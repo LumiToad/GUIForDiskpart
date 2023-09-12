@@ -5,11 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUIForDiskpart"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="850" ResizeMode="CanResize" MinHeight="450" MinWidth="800">
     <Grid Background="#FF3E3E3E">
-        <Button x:Name="TestButton" Content="Button" HorizontalAlignment="Left" Margin="533,126,0,0" VerticalAlignment="Top" Click="TestButton_Click"/>
-        
-        <TextBox x:Name="ConsoleReturn" HorizontalAlignment="Left" Margin="80,279,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="630" FontFamily="Consolas" AllowDrop="False" Height="116" Background="#FF252525" IsReadOnly="True" IsUndoEnabled="False" Foreground="#FF009409" VerticalScrollBarVisibility="Auto" TextChanged="ConsoleReturn_TextChanged"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="77*"/>
+            <ColumnDefinition Width="323*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="TestButton" Content="Button" Margin="379,126,0,0" Click="TestButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
+
+        <TextBox x:Name="ConsoleReturn" Margin="85,280,85,38" TextWrapping="Wrap" Width="630" FontFamily="Consolas" AllowDrop="False" Height="116" Background="#FF252525" IsUndoEnabled="False" Foreground="#FF009409" VerticalScrollBarVisibility="Auto" TextChanged="ConsoleReturn_TextChanged" Grid.IsSharedSizeScope="True" Grid.ColumnSpan="2" IsReadOnly="True"/>
 
     </Grid>
 </Window>

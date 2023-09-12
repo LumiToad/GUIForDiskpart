@@ -27,7 +27,6 @@ namespace GUIForDiskpart
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine(mainProgram.dpFunctions.List(diskpart.DPListType.VOLUME));
             ConsoleReturn.Text += mainProgram.dpFunctions.List(diskpart.DPListType.VOLUME);
         }
 

@@ -5,28 +5,57 @@ namespace GUIForDiskpart.main
 {
     public class CommandExecuter
     {
-        ProcessStartInfo processInfo;
         Process process = new Process();
 
-        public string ExecuteCommand(string command, ref int exitCode)
-        {
-            string output = string.Empty;
-            processInfo = new ProcessStartInfo("diskpart.exe");
-            processInfo.CreateNoWindow = true;
-            processInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            processInfo.UseShellExecute = false;
-            processInfo.RedirectStandardOutput = true;
-            processInfo.RedirectStandardInput = true;
-            process.StartInfo = processInfo;
+        private const string exeSuffix = ".exe";
 
-            process = Process.Start(processInfo);
+        public string IssueCommand(ProcessType processType, string command)
+        {
+            SetupProcessInfo(processType);
+            
+            string output = "";
+            output += ExecuteCommand(processType, command);
+            output += ReadProcessStandardOutput();
+            int exitCode = ExitProcess();
+            output += "Exit Code: " + exitCode.ToString() + "\n";
+
+            return output;
+        }
+
+        private void SetupProcessInfo(ProcessType processType)
+        {
+            process.StartInfo.FileName = processType.ToString() + exeSuffix;
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardInput = true;
+        }
+
+        private string ExecuteCommand(ProcessType processType, string command)
+        {
+            process.Start();
             process.StandardInput.WriteLine(command);
             process.StandardInput.WriteLine("exit");
-            StreamReader streamReader = process.StandardOutput;
-            output = streamReader.ReadToEnd();
+
+            return processType.ToString().ToUpper() + " - " + command + "\n";
+        }
+
+        private int ExitProcess()
+        {
+            process.WaitForExit();
+
+            int exitCode = 0;
             exitCode = process.ExitCode;
+
             process.Close();
-            return output;
+            return exitCode;
+        }
+
+        private string ReadProcessStandardOutput()
+        {
+            StreamReader streamReader = process.StandardOutput;
+            return streamReader.ReadToEnd();
         }
     }
 }

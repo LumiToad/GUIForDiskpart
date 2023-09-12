@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <Compile Remove="main\ProcessHandler.cs" />
-    <Compile Remove="main\ProcessTypeEnum.cs" />
   </ItemGroup>
 
 </Project>
