@@ -3,7 +3,7 @@
     public enum ProcessType
     {
         None = 0,
-        Cmd = 1,
-        Diskpart = 2
+        cmd = 10,
+        diskpart = 20
     }
 }

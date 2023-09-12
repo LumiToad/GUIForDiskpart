@@ -6,9 +6,10 @@
         xmlns:local="clr-namespace:GUIForDiskpart"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Label x:Name="ReturnLabel" Content="Text" HorizontalAlignment="Left" Margin="153,151,0,0" VerticalAlignment="Top" Height="164" Width="500" FontSize="18"/>
-        <Button x:Name="TestButton" Content="Button" HorizontalAlignment="Left" Margin="403,355,0,0" VerticalAlignment="Top" Click="TestButton_Click"/>
+    <Grid Background="#FF3E3E3E">
+        <Button x:Name="TestButton" Content="Button" HorizontalAlignment="Left" Margin="533,126,0,0" VerticalAlignment="Top" Click="TestButton_Click"/>
+        
+        <TextBox x:Name="ConsoleReturn" HorizontalAlignment="Left" Margin="80,279,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="630" FontFamily="Consolas" AllowDrop="False" Height="116" Background="#FF252525" IsReadOnly="True" IsUndoEnabled="False" Foreground="#FF009409" VerticalScrollBarVisibility="Auto" TextChanged="ConsoleReturn_TextChanged"/>
 
     </Grid>
 </Window>

@@ -1,6 +1,7 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 using System.Diagnostics;
+
 
 namespace GUIForDiskpart.main
 {
@@ -28,7 +29,7 @@ namespace GUIForDiskpart.main
             {
                 if (!killByForce) 
                 {
-                    IssueCommand(,"exit");
+                    IssueCommand(processType,"exit");
                 }
                 else
                 {
@@ -41,7 +42,7 @@ namespace GUIForDiskpart.main
         {
             process.StartInfo.FileName = processType.ToString() + executeableSuffix;
             process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.CreateNoWindow = false;
             process.StartInfo.RedirectStandardInput = true;
             process.StartInfo.RedirectStandardOutput = true;
         }
@@ -61,16 +62,20 @@ namespace GUIForDiskpart.main
             Process process = GetProcessByEnum(processType);
 
             process.StandardInput.WriteLine(command);
-            output = process.StandardOutput.ReadToEnd();
 
-            return "";
+            while (!process.StandardOutput.EndOfStream)
+            {
+                output += process.StandardOutput.ReadLine();
+            }
+
+            return output;
         }
 
         private Process GetProcessByEnum(ProcessType processType)
         {
             foreach (Process process in activeProcesses) 
             {
-                if (process.ProcessName == processType.ToString() + executeableSuffix)
+                if (process.ProcessName == processType.ToString())
                 {
                     return process; 
                 }

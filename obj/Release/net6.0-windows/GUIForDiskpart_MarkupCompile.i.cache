@@ -1,7 +1,7 @@
 ﻿GUIForDiskpart
 1.0.0.0
 
-winexe
+exe
 C#
 .cs
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\
@@ -12,7 +12,7 @@ TRACE;RELEASE;NET;NET6_0;NETCOREAPP
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\App.xaml
 11407045341
 
-8317722492
+9-884316515
 194726069201
 MainWindow.xaml;
 

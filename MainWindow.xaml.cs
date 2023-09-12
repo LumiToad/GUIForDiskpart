@@ -1,18 +1,6 @@
-﻿using GUIForDiskpart.main;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using GUIForDiskpart.main;
 
 namespace GUIForDiskpart
 {
@@ -21,16 +9,31 @@ namespace GUIForDiskpart
     /// </summary>
     public partial class MainWindow : Window
     {
+        MainProgram mainProgram;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            mainProgram = new MainProgram();
+            mainProgram.Initialize();
+            
         }
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
-            Test testClass = new Test();
+            Console.WriteLine(mainProgram.dpFunctions.List(diskpart.DPListType.VOLUME));
+            ConsoleReturn.Text += mainProgram.dpFunctions.List(diskpart.DPListType.VOLUME);
+        }
 
-            testClass.TestFunc();
+        private void ConsoleReturn_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            ConsoleReturn.ScrollToEnd();
         }
     }
 }
