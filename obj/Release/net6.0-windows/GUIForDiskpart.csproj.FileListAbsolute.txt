@@ -38,3 +38,8 @@ E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\ref
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\GUIForDiskpart.pdb
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\GUIForDiskpart.genruntimeconfig.cache
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\ref\GUIForDiskpart.dll
+E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\bin\Release\net6.0-windows\System.CodeDom.dll
+E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\bin\Release\net6.0-windows\System.Management.dll
+E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\bin\Release\net6.0-windows\runtimes\win\lib\net6.0\System.Management.dll
+E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\GUIForDiskpart.csproj.AssemblyReference.cache
+E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\GUIForDiskpart.csproj.CopyComplete

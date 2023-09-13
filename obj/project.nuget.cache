@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "2S/pUNq7mZt/7JAjofQTFWP1+dha+UwUlphKWwqR+GeimB2ndwUEaWaMxjQFgTuGmEoCy3Goremb0258fuxhwg==",
+  "dgSpecHash": "VatzsbyItUIVeUQrTzdk4eoWgq0tD8y4OQtf2hBa3hXw6DkY/zTxNxSb4I9tjbRm55+3FbQmPrcpwB/AE424hg==",
   "success": true,
   "projectFilePath": "E:\\Projekte\\0_Programmieren\\CSharp\\GUIForDiskpart\\GUIForDiskpart.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Lukas\\.nuget\\packages\\system.codedom\\7.0.0\\system.codedom.7.0.0.nupkg.sha512",
+    "C:\\Users\\Lukas\\.nuget\\packages\\system.management\\7.0.2\\system.management.7.0.2.nupkg.sha512"
+  ],
   "logs": []
 }

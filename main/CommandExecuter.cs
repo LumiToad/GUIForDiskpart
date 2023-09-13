@@ -1,5 +1,8 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace GUIForDiskpart.main
 {
@@ -24,6 +27,7 @@ namespace GUIForDiskpart.main
 
         private void SetupProcessInfo(ProcessType processType)
         {
+
             process.StartInfo.FileName = processType.ToString() + exeSuffix;
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;

@@ -53,7 +53,6 @@ namespace GUIForDiskpart.diskpart
                 {
                     output = output.Replace(line, "");
                     output = Regex.Replace(output, @"[\r\n]+", "\n");
-
                 }
             }
 
