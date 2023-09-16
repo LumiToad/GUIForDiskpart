@@ -13,6 +13,7 @@ namespace GUIForDiskpart.main
         {
             dpFunctions = new DPFunctions(commandExecuter);
             driveRetriever = new DriveRetriever();
+            driveRetriever.RetrieveDrives();
         }
 
 

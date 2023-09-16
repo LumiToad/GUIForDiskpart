@@ -69,6 +69,34 @@ namespace GUIForDiskpart.main
             Console.WriteLine(new string('-', 79));
         }
 
+        public string GetOutputAsString()
+        {
+            string output = string.Empty;
+            output += "PhysicalName: " + PhysicalName + "\n";
+            output += "DriveNumber: " + DriveNumber + "\n";
+            output += "DiskName: " + DiskName + "\n";
+            output += "DiskModel: " + DiskModel + "\n";
+            output += "DiskInterface: " + DiskInterface + "\n";
+            output += "MediaLoaded: " + MediaLoaded + "\n";
+            output += "MediaType: " + MediaType + "\n";
+            output += "MediaSignature: " + MediaSignature + "\n";
+            output += "MediaStatus: " + MediaStatus + "\n";
+            
+            output += "DriveName: " + DriveName + "\n";
+            output += "DriveId: " + DriveId + "\n";
+            output += "DriveCompressed: " + DriveCompressed + "\n";
+            output += "DriveType: " + DriveType + "\n";
+            output += "FileSystem: " + FileSystem + "\n";
+            output += "FreeSpace: " + FreeSpace + "\n";
+            output += "TotalSpace: " + TotalSpace + "\n";
+            output += "DriveMediaType: " + DriveMediaType + "\n";
+            output += "VolumeName: " + VolumeName + "\n";
+            output += "VolumeSerial: " + VolumeSerial + "\n";
+            output += "_________________" + "\n";
+
+            return output;
+        }
+
         public void AddPhysicalDriveInfo(PhysicalDrive physicalDrive)
         {
             DeviceId = physicalDrive.DeviceId;
