@@ -43,3 +43,6 @@ E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\bin\Release\net6.0-windows\Sys
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\bin\Release\net6.0-windows\runtimes\win\lib\net6.0\System.Management.dll
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\GUIForDiskpart.csproj.AssemblyReference.cache
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\GUIForDiskpart.csproj.CopyComplete
+E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\DriveListEntry.g.cs
+E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\DriveListEntry.baml
+E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\GeneratedInternalTypeHelper.g.cs

@@ -7,17 +7,42 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="850" ResizeMode="CanResize" MinHeight="450" MinWidth="800">
     <Grid Background="#FF3E3E3E">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="77*"/>
-            <ColumnDefinition Width="323*"/>
-        </Grid.ColumnDefinitions>
-        <Button x:Name="TestButton" Content="List Volume" Margin="523,24,0,0" Click="TestButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
 
-        <TextBox x:Name="ConsoleReturn" Margin="85,280,85,38" TextWrapping="Wrap" Width="630" FontFamily="Consolas" AllowDrop="False" Height="116" Background="#FF252525" IsUndoEnabled="False" Foreground="#FF009409" VerticalScrollBarVisibility="Auto" TextChanged="ConsoleReturn_TextChanged" Grid.IsSharedSizeScope="True" Grid.ColumnSpan="2" IsReadOnly="True"/>
-        <Button Grid.Column="1" Content="List Disk" HorizontalAlignment="Left" Margin="523,58,0,0" VerticalAlignment="Top" Click="Button_Click"/>
-        <Button Grid.Column="1" Content="List Part" HorizontalAlignment="Left" Margin="523,100,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
-        <Button Grid.Column="1" Content="List Vdisk" HorizontalAlignment="Left" Margin="523,140,0,0" VerticalAlignment="Top" Click="Button_Click_2"/>
-        <Button Grid.Column="1" Content="Retrieve Drive Data" HorizontalAlignment="Left" Margin="471,252,0,0" VerticalAlignment="Top" Click="Button_Click_3"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <TextBox x:Name="ConsoleReturn" TextWrapping="Wrap" FontFamily="Consolas" AllowDrop="False" Background="#FF252525" IsUndoEnabled="False" Foreground="#FF009409" VerticalScrollBarVisibility="Auto" TextChanged="ConsoleReturn_TextChanged" Grid.IsSharedSizeScope="True" IsReadOnly="True" Grid.Column="1" Grid.Row="2"/>
+        <Grid Grid.Column="1" Margin="0,161,0,161" Grid.RowSpan="3">
+
+            <Button x:Name="ListVolume" Content="List Volume" Margin="318,50,0,0" Click="ListVolume_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="107"/>
+
+            <Button x:Name="ListDisk" Content="List Disk" HorizontalAlignment="Left" Margin="351,0,0,0" VerticalAlignment="Top" Click="ListDisk_Click" Height="22" Width="72"/>
+            <Button x:Name="ListPart" Content="List Part" HorizontalAlignment="Left" Margin="351,82,0,0" VerticalAlignment="Top" Click="ListPart_Click" Width="74"/>
+            <Button x:Name="ListVdisk" Content="List Vdisk" HorizontalAlignment="Left" Margin="351,107,0,0" VerticalAlignment="Top" Click="ListVdisk_Click" Width="74"/>
+            <Button x:Name="RetrieveDriveData" Content="Retrieve Drive Data" HorizontalAlignment="Left" VerticalAlignment="Top" Click="RetrieveDriveData_Click" Height="22"/>
+        </Grid>
+        <local:DriveListEntry x:Name="DriveListEntryElement" HorizontalAlignment="Left" VerticalAlignment="Center" Loaded="DriveListEntry_Loaded" Height="162" Grid.Row="1" Width="420" AutomationProperties.Name="DriveListEntryElement"/>
 
     </Grid>
+
+    <Window.Resources>
+        <DataTemplate x:Key="driveTemplate">
+            <StackPanel>
+                <TextBlock Text="{Binding Path=DriveName}" />
+                <TextBlock Text="{Binding Path=DriveLetter}"/>
+                <TextBlock Text="{Binding Path=TotalSize}"/>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
 </Window>
+    
+
+    

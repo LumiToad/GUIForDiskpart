@@ -36,34 +36,45 @@ namespace GUIForDiskpart
             ConsoleReturn.Text += text;
         }
 
-        private void TestButton_Click(object sender, RoutedEventArgs e)
+        private void ListVolume_Click(object sender, RoutedEventArgs e)
         {
             ConsoleReturn.Text += mainProgram.dpFunctions.List(diskpart.DPListType.VOLUME);
         }
 
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ListDisk_Click(object sender, RoutedEventArgs e)
         {
             ConsoleReturn.Text += mainProgram.dpFunctions.List(diskpart.DPListType.DISK);
 
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void ListPart_Click(object sender, RoutedEventArgs e)
         {
             ConsoleReturn.Text += mainProgram.dpFunctions.List(diskpart.DPListType.PARTITION);
 
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void ListVdisk_Click(object sender, RoutedEventArgs e)
         {
             ConsoleReturn.Text += mainProgram.dpFunctions.List(diskpart.DPListType.VDISK);
 
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void RetrieveDriveData_Click(object sender, RoutedEventArgs e)
         {
             mainProgram.driveRetriever.RetrieveDrives();
             AddTextToOutputConsole(mainProgram.driveRetriever.GetLogicalDrivesOutput());
+        }
+
+        private void ListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void DriveListEntry_Loaded(object sender, RoutedEventArgs e)
+        {
+            LogicalDrive logicalDrive = mainProgram.driveRetriever.LogicalDrives[0];
+            DriveListEntryElement.AddLogicalDriveData(logicalDrive.DriveNumber, logicalDrive.DiskName, logicalDrive.TotalSpace, logicalDrive.MediaStatus);
         }
     }
 }
