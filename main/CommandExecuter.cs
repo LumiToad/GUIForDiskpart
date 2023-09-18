@@ -1,8 +1,5 @@
 ﻿using System.Diagnostics;
-using System.Globalization;
 using System.IO;
-using System.Text.RegularExpressions;
-using System.Threading;
 
 namespace GUIForDiskpart.main
 {
@@ -17,7 +14,33 @@ namespace GUIForDiskpart.main
             SetupProcessInfo(processType);
             
             string output = "";
+
+            process.Start();
             output += ExecuteCommand(processType, command);
+            process.StandardInput.WriteLine("exit");
+
+            output += ReadProcessStandardOutput();
+            int exitCode = ExitProcess();
+            output += "Exit Code: " + exitCode.ToString() + "\n";
+
+            return output;
+        }
+
+        public string IssueCommand(ProcessType processType, string[] commands)
+        {
+            SetupProcessInfo(processType);
+
+            string output = "";
+
+            process.Start();
+
+            foreach (string command in commands)
+            {
+                output += ExecuteCommand(processType, command) + "\n";
+            }
+
+            process.StandardInput.WriteLine("exit");
+
             output += ReadProcessStandardOutput();
             int exitCode = ExitProcess();
             output += "Exit Code: " + exitCode.ToString() + "\n";
@@ -38,12 +61,11 @@ namespace GUIForDiskpart.main
 
         private string ExecuteCommand(ProcessType processType, string command)
         {
-            process.Start();
             process.StandardInput.WriteLine(command);
-            process.StandardInput.WriteLine("exit");
 
             return processType.ToString().ToUpper() + " - " + command + "\n";
         }
+
 
         private int ExitProcess()
         {

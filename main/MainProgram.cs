@@ -1,21 +1,22 @@
 ﻿using GUIForDiskpart.diskpart;
+using System;
 
 namespace GUIForDiskpart.main
 {
     public class MainProgram
     {
-        private CommandExecuter commandExecuter = new CommandExecuter();
-        
         public DPFunctions dpFunctions;
         public DriveRetriever driveRetriever;
 
-        public void Initialize()
+        public MainProgram() 
         {
-            dpFunctions = new DPFunctions(commandExecuter);
-            driveRetriever = new DriveRetriever();
-            driveRetriever.RetrieveDrives();
+            Initialize();
         }
 
-
+        public void Initialize()
+        {
+            dpFunctions = new DPFunctions();
+            driveRetriever = new DriveRetriever();
+        }
     }
 }

@@ -8,20 +8,19 @@ namespace GUIForDiskpart.diskpart
 {
     public class DPFunctions
     {
-        private CommandExecuter m_commandExecuter;
+        private CommandExecuter commandExecuter;
         private List<string> dpInfoExcludeStrings = new List<string>();
 
-        public DPFunctions(CommandExecuter commandExecuter)
+        public DPFunctions()
         {
-            m_commandExecuter = commandExecuter;
+            commandExecuter = new CommandExecuter();
+;
             GetDPInfoExcludeStrings();
         }
 
         private void GetDPInfoExcludeStrings()
         {
-            string output = m_commandExecuter.IssueCommand(ProcessType.diskpart, "");
-
-            
+            string output = commandExecuter.IssueCommand(ProcessType.diskpart, "");
 
             foreach (string line in output.Split('\r', StringSplitOptions.TrimEntries)) 
             {
@@ -35,7 +34,20 @@ namespace GUIForDiskpart.diskpart
         {
             string command = "List " + type.ToString();
 
-            string output = m_commandExecuter.IssueCommand(ProcessType.diskpart, command);
+            string output = commandExecuter.IssueCommand(ProcessType.diskpart, command);
+            output = RemoveDPInfo(output);
+
+            return output;
+        }
+
+        public string Detail(DPListType type, int selection) 
+        {
+            string[] commands = new string[2];
+
+            commands[0] = "Select " + type.ToString() + " " + selection.ToString();
+            commands[1] = "Detail " + type.ToString();
+
+            string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
             output = RemoveDPInfo(output);
 
             return output;

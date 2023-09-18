@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Management;
 
 
@@ -109,6 +110,20 @@ namespace GUIForDiskpart.main
                     }
                 }
             }
+
+            logicalDrives = SortLogicalDrivesByDriveNumber(logicalDrives);
+        }
+
+        private List<LogicalDrive> SortLogicalDrivesByDriveNumber(List<LogicalDrive> list)
+        {
+            List<LogicalDrive> sortedList = list.OrderBy(o=>o.DriveNumber).ToList();
+            return sortedList;
+        }
+
+        private List<PhysicalDrive> SortPhysicalDrivesByDeviceID(List<PhysicalDrive> list)
+        {
+            List<PhysicalDrive> sortedList = list.OrderBy(o => o.deviceID).ToList();
+            return sortedList;
         }
     }
 }

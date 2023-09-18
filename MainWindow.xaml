@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUIForDiskpart"
         mc:Ignorable="d"
+        
         Title="MainWindow" Height="500" Width="850" ResizeMode="CanResize" MinHeight="450" MinWidth="800">
-    <Grid Background="#FF3E3E3E">
+    <Grid x:Name="MainGrid" Background="#FF3E3E3E">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -20,7 +21,7 @@
         </Grid.ColumnDefinitions>
 
         <TextBox x:Name="ConsoleReturn" TextWrapping="Wrap" FontFamily="Consolas" AllowDrop="False" Background="#FF252525" IsUndoEnabled="False" Foreground="#FF009409" VerticalScrollBarVisibility="Auto" TextChanged="ConsoleReturn_TextChanged" Grid.IsSharedSizeScope="True" IsReadOnly="True" Grid.Column="1" Grid.Row="2"/>
-        <Grid Grid.Column="1" Margin="0,161,0,161" Grid.RowSpan="3">
+        <Grid x:Name="ButtonGrid" Grid.Column="1" Margin="0,161,0,161" Grid.RowSpan="3">
 
             <Button x:Name="ListVolume" Content="List Volume" Margin="318,50,0,0" Click="ListVolume_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="107"/>
 
@@ -29,7 +30,7 @@
             <Button x:Name="ListVdisk" Content="List Vdisk" HorizontalAlignment="Left" Margin="351,107,0,0" VerticalAlignment="Top" Click="ListVdisk_Click" Width="74"/>
             <Button x:Name="RetrieveDriveData" Content="Retrieve Drive Data" HorizontalAlignment="Left" VerticalAlignment="Top" Click="RetrieveDriveData_Click" Height="22"/>
         </Grid>
-        <local:DriveListEntry x:Name="DriveListEntryElement" HorizontalAlignment="Left" VerticalAlignment="Center" Loaded="DriveListEntry_Loaded" Height="162" Grid.Row="1" Width="420" AutomationProperties.Name="DriveListEntryElement"/>
+        <StackPanel x:Name="someStackPanel" CanVerticallyScroll="True" Grid.RowSpan="3"/>
 
     </Grid>
 
