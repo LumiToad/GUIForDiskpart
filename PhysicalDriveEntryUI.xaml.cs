@@ -15,9 +15,9 @@ namespace GUIForDiskpart
         MainWindow mainWindow;
         DPFunctions dpFunctions;
 
-        LogicalDrive logicalDrive;
+        PhysicalDrive physicalDrive;
 
-        public int DriveNumber { get { return logicalDrive.DriveNumber; } }
+        public int DriveNumber { get { return physicalDrive.DriveNumber; } }
 
         public PhysicalDriveEntryUI()
         {
@@ -32,27 +32,27 @@ namespace GUIForDiskpart
             dpFunctions = mainWindow.mainProgram.dpFunctions;
         }
 
-        public void AddLogicalDriveData(LogicalDrive logicalDrive)
+        public void AddPhysicalDriveData(PhysicalDrive physicalDrive)
         {
-            this.logicalDrive = logicalDrive;
+            this.physicalDrive = physicalDrive;
             DriveDataToThisUI();
         }
 
         private void DriveDataToThisUI()
         {
-            DriveNumberValueLabel.Content = logicalDrive.DriveNumber.ToString();
-            DiskNameValueLabel.Content = logicalDrive.DiskName;
+            DriveNumberValueLabel.Content = physicalDrive.DriveNumber.ToString();
+            DiskNameValueLabel.Content = physicalDrive.DiskName;
 
             ByteFormatter byteFormatter = new ByteFormatter();
-            TotalSpaceValueLabel.Content = byteFormatter.FormatBytes((long)logicalDrive.TotalSpace);
+            TotalSpaceValueLabel.Content = byteFormatter.FormatBytes((long)physicalDrive.TotalSpace);
 
-            StatusValueLabel.Content = logicalDrive.MediaStatus;
-            PartitionsValueLabel.Content = logicalDrive.Partitions;
+            StatusValueLabel.Content = physicalDrive.MediaStatus;
+            PartitionsValueLabel.Content = physicalDrive.PartitionCount;
         }
 
         private void Detail_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.AddTextToOutputConsole(dpFunctions.Detail(DPListType.DISK, logicalDrive.DriveNumber));
+            mainWindow.AddTextToOutputConsole(dpFunctions.Detail(DPListType.DISK, physicalDrive.DriveNumber));
         }
     }
 }
