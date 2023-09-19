@@ -11,11 +11,12 @@ namespace GUIForDiskpart.main
         public string mediaStatus;
         public bool mediaLoaded;
         public UInt64 totalSpace;
+        public UInt32 partitions;
 
         public PhysicalDrive() 
         { }
 
-        public PhysicalDrive(string deviceID, string physicalName, string diskName, string diskModel, string mediaStatus, bool mediaLoaded, ulong totalSpace)
+        public PhysicalDrive(string deviceID, string physicalName, string diskName, string diskModel, string mediaStatus, bool mediaLoaded, ulong totalSpace, uint partitions)
         {
             this.deviceID = deviceID;
             this.physicalName = physicalName;
@@ -24,6 +25,7 @@ namespace GUIForDiskpart.main
             this.mediaStatus = mediaStatus;
             this.mediaLoaded = mediaLoaded;
             this.totalSpace = totalSpace;
+            this.partitions = partitions;
         }
 
         public string DeviceId { get; set; }
@@ -38,5 +40,7 @@ namespace GUIForDiskpart.main
         public bool MediaLoaded { get; set; }
 
         public UInt64 TotalSpace { get; set; }
+
+        public UInt32 Partitions { get; set; }
     }
 }

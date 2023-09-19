@@ -67,16 +67,18 @@ namespace GUIForDiskpart
 
         private void RetrieveAndShowDriveData()
         {
-            mainProgram.driveRetriever.RetrieveDrives();
+            mainProgram.driveRetriever.ReloadDriveInformation();
             AddTextToOutputConsole(mainProgram.driveRetriever.GetLogicalDrivesOutput());
             AddLogicalDrivesToStackPanel();
         }
 
         private void AddLogicalDrivesToStackPanel()
         {
+            someStackPanel.Children.Clear();
+
             foreach (LogicalDrive logicalDrive in mainProgram.driveRetriever.LogicalDrives)
             {
-                DriveListEntry driveListEntry = new DriveListEntry();
+                PhysicalDriveEntryUI driveListEntry = new PhysicalDriveEntryUI();
                 driveListEntry.AddLogicalDriveData(logicalDrive);
 
                 someStackPanel.Children.Add(driveListEntry);

@@ -8,9 +8,9 @@ using System.Windows.Controls;
 namespace GUIForDiskpart
 {
     /// <summary>
-    /// Interaktionslogik für DriveListEntry.xaml
+    /// Interaktionslogik für PhysicalDriveEntryUI.xaml
     /// </summary>
-    public partial class DriveListEntry : UserControl
+    public partial class PhysicalDriveEntryUI : UserControl
     {
         MainWindow mainWindow;
         DPFunctions dpFunctions;
@@ -19,7 +19,7 @@ namespace GUIForDiskpart
 
         public int DriveNumber { get { return logicalDrive.DriveNumber; } }
 
-        public DriveListEntry()
+        public PhysicalDriveEntryUI()
         {
             InitializeComponent();
 
@@ -47,6 +47,7 @@ namespace GUIForDiskpart
             TotalSpaceValueLabel.Content = byteFormatter.FormatBytes((long)logicalDrive.TotalSpace);
 
             StatusValueLabel.Content = logicalDrive.MediaStatus;
+            PartitionsValueLabel.Content = logicalDrive.Partitions;
         }
 
         private void Detail_Click(object sender, RoutedEventArgs e)

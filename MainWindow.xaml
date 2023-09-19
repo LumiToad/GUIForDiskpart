@@ -20,7 +20,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBox x:Name="ConsoleReturn" TextWrapping="Wrap" FontFamily="Consolas" AllowDrop="False" Background="#FF252525" IsUndoEnabled="False" Foreground="#FF009409" VerticalScrollBarVisibility="Auto" TextChanged="ConsoleReturn_TextChanged" Grid.IsSharedSizeScope="True" IsReadOnly="True" Grid.Column="1" Grid.Row="2"/>
+        <TextBox x:Name="ConsoleReturn" TextWrapping="Wrap" FontFamily="Consolas" AllowDrop="False" Background="#FF252525" IsUndoEnabled="False" Foreground="#FF009409" VerticalScrollBarVisibility="Auto" TextChanged="ConsoleReturn_TextChanged" Grid.IsSharedSizeScope="True" IsReadOnly="True" Grid.Row="2" Grid.ColumnSpan="2"/>
         <Grid x:Name="ButtonGrid" Grid.Column="1" Margin="0,161,0,161" Grid.RowSpan="3">
 
             <Button x:Name="ListVolume" Content="List Volume" Margin="318,50,0,0" Click="ListVolume_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="107"/>
@@ -30,7 +30,7 @@
             <Button x:Name="ListVdisk" Content="List Vdisk" HorizontalAlignment="Left" Margin="351,107,0,0" VerticalAlignment="Top" Click="ListVdisk_Click" Width="74"/>
             <Button x:Name="RetrieveDriveData" Content="Retrieve Drive Data" HorizontalAlignment="Left" VerticalAlignment="Top" Click="RetrieveDriveData_Click" Height="22"/>
         </Grid>
-        <StackPanel x:Name="someStackPanel" CanVerticallyScroll="True" Grid.RowSpan="3"/>
+        <StackPanel x:Name="someStackPanel" CanVerticallyScroll="True" Grid.RowSpan="3" Margin="0,0,0,161"/>
 
     </Grid>
 

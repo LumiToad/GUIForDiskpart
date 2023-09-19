@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
+using System.Runtime.InteropServices;
 
 
 namespace GUIForDiskpart.main
@@ -46,6 +47,19 @@ namespace GUIForDiskpart.main
 
             return output;
         }
+        private void SetupDriveChangedWatcher()
+        {
+            ManagementEventWatcher watcher = new ManagementEventWatcher();
+            WqlEventQuery query = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2");
+            //watcher.EventArrived += new EventArrivedEventHandler();
+            watcher.Query = query;
+            watcher.Start();
+            watcher.WaitForNextEvent();
+        }
+        private void OnDriveChanged()
+        {
+
+        }
 
         private void RetrievePhysicalDrives()
         {
@@ -59,9 +73,10 @@ namespace GUIForDiskpart.main
                 string status = Convert.ToString(drive.Properties["Status"].Value);
                 bool mediaLoaded = Convert.ToBoolean(drive.Properties["MediaLoaded"].Value);
                 UInt64 totalSpace = Convert.ToUInt64(drive.Properties["Size"].Value);
+                UInt32 partitions = Convert.ToUInt32(drive.Properties["Partitions"].Value);
 
                 PhysicalDrive physicalDrive = new PhysicalDrive(deviceId, physicalName,
-                    diskName, diskModel, status, mediaLoaded, totalSpace);
+                    diskName, diskModel, status, mediaLoaded, totalSpace, partitions);
                 physicalDrives.Add(physicalDrive);
 
                 managementObjectDrives.Add(drive);
@@ -77,6 +92,7 @@ namespace GUIForDiskpart.main
 
                 foreach (ManagementObject partition in partitionQuery.Get())
                 {
+                    Console.WriteLine("Partition Count: " + partitionQuery.Get().Count);
                     var logicalDriveQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_LogicalDiskToPartition", partition.Path.RelativePath);
                     var logicalDriveQuery = new ManagementObjectSearcher(logicalDriveQueryText);
                     foreach (ManagementObject logicalDrive in logicalDriveQuery.Get())
@@ -91,6 +107,7 @@ namespace GUIForDiskpart.main
                         newLogicalDrive.MediaType = Convert.ToString(drive.Properties["MediaType"].Value); // Fixed hard disk media
                         newLogicalDrive.MediaSignature = Convert.ToUInt32(drive.Properties["Signature"].Value); // int32
                         newLogicalDrive.MediaStatus = Convert.ToString(drive.Properties["Status"].Value); // OK
+                        newLogicalDrive.Partitions = Convert.ToUInt32(drive.Properties["Partitions"].Value);
 
                         newLogicalDrive.DriveName = Convert.ToString(logicalDrive.Properties["Name"].Value); // C:
                         newLogicalDrive.DriveId = Convert.ToString(logicalDrive.Properties["DeviceId"].Value); // C:
