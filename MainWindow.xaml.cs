@@ -75,7 +75,7 @@ namespace GUIForDiskpart
         {
             someStackPanel.Children.Clear();
 
-            foreach (PhysicalDrive physicalDrive in mainProgram.driveRetriever.PhysicalDrives)
+            foreach (DriveInfo physicalDrive in mainProgram.driveRetriever.PhysicalDrives)
             {
                 PhysicalDriveEntryUI driveListEntry = new PhysicalDriveEntryUI();
                 driveListEntry.AddPhysicalDriveData(physicalDrive);

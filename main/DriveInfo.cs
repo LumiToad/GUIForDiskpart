@@ -4,7 +4,7 @@ using System.IO;
 
 namespace GUIForDiskpart.main
 {
-    public class PhysicalDrive
+    public class DriveInfo
     {
         public string deviceID;
         public string DeviceId { get { return deviceID; } }
@@ -33,15 +33,35 @@ namespace GUIForDiskpart.main
         public int driveNumber;
         public int DriveNumber { get { return driveNumber; } }
 
-        private List<LogicalDrive> logicalDrives = new List<LogicalDrive>();
-        
-        private List<PartitionDrive> partitionDrives = new List<PartitionDrive>();
+        private string interfaceType;
+        public string InterfaceType { get { return interfaceType; } }
 
-        public PhysicalDrive() 
+        private UInt32 mediaSignature;
+        public UInt32 MediaSignature { get { return mediaSignature; } }
+
+        private string driveName;
+        public string DriveName { get { return driveName; } }
+
+        private string driveId;
+        public string DriveId { get { return driveId; } }
+
+        private bool driveCompressed;
+        public bool DriveCompressed { get { return driveCompressed; } }
+
+        private string mediaType;
+        public string MediaType { get { return mediaType; } }
+
+        private List<LogicalDriveInfo> logicalDrives = new List<LogicalDriveInfo>();
+        
+        private List<PartitionInfo> partitionDrives = new List<PartitionInfo>();
+
+        public DriveInfo() 
         { }
 
-        public PhysicalDrive(string deviceID, string physicalName, string diskName,
-            string diskModel, string mediaStatus, bool mediaLoaded, ulong totalSpace, uint partitionsCount)
+        public DriveInfo(string deviceID, string physicalName, string diskName,
+            string diskModel, string mediaStatus, bool mediaLoaded, ulong totalSpace,
+            uint partitionsCount, string interfaceType, string mediaType,
+            UInt32 mediaSignature, string driveName)
         {
             this.deviceID = deviceID;
             this.physicalName = physicalName;
@@ -52,6 +72,10 @@ namespace GUIForDiskpart.main
             this.totalSpace = totalSpace;
             this.partitionCount = partitionsCount;
             this.driveNumber = ParseDriveNumber(physicalName);
+            this.interfaceType = interfaceType;
+            this.mediaType = mediaType;
+            this.mediaSignature = mediaSignature;
+            this.driveName = driveName;
         }
 
         public void PrintToConsole()
@@ -63,7 +87,12 @@ namespace GUIForDiskpart.main
             Console.WriteLine("MediaLoaded: {0}", MediaLoaded);
             Console.WriteLine("MediaStatus: {0}", MediaStatus);
             Console.WriteLine("TotalSpace: {0}", TotalSpace);
-
+            Console.WriteLine("InterfaceType: {0}", InterfaceType);
+            Console.WriteLine("MediaType: {0}", MediaType);
+            Console.WriteLine("MediaSignature: {0}", MediaSignature);
+            Console.WriteLine("DriveName: {0}", DriveName);
+            Console.WriteLine("DriveId: {0}", DriveId);
+            Console.WriteLine("DriveCompressed: {0}", DriveCompressed);
             Console.WriteLine(new string('-', 79));
         }
 
@@ -77,7 +106,23 @@ namespace GUIForDiskpart.main
             output += "MediaLoaded: " + MediaLoaded + "\n";
             output += "MediaStatus: " + MediaStatus + "\n";
             output += "TotalSpace: " + TotalSpace + "\n";
+            output += "InterfaceType: " + InterfaceType + "\n";
+            output += "MediaType: " + MediaType + "\n";
+            output += "MediaSignature: " + MediaSignature + "\n";
+            output += "DriveName: " + DriveName + "\n";
+            output += "DriveId: " + DriveId + "\n";
+            output += "DriveCompressed: " + DriveCompressed + "\n";
             output += "_________________" + "\n";
+            
+            foreach (PartitionInfo partitionInfo in partitionDrives)
+            {
+                output += partitionInfo.GetOutputAsString();
+            }
+
+            foreach (LogicalDriveInfo logicalDrive in logicalDrives) 
+            {
+                output += logicalDrive.GetOutputAsString();
+            }
 
             return output;
         }
@@ -87,12 +132,12 @@ namespace GUIForDiskpart.main
             return int.Parse(name.Substring(name.Length - 1));
         }
 
-        public void AddLogicalDriveToList(LogicalDrive drive)
+        public void AddLogicalDriveToList(LogicalDriveInfo drive)
         {
             logicalDrives.Add(drive);
         }
 
-        public void AddPartitionDriveToList(PartitionDrive drive)
+        public void AddPartitionDriveToList(PartitionInfo drive)
         {
             partitionDrives.Add(drive);
         }

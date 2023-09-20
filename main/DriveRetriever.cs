@@ -9,8 +9,8 @@ namespace GUIForDiskpart.main
 {
     public class DriveRetriever
     {
-        private List<PhysicalDrive> physicalDrives = new List<PhysicalDrive>();
-        public List<PhysicalDrive> PhysicalDrives { get { return physicalDrives; } }
+        private List<DriveInfo> physicalDrives = new List<DriveInfo>();
+        public List<DriveInfo> PhysicalDrives { get { return physicalDrives; } }
 
         private List<ManagementObject> managementObjectDrives = new List<ManagementObject>();
 
@@ -36,7 +36,7 @@ namespace GUIForDiskpart.main
         {
             string output = string.Empty;
 
-            foreach (PhysicalDrive physicalDrive in physicalDrives) 
+            foreach (DriveInfo physicalDrive in physicalDrives) 
             {
                 output += physicalDrive.GetOutputAsString();
             }
@@ -81,8 +81,17 @@ namespace GUIForDiskpart.main
                 UInt64 totalSpace = Convert.ToUInt64(drive.Properties["Size"].Value);
                 UInt32 partitionCount = Convert.ToUInt32(drive.Properties["Partitions"].Value);
 
-                PhysicalDrive physicalDrive = new PhysicalDrive(deviceId, physicalName,
-                    diskName, diskModel, status, mediaLoaded, totalSpace, partitionCount);
+                string interfaceType = Convert.ToString(drive.Properties["InterfaceType"].Value);
+                string mediaType = Convert.ToString(drive.Properties["MediaType"].Value);
+                UInt32 mediaSignature = Convert.ToUInt32(drive.Properties["Signature"].Value);
+                string mediaStatus = Convert.ToString(drive.Properties["Status"].Value);
+
+                string driveName = Convert.ToString(drive.Properties["Name"].Value); // C:
+                //bool driveCompressed = Convert.ToBoolean(drive.Properties["Compressed"].Value); --- FEATURE GESTRICHEN
+
+                DriveInfo physicalDrive = new DriveInfo(deviceId, physicalName,
+                    diskName, diskModel, status, mediaLoaded, totalSpace, partitionCount,
+                    interfaceType, mediaType, mediaSignature, mediaStatus);
 
                 var partitionQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_DiskDriveToDiskPartition", drive.Path.RelativePath);
                 var partitionQuery = new ManagementObjectSearcher(partitionQueryText);
@@ -105,9 +114,9 @@ namespace GUIForDiskpart.main
             physicalDrives = SortPhysicalDrivesByDeviceID(physicalDrives);
         }
 
-        private PartitionDrive RetrievePartitions(ManagementObject drive)
+        private PartitionInfo RetrievePartitions(ManagementObject drive)
         {
-            PartitionDrive newPartition = new PartitionDrive();
+            PartitionInfo newPartition = new PartitionInfo();
             
             newPartition.PartitionName = Convert.ToString(drive.Properties["Name"].Value);
             newPartition.Bootable = Convert.ToBoolean(drive.Properties["Bootable"].Value);
@@ -120,40 +129,33 @@ namespace GUIForDiskpart.main
             return newPartition;
         }
 
-        private LogicalDrive RetrieveLogicalDrives(ManagementObject logicalDrive)
+        private LogicalDriveInfo RetrieveLogicalDrives(ManagementObject logicalDrive)
         {
-            LogicalDrive newLogicalDrive = new LogicalDrive();
+            LogicalDriveInfo newLogicalDrive = new LogicalDriveInfo();
             
-            //newLogicalDrive.DiskInterface = Convert.ToString(logicalDrive.Properties["InterfaceType"].Value); // IDE
-            newLogicalDrive.MediaType = Convert.ToString(logicalDrive.Properties["MediaType"].Value); // Fixed hard disk media
-            //newLogicalDrive.MediaSignature = Convert.ToUInt32(logicalDrive.Properties["Signature"].Value); // int32
-            //newLogicalDrive.MediaStatus = Convert.ToString(logicalDrive.Properties["Status"].Value); // OK
-
-            //newLogicalDrive.DriveName = Convert.ToString(logicalDrive.Properties["Name"].Value); // C:
-            //newLogicalDrive.DriveId = Convert.ToString(logicalDrive.Properties["DeviceId"].Value); // C:
-            //newLogicalDrive.DriveCompressed = Convert.ToBoolean(logicalDrive.Properties["Compressed"].Value);
+            
             newLogicalDrive.DriveType = Convert.ToUInt32(logicalDrive.Properties["DriveType"].Value); // C: - 3
             newLogicalDrive.FileSystem = Convert.ToString(logicalDrive.Properties["FileSystem"].Value); // NTFS
             newLogicalDrive.FreeSpace = Convert.ToUInt64(logicalDrive.Properties["FreeSpace"].Value); // in bytes
             newLogicalDrive.TotalSpace = Convert.ToUInt64(logicalDrive.Properties["Size"].Value); // in bytes
-            //newLogicalDrive.DriveMediaType = Convert.ToUInt32(logicalDrive.Properties["MediaType"].Value); // c: 12
             newLogicalDrive.VolumeName = Convert.ToString(logicalDrive.Properties["VolumeName"].Value); // System
             newLogicalDrive.VolumeSerial = Convert.ToString(logicalDrive.Properties["VolumeSerialNumber"].Value); // 12345678
-            
+            newLogicalDrive.DriveLetter = Convert.ToString(logicalDrive.Properties["Name"].Value);
+
             newLogicalDrive.PrintToConsole();
 
             return newLogicalDrive;
         }
 
-        private List<LogicalDrive> SortLogicalDrivesByDriveNumber(List<LogicalDrive> list)
+        private List<LogicalDriveInfo> SortLogicalDrivesByDriveNumber(List<LogicalDriveInfo> list)
         {
-            List<LogicalDrive> sortedList = list.OrderBy(o=>o.DriveId).ToList();
+            List<LogicalDriveInfo> sortedList = list.OrderBy(o=>o.VolumeName).ToList();
             return sortedList;
         }
 
-        private List<PhysicalDrive> SortPhysicalDrivesByDeviceID(List<PhysicalDrive> list)
+        private List<DriveInfo> SortPhysicalDrivesByDeviceID(List<DriveInfo> list)
         {
-            List<PhysicalDrive> sortedList = list.OrderBy(o => o.DriveNumber).ToList();
+            List<DriveInfo> sortedList = list.OrderBy(o => o.DriveNumber).ToList();
             return sortedList;
         }
     }

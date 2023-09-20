@@ -10,6 +10,7 @@
     <Grid x:Name="MainGrid" Background="#FF3E3E3E">
         <Grid.RowDefinitions>
             <RowDefinition/>
+            
             <RowDefinition/>
             <RowDefinition/>
 
@@ -20,7 +21,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBox x:Name="ConsoleReturn" TextWrapping="Wrap" FontFamily="Consolas" AllowDrop="False" Background="#FF252525" IsUndoEnabled="False" Foreground="#FF009409" VerticalScrollBarVisibility="Auto" TextChanged="ConsoleReturn_TextChanged" Grid.IsSharedSizeScope="True" IsReadOnly="True" Grid.Row="2" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="ConsoleReturn" TextWrapping="Wrap" FontFamily="Consolas" AllowDrop="False" Background="#FF252525" IsUndoEnabled="False" Foreground="#FF009409" VerticalScrollBarVisibility="Auto" TextChanged="ConsoleReturn_TextChanged" Grid.IsSharedSizeScope="True" IsReadOnly="True" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,-167"/>
         <Grid x:Name="ButtonGrid" Grid.Column="1" Margin="0,161,0,161" Grid.RowSpan="3">
 
             <Button x:Name="ListVolume" Content="List Volume" Margin="318,50,0,0" Click="ListVolume_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="107"/>

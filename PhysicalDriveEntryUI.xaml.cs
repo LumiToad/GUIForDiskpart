@@ -15,7 +15,7 @@ namespace GUIForDiskpart
         MainWindow mainWindow;
         DPFunctions dpFunctions;
 
-        PhysicalDrive physicalDrive;
+        DriveInfo physicalDrive;
 
         public int DriveNumber { get { return physicalDrive.DriveNumber; } }
 
@@ -32,7 +32,7 @@ namespace GUIForDiskpart
             dpFunctions = mainWindow.mainProgram.dpFunctions;
         }
 
-        public void AddPhysicalDriveData(PhysicalDrive physicalDrive)
+        public void AddPhysicalDriveData(DriveInfo physicalDrive)
         {
             this.physicalDrive = physicalDrive;
             DriveDataToThisUI();
