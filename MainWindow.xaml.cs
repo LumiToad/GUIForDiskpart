@@ -73,14 +73,14 @@ namespace GUIForDiskpart
 
         private void AddLogicalDrivesToStackPanel()
         {
-            someStackPanel.Children.Clear();
+            DriveStackPanel.Children.Clear();
 
             foreach (DriveInfo physicalDrive in mainProgram.driveRetriever.PhysicalDrives)
             {
                 PhysicalDriveEntryUI driveListEntry = new PhysicalDriveEntryUI();
-                driveListEntry.AddPhysicalDriveData(physicalDrive);
+                driveListEntry.AddDriveInfo(physicalDrive);
 
-                someStackPanel.Children.Add(driveListEntry);
+                DriveStackPanel.Children.Add(driveListEntry);
             }
         }
     }

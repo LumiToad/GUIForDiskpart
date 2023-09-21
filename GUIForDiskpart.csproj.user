@@ -7,11 +7,23 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="FormatWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="PartitionDriveEntryUI.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="PhysicalDriveEntryUI.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="FormatWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PartitionDriveEntryUI.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="PhysicalDriveEntryUI.xaml">
       <SubType>Designer</SubType>
     </Page>

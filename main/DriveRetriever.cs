@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
@@ -69,7 +70,6 @@ namespace GUIForDiskpart.main
 
         private void RetrieveDrivesToList()
         {
-
             foreach (ManagementObject drive in managementObjectDrives)
             {
                 string deviceId = Convert.ToString(drive.Properties["DeviceId"].Value);
@@ -80,14 +80,11 @@ namespace GUIForDiskpart.main
                 bool mediaLoaded = Convert.ToBoolean(drive.Properties["MediaLoaded"].Value);
                 UInt64 totalSpace = Convert.ToUInt64(drive.Properties["Size"].Value);
                 UInt32 partitionCount = Convert.ToUInt32(drive.Properties["Partitions"].Value);
-
                 string interfaceType = Convert.ToString(drive.Properties["InterfaceType"].Value);
                 string mediaType = Convert.ToString(drive.Properties["MediaType"].Value);
                 UInt32 mediaSignature = Convert.ToUInt32(drive.Properties["Signature"].Value);
                 string mediaStatus = Convert.ToString(drive.Properties["Status"].Value);
-
-                string driveName = Convert.ToString(drive.Properties["Name"].Value); // C:
-                //bool driveCompressed = Convert.ToBoolean(drive.Properties["Compressed"].Value); --- FEATURE GESTRICHEN
+                string driveName = Convert.ToString(drive.Properties["Name"].Value); 
 
                 DriveInfo physicalDrive = new DriveInfo(deviceId, physicalName,
                     diskName, diskModel, status, mediaLoaded, totalSpace, partitionCount,
@@ -99,13 +96,6 @@ namespace GUIForDiskpart.main
                 foreach (ManagementObject partition in partitionQuery.Get())
                 {
                     physicalDrive.AddPartitionDriveToList(RetrievePartitions(partition));
-
-                    var logicalDriveQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_LogicalDiskToPartition", partition.Path.RelativePath);
-                    var logicalDriveQuery = new ManagementObjectSearcher(logicalDriveQueryText);
-                    foreach (ManagementObject logicalDrive in logicalDriveQuery.Get())
-                    {
-                        physicalDrive.AddLogicalDriveToList(RetrieveLogicalDrives(logicalDrive));
-                    }
                 }
                 
                 physicalDrives.Add(physicalDrive);
@@ -114,25 +104,31 @@ namespace GUIForDiskpart.main
             physicalDrives = SortPhysicalDrivesByDeviceID(physicalDrives);
         }
 
-        private PartitionInfo RetrievePartitions(ManagementObject drive)
+        private PartitionInfo RetrievePartitions(ManagementObject partition)
         {
             PartitionInfo newPartition = new PartitionInfo();
             
-            newPartition.PartitionName = Convert.ToString(drive.Properties["Name"].Value);
-            newPartition.Bootable = Convert.ToBoolean(drive.Properties["Bootable"].Value);
-            newPartition.BootPartition = Convert.ToBoolean(drive.Properties["BootPartition"].Value);
-            newPartition.PrimaryPartition = Convert.ToBoolean(drive.Properties["PrimaryPartition"].Value);
-            newPartition.Size = Convert.ToUInt64(drive.Properties["Size"].Value);
-            newPartition.Status = Convert.ToString(drive.Properties["Status"].Value);
-            newPartition.Type = Convert.ToString(drive.Properties["Type"].Value);
-            
+            newPartition.PartitionName = Convert.ToString(partition.Properties["Name"].Value);
+            newPartition.Bootable = Convert.ToBoolean(partition.Properties["Bootable"].Value);
+            newPartition.BootPartition = Convert.ToBoolean(partition.Properties["BootPartition"].Value);
+            newPartition.PrimaryPartition = Convert.ToBoolean(partition.Properties["PrimaryPartition"].Value);
+            newPartition.Size = Convert.ToUInt64(partition.Properties["Size"].Value);
+            newPartition.Status = Convert.ToString(partition.Properties["Status"].Value);
+            newPartition.Type = Convert.ToString(partition.Properties["Type"].Value);
+
+            var logicalDriveQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_LogicalDiskToPartition", partition.Path.RelativePath);
+            var logicalDriveQuery = new ManagementObjectSearcher(logicalDriveQueryText);
+            foreach (ManagementObject logicalDrive in logicalDriveQuery.Get())
+            {
+                newPartition.AddLogicalDrive(RetrieveLogicalDrives(logicalDrive));
+            }
+
             return newPartition;
         }
 
         private LogicalDriveInfo RetrieveLogicalDrives(ManagementObject logicalDrive)
         {
             LogicalDriveInfo newLogicalDrive = new LogicalDriveInfo();
-            
             
             newLogicalDrive.DriveType = Convert.ToUInt32(logicalDrive.Properties["DriveType"].Value); // C: - 3
             newLogicalDrive.FileSystem = Convert.ToString(logicalDrive.Properties["FileSystem"].Value); // NTFS
@@ -145,12 +141,6 @@ namespace GUIForDiskpart.main
             newLogicalDrive.PrintToConsole();
 
             return newLogicalDrive;
-        }
-
-        private List<LogicalDriveInfo> SortLogicalDrivesByDriveNumber(List<LogicalDriveInfo> list)
-        {
-            List<LogicalDriveInfo> sortedList = list.OrderBy(o=>o.VolumeName).ToList();
-            return sortedList;
         }
 
         private List<DriveInfo> SortPhysicalDrivesByDeviceID(List<DriveInfo> list)

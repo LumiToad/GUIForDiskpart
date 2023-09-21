@@ -45,3 +45,8 @@ E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\GUI
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\GUIForDiskpart.csproj.CopyComplete
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\PhysicalDriveEntryUI.g.cs
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\PhysicalDriveEntryUI.baml
+E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\PartitionDriveEntryUI.g.cs
+E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\PartitionDriveEntryUI.baml
+E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\GeneratedInternalTypeHelper.g.cs
+E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\FormatWindow.g.cs
+E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\FormatWindow.baml

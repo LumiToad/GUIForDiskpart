@@ -26,6 +26,9 @@ namespace GUIForDiskpart.main
         public string type;
         public string Type { get; set; }
 
+        public LogicalDriveInfo logicalDriveInfo;
+        public LogicalDriveInfo LogicalDriveInfo { get { return logicalDriveInfo; } }
+
         public void PrintToConsole()
         {
             Console.WriteLine("PartitionName: {0}", PartitionName);
@@ -48,9 +51,23 @@ namespace GUIForDiskpart.main
             output += "\tTotalSize: " + Size + "\n";
             output += "\tMediaStatus: " + Status + "\n";
             output += "\tMediaType: " + Type + "\n";
-            output += "\t_________________" + "\n";
 
+            if (logicalDriveInfo != null) 
+            { 
+                output += logicalDriveInfo.GetOutputAsString();
+            }
+
+            output += "\t_________________" + "\n";
+            
             return output;
         }
+
+        public void AddLogicalDrive(LogicalDriveInfo drive)
+        {
+            logicalDriveInfo = drive;
+        }
+
+        public bool IsLogicalPartition()
+        {  return logicalDriveInfo != null; }
     }
 }

@@ -50,10 +50,9 @@ namespace GUIForDiskpart.main
 
         private string mediaType;
         public string MediaType { get { return mediaType; } }
-
-        private List<LogicalDriveInfo> logicalDrives = new List<LogicalDriveInfo>();
         
         private List<PartitionInfo> partitionDrives = new List<PartitionInfo>();
+        public List<PartitionInfo> PartitionInfos { get { return partitionDrives; } }
 
         public DriveInfo() 
         { }
@@ -118,23 +117,12 @@ namespace GUIForDiskpart.main
             {
                 output += partitionInfo.GetOutputAsString();
             }
-
-            foreach (LogicalDriveInfo logicalDrive in logicalDrives) 
-            {
-                output += logicalDrive.GetOutputAsString();
-            }
-
             return output;
         }
 
         public int ParseDriveNumber(string name)
         {
             return int.Parse(name.Substring(name.Length - 1));
-        }
-
-        public void AddLogicalDriveToList(LogicalDriveInfo drive)
-        {
-            logicalDrives.Add(drive);
         }
 
         public void AddPartitionDriveToList(PartitionInfo drive)

@@ -30,6 +30,7 @@ namespace GUIForDiskpart.main
             Console.WriteLine("Name: {0}", DriveLetter);
             Console.WriteLine("DriveType: {0}", DriveType);
             Console.WriteLine("FileSystem: {0}", FileSystem);
+            Console.WriteLine("TotalSpace: {0}", TotalSpace);
             Console.WriteLine("FreeSpace: {0}", FreeSpace);
             Console.WriteLine("VolumeName: {0}", VolumeName);
             Console.WriteLine("VolumeSerial: {0}", VolumeSerial);
@@ -39,14 +40,13 @@ namespace GUIForDiskpart.main
         public string GetOutputAsString()
         {
             string output = string.Empty;
-            output += "TEST";
-            output += "\tDriveType: " + DriveType + "\n";
-            output += "\tFileSystem: " + FileSystem + "\n";
-            output += "\tFreeSpace: " + FreeSpace + "\n";
-            output += "\tVolumeName: " + VolumeName + "\n";
-            output += "\tVolumeSerial: " + VolumeSerial + "\n";
-            output += "\tDriveLetter: " + DriveLetter + "\\" + "\n";
-            output += "_________________" + "\n";
+            output += "\t\tVolumeName: " + VolumeName + "\n";
+            output += "\t\tDriveLetter: " + DriveLetter + "\\" + "\n";
+            output += "\t\tFileSystem: " + FileSystem + "\n";
+            output += "\t\tTotalSpace: " + TotalSpace + "\n";
+            output += "\t\tFreeSpace: " + FreeSpace + "\n";
+            output += "\t\tDriveType: " + DriveType + "\n";
+            output += "\t\tVolumeSerial: " + VolumeSerial + "\n";
 
             return output;
         }
