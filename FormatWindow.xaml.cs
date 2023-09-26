@@ -11,14 +11,14 @@ namespace GUIForDiskpart
     /// <summary>
     /// Interaktionslogik für FormatWindow.xaml
     /// </summary>
-    public partial class FormatWindow : Window
+    public partial class FormatDriveWindow : Window
     {
         private MainWindow mainWindow;
         private MainProgram mainProgram;
 
         private DriveInfo driveInfo;
 
-        public FormatWindow(DriveInfo drive)
+        public FormatDriveWindow(DriveInfo drive)
         {
             InitializeComponent();
 
@@ -36,21 +36,24 @@ namespace GUIForDiskpart
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //if (FileSystemValue.SelectedItem.ToString() == "NTFS")
-            //{
-            //    CompressionValue.IsEnabled = true;
-            //}
-            //else
-            //{
-            //    CompressionValue.IsEnabled = false;
-            //}
+            if (CompressionValue == null) return;
+
+            if (SelectedFileSystemAsString() == "NTFS")
+            {
+                CompressionValue.IsEnabled = true;
+            }
+            else
+            {
+                CompressionValue.IsEnabled = false;
+                CompressionValue.IsChecked = false;
+            }
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             FileSystem fileSystem = FileSystem.NTFS;
 
-            switch (FileSystemValue.SelectedItem.ToString()) 
+            switch (SelectedFileSystemAsString()) 
             {
                 case ("NTFS"):
                     fileSystem = FileSystem.NTFS;                    
@@ -68,22 +71,18 @@ namespace GUIForDiskpart
 
             string output = string.Empty;
 
-            //cant use partition count, need to do it for each partition number individually
-
             if (DriveLetterValue.Text == "")
             {
-                output = mainProgram.comfortFunctions.FormatWholeDrive((int)driveInfo.DriveNumber, (int)driveInfo.PartitionInfos.Count + 1,
-                fileSystem, VolumeValue.Text, Convert.ToUInt64(SizeValue.Text), (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, true, false);
+                output = mainProgram.comfortFunctions.EasyDriveFormat(driveInfo, fileSystem, VolumeValue.Text,
+                    Convert.ToUInt64(SizeValue.Text), (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, true, false);
             }
             else
             {
                 char driveLetter = DriveLetterValue.Text.ToCharArray()[0];
 
-                output = mainProgram.comfortFunctions.FormatWholeDrive((int)driveInfo.DriveNumber, (int)driveInfo.PartitionInfos.Count + 1,
-                fileSystem, VolumeValue.Text, driveLetter, Convert.ToUInt64(SizeValue.Text), (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, true, false);
+                output = mainProgram.comfortFunctions.EasyDriveFormat(driveInfo, fileSystem, VolumeValue.Text,
+                    driveLetter, Convert.ToUInt64(SizeValue.Text), (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, true, false);
             }
-
-            
 
             mainWindow.AddTextToOutputConsole(output);
             
@@ -93,6 +92,11 @@ namespace GUIForDiskpart
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private string SelectedFileSystemAsString()
+        {
+            return (string)((ComboBoxItem)FileSystemValue.SelectedValue).Content;
         }
     }
 }

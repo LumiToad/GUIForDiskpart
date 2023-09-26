@@ -6,7 +6,7 @@ namespace GUIForDiskpart.main
     public class MainProgram
     {
         public DPFunctions dpFunctions;
-        public ComfortFunctions comfortFunctions;
+        public ComfortFeatures comfortFunctions;
         public DriveRetriever driveRetriever;
 
         public MainProgram() 
@@ -18,7 +18,7 @@ namespace GUIForDiskpart.main
         {
             dpFunctions = new DPFunctions();
             driveRetriever = new DriveRetriever();
-            comfortFunctions = new ComfortFunctions();
+            comfortFunctions = new ComfortFeatures();
             comfortFunctions.dpFunctions = dpFunctions;
         }
     }

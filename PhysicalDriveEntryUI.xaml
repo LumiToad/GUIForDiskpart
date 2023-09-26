@@ -7,10 +7,16 @@
              mc:Ignorable="d" MinWidth="400">
     <UserControl.ContextMenu>
         <ContextMenu>
-            <MenuItem Header="Detail" Click="Detail_Click"/>
-            <MenuItem Header="ChildrenCount" Click="ChildrenCount_Click"/>
+            <MenuItem Header="DISKPART - Detail" Click="Detail_Click"/>
+            <MenuItem Header="DISKPART - Clean" Click="Clean_Click"/>
+            <MenuItem Header="DISKPART - Convert" Click="Convert_Click"/>
+            <MenuItem Header="DISKPART - Create">
+                <MenuItem Header="Partition" Click="CreatePart_Click"/>
+                <MenuItem Header="Volume" Click="CreateVolume_Click"/>
+                <MenuItem Header="VDisk" Click="CreateVDisk_Click"/>
+            </MenuItem>
             <Separator />
-            <MenuItem Header="Format" Click="Format_Click"/>
+            <MenuItem Header="GUIFD - Format" Click="Format_Click"/>
         </ContextMenu>
 
     </UserControl.ContextMenu>

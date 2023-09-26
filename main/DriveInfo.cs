@@ -27,11 +27,14 @@ namespace GUIForDiskpart.main
         public UInt64 totalSpace;
         public UInt64 TotalSpace { get { return totalSpace; } }
 
+        public UInt64 unpartSpace;
+        public UInt64 UnpartSpace { get; set; }
+
         public UInt32 partitionCount;
         public UInt32 PartitionCount { get { return partitionCount; } }
 
-        public int driveNumber;
-        public int DriveNumber { get { return driveNumber; } }
+        public int driveIndex;
+        public int DriveIndex { get { return driveIndex; } }
 
         private string interfaceType;
         public string InterfaceType { get { return interfaceType; } }
@@ -52,7 +55,7 @@ namespace GUIForDiskpart.main
         public string MediaType { get { return mediaType; } }
         
         private List<PartitionInfo> partitionDrives = new List<PartitionInfo>();
-        public List<PartitionInfo> PartitionInfos { get { return partitionDrives; } }
+        public List<PartitionInfo> PartitionDrives { get { return partitionDrives; } }
 
         public DriveInfo() 
         { }
@@ -70,7 +73,7 @@ namespace GUIForDiskpart.main
             this.mediaLoaded = mediaLoaded;
             this.totalSpace = totalSpace;
             this.partitionCount = partitionsCount;
-            this.driveNumber = ParseDriveNumber(physicalName);
+            this.driveIndex = ParseDriveNumber(PhysicalName);
             this.interfaceType = interfaceType;
             this.mediaType = mediaType;
             this.mediaSignature = mediaSignature;
@@ -80,7 +83,7 @@ namespace GUIForDiskpart.main
         public void PrintToConsole()
         {
             Console.WriteLine("PhysicalName: {0}", PhysicalName);
-            Console.WriteLine("DriveNumber: {0}", DriveNumber);
+            Console.WriteLine("DriveNumber: {0}", DriveIndex);
             Console.WriteLine("DiskName: {0}", DiskName);
             Console.WriteLine("DiskModel: {0}", DiskModel);
             Console.WriteLine("MediaLoaded: {0}", MediaLoaded);
@@ -99,12 +102,13 @@ namespace GUIForDiskpart.main
         {
             string output = string.Empty;
             output += "PhysicalName: " + PhysicalName + "\n";
-            output += "DriveNumber: " + DriveNumber + "\n";
+            output += "DriveNumber: " + DriveIndex + "\n";
             output += "DiskName: " + DiskName + "\n";
             output += "DiskModel: " + DiskModel + "\n";
             output += "MediaLoaded: " + MediaLoaded + "\n";
             output += "MediaStatus: " + MediaStatus + "\n";
             output += "TotalSpace: " + TotalSpace + "\n";
+            output += "UnpartSpace: " + UnpartSpace + "\n";
             output += "InterfaceType: " + InterfaceType + "\n";
             output += "MediaType: " + MediaType + "\n";
             output += "MediaSignature: " + MediaSignature + "\n";
@@ -120,14 +124,40 @@ namespace GUIForDiskpart.main
             return output;
         }
 
-        public int ParseDriveNumber(string name)
-        {
-            return int.Parse(name.Substring(name.Length - 1));
-        }
-
         public void AddPartitionDriveToList(PartitionInfo drive)
         {
             partitionDrives.Add(drive);
+        }
+
+        public int ParseDriveNumber(string name)
+        {
+            int spacerIndex = 0;
+
+            for (int i = name.Length - 1; i != 0; i--)
+            {
+                bool isNumber = int.TryParse(name[i].ToString(), out int result);
+
+                if (!isNumber)
+                {
+                    spacerIndex = i +1;
+                    break;
+                }
+            }
+
+            return int.Parse(name.Substring(spacerIndex));
+        }
+
+        public UInt64 CalcUnpartSpace(UInt64 space)
+        {
+            UInt64 result = space;
+
+            foreach (PartitionInfo partitionInfo in partitionDrives)
+            {
+                Console.WriteLine(partitionInfo.Size);
+                result -= partitionInfo.Size;
+            }
+
+            return result;
         }
     }
 }

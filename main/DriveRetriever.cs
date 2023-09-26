@@ -97,7 +97,9 @@ namespace GUIForDiskpart.main
                 {
                     physicalDrive.AddPartitionDriveToList(RetrievePartitions(partition));
                 }
-                
+
+                physicalDrive.UnpartSpace = physicalDrive.CalcUnpartSpace(physicalDrive.TotalSpace);
+
                 physicalDrives.Add(physicalDrive);
             }
 
@@ -115,6 +117,7 @@ namespace GUIForDiskpart.main
             newPartition.Size = Convert.ToUInt64(partition.Properties["Size"].Value);
             newPartition.Status = Convert.ToString(partition.Properties["Status"].Value);
             newPartition.Type = Convert.ToString(partition.Properties["Type"].Value);
+            newPartition.PartitionIndex = (int)Convert.ToUInt32(partition.Properties["Index"].Value);
 
             var logicalDriveQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_LogicalDiskToPartition", partition.Path.RelativePath);
             var logicalDriveQuery = new ManagementObjectSearcher(logicalDriveQueryText);
@@ -145,7 +148,7 @@ namespace GUIForDiskpart.main
 
         private List<DriveInfo> SortPhysicalDrivesByDeviceID(List<DriveInfo> list)
         {
-            List<DriveInfo> sortedList = list.OrderBy(o => o.DriveNumber).ToList();
+            List<DriveInfo> sortedList = list.OrderBy(o => o.DriveIndex).ToList();
             return sortedList;
         }
     }

@@ -17,7 +17,7 @@ namespace GUIForDiskpart
 
         DriveInfo driveInfo;
 
-        public int DriveNumber { get { return driveInfo.DriveNumber; } }
+        public int DriveNumber { get { return driveInfo.DriveIndex; } }
 
         public PhysicalDriveEntryUI()
         {
@@ -40,7 +40,7 @@ namespace GUIForDiskpart
 
         private void DriveDataToThisUI()
         {
-            DriveNumberValueLabel.Content = driveInfo.DriveNumber.ToString();
+            DriveNumberValueLabel.Content = driveInfo.DriveIndex.ToString();
             DiskNameValueLabel.Content = driveInfo.DiskName;
 
             ByteFormatter byteFormatter = new ByteFormatter();
@@ -49,22 +49,47 @@ namespace GUIForDiskpart
             StatusValueLabel.Content = driveInfo.MediaStatus;
             PartitionsValueLabel.Content = driveInfo.PartitionCount;
 
-            foreach (PartitionInfo partitionInfo in driveInfo.PartitionInfos)
+            foreach (PartitionInfo partitionInfo in driveInfo.PartitionDrives)
             {
                 PartitionDriveEntryUI partitionDriveEntryUI = new PartitionDriveEntryUI();
-                partitionDriveEntryUI.AddPartitionInfo(partitionInfo);
+                partitionDriveEntryUI.AddPartitionInfo(partitionInfo, driveInfo.DriveIndex);
                 PartitionStackPanel.Children.Add(partitionDriveEntryUI);
             }
         }
 
         private void Detail_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.AddTextToOutputConsole(dpFunctions.Detail(DPListType.DISK, driveInfo.DriveNumber));
+            mainWindow.AddTextToOutputConsole(dpFunctions.Detail(DPListType.DISK, driveInfo.DriveIndex));
+        }
+
+        private void Clean_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Convert_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CreatePart_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CreateVolume_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CreateVDisk_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void Format_Click(object sender, RoutedEventArgs e)
         {
-            FormatWindow formatWindow = new FormatWindow(driveInfo);
+            FormatDriveWindow formatWindow = new FormatDriveWindow(driveInfo);
 
             formatWindow.Show();
         }

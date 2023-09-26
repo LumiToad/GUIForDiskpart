@@ -5,6 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUIForDiskpart"
              mc:Ignorable="d" MinWidth="100">
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="DISKPART - Detail" Click="Detail_Click"/>
+            <MenuItem Header="DISKPART - Format" Click="Format_Click"/>
+            <MenuItem Header="DISKPART - Delete" Click="Delete_Click"/>
+            <MenuItem Header="DISKPART - Assign" Click="Assign_Click"/>
+            <Separator />
+        </ContextMenu>
+
+    </UserControl.ContextMenu>
     <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
             <RowDefinition Height="12"/>

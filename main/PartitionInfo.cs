@@ -6,7 +6,18 @@ namespace GUIForDiskpart.main
     public class PartitionInfo
     {
         public string partitionName;
-        public string PartitionName { get; set; }
+        public string PartitionName 
+        { 
+            get {  return partitionName; }
+            set 
+            {
+                partitionName = value;
+                PartitionIndex = ParsePartitionNumber(partitionName);
+            } 
+        }
+
+        public int partitionIndex;
+        public int PartitionIndex { get; set; }
 
         public bool bootable;
         public bool Bootable { get; set; }
@@ -69,5 +80,21 @@ namespace GUIForDiskpart.main
 
         public bool IsLogicalPartition()
         {  return logicalDriveInfo != null; }
+
+        public int ParsePartitionNumber(string name)
+        {
+            int spacerIndex = 0;
+
+            for (int i = name.Length -1; i != 0; i-- )
+            {
+                if (name[i] == ' ')
+                {
+                    spacerIndex = i;
+                    break;
+                }
+            }
+
+            return int.Parse(name.Substring(spacerIndex));
+        }
     }
 }

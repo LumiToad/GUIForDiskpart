@@ -35,7 +35,7 @@ namespace GUIForDiskpart.diskpart
 
             string output = commandExecuter.IssueCommand(ProcessType.diskpart, command);
             output = RemoveDPInfo(output);
-
+            
             return output;
         }
 
@@ -50,6 +50,8 @@ namespace GUIForDiskpart.diskpart
             output = RemoveDPInfo(output);
 
             return output;
+
+            //FAIL: Hier muss es auch verschiedene Funktionen geben, weil immer erst das drive gewählt werden muss
         }
 
         private string RemoveDPInfo(string info)
@@ -179,13 +181,23 @@ namespace GUIForDiskpart.diskpart
             return output;
         }
 
-        public string Delete(int diskIndex, int partitionIndex)
+        public string Delete(int diskIndex, int partitionIndex, bool isNoErr, bool isOverride)
         {
             string[] commands = new string[3];
 
             commands[0] = "Select " + DPListType.DISK.ToString() + " " + diskIndex.ToString();
             commands[1] = "Select " + DPListType.PARTITION.ToString() + " " + partitionIndex.ToString();
-            commands[2] = "Delete " + "PART";
+            commands[2] = "Delete " + "PART ";
+
+            if (isNoErr)
+            {
+                commands[2] += "NOERR ";
+            }
+
+            if (isOverride)
+            {
+                commands[2] += "OVERRIDE ";
+            }
 
             string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
             output = RemoveDPInfo(output);
@@ -224,6 +236,37 @@ namespace GUIForDiskpart.diskpart
             {
                 commands[2] += "NOERR ";
             }
+
+            string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
+            output = RemoveDPInfo(output);
+
+            return output;
+        }
+
+        public string Clean(int diskIndex, bool isCleanAll)
+        {
+            string[] commands = new string[2];
+
+            commands[0] = "Select " + DPListType.DISK.ToString() + " " + diskIndex.ToString();
+            commands[1] = "Clean ";
+
+            if (isCleanAll)
+            {
+                commands[1] += "ALL";
+            }
+
+            string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
+            output = RemoveDPInfo(output);
+
+            return output;
+        }
+
+        public string Convert(int diskIndex, ConvertOptions options)
+        {
+            string[] commands = new string[2];
+
+            commands[0] = "Select " + DPListType.DISK.ToString() + " " + diskIndex.ToString();
+            commands[1] = "Convert " + options.ToString();
 
             string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
             output = RemoveDPInfo(output);
