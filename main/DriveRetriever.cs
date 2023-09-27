@@ -95,7 +95,7 @@ namespace GUIForDiskpart.main
 
                 foreach (ManagementObject partition in partitionQuery.Get())
                 {
-                    physicalDrive.AddPartitionDriveToList(RetrievePartitions(partition));
+                    physicalDrive.AddPartitionDriveToList(RetrievePartitions(partition, physicalDrive.DriveIndex));
                 }
 
                 physicalDrive.UnpartSpace = physicalDrive.CalcUnpartSpace(physicalDrive.TotalSpace);
@@ -106,7 +106,7 @@ namespace GUIForDiskpart.main
             physicalDrives = SortPhysicalDrivesByDeviceID(physicalDrives);
         }
 
-        private PartitionInfo RetrievePartitions(ManagementObject partition)
+        private PartitionInfo RetrievePartitions(ManagementObject partition, int driveIndex)
         {
             PartitionInfo newPartition = new PartitionInfo();
             
@@ -118,6 +118,7 @@ namespace GUIForDiskpart.main
             newPartition.Status = Convert.ToString(partition.Properties["Status"].Value);
             newPartition.Type = Convert.ToString(partition.Properties["Type"].Value);
             newPartition.PartitionIndex = (int)Convert.ToUInt32(partition.Properties["Index"].Value);
+            newPartition.DriveIndex = driveIndex;
 
             var logicalDriveQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_LogicalDiskToPartition", partition.Path.RelativePath);
             var logicalDriveQuery = new ManagementObjectSearcher(logicalDriveQueryText);

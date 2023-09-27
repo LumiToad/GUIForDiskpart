@@ -1,8 +1,8 @@
 ﻿using GUIForDiskpart.diskpart;
 using GUIForDiskpart.main;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace GUIForDiskpart
 {
@@ -15,7 +15,16 @@ namespace GUIForDiskpart
         DPFunctions dpFunctions;
 
         PartitionInfo partitionInfo;
-        int driveIndex = 0;
+
+        private const string partitionBorder = "#FF00C4B4";
+        private const string partitionBackground = "#FFBBBBBB";
+
+        private const string logicalBorder = "#FF0A70C5";
+        private const string logicalBackground = "#FFBBBBBB";
+
+        private const string freeSpaceBorder = "#FFE3E3E3";
+        private const string freeSpaceBackground = "#FFBBBBBB";
+
 
         public PartitionDriveEntryUI()
         {
@@ -30,10 +39,9 @@ namespace GUIForDiskpart
             dpFunctions = mainWindow.mainProgram.dpFunctions;
         }
 
-        public void AddPartitionInfo(PartitionInfo partitionInfo, int driveIndex)
+        public void AddPartitionInfo(PartitionInfo partitionInfo)
         {
             this.partitionInfo = partitionInfo;
-            this.driveIndex = driveIndex;
             PartitionDataToThisUI();
         }
 
@@ -49,12 +57,29 @@ namespace GUIForDiskpart
                 VolumeNameValue.Text = partitionInfo.LogicalDriveInfo.VolumeName;
                 DriveLetterValue.Text = partitionInfo.LogicalDriveInfo.FileSystem;
                 FreeSpaceValue.Text = partitionInfo.LogicalDriveInfo.FreeSpace.ToString();
+                ChangeUIColor(logicalBorder, logicalBackground);
             }
+            else
+            {
+                VolumeNameValue.Text = "";
+                DriveLetterValue.Text = "";
+                FreeSpaceValue.Text = "";
+                ChangeUIColor(partitionBorder, partitionBackground);
+            }
+        }
+
+        private void ChangeUIColor(string border, string background)
+        {
+            var borderBrushColor = new BrushConverter();
+            UserControl.BorderBrush = (Brush)borderBrushColor.ConvertFrom(border);
+
+            var backgroundBrushColor = new BrushConverter();
+            MainGrid.Background = (Brush)backgroundBrushColor.ConvertFrom(background);
         }
 
         private void Detail_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.AddTextToOutputConsole(dpFunctions.Detail(DPListType.PARTITION, driveIndex));
+            mainWindow.AddTextToOutputConsole(dpFunctions.DetailPart(partitionInfo.DriveIndex, partitionInfo.PartitionIndex));
         }
 
         private void Format_Click(object sender, RoutedEventArgs e)

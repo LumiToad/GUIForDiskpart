@@ -6,32 +6,20 @@
         xmlns:local="clr-namespace:GUIForDiskpart"
         mc:Ignorable="d"
         
-        Title="MainWindow" Height="500" Width="850" ResizeMode="CanResize" MinHeight="450" MinWidth="800">
-    <Grid x:Name="MainGrid" Background="#FF3E3E3E">
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-
-            <RowDefinition/>
-            <RowDefinition/>
-
-        </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-
-        <TextBox x:Name="ConsoleReturn" TextWrapping="Wrap" FontFamily="Consolas" AllowDrop="False" Background="#FF252525" IsUndoEnabled="False" Foreground="#FF009409" VerticalScrollBarVisibility="Auto" TextChanged="ConsoleReturn_TextChanged" Grid.IsSharedSizeScope="True" IsReadOnly="True" Grid.Row="2" Grid.ColumnSpan="2"/>
-        <Grid x:Name="ButtonGrid" Grid.Column="1" Margin="0,161,0,161" Grid.RowSpan="3">
-
-            <Button x:Name="ListVolume" Content="List Volume" Margin="318,50,0,0" Click="ListVolume_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="107"/>
-
-            <Button x:Name="ListDisk" Content="List Disk" HorizontalAlignment="Left" Margin="351,0,0,0" VerticalAlignment="Top" Click="ListDisk_Click" Height="22" Width="72"/>
-            <Button x:Name="ListPart" Content="List Part" HorizontalAlignment="Left" Margin="351,82,0,0" VerticalAlignment="Top" Click="ListPart_Click" Width="74"/>
-            <Button x:Name="ListVdisk" Content="List Vdisk" HorizontalAlignment="Left" Margin="351,107,0,0" VerticalAlignment="Top" Click="ListVdisk_Click" Width="74"/>
-            <Button x:Name="RetrieveDriveData" Content="Retrieve Drive Data" HorizontalAlignment="Left" VerticalAlignment="Top" Click="RetrieveDriveData_Click" Height="22"/>
-        </Grid>
-        <StackPanel x:Name="DriveStackPanel" CanVerticallyScroll="True" Grid.RowSpan="3" Margin="0,0,0,161"/>
+        Title="MainWindow" WindowState="Maximized" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow">
+    <Grid x:Name="MainGrid" Background="#FF3E3E3E" MinWidth="1024" MinHeight="768">
+        <StackPanel Margin="745,0,0,0" Grid.Column="1" HorizontalAlignment="Right" Width="100">
+            <Button x:Name="ListVolume" Content="List Volume" Click="ListVolume_Click"/>
+            <Button x:Name="ListDisk" Content="List Disk" Click="ListDisk_Click" Height="22"/>
+            <Button x:Name="ListPart" Content="List Part" Click="ListPart_Click"/>
+            <Button x:Name="ListVdisk" Content="List Vdisk" Click="ListVdisk_Click"/>
+            <Button x:Name="RetrieveDriveData" Content="Retrieve Drive Data" Click="RetrieveDriveData_Click" Height="22" Width="NaN"/>
+            <StackPanel Height="221"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Left">
+            <StackPanel x:Name="DriveStackPanel" CanVerticallyScroll="True" Width="NaN"/>
+            <TextBox x:Name="ConsoleReturn" TextWrapping="Wrap" FontFamily="Consolas" AllowDrop="False" Background="#FF252525" IsUndoEnabled="False" Foreground="#FF009409" VerticalScrollBarVisibility="Visible" TextChanged="ConsoleReturn_TextChanged" Grid.IsSharedSizeScope="True" IsReadOnly="True" Height="294" MinWidth="800"/>
+        </StackPanel>
 
     </Grid>
 

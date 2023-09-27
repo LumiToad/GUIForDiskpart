@@ -39,19 +39,31 @@ namespace GUIForDiskpart.diskpart
             return output;
         }
 
-        public string Detail(DPListType type, int selection) 
+        public string DetailDisk(int diskIndex) 
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + type.ToString() + " " + selection.ToString();
-            commands[1] = "Detail " + type.ToString();
+            commands[0] = "Select " + "DISK " + diskIndex.ToString();
+            commands[1] = "Detail " + "DISK ";
 
             string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
             output = RemoveDPInfo(output);
 
             return output;
+        }
 
-            //FAIL: Hier muss es auch verschiedene Funktionen geben, weil immer erst das drive gewählt werden muss
+        public string DetailPart(int diskIndex, int partIndex)
+        {
+            string[] commands = new string[3];
+
+            commands[0] = "Select " + "DISK " + diskIndex.ToString();
+            commands[1] = "Select " + "PART " + partIndex.ToString();
+            commands[2] = "Detail " + "PART ";
+
+            string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
+            output = RemoveDPInfo(output);
+
+            return output;
         }
 
         private string RemoveDPInfo(string info)

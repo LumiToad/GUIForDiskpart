@@ -52,14 +52,14 @@ namespace GUIForDiskpart
             foreach (PartitionInfo partitionInfo in driveInfo.PartitionDrives)
             {
                 PartitionDriveEntryUI partitionDriveEntryUI = new PartitionDriveEntryUI();
-                partitionDriveEntryUI.AddPartitionInfo(partitionInfo, driveInfo.DriveIndex);
+                partitionDriveEntryUI.AddPartitionInfo(partitionInfo);
                 PartitionStackPanel.Children.Add(partitionDriveEntryUI);
             }
         }
 
         private void Detail_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.AddTextToOutputConsole(dpFunctions.Detail(DPListType.DISK, driveInfo.DriveIndex));
+            mainWindow.AddTextToOutputConsole(dpFunctions.DetailDisk(driveInfo.DriveIndex));
         }
 
         private void Clean_Click(object sender, RoutedEventArgs e)

@@ -19,6 +19,9 @@ namespace GUIForDiskpart.main
         public int partitionIndex;
         public int PartitionIndex { get; set; }
 
+        private int driveIndex;
+        public int DriveIndex { get; set; }
+
         public bool bootable;
         public bool Bootable { get; set; }
 
