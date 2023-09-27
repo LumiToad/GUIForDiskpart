@@ -10,6 +10,9 @@
     <Compile Update="FormatWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="FreeSpaceEntryUI.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="PartitionDriveEntryUI.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -19,6 +22,9 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="FormatWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="FreeSpaceEntryUI.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="PartitionDriveEntryUI.xaml">

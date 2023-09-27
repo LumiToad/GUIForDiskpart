@@ -47,6 +47,7 @@ E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\Phy
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\PhysicalDriveEntryUI.baml
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\PartitionDriveEntryUI.g.cs
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\PartitionDriveEntryUI.baml
-E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\GeneratedInternalTypeHelper.g.cs
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\FormatWindow.g.cs
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\FormatWindow.baml
+E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\FreeSpaceEntryUI.g.cs
+E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\FreeSpaceEntryUI.baml

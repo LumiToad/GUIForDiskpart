@@ -39,7 +39,7 @@ namespace GUIForDiskpart {
     /// <summary>
     /// UserControl1
     /// </summary>
-    public partial class UserControl1 : System.Windows.Controls.UserControl, System.Windows.Markup.IComponentConnector {
+    public partial class FreeSpaceEntryUI : System.Windows.Controls.UserControl, System.Windows.Markup.IComponentConnector {
         
         private bool _contentLoaded;
         

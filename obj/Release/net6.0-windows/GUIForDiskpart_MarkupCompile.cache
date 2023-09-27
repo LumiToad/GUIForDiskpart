@@ -10,11 +10,11 @@ none
 false
 TRACE;RELEASE;NET;NET6_0;NETCOREAPP
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\App.xaml
-421033243
+52099550588
 
-20301078358
+211700461296
 195-1518373093
-FormatWindow.xaml;MainWindow.xaml;PartitionDriveEntryUI.xaml;PhysicalDriveEntryUI.xaml;
+FormatWindow.xaml;FreeSpaceEntryUI.xaml;MainWindow.xaml;PartitionDriveEntryUI.xaml;PhysicalDriveEntryUI.xaml;
 
 False
 

@@ -17,7 +17,7 @@ namespace GUIForDiskpart
 
         DriveInfo driveInfo;
 
-        public int DriveNumber { get { return driveInfo.DriveIndex; } }
+        public int DriveIndex { get { return driveInfo.DriveIndex; } }
 
         public PhysicalDriveEntryUI()
         {
@@ -54,6 +54,13 @@ namespace GUIForDiskpart
                 PartitionDriveEntryUI partitionDriveEntryUI = new PartitionDriveEntryUI();
                 partitionDriveEntryUI.AddPartitionInfo(partitionInfo);
                 PartitionStackPanel.Children.Add(partitionDriveEntryUI);
+            }
+
+            if (driveInfo.UnpartSpace > 0) 
+            {
+                Console.WriteLine(driveInfo.UnpartSpace.ToString());
+                FreeSpaceEntryUI freeSpaceEntryUI = new FreeSpaceEntryUI(driveInfo.UnpartSpace, driveInfo.DriveIndex);
+                PartitionStackPanel.Children.Add(freeSpaceEntryUI);
             }
         }
 
