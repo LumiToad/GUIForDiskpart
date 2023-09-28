@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "GUIForDiskpart/1.0.0": {
+      "GUIForDiskpart/1.0.4": {
         "dependencies": {
           "System.Management": "7.0.2"
         },
@@ -44,7 +44,7 @@
     }
   },
   "libraries": {
-    "GUIForDiskpart/1.0.0": {
+    "GUIForDiskpart/1.0.4": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

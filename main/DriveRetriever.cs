@@ -1,19 +1,32 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Management;
-using System.Windows.Documents;
-
+using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace GUIForDiskpart.main
 {
     public class DriveRetriever
     {
+        MainWindow mainWindow;
+
         private List<DriveInfo> physicalDrives = new List<DriveInfo>();
         public List<DriveInfo> PhysicalDrives { get { return physicalDrives; } }
 
         private List<ManagementObject> managementObjectDrives = new List<ManagementObject>();
+
+        Thread thread;
+
+        public void Initialize()
+        {
+            mainWindow = (MainWindow)Application.Current.MainWindow;
+            SetupDriveChangedWatcher();
+        }
 
         public void RetrieveDrives()
         {
@@ -44,18 +57,27 @@ namespace GUIForDiskpart.main
 
             return output;
         }
+        
         private void SetupDriveChangedWatcher()
         {
-            ManagementEventWatcher watcher = new ManagementEventWatcher();
-            WqlEventQuery query = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2");
-            //watcher.EventArrived += new EventArrivedEventHandler();
-            watcher.Query = query;
-            watcher.Start();
-            watcher.WaitForNextEvent();
+            try
+            {
+                WqlEventQuery query = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2 or EventType = 3");
+                ManagementEventWatcher watcher = new ManagementEventWatcher();
+                watcher.Query = query;
+                watcher.EventArrived += new EventArrivedEventHandler(OnDriveChanged);
+                watcher.Options.Timeout = TimeSpan.FromSeconds(3);
+                watcher.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-        private void OnDriveChanged()
+        
+        private void OnDriveChanged(object sender, EventArrivedEventArgs e)
         {
-
+            mainWindow.RetrieveAndShowDriveData();
         }
 
         private void RetrieveWMIObjectsToList()

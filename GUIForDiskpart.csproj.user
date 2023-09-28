@@ -7,33 +7,36 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="FormatWindow.xaml.cs">
+    <Compile Update="windows\AboutWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="FreeSpaceEntryUI.xaml.cs">
+    <Compile Update="windows\FormatWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="PartitionDriveEntryUI.xaml.cs">
+    <Compile Update="userControls\FreeSpaceEntryUI.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="PhysicalDriveEntryUI.xaml.cs">
+    <Compile Update="userControls\PartitionDriveEntryUI.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="userControls\PhysicalDriveEntryUI.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="FormatWindow.xaml">
+    <Page Update="windows\AboutWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="FreeSpaceEntryUI.xaml">
+    <Page Update="windows\FormatWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="PartitionDriveEntryUI.xaml">
+    <Page Update="userControls\FreeSpaceEntryUI.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="PhysicalDriveEntryUI.xaml">
+    <Page Update="userControls\PartitionDriveEntryUI.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MainWindow.xaml">
+    <Page Update="userControls\PhysicalDriveEntryUI.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

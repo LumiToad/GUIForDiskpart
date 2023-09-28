@@ -18,6 +18,7 @@ namespace GUIForDiskpart.main
         {
             dpFunctions = new DPFunctions();
             driveRetriever = new DriveRetriever();
+            driveRetriever.Initialize();
             comfortFunctions = new ComfortFeatures();
             comfortFunctions.dpFunctions = dpFunctions;
         }
