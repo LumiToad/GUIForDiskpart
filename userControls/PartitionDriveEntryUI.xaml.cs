@@ -1,5 +1,6 @@
 ﻿using GUIForDiskpart.diskpart;
 using GUIForDiskpart.main;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -17,13 +18,24 @@ namespace GUIForDiskpart
         PartitionInfo partitionInfo;
 
         private const string partitionBorder = "#FF00C4B4";
-        private const string partitionBackground = "#FFBBBBBB";
-
         private const string logicalBorder = "#FF0A70C5";
-        private const string logicalBackground = "#FFBBBBBB";
+        
+        private const string basicBackground = "#FFBBBBBB";
+        private const string selectBackground = "#FF308EBF";
 
-        private const string freeSpaceBorder = "#FFE3E3E3";
-        private const string freeSpaceBackground = "#FFBBBBBB";
+        private bool isSelected = false;
+        public bool IsSelected 
+        { 
+            get 
+            {
+                return isSelected; 
+            } 
+            
+            private set
+            {
+                isSelected = value;
+            }
+        }
 
 
         public PartitionDriveEntryUI()
@@ -48,33 +60,37 @@ namespace GUIForDiskpart
         public void PartitionDataToThisUI()
         {
             PartitionNameValue.Text = partitionInfo.PartitionName;
-            BootPartitionValue.Text = partitionInfo.BootPartition.ToString();
+            BootPartitionValue.IsChecked = partitionInfo.BootPartition;
             TotalSizeValue.Text = partitionInfo.Size.ToString();
             PartitionTableValue.Text = partitionInfo.Type;
 
             if (partitionInfo.IsLogicalPartition())
             {
                 VolumeNameValue.Text = partitionInfo.LogicalDriveInfo.VolumeName;
-                DriveLetterValue.Text = partitionInfo.LogicalDriveInfo.FileSystem;
+                DriveLetterValue.Text = partitionInfo.LogicalDriveInfo.DriveLetter;
                 FreeSpaceValue.Text = partitionInfo.LogicalDriveInfo.FreeSpace.ToString();
-                ChangeUIColor(logicalBorder, logicalBackground);
+                FileSystemValue.Text = partitionInfo.LogicalDriveInfo.FileSystem;
+                ChangeUIBorder(logicalBorder);
             }
             else
             {
                 VolumeNameValue.Text = "";
                 DriveLetterValue.Text = "";
                 FreeSpaceValue.Text = "";
-                ChangeUIColor(partitionBorder, partitionBackground);
+                ChangeUIBorder(partitionBorder);
             }
         }
 
-        private void ChangeUIColor(string border, string background)
+        private void ChangeUIBorder(string borderColorValue)
         {
             var borderBrushColor = new BrushConverter();
-            UserControl.BorderBrush = (Brush)borderBrushColor.ConvertFrom(border);
+            UserControl.BorderBrush = (Brush)borderBrushColor.ConvertFrom(borderColorValue);
+        }
 
+        private void ChangeBackgroundColor(string backgroundColorValue)
+        {
             var backgroundBrushColor = new BrushConverter();
-            MainGrid.Background = (Brush)backgroundBrushColor.ConvertFrom(background);
+            MainGrid.Background = (Brush)backgroundBrushColor.ConvertFrom(backgroundColorValue);
         }
 
         private void Detail_Click(object sender, RoutedEventArgs e)
@@ -89,12 +105,40 @@ namespace GUIForDiskpart
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
+            DPFunctions dPFunctions = new DPFunctions();
 
+            string output = string.Empty;
+
+            output += dpFunctions.Delete(partitionInfo.DriveIndex, partitionInfo.PartitionIndex, false, true);
+
+            mainWindow.AddTextToOutputConsole(output);
+            mainWindow.RetrieveAndShowDriveData(false);
         }
 
         private void Assign_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void UserControl_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Console.WriteLine(sender.ToString());
+
+            MarkAsSelected();
+        }
+
+        public void MarkAsSelected()
+        {            
+            IsSelected = !IsSelected;
+
+            if (IsSelected) 
+            {
+                ChangeBackgroundColor(selectBackground);
+            }
+            else
+            {
+                ChangeBackgroundColor(basicBackground);
+            }
         }
     }
 }

@@ -5,21 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUIForDiskpart"
         mc:Ignorable="d"
-        Title="Format selected drive" Height="263" Width="478" ResizeMode="NoResize">
+        Title="Format selected drive" Height="299" Width="530" ResizeMode="NoResize">
     <Grid x:Name="MainGrid" Background="#FF3E3E3E" Margin="0,0,0,-6">
         <TextBlock x:Name="DiskDetailValue" HorizontalAlignment="Left" Margin="21,23,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="197" Width="171" Foreground="#FF66CE51"/>
         <Border HorizontalAlignment="Left" Height="196" Margin="197,20,0,0" VerticalAlignment="Top" Width="264">
             <Grid>
                 <ComboBox x:Name="FileSystemValue" HorizontalAlignment="Left" Margin="143,2,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged">
                     <ComboBoxItem IsSelected="True" Content="NTFS"/>
-                    <ComboBoxItem Content="FAT"/>
-                    <ComboBoxItem Content="FAT16"/>
                     <ComboBoxItem Content="exFAT"/>
+                    <ComboBoxItem Content="FAT32"/>
                 </ComboBox>
                 <Label Content="File System: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <TextBox x:Name="VolumeValue" HorizontalAlignment="Left" Margin="143,30,0,0" TextWrapping="Wrap" Text="Volume" VerticalAlignment="Top" Width="120"/>
+                <TextBox x:Name="VolumeValue" HorizontalAlignment="Left" Margin="143,30,0,0" TextWrapping="Wrap" Text="Volume" VerticalAlignment="Top" Width="120" />
                 <Label Content="Volume Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,26,0,0"/>
-                <TextBox x:Name="SizeValue" HorizontalAlignment="Left" Margin="143,56,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120"/>
+                <TextBox x:Name="SizeValue" HorizontalAlignment="Left" Margin="143,56,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" TextChanged="SizeValue_TextChanged"/>
                 <Label Content="Size in MB:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,52,0,0"/>
                 <TextBox x:Name="DriveLetterValue" HorizontalAlignment="Left" Margin="143,83,0,0" TextWrapping="Wrap" Text="Z" VerticalAlignment="Top" Width="120" MaxLength="1"
                     CharacterCasing="Upper" AcceptsTab="False" AcceptsReturn="False" />
@@ -30,5 +29,6 @@
                 <Button x:Name="CancelButton" Content="Cancel" Margin="143,163,35,0" Click="CancelButton_Click"/>
             </Grid>
         </Border>
+        <Label x:Name="ErrorMessageValue" Content="" HorizontalAlignment="Left" Margin="201,221,0,0" VerticalAlignment="Top" Width="267" Foreground="Red"/>
     </Grid>
 </Window>

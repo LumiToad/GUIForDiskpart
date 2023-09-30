@@ -77,7 +77,7 @@ namespace GUIForDiskpart.main
         
         private void OnDriveChanged(object sender, EventArrivedEventArgs e)
         {
-            mainWindow.RetrieveAndShowDriveData();
+            mainWindow.RetrieveAndShowDriveData(false);
         }
 
         private void RetrieveWMIObjectsToList()

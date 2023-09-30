@@ -7,9 +7,9 @@
     <UseWPF>true</UseWPF>
     <ApplicationManifest>main\app.manifest</ApplicationManifest>
 	<Deterministic>false</Deterministic>
-	<Version>1.0.4</Version>
-	<AssemblyVersion>1.0.2309.4</AssemblyVersion>
-	<FileVersion>1.0.2309.4</FileVersion>
+	<Version>1.0.106</Version>
+	<AssemblyVersion>1.0.2309.106</AssemblyVersion>
+	<FileVersion>1.0.2309.106</FileVersion>
 	<Copyright>MIT License</Copyright>
   </PropertyGroup>
 

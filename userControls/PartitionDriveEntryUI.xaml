@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUIForDiskpart"
-             mc:Ignorable="d" MinWidth="100" Height="110" BorderThickness="2,2,2,2" Foreground="Black" BorderBrush="#FFE3E3E3">
+             mc:Ignorable="d" MinWidth="100" BorderThickness="6,6,6,6" Foreground="Black" BorderBrush="#FFE3E3E3" Margin="5,5,5,0" PreviewMouseDown="UserControl_PreviewMouseDown">
     <UserControl.ContextMenu>
         <ContextMenu>
             <MenuItem Header="DISKPART - Detail" Click="Detail_Click"/>
@@ -15,18 +15,18 @@
         </ContextMenu>
 
     </UserControl.ContextMenu>
-    <Grid x:Name="MainGrid" Background="#FFBBBBBB" Width="200" Height="161">
+    <Grid x:Name="MainGrid" Background="#FFBBBBBB" VerticalAlignment="Top">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="33*"/>
             <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="148*"/>
-            <RowDefinition Height="13*"/>
+            <RowDefinition Height="145*"/>
+
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Margin="0,0,10,0" Height="NaN" Grid.RowSpan="2" Grid.ColumnSpan="2">
-            <StackPanel Width="104">
-                <TextBlock x:Name="NameTextBlock" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="10">
+            <StackPanel Width="104" Margin="0,0,5,0">
+                <TextBlock x:Name="NameTextBlock" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -35,7 +35,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </TextBlock.RenderTransform><Run Language="de-de" Text="N"/><Run Text="ame:"/></TextBlock>
-                <TextBlock x:Name="BootPartitionTextBox" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="10">
+                <TextBlock x:Name="BootPartitionTextBox" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -43,8 +43,8 @@
                             <RotateTransform Angle="0.423"/>
                             <TranslateTransform/>
                         </TransformGroup>
-                    </TextBlock.RenderTransform><Run Language="de-de" Text="Is boot partition:"/></TextBlock>
-                <TextBlock x:Name="TotalSizeTextBox" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="10">
+                    </TextBlock.RenderTransform><Run Language="de-de" Text="B"/><Run Text="oot partition:"/></TextBlock>
+                <TextBlock x:Name="TotalSizeTextBox" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -53,7 +53,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </TextBlock.RenderTransform><Run Language="de-de" Text="Total Size:"/></TextBlock>
-                <TextBlock x:Name="PartitionTableTextBox" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="10">
+                <TextBlock x:Name="PartitionTableTextBox" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -62,7 +62,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </TextBlock.RenderTransform><Run Language="de-de" Text="Partition Table:"/></TextBlock>
-                <TextBlock x:Name="VolumeNameTextBox" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="10">
+                <TextBlock x:Name="VolumeNameTextBox" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -71,7 +71,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </TextBlock.RenderTransform><Run Language="de-de" Text="Volume Name:"/></TextBlock>
-                <TextBlock x:Name="DriveLetterTextBox" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="10">
+                <TextBlock x:Name="DriveLetterTextBox" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -80,7 +80,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </TextBlock.RenderTransform><Run Language="de-de" Text="Drive Letter:"/></TextBlock>
-                <TextBlock x:Name="FileSystemTextBox" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="10">
+                <TextBlock x:Name="FileSystemTextBox" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -89,7 +89,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </TextBlock.RenderTransform><Run Language="de-de" Text="File System:"/></TextBlock>
-                <TextBlock x:Name="FreeSpaceTextBox" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="10">
+                <TextBlock x:Name="FreeSpaceTextBox" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -99,8 +99,8 @@
                         </TransformGroup>
                     </TextBlock.RenderTransform><Run Language="de-de" Text="Free Space:"/></TextBlock>
             </StackPanel>
-            <StackPanel Width="103">
-                <TextBlock x:Name="PartitionNameValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="10">
+            <StackPanel VerticalAlignment="Top">
+                <TextBlock x:Name="PartitionNameValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -109,7 +109,8 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </TextBlock.RenderTransform><Run Language="de-de" Text="XXX"/></TextBlock>
-                <TextBlock x:Name="BootPartitionValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="10">
+                <CheckBox x:Name="BootPartitionValue" Content="" IsEnabled="False" Margin="0,0,0,2"/>
+                <TextBlock x:Name="TotalSizeValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -118,7 +119,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </TextBlock.RenderTransform><Run Language="de-de" Text="XXX"/></TextBlock>
-                <TextBlock x:Name="TotalSizeValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="10">
+                <TextBlock x:Name="PartitionTableValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -127,7 +128,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </TextBlock.RenderTransform><Run Language="de-de" Text="XXX"/></TextBlock>
-                <TextBlock x:Name="PartitionTableValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="10">
+                <TextBlock x:Name="VolumeNameValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -136,7 +137,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </TextBlock.RenderTransform><Run Language="de-de" Text="XXX"/></TextBlock>
-                <TextBlock x:Name="VolumeNameValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="10">
+                <TextBlock x:Name="DriveLetterValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14" Foreground="Black">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -145,7 +146,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </TextBlock.RenderTransform><Run Language="de-de" Text="XXX"/></TextBlock>
-                <TextBlock x:Name="DriveLetterValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="10">
+                <TextBlock x:Name="FileSystemValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14" Foreground="Black">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -154,16 +155,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </TextBlock.RenderTransform><Run Language="de-de" Text="XXX"/></TextBlock>
-                <TextBlock x:Name="FileSystemValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="10">
-                    <TextBlock.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="0.423"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </TextBlock.RenderTransform><Run Language="de-de" Text="XXX"/></TextBlock>
-                <TextBlock x:Name="FreeSpaceValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="10">
+                <TextBlock x:Name="FreeSpaceValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>

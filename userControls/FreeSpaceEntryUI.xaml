@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUIForDiskpart"
-             mc:Ignorable="d" BorderBrush="#FFE3E3E3" BorderThickness="3,3,3,3" Height="110" Width="200">
+             mc:Ignorable="d" BorderBrush="#FFE3E3E3" BorderThickness="6,6,3,6" Height="110" Width="200" Margin="5,5,5,5">
     <UserControl.ContextMenu>
         <ContextMenu>
             <MenuItem Header="DISKPART - Create">
@@ -17,7 +17,7 @@
                 
         </ContextMenu>
     </UserControl.ContextMenu>
-    <Grid Background="#FFBBBBBB">
+    <Grid x:Name="MainGrid" Background="#FFBBBBBB" PreviewMouseDown="UserControl_PreviewMouseDown">
         <Label x:Name="UnpartSpaceLabel" Content="Unpartitioned Space:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Label x:Name="UnPartSpaceValue" Content="XXX" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top"/>
 

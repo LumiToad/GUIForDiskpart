@@ -1,8 +1,10 @@
 ﻿using GUIForDiskpart.diskpart;
 using GUIForDiskpart.main;
+using GUIForDiskpart.windows;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace GUIForDiskpart
 {
@@ -17,7 +19,26 @@ namespace GUIForDiskpart
         private ulong freeSpace;
 
         private int driveIndex;
-        
+
+        private const string freeSpaceBorder = "#FFE3E3E3";
+
+        private const string basicBackground = "#FFBBBBBB";
+        private const string selectBackground = "#FF308EBF";
+
+        private bool isSelected = false;
+        public bool IsSelected
+        {
+            get
+            {
+                return isSelected;
+            }
+
+            private set
+            {
+                isSelected = value;
+            }
+        }
+
         public FreeSpaceEntryUI(UInt64 space, int driveIndex)
         {
             InitializeComponent();
@@ -46,8 +67,11 @@ namespace GUIForDiskpart
 
         private void CreatePartition_Click(object sender, RoutedEventArgs e)
         {
-            ///Just a test!
-            dpFunctions.CreatePartition(driveIndex, CreatePartitionOptions.PRIMARY, 0, false);
+            CreatePartitionWindow createPartitionWindow = new CreatePartitionWindow(driveIndex, freeSpace);
+            createPartitionWindow.Owner = mainWindow;
+            createPartitionWindow.Focus();
+            
+            createPartitionWindow.Show();
         }
 
         private void CreateVolume_Click(object sender, RoutedEventArgs e)
@@ -63,6 +87,33 @@ namespace GUIForDiskpart
         private void MultiCreate_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void UserControl_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Console.WriteLine(sender.ToString());
+
+            MarkAsSelected();
+        }
+
+        public void MarkAsSelected()
+        {
+            IsSelected = !IsSelected;
+
+            if (IsSelected)
+            {
+                ChangeBackgroundColor(selectBackground);
+            }
+            else
+            {
+                ChangeBackgroundColor(basicBackground);
+            }
+        }
+
+        private void ChangeBackgroundColor(string backgroundColorValue)
+        {
+            var backgroundBrushColor = new BrushConverter();
+            MainGrid.Background = (Brush)backgroundBrushColor.ConvertFrom(backgroundColorValue);
         }
     }
 }

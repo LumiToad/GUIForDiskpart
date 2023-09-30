@@ -2,8 +2,11 @@
 using GUIForDiskpart.windows;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
+
 
 namespace GUIForDiskpart
 {
@@ -27,7 +30,7 @@ namespace GUIForDiskpart
         private void Initialize()
         {
             mainProgram = new MainProgram();
-            RetrieveAndShowDriveData();
+            RetrieveAndShowDriveData(true);
         }
 
         private void Test()
@@ -83,21 +86,24 @@ namespace GUIForDiskpart
 
         private void RetrieveDriveData_Click(object sender, RoutedEventArgs e)
         {
-            RetrieveAndShowDriveData();
+            RetrieveAndShowDriveData(true);
         }
 
-        public void RetrieveAndShowDriveData()
+        public void RetrieveAndShowDriveData(bool outputText)
         {
-            Application.Current.Dispatcher.Invoke(RetrieveAndShowDriveData_Internal);
+            Application.Current.Dispatcher.Invoke(RetrieveAndShowDriveData_Internal, outputText);
         }
 
-        private void RetrieveAndShowDriveData_Internal()
+        private void RetrieveAndShowDriveData_Internal(bool outputText)
         {
             mainProgram.driveRetriever.ReloadDriveInformation();
 
             AddLogicalDrivesToStackPanel();
 
-            AddTextToOutputConsole(mainProgram.driveRetriever.GetDrivesOutput());
+            if (outputText) 
+            { 
+                AddTextToOutputConsole(mainProgram.driveRetriever.GetDrivesOutput());
+            }
         }
 
         private void AddLogicalDrivesToStackPanel()
