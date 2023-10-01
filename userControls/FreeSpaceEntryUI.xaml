@@ -8,12 +8,19 @@
     <UserControl.ContextMenu>
         <ContextMenu>
             <MenuItem Header="DISKPART - Create">
+                <MenuItem.Icon>
+                    <Image Source="/resources/DiskpartD.png" />
+                </MenuItem.Icon>
                 <MenuItem Header="Partition" Click="CreatePartition_Click"/>
                 <MenuItem Header="Volume" Click="CreateVolume_Click"/>
                 <MenuItem Header="VDisk" Click="CreateVDisk_Click"/>
             </MenuItem>
                 <Separator />
-            <MenuItem Header="GUIFD - Multi Create" Click="MultiCreate_Click"/>
+            <MenuItem Header="GUIFD - Multi Create" Click="MultiCreate_Click">
+                <MenuItem.Icon>
+                    <Image Source="/resources/guifdG.png" />
+                </MenuItem.Icon>
+            </MenuItem>
                 
         </ContextMenu>
     </UserControl.ContextMenu>

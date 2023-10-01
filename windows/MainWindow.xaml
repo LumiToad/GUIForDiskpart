@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GUIForDiskpart"
         mc:Ignorable="d"
         
-        Title="MainWindow" WindowState="Normal" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" MinWidth="800" MinHeight="600">
+        Title="GUIFD - GUI for Diskpart" WindowState="Normal" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" MinWidth="800" MinHeight="600">
     <Grid x:Name="MainGrid" Background="#FF3E3E3E">
         <DockPanel LastChildFill="true">
             <Menu DockPanel.Dock="Top" Height="20">
@@ -16,13 +16,20 @@
                     <Separator/>
                     <MenuItem Header="Quit" Click="Quit_Click"/>
                 </MenuItem>
-                
+
                 <MenuItem Header="Commands">
-                    <MenuItem Header="Reload Drives" Click="RetrieveDriveData_Click"/>
+                    <MenuItem Header="Reload Drives" Click="RetrieveDriveData_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/resources/guifdG.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
 
                 <MenuItem Header="Diskpart">
                     <MenuItem Header="List">
+                        <MenuItem.Icon>
+                            <Image Source="/resources/DiskpartD.png" />
+                        </MenuItem.Icon>
                         <MenuItem Header="Disk" Click="ListDisk_Click"/>
                         <MenuItem Header="Volume" Click="ListVolume_Click"/>
                         <MenuItem Header="Partition" Click="ListPart_Click"/>

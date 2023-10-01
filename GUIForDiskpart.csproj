@@ -7,10 +7,11 @@
     <UseWPF>true</UseWPF>
     <ApplicationManifest>main\app.manifest</ApplicationManifest>
 	<Deterministic>false</Deterministic>
-	<Version>1.0.106</Version>
-	<AssemblyVersion>1.0.2309.106</AssemblyVersion>
-	<FileVersion>1.0.2309.106</FileVersion>
+	<Version>1.0.120</Version>
+	<AssemblyVersion>1.0.2310.120</AssemblyVersion>
+	<FileVersion>1.0.2310.120</FileVersion>
 	<Copyright>MIT License</Copyright>
+	<ApplicationIcon>resources\guifdLogo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -30,11 +31,29 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="resources\CmdC.png" />
+    <None Remove="resources\DiskpartD.png" />
+    <None Remove="resources\FroggoCorner.png" />
+    <None Remove="resources\guifdG.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="resources\guifdLogo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Management" Version="7.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Themes\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="resources\CmdC.png" />
+    <Resource Include="resources\DiskpartD.png" />
+    <Resource Include="resources\FroggoCorner.png" />
+    <Resource Include="resources\guifdG.png" />
   </ItemGroup>
 
   <ItemGroup>

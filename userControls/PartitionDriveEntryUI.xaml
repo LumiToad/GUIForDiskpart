@@ -7,10 +7,26 @@
              mc:Ignorable="d" MinWidth="100" BorderThickness="6,6,6,6" Foreground="Black" BorderBrush="#FFE3E3E3" Margin="5,5,5,0" PreviewMouseDown="UserControl_PreviewMouseDown">
     <UserControl.ContextMenu>
         <ContextMenu>
-            <MenuItem Header="DISKPART - Detail" Click="Detail_Click"/>
-            <MenuItem Header="DISKPART - Format" Click="Format_Click"/>
-            <MenuItem Header="DISKPART - Delete" Click="Delete_Click"/>
-            <MenuItem Header="DISKPART - Assign" Click="Assign_Click"/>
+            <MenuItem Header="DISKPART - Detail" Click="Detail_Click">
+                <MenuItem.Icon>
+                    <Image Source="/resources/DiskpartD.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="DISKPART - Format" Click="Format_Click">
+                <MenuItem.Icon>
+                    <Image Source="/resources/DiskpartD.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="DISKPART - Delete" Click="Delete_Click">
+                <MenuItem.Icon>
+                    <Image Source="/resources/DiskpartD.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="DISKPART - Assign" Click="Assign_Click">
+                <MenuItem.Icon>
+                    <Image Source="/resources/DiskpartD.png" />
+                </MenuItem.Icon>
+            </MenuItem>
             <Separator />
         </ContextMenu>
 
