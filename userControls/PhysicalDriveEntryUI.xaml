@@ -56,8 +56,8 @@
                 <Label x:Name="StatusValueLabel" Content="OK?" FontSize="14" Grid.IsSharedSizeScope="False" UseLayoutRounding="True" MinWidth="100" Padding="1,1,1,1"/>
                 <Label x:Name="PartitionsValueLabel" Content="99" FontSize="14" Grid.IsSharedSizeScope="False" UseLayoutRounding="True" MinWidth="100" Padding="1,1,1,1"/>
             </StackPanel>
-            <ScrollViewer x:Name="scrollViewer" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled" MinWidth="100" HorizontalAlignment="Center" CanContentScroll="True">
-                <StackPanel x:Name="PartitionStackPanel" Orientation="Horizontal" MaxWidth="800"/>
+            <ScrollViewer x:Name="scrollViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" MinWidth="100" HorizontalAlignment="Left" CanContentScroll="True" MaxWidth="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:PhysicalDriveEntryUI}}}" UseLayoutRounding="False" HorizontalContentAlignment="Right">
+                <StackPanel x:Name="PartitionStackPanel" Orientation="Horizontal" Grid.IsSharedSizeScope="True"/>
             </ScrollViewer>
         </StackPanel>
     </Grid>

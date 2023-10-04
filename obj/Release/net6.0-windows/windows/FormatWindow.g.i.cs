@@ -141,7 +141,7 @@ namespace GUIForDiskpart {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/GUIForDiskpart;V1.0.2310.120;component/windows/formatwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/GUIForDiskpart;V1.0.2310.168;component/windows/formatwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\windows\FormatWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

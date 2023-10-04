@@ -1,5 +1,6 @@
 ﻿using GUIForDiskpart.diskpart;
 using GUIForDiskpart.main;
+using GUIForDiskpart.windows;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -59,7 +60,7 @@ namespace GUIForDiskpart
             if (driveInfo.UnpartSpace > 0) 
             {
                 Console.WriteLine(driveInfo.UnpartSpace.ToString());
-                FreeSpaceEntryUI freeSpaceEntryUI = new FreeSpaceEntryUI(driveInfo.UnpartSpace, driveInfo.DriveIndex);
+                FreeSpaceEntryUI freeSpaceEntryUI = new FreeSpaceEntryUI(driveInfo.UnpartSpace, driveInfo);
                 PartitionStackPanel.Children.Add(freeSpaceEntryUI);
             }
         }
@@ -71,12 +72,36 @@ namespace GUIForDiskpart
 
         private void Clean_Click(object sender, RoutedEventArgs e)
         {
+            //Still needs "clean all" option
 
+            MessageBoxResult messageBoxResult = MessageBox.Show("This will delete and also clean everything on this drive!",
+               "Are you sure?", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+
+            if (messageBoxResult == MessageBoxResult.OK) 
+            {
+                DPFunctions dpFunctions = new DPFunctions();
+
+                string output = string.Empty;
+
+                output = dpFunctions.Clean(driveInfo.DriveIndex, false);
+
+                mainWindow.AddTextToOutputConsole(output);
+
+                return;
+            }
+            else
+            {
+                return;
+            }
         }
 
         private void Convert_Click(object sender, RoutedEventArgs e)
         {
-
+            ConvertDriveWindow convertDriveWindow = new ConvertDriveWindow(driveInfo);
+            convertDriveWindow.Owner = mainWindow;
+            convertDriveWindow.Focus();
+            
+            convertDriveWindow.Show();
         }
 
         private void CreatePart_Click(object sender, RoutedEventArgs e)

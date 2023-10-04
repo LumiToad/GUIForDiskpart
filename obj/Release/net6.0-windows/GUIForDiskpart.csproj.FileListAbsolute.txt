@@ -57,3 +57,6 @@ E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\bin\Release\net6.0-windows\GUI
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\windows\CreatePartitionWindow.g.cs
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\windows\CreatePartitionWindow.baml
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\GUIForDiskpart_Content.g.cs
+E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\GeneratedInternalTypeHelper.g.cs
+E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\windows\ConvertDriveWindow.g.cs
+E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\obj\Release\net6.0-windows\windows\ConvertDriveWindow.baml
