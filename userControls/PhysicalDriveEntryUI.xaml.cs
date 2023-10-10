@@ -18,7 +18,7 @@ namespace GUIForDiskpart
 
         DriveInfo driveInfo;
 
-        public int DriveIndex { get { return driveInfo.DriveIndex; } }
+        public uint DriveIndex { get { return driveInfo.DriveIndex; } }
 
         public PhysicalDriveEntryUI()
         {

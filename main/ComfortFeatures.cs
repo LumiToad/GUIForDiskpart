@@ -20,9 +20,9 @@ namespace GUIForDiskpart.main
             output += dpFunctions.Convert(drive.DriveIndex, ConvertOptions.GPT);
             output += dpFunctions.Delete(drive.DriveIndex, 1, false, true);
 
-            output += dpFunctions.CreatePartition(drive.driveIndex, CreatePartitionOptions.PRIMARY, sizeInMB, isNoErr);
-            output += dpFunctions.Format(drive.driveIndex, 1, fileSystem, volumeName, isQuickFormatting, isCompressed, isOverride, isNoWait, isNoErr);
-            output += dpFunctions.Assign(drive.driveIndex, 1, driveLetter, isNoErr);
+            output += dpFunctions.CreatePartition(drive.DriveIndex, CreatePartitionOptions.PRIMARY, sizeInMB, isNoErr);
+            output += dpFunctions.Format(drive.DriveIndex, 1, fileSystem, volumeName, isQuickFormatting, isCompressed, isOverride, isNoWait, isNoErr);
+            output += dpFunctions.Assign(drive.DriveIndex, 1, driveLetter, isNoErr);
             
             return output;
         }
@@ -37,9 +37,9 @@ namespace GUIForDiskpart.main
             output += dpFunctions.Convert(drive.DriveIndex, ConvertOptions.GPT);
             output += dpFunctions.Delete(drive.DriveIndex, 1, false, true);
 
-            output += dpFunctions.CreatePartition(drive.driveIndex, CreatePartitionOptions.PRIMARY, sizeInMB, isNoErr);
-            output += dpFunctions.Format(drive.driveIndex, 1, fileSystem, volumeName, isQuickFormatting, isCompressed, isOverride, isNoWait, isNoErr);
-            output += dpFunctions.Assign(drive.driveIndex, 1, isNoErr);
+            output += dpFunctions.CreatePartition(drive.DriveIndex, CreatePartitionOptions.PRIMARY, sizeInMB, isNoErr);
+            output += dpFunctions.Format(drive.DriveIndex, 1, fileSystem, volumeName, isQuickFormatting, isCompressed, isOverride, isNoWait, isNoErr);
+            output += dpFunctions.Assign(drive.DriveIndex, 1, isNoErr);
 
             return output;
         }
@@ -54,9 +54,9 @@ namespace GUIForDiskpart.main
             output += dpFunctions.Convert(drive.DriveIndex, ConvertOptions.GPT);
             output += dpFunctions.Delete(drive.DriveIndex, 1, false, true);
 
-            output += dpFunctions.CreatePartition(drive.driveIndex, CreatePartitionOptions.PRIMARY, 0, isNoErr);
-            output += dpFunctions.Format(drive.driveIndex, 1, fileSystem, volumeName, isQuickFormatting, isCompressed, isOverride, isNoWait, isNoErr);
-            output += dpFunctions.Assign(drive.driveIndex, 1, isNoErr);
+            output += dpFunctions.CreatePartition(drive.DriveIndex, CreatePartitionOptions.PRIMARY, 0, isNoErr);
+            output += dpFunctions.Format(drive.DriveIndex, 1, fileSystem, volumeName, isQuickFormatting, isCompressed, isOverride, isNoWait, isNoErr);
+            output += dpFunctions.Assign(drive.DriveIndex, 1, isNoErr);
 
             return output;
         }

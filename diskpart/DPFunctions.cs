@@ -39,11 +39,11 @@ namespace GUIForDiskpart.diskpart
             return output;
         }
 
-        public string DetailDisk(int diskIndex) 
+        public string DetailDisk(uint driveIndex) 
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + "DISK " + diskIndex.ToString();
+            commands[0] = "Select " + "DISK " + driveIndex.ToString();
             commands[1] = "Detail " + "DISK ";
 
             string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
@@ -52,11 +52,11 @@ namespace GUIForDiskpart.diskpart
             return output;
         }
 
-        public string DetailPart(int diskIndex, int partIndex)
+        public string DetailPart(uint driveIndex, int partIndex)
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + "DISK " + diskIndex.ToString();
+            commands[0] = "Select " + "DISK " + driveIndex.ToString();
             commands[1] = "Select " + "PART " + partIndex.ToString();
             commands[2] = "Detail " + "PART ";
 
@@ -84,11 +84,11 @@ namespace GUIForDiskpart.diskpart
             return output;
         }
 
-        public string CreatePartition(int diskIndex, CreatePartitionOptions option, UInt64 sizeInMB, bool isNoErr)
+        public string CreatePartition(uint driveIndex, CreatePartitionOptions option, UInt64 sizeInMB, bool isNoErr)
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPListType.DISK.ToString() + " " + diskIndex.ToString();
+            commands[0] = "Select " + DPListType.DISK.ToString() + " " + driveIndex.ToString();
             commands[1] = "Create PARTITION " +  option.ToString() + " ";
 
             if (sizeInMB > 0)
@@ -107,11 +107,11 @@ namespace GUIForDiskpart.diskpart
             return output;
         }
 
-        public string CreateVolume(int diskIndex, CreateVolumeOptions option, UInt64 sizeInMB, bool isNoErr)
+        public string CreateVolume(uint driveIndex, CreateVolumeOptions option, UInt64 sizeInMB, bool isNoErr)
         {
             string[] commands = new string[1];
 
-            commands[0] = "Select " + DPListType.DISK.ToString() + " " + diskIndex.ToString();
+            commands[0] = "Select " + DPListType.DISK.ToString() + " " + driveIndex.ToString();
             commands[1] = "Create VOLUME " + option.ToString() + " ";
 
             if (sizeInMB > 0)
@@ -130,11 +130,11 @@ namespace GUIForDiskpart.diskpart
             return output;
         }
 
-        public string CreateVDisk(int diskIndex, string filePath, bool isNoErr)
+        public string CreateVDisk(uint driveIndex, string filePath, bool isNoErr)
         {
             string[] commands = new string[1];
 
-            commands[0] = "Select " + DPListType.DISK.ToString() + " " + diskIndex.ToString();
+            commands[0] = "Select " + DPListType.DISK.ToString() + " " + driveIndex.ToString();
             commands[1] = "Create VDISK FILE=" + filePath + " ";
 
             if (isNoErr)
@@ -148,12 +148,12 @@ namespace GUIForDiskpart.diskpart
             return output;
         }
 
-        public string Format(int diskIndex, int partitionIndex, FileSystem fileSystem,
+        public string Format(uint driveIndex, int partitionIndex, FileSystem fileSystem,
             string volumeName, bool isQuickFormatting, bool isCompressed, bool isOverride, bool isNoWait, bool isNoErr)
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPListType.DISK.ToString() + " " + diskIndex.ToString();
+            commands[0] = "Select " + DPListType.DISK.ToString() + " " + driveIndex.ToString();
             commands[1] = "Select " + DPListType.PARTITION.ToString() + " " + partitionIndex.ToString();
             commands[2] = "Format " + "FS=" + fileSystem.ToString() + " " ;
 
@@ -193,11 +193,11 @@ namespace GUIForDiskpart.diskpart
             return output;
         }
 
-        public string Delete(int diskIndex, int partitionIndex, bool isNoErr, bool isOverride)
+        public string Delete(uint driveIndex, int partitionIndex, bool isNoErr, bool isOverride)
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPListType.DISK.ToString() + " " + diskIndex.ToString();
+            commands[0] = "Select " + DPListType.DISK.ToString() + " " + driveIndex.ToString();
             commands[1] = "Select " + DPListType.PARTITION.ToString() + " " + partitionIndex.ToString();
             commands[2] = "Delete " + "PART ";
 
@@ -217,11 +217,11 @@ namespace GUIForDiskpart.diskpart
             return output;
         }
 
-        public string Assign(int diskIndex, int partitionIndex, char driveLetter, bool isNoErr)
+        public string Assign(uint driveIndex, int partitionIndex, char driveLetter, bool isNoErr)
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPListType.DISK.ToString() + " " + diskIndex.ToString();
+            commands[0] = "Select " + DPListType.DISK.ToString() + " " + driveIndex.ToString();
             commands[1] = "Select " + DPListType.PARTITION.ToString() + " " + partitionIndex.ToString();
             commands[2] = "Assign " + "LETTER=" + driveLetter + " ";
 
@@ -236,11 +236,11 @@ namespace GUIForDiskpart.diskpart
             return output;
         }
 
-        public string Assign(int diskIndex, int partitionIndex, bool isNoErr)
+        public string Assign(uint driveIndex, int partitionIndex, bool isNoErr)
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPListType.DISK.ToString() + " " + diskIndex.ToString();
+            commands[0] = "Select " + DPListType.DISK.ToString() + " " + driveIndex.ToString();
             commands[1] = "Select " + DPListType.PARTITION.ToString() + " " + partitionIndex.ToString();
             commands[2] = "Assign ";
 
@@ -255,11 +255,11 @@ namespace GUIForDiskpart.diskpart
             return output;
         }
 
-        public string Clean(int diskIndex, bool isCleanAll)
+        public string Clean(uint driveIndex, bool isCleanAll)
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPListType.DISK.ToString() + " " + diskIndex.ToString();
+            commands[0] = "Select " + DPListType.DISK.ToString() + " " + driveIndex.ToString();
             commands[1] = "Clean ";
 
             if (isCleanAll)
@@ -273,11 +273,11 @@ namespace GUIForDiskpart.diskpart
             return output;
         }
 
-        public string Convert(int diskIndex, ConvertOptions options)
+        public string Convert(uint driveIndex, ConvertOptions options)
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPListType.DISK.ToString() + " " + diskIndex.ToString();
+            commands[0] = "Select " + DPListType.DISK.ToString() + " " + driveIndex.ToString();
             commands[1] = "Convert " + options.ToString();
 
             string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);

@@ -6,64 +6,210 @@ namespace GUIForDiskpart.main
 {
     public class DriveInfo
     {
-        public string deviceID;
+        readonly public string deviceID;
         public string DeviceId { get { return deviceID; } }
 
-        public string physicalName;
+        readonly private string physicalName;
         public string PhysicalName { get { return physicalName; } }
 
-        public string diskName;
+        readonly private string diskName;
         public string DiskName { get { return diskName; } }
 
-        public string diskModel;
+        readonly private string diskModel;
         public string DiskModel { get { return diskModel; } }
 
-        public string mediaStatus;
+        readonly private string mediaStatus;
         public string MediaStatus { get { return mediaStatus; } }
 
-        public bool mediaLoaded;
+        readonly private bool mediaLoaded;
         public bool MediaLoaded { get { return mediaLoaded; } }
 
-        public UInt64 totalSpace;
+        readonly private UInt64 totalSpace;
         public UInt64 TotalSpace { get { return totalSpace; } }
 
-        public UInt64 unpartSpace;
+        readonly private UInt64 unpartSpace;
         public UInt64 UnpartSpace { get; set; }
 
-        public UInt32 partitionCount;
+        readonly private UInt32 partitionCount;
         public UInt32 PartitionCount { get { return partitionCount; } }
 
-        public int driveIndex;
-        public int DriveIndex { get { return driveIndex; } }
-
-        private string interfaceType;
+        readonly private string interfaceType;
         public string InterfaceType { get { return interfaceType; } }
 
-        private UInt32 mediaSignature;
+        readonly private UInt32 mediaSignature;
         public UInt32 MediaSignature { get { return mediaSignature; } }
 
-        private string driveName;
+        readonly private string driveName;
         public string DriveName { get { return driveName; } }
 
-        private string driveId;
-        public string DriveId { get { return driveId; } }
-
-        private bool driveCompressed;
-        public bool DriveCompressed { get { return driveCompressed; } }
-
-        private string mediaType;
+        readonly private string mediaType;
         public string MediaType { get { return mediaType; } }
-        
+
+        readonly private UInt16 availability;
+        public UInt16 Availability { get => availability;}
+
+        readonly private UInt32 bytesPerSector;
+        public UInt32 BytesPerSector { get => bytesPerSector; }
+
+        readonly private string compressionMethod;
+        public string CompressionMethod { get => compressionMethod; }
+
+        readonly private UInt32 configManagerErrorCode;
+        public UInt32 ConfigManagerErrorCode { get => configManagerErrorCode; }
+
+        readonly private bool configManagerUserConfig;
+        public bool ConfigManagerUserConfig { get => configManagerUserConfig; }
+
+        readonly private string creationClassName;
+        public string CreationClassName { get => creationClassName; }
+
+        readonly private UInt64 defaultBlockSize;
+        public UInt64 DefaultBlockSize { get => defaultBlockSize;}
+
+        readonly private string description;
+        public string Description { get => description; }
+
+        readonly private bool errorCleared;
+        public bool ErrorCleared { get => errorCleared; }
+
+        readonly private string errorDescription;
+        public string ErrorDescription { get => errorDescription; }
+
+        readonly private string errorMethodology;
+        public string ErrorMethodology { get => errorMethodology; }
+
+        readonly private string firmwareRevision;
+        public string FirmwareRevision { get => firmwareRevision; }
+
+        readonly private UInt32 driveIndex;
+        public UInt32 DriveIndex { get => driveIndex; }
+
+        readonly private DateTime installDate;
+        public DateTime InstallDate { get => installDate; }
+
+        readonly private UInt32 lastErrorCode;
+        public UInt32 LastErrorCode { get => lastErrorCode; }
+
+        readonly private string manufacturer;
+        public string Manufacturer { get => manufacturer; }
+
+        readonly private UInt64 maxBlockSize;
+        public UInt64 MaxBlockSize { get => maxBlockSize; }
+
+        readonly private UInt64 maxMediaSize;
+        public UInt64 MaxMediaSize { get => maxMediaSize; }
+
+        readonly private UInt64 minBlockSize;
+        public UInt64 MinBlockSize { get => minBlockSize; }
+
+        readonly private bool needsCleaning;
+        public bool NeedsCleaning { get => needsCleaning; }
+
+        readonly private UInt32 numberOfMediaSupported;
+        public UInt32 NumberOfMediaSupported { get => numberOfMediaSupported; }
+
+        readonly private string pnpDeviceID;
+        public string PNPDeviceID { get => pnpDeviceID; }
+
+        readonly private bool powerManagementSupported;
+        public bool PowerManagementSupported { get => powerManagementSupported; }
+
+        readonly private UInt32 scsiBus;
+        public UInt32 SCSIBus { get => scsiBus; }
+
+        readonly private UInt16 scsiLogicalUnit;
+        public UInt16 SCSILogicalUnit { get => scsiLogicalUnit; }
+
+        readonly private UInt16 scsiPort;
+        public UInt16 SCSIPort { get => scsiPort; }
+
+        readonly private UInt16 scsiTargetId;
+        public UInt16 SCSITargetID { get => scsiTargetId; }
+
+        readonly private UInt32 sectorsPerTrack;
+        public UInt32 SectorsPerTrack { get => sectorsPerTrack; }
+
+        readonly private string serialNumber;
+        public string SerialNumber { get => serialNumber; }
+
+        readonly private UInt16 statusInfo;
+        public UInt16 StatusInfo { get => statusInfo; }
+
+        readonly private string systemCreationClassName;
+        public string SystemCreationClassName { get => systemCreationClassName; }
+
+        readonly private string systemName;
+        public string SystemName { get => systemName; }
+
+        readonly private UInt64 totalCylinders;
+        public UInt64 TotalCylinders { get => totalCylinders; }
+
+        readonly private UInt32 totalHeads;
+        public UInt32 TotalHeads { get => totalHeads; }
+
+        readonly private UInt64 totalSectors;
+        public UInt64 TotalSectors { get => totalSectors; }
+
+        readonly private UInt64 totalTracks;
+        public UInt64 TotalTracks { get => totalTracks; }
+
+        readonly private UInt32 tracksPerCylinder;
+        public UInt32 TracksPerCylinder { get => tracksPerCylinder; }
+
+
         private List<PartitionInfo> partitionDrives = new List<PartitionInfo>();
         public List<PartitionInfo> PartitionDrives { get { return partitionDrives; } }
 
-        public DriveInfo() 
-        { }
-
-        public DriveInfo(string deviceID, string physicalName, string diskName,
-            string diskModel, string mediaStatus, bool mediaLoaded, ulong totalSpace,
-            uint partitionsCount, string interfaceType, string mediaType,
-            UInt32 mediaSignature, string driveName)
+        public DriveInfo(
+            string deviceID,
+            string physicalName,
+            string diskName,
+            string diskModel,
+            string mediaStatus,
+            bool mediaLoaded,
+            ulong totalSpace,
+            uint partitionCount,
+            string interfaceType,
+            uint mediaSignature,
+            string driveName,
+            string mediaType,
+            ushort availability,
+            uint bytesPerSector,
+            string compressionMethod,
+            uint configManagerErrorCode,
+            bool configManagerUserConfig,
+            string creationClassName,
+            ulong defaultBlockSize,
+            string description,
+            bool errorCleared,
+            string errorDescription,
+            string errorMethodology,
+            string firmwareRevision,
+            uint index,
+            DateTime installDate,
+            uint lastErrorCode,
+            string manufacturer,
+            ulong maxBlockSize,
+            ulong maxMediaSize,
+            ulong minBlockSize,
+            bool needsCleaning,
+            uint numberOfMediaSupported,
+            string pnpDeviceID,
+            bool powerManagementSupported,
+            uint scsiBus,
+            ushort scsiLogicalUnit,
+            ushort scsiPort,
+            ushort scsiTargetId,
+            uint sectorsPerTrack,
+            string serialNumber,
+            ushort statusInfo,
+            string systemCreationClassName,
+            string systemName,
+            ulong totalCylinders,
+            uint totalHeads,
+            ulong totalSectors,
+            ulong totalTracks,
+            uint tracksPerCylinder)
         {
             this.deviceID = deviceID;
             this.physicalName = physicalName;
@@ -72,18 +218,54 @@ namespace GUIForDiskpart.main
             this.mediaStatus = mediaStatus;
             this.mediaLoaded = mediaLoaded;
             this.totalSpace = totalSpace;
-            this.partitionCount = partitionsCount;
-            this.driveIndex = ParseDriveNumber(PhysicalName);
+            this.partitionCount = partitionCount;
             this.interfaceType = interfaceType;
-            this.mediaType = mediaType;
             this.mediaSignature = mediaSignature;
             this.driveName = driveName;
+            this.mediaType = mediaType;
+            this.availability = availability;
+            this.bytesPerSector = bytesPerSector;
+            this.compressionMethod = compressionMethod;
+            this.configManagerErrorCode = configManagerErrorCode;
+            this.configManagerUserConfig = configManagerUserConfig;
+            this.creationClassName = creationClassName;
+            this.defaultBlockSize = defaultBlockSize;
+            this.description = description;
+            this.errorCleared = errorCleared;
+            this.errorDescription = errorDescription;
+            this.errorMethodology = errorMethodology;
+            this.firmwareRevision = firmwareRevision;
+            this.driveIndex = index;
+            this.installDate = installDate;
+            this.lastErrorCode = lastErrorCode;
+            this.manufacturer = manufacturer;
+            this.maxBlockSize = maxBlockSize;
+            this.maxMediaSize = maxMediaSize;
+            this.minBlockSize = minBlockSize;
+            this.needsCleaning = needsCleaning;
+            this.numberOfMediaSupported = numberOfMediaSupported;
+            this.pnpDeviceID = pnpDeviceID;
+            this.powerManagementSupported = powerManagementSupported;
+            this.scsiBus = scsiBus;
+            this.scsiLogicalUnit = scsiLogicalUnit;
+            this.scsiPort = scsiPort;
+            this.scsiTargetId = scsiTargetId;
+            this.sectorsPerTrack = sectorsPerTrack;
+            this.serialNumber = serialNumber;
+            this.statusInfo = statusInfo;
+            this.systemCreationClassName = systemCreationClassName;
+            this.systemName = systemName;
+            this.totalCylinders = totalCylinders;
+            this.totalHeads = totalHeads;
+            this.totalSectors = totalSectors;
+            this.totalTracks = totalTracks;
+            this.tracksPerCylinder = tracksPerCylinder;
         }
 
-        public void PrintToConsole()
+        public void PrintToConsoleOld()
         {
             Console.WriteLine("PhysicalName: {0}", PhysicalName);
-            Console.WriteLine("DriveNumber: {0}", DriveIndex);
+            Console.WriteLine("DriveIndex: {0}", DriveIndex);
             Console.WriteLine("DiskName: {0}", DiskName);
             Console.WriteLine("DiskModel: {0}", DiskModel);
             Console.WriteLine("MediaLoaded: {0}", MediaLoaded);
@@ -93,29 +275,33 @@ namespace GUIForDiskpart.main
             Console.WriteLine("MediaType: {0}", MediaType);
             Console.WriteLine("MediaSignature: {0}", MediaSignature);
             Console.WriteLine("DriveName: {0}", DriveName);
-            Console.WriteLine("DriveId: {0}", DriveId);
-            Console.WriteLine("DriveCompressed: {0}", DriveCompressed);
             Console.WriteLine(new string('-', 79));
+        }
+
+        public void PrintToConsole()
+        {
+            Console.WriteLine(GetOutputAsString());
         }
 
         public string GetOutputAsString()
         {
             string output = string.Empty;
-            output += "PhysicalName: " + PhysicalName + "\n";
-            output += "DriveNumber: " + DriveIndex + "\n";
-            output += "DiskName: " + DiskName + "\n";
-            output += "DiskModel: " + DiskModel + "\n";
-            output += "MediaLoaded: " + MediaLoaded + "\n";
-            output += "MediaStatus: " + MediaStatus + "\n";
-            output += "TotalSpace: " + TotalSpace + "\n";
-            output += "UnpartSpace: " + UnpartSpace + "\n";
-            output += "InterfaceType: " + InterfaceType + "\n";
-            output += "MediaType: " + MediaType + "\n";
-            output += "MediaSignature: " + MediaSignature + "\n";
-            output += "DriveName: " + DriveName + "\n";
-            output += "DriveId: " + DriveId + "\n";
-            output += "DriveCompressed: " + DriveCompressed + "\n";
-            output += "_________________" + "\n";
+            output += "PhysicalName: " + PhysicalName + '\n';
+            output += "DriveIndex: " + DriveIndex + '\n';
+            output += "DiskName: " + DiskName + '\n';
+            output += "DiskModel: " + DiskModel + '\n';
+            output += "MediaLoaded: " + MediaLoaded + '\n';
+            output += "MediaStatus: " + MediaStatus + '\n';
+            output += "TotalSpace: " + TotalSpace + '\n';
+            output += "UnpartSpace: " + UnpartSpace + '\n';
+            output += "InterfaceType: " + InterfaceType + '\n';
+            output += "MediaType: " + MediaType + '\n';
+            output += "MediaSignature: " + MediaSignature + '\n';
+            output += "DriveName: " + DriveName + '\n';
+            output += "SystemName: " + SystemName + '\n';
+            output += "SCSIBus: " + SCSIBus + '\n';
+            output += "Index: " + DriveIndex + '\n';
+            output += "_________________" + '\n';
             
             foreach (PartitionInfo partitionInfo in partitionDrives)
             {
@@ -127,24 +313,6 @@ namespace GUIForDiskpart.main
         public void AddPartitionDriveToList(PartitionInfo drive)
         {
             partitionDrives.Add(drive);
-        }
-
-        public int ParseDriveNumber(string name)
-        {
-            int spacerIndex = 0;
-
-            for (int i = name.Length - 1; i != 0; i--)
-            {
-                bool isNumber = int.TryParse(name[i].ToString(), out int result);
-
-                if (!isNumber)
-                {
-                    spacerIndex = i +1;
-                    break;
-                }
-            }
-
-            return int.Parse(name.Substring(spacerIndex));
         }
 
         public UInt64 CalcUnpartSpace(UInt64 space)
