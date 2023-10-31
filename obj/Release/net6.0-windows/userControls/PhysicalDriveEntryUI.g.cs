@@ -165,7 +165,7 @@ namespace GUIForDiskpart {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/GUIForDiskpart;V1.0.2310.292;component/usercontrols/physicaldriveentryui.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/GUIForDiskpart;V1.0.2310.330;component/usercontrols/physicaldriveentryui.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\userControls\PhysicalDriveEntryUI.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -4,6 +4,9 @@ namespace GUIForDiskpart.main
 {
     public class PartitionInfo
     {
+        private UInt32 wsmPartitionNumber;
+        public UInt32 WSMPartitionNumber { get { return wsmPartitionNumber; } set { wsmPartitionNumber = value; } }
+
         private UInt16 availability;
         public UInt16 Availability { get { return availability; } set { availability = value; } }
 

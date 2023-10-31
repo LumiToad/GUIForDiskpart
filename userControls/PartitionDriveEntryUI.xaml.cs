@@ -92,7 +92,7 @@ namespace GUIForDiskpart
 
         private void Detail_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.AddTextToOutputConsole(DPFunctions.DetailPart(partitionInfo.DiskIndex, partitionInfo.PartitionIndex));
+            mainWindow.AddTextToOutputConsole(DPFunctions.DetailPart(partitionInfo.DiskIndex, partitionInfo.WSMPartitionNumber));
         }
 
         private void Format_Click(object sender, RoutedEventArgs e)

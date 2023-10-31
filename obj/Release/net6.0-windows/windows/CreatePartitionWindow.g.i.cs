@@ -101,7 +101,7 @@ namespace GUIForDiskpart.windows {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/GUIForDiskpart;V1.0.2310.292;component/windows/createpartitionwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/GUIForDiskpart;V1.0.2310.330;component/windows/createpartitionwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\windows\CreatePartitionWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -1,11 +1,67 @@
-﻿using System.Diagnostics;
+﻿using Microsoft.PowerShell;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Management.Automation.Runspaces;
 
 namespace GUIForDiskpart.main
 {
     public static class CommandExecuter
     {
         private const string exeSuffix = ".exe";
+
+        /*
+        public static List<Object> IssuePowershellCommand(string command, string psParam)
+        {
+            PowerShell ps = PowerShell.Create();
+            List<object> objects = new List<object>();
+
+            ps.AddCommand("Set-ExecutionPolicy")
+                .AddParameter("ExecutionPolicy ", ExecutionPolicy.Unrestricted)
+                .AddParameter("Scope ", ExecutionPolicyScope.Process)
+                ;
+
+            ps.AddCommand(command)
+                .AddParameter(psParam)
+                ;
+
+            IAsyncResult asyncpl = ps.BeginInvoke();
+
+            foreach (PSObject result in ps.EndInvoke(asyncpl))
+            {
+                objects.Add(result);
+            }
+
+            return objects;
+        }
+        */
+
+        public static List<Object> IssuePowershellCommand(string command, string psParam)
+        {
+            InitialSessionState initialSessionState = InitialSessionState.CreateDefault();
+            initialSessionState.ExecutionPolicy = ExecutionPolicy.Unrestricted;
+
+            Runspace runspace = RunspaceFactory.CreateRunspace(initialSessionState);
+            runspace.Open();
+            List<object> objects = new List<object>();
+
+            Pipeline pipeline = runspace.CreatePipeline();
+            pipeline.Commands.AddScript($"{command} {psParam}");
+
+            var results = pipeline.Invoke();
+
+            foreach (var result in results)
+            {
+                objects.Add(result);
+            }
+
+            runspace.Close();
+
+
+            return objects;
+        }
+        
 
         public static string IssueCommand(string processType, string[] commands)
         {

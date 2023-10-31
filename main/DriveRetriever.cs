@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
+using System.Management.Automation;
 
 namespace GUIForDiskpart.main
 {
@@ -121,15 +122,23 @@ namespace GUIForDiskpart.main
                     numberOfMediaSupported, pnpDeviceID, powerManagementSupported, scsiBus, scsiLogicalUnit, scsiPort, scsiTargetId, sectorsPerTrack,
                     serialNumber, statusInfo, systemCreationClassName, systemName, totalCylinders, totalHeads, totalSectors, totalTracks, tracksPerCylinder);
 
-                //var partitionQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_DiskDriveToDiskPartition", drive.Path.RelativePath);
+                var partitionQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_DiskDriveToDiskPartition", drive.Path.RelativePath);
+                var partitionQuery = new ManagementObjectSearcher(partitionQueryText);
 
-                var partitionQueryText = "SELECT * from Win32_DiskPartition";
-                var partitionQuery = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM CIM_DiskPartition");
-                //var partitionQuery = new ManagementObjectSearcher(partitionQueryText);
+                
 
                 foreach (ManagementObject partition in partitionQuery.Get())
                 {
-                    physicalDrive.AddPartitionToList(RetrievePartitions(partition, physicalDrive.DiskIndex));
+                    PartitionInfo newPartition = RetrievePartitions(partition, physicalDrive.DiskIndex);
+                    foreach (PSObject psObject in GetPSPartitionsByOffset(physicalDrive))
+                    {
+                        if ((UInt64)psObject.Properties["Offset"].Value == newPartition.StartingOffset) 
+                        {
+                            newPartition.WSMPartitionNumber = (UInt32)psObject.Members["PartitionNumber"].Value;
+                        }
+                    }
+                    
+                    physicalDrive.AddPartitionToList(newPartition);
                 }
 
                 physicalDrive.UnpartSpace = physicalDrive.CalcUnpartSpace(physicalDrive.TotalSpace);
@@ -194,6 +203,13 @@ namespace GUIForDiskpart.main
             }
 
             return newPartition;
+        }
+
+        private static List<object> GetPSPartitionsByOffset(DriveInfo driveInfo)
+        {
+            string diskIndex = Convert.ToString(driveInfo.DiskIndex);
+
+            return CommandExecuter.IssuePowershellCommand("Get-Partition", diskIndex);
         }
 
         private static LogicalDriveInfo RetrieveLogicalDrives(ManagementObject logicalDrive)

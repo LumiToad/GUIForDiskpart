@@ -7,9 +7,9 @@
     <UseWPF>true</UseWPF>
     <ApplicationManifest>main\app.manifest</ApplicationManifest>
 	<Deterministic>false</Deterministic>
-	<Version>1.0.292</Version>
-	<AssemblyVersion>1.0.2310.292</AssemblyVersion>
-	<FileVersion>1.0.2310.292</FileVersion>
+	<Version>1.0.330</Version>
+	<AssemblyVersion>1.0.2310.330</AssemblyVersion>
+	<FileVersion>1.0.2310.330</FileVersion>
 	<Copyright>MIT License</Copyright>
 	<ApplicationIcon>resources\guifdLogo.ico</ApplicationIcon>
   </PropertyGroup>
@@ -42,7 +42,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.16" />
     <PackageReference Include="System.Management" Version="7.0.2" />
+    <PackageReference Include="System.Management.Automation" Version="7.2.16" />
   </ItemGroup>
 
   <ItemGroup>

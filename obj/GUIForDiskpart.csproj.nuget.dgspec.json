@@ -5,7 +5,7 @@
   },
   "projects": {
     "E:\\Projekte\\0_Programmieren\\CSharp\\GUIForDiskpart\\GUIForDiskpart.csproj": {
-      "version": "1.0.292",
+      "version": "1.0.330",
       "restore": {
         "projectUniqueName": "E:\\Projekte\\0_Programmieren\\CSharp\\GUIForDiskpart\\GUIForDiskpart.csproj",
         "projectName": "GUIForDiskpart",
@@ -40,9 +40,17 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "dependencies": {
+            "Microsoft.PowerShell.SDK": {
+              "target": "Package",
+              "version": "[7.2.16, )"
+            },
             "System.Management": {
               "target": "Package",
               "version": "[7.0.2, )"
+            },
+            "System.Management.Automation": {
+              "target": "Package",
+              "version": "[7.2.16, )"
             }
           },
           "imports": [
