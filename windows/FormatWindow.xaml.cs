@@ -11,7 +11,6 @@ namespace GUIForDiskpart
     public partial class FormatDriveWindow : Window
     {
         private MainWindow mainWindow;
-        private MainProgram mainProgram;
 
         private DriveInfo driveInfo;
 
@@ -23,7 +22,6 @@ namespace GUIForDiskpart
             DriveInfoToTextBox();
 
             mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainProgram = mainWindow.mainProgram;
         }
 
         public void DriveInfoToTextBox()
@@ -79,14 +77,14 @@ namespace GUIForDiskpart
 
             if (DriveLetterValue.Text == "")
             {
-                output = mainProgram.comfortFunctions.EasyDriveFormat(driveInfo, fileSystem, VolumeValue.Text,
+                output = ComfortFeatures.EasyDriveFormat(driveInfo, fileSystem, VolumeValue.Text,
                     size, (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, true, false);
             }
             else
             {
                 char driveLetter = DriveLetterValue.Text.ToCharArray()[0];
 
-                output = mainProgram.comfortFunctions.EasyDriveFormat(driveInfo, fileSystem, VolumeValue.Text,
+                output = ComfortFeatures.EasyDriveFormat(driveInfo, fileSystem, VolumeValue.Text,
                     driveLetter, size, (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, true, false);
             }
 

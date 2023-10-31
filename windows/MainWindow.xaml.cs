@@ -17,8 +17,6 @@ namespace GUIForDiskpart
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainProgram mainProgram;
-
         private const string websiteURL = "https://github.com/LumiToad/GUIForDiskpart";
         private const string buildStage = "Alpha";
 
@@ -31,7 +29,6 @@ namespace GUIForDiskpart
 
         private void Initialize()
         {
-            mainProgram = new MainProgram();
             RetrieveAndShowDriveData(true);
             SetupDriveChangedWatcher();
         }
@@ -99,13 +96,13 @@ namespace GUIForDiskpart
 
         private void RetrieveAndShowDriveData_Internal(bool outputText)
         {
-            mainProgram.driveRetriever.ReloadDriveInformation();
+            DriveRetriever.ReloadDriveInformation();
 
             AddLogicalDrivesToStackPanel();
 
             if (outputText) 
             { 
-                AddTextToOutputConsole(mainProgram.driveRetriever.GetDrivesOutput());
+                AddTextToOutputConsole(DriveRetriever.GetDrivesOutput());
             }
         }
 
@@ -113,7 +110,7 @@ namespace GUIForDiskpart
         {
             DriveStackPanel.Children.Clear();
 
-            foreach (DriveInfo physicalDrive in mainProgram.driveRetriever.PhysicalDrives)
+            foreach (DriveInfo physicalDrive in DriveRetriever.PhysicalDrives)
             {
                 PhysicalDriveEntryUI driveListEntry = new PhysicalDriveEntryUI();
                 driveListEntry.AddDriveInfo(physicalDrive);

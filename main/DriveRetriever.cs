@@ -5,36 +5,36 @@ using System.Management;
 
 namespace GUIForDiskpart.main
 {
-    public class DriveRetriever
+    public static class DriveRetriever
     {
-        private List<DriveInfo> physicalDrives = new List<DriveInfo>();
-        public List<DriveInfo> PhysicalDrives { get { return physicalDrives; } }
+        private static List<DriveInfo> physicalDrives = new List<DriveInfo>();
+        public static List<DriveInfo> PhysicalDrives { get { return physicalDrives; } }
 
-        private List<ManagementObject> managementObjectDrives = new List<ManagementObject>();
+        private static List<ManagementObject> managementObjectDrives = new List<ManagementObject>();
 
-        public void Initialize()
+        public static void Initialize()
         {
         }
 
-        public void RetrieveDrives()
+        public static void RetrieveDrives()
         {
             RetrieveWMIObjectsToList();
             RetrieveDrivesToList();
         }
 
-        public void ReloadDriveInformation()
+        public static void ReloadDriveInformation()
         {
             DeleteDriveInformation();
             RetrieveDrives();
         }
 
-        private void DeleteDriveInformation()
+        private static void DeleteDriveInformation()
         {
             physicalDrives.Clear();
             managementObjectDrives.Clear();
         }
 
-        public string GetDrivesOutput()
+        public static string GetDrivesOutput()
         {
             string output = string.Empty;
 
@@ -46,7 +46,7 @@ namespace GUIForDiskpart.main
             return output;
         }
 
-        private void RetrieveWMIObjectsToList()
+        private static void RetrieveWMIObjectsToList()
         {
             ManagementObjectSearcher driveQuery = new ManagementObjectSearcher("select * from Win32_DiskDrive");
 
@@ -56,7 +56,7 @@ namespace GUIForDiskpart.main
             }
         }
 
-        private void RetrieveDrivesToList()
+        private static void RetrieveDrivesToList()
         {
             foreach (ManagementObject drive in managementObjectDrives)
             {
@@ -140,7 +140,7 @@ namespace GUIForDiskpart.main
             physicalDrives = SortPhysicalDrivesByDeviceID(physicalDrives);
         }
 
-        private PartitionInfo RetrievePartitions(ManagementObject partition, uint diskIndex)
+        private static PartitionInfo RetrievePartitions(ManagementObject partition, uint diskIndex)
         {
             PartitionInfo newPartition = new PartitionInfo();
             
@@ -196,7 +196,7 @@ namespace GUIForDiskpart.main
             return newPartition;
         }
 
-        private LogicalDriveInfo RetrieveLogicalDrives(ManagementObject logicalDrive)
+        private static LogicalDriveInfo RetrieveLogicalDrives(ManagementObject logicalDrive)
         {
             LogicalDriveInfo newLogicalDrive = new LogicalDriveInfo();
             
@@ -213,7 +213,7 @@ namespace GUIForDiskpart.main
             return newLogicalDrive;
         }
 
-        private List<DriveInfo> SortPhysicalDrivesByDeviceID(List<DriveInfo> list)
+        private static List<DriveInfo> SortPhysicalDrivesByDeviceID(List<DriveInfo> list)
         {
             List<DriveInfo> sortedList = list.OrderBy(o => o.DiskIndex).ToList();
             return sortedList;
