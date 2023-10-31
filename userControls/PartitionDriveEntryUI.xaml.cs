@@ -13,8 +13,6 @@ namespace GUIForDiskpart
     public partial class PartitionDriveEntryUI : UserControl
     {
         MainWindow mainWindow;
-        DPFunctions dpFunctions;
-
         PartitionInfo partitionInfo;
 
         private const string partitionBorder = "#FF00C4B4";
@@ -48,7 +46,6 @@ namespace GUIForDiskpart
         private void Initialize()
         {
             mainWindow = (MainWindow)Application.Current.MainWindow;
-            dpFunctions = mainWindow.mainProgram.dpFunctions;
         }
 
         public void AddPartitionInfo(PartitionInfo partitionInfo)
@@ -95,7 +92,7 @@ namespace GUIForDiskpart
 
         private void Detail_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.AddTextToOutputConsole(dpFunctions.DetailPart(partitionInfo.DiskIndex, partitionInfo.PartitionIndex));
+            mainWindow.AddTextToOutputConsole(DPFunctions.DetailPart(partitionInfo.DiskIndex, partitionInfo.PartitionIndex));
         }
 
         private void Format_Click(object sender, RoutedEventArgs e)
@@ -105,11 +102,9 @@ namespace GUIForDiskpart
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            DPFunctions dPFunctions = new DPFunctions();
-
             string output = string.Empty;
 
-            output += dpFunctions.Delete(partitionInfo.DiskIndex, partitionInfo.PartitionIndex, false, true);
+            output += DPFunctions.Delete(partitionInfo.DiskIndex, partitionInfo.PartitionIndex, false, true);
 
             mainWindow.AddTextToOutputConsole(output);
             mainWindow.RetrieveAndShowDriveData(false);

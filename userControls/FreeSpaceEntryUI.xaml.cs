@@ -14,7 +14,6 @@ namespace GUIForDiskpart
     public partial class FreeSpaceEntryUI : UserControl
     {
         MainWindow mainWindow;
-        DPFunctions dpFunctions;
 
         private ulong freeSpace;
 
@@ -52,7 +51,6 @@ namespace GUIForDiskpart
         private void Initialize()
         {
             mainWindow = (MainWindow)Application.Current.MainWindow;
-            dpFunctions = mainWindow.mainProgram.dpFunctions;
 
             AddSpaceToUI();
         }
@@ -76,12 +74,12 @@ namespace GUIForDiskpart
 
         private void CreateVolume_Click(object sender, RoutedEventArgs e)
         {
-            //dpFunctions.CreatePartition();
+            //DPFunctions.CreatePartition();
         }
 
         private void CreateVDisk_Click(object sender, RoutedEventArgs e)
         {
-            //dpFunctions.CreatePartition();
+            //DPFunctions.CreatePartition();
         }
 
         private void MultiCreate_Click(object sender, RoutedEventArgs e)

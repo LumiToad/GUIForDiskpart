@@ -3,11 +3,13 @@ using System.IO;
 
 namespace GUIForDiskpart.main
 {
-    public class CommandExecuter
+    public static class CommandExecuter
     {
-        Process process = new Process();
+        //Process process = new Process();
 
         private const string exeSuffix = ".exe";
+
+        /*
 
         public string IssueCommand(ProcessType processType, string command)
         {
@@ -26,9 +28,10 @@ namespace GUIForDiskpart.main
             return output;
         }
 
-        public string IssueCommand(ProcessType processType, string[] commands)
+        */
+        public static string IssueCommand(ProcessType processType, string[] commands)
         {
-            SetupProcessInfo(processType);
+            var process = CreateProcess(processType);
 
             string output = "";
 
@@ -36,21 +39,44 @@ namespace GUIForDiskpart.main
 
             foreach (string command in commands)
             {
-                output += ExecuteCommand(processType, command) + "\n";
+                process.StandardInput.WriteLine(command);
+
+                output += processType.ToString().ToUpper() + " - " + command + "\n";
             }
 
             process.StandardInput.WriteLine("exit");
 
-            output += ReadProcessStandardOutput();
-            int exitCode = ExitProcess();
+            output += ReadProcessStandardOutput(process);
+            int exitCode = 0;
+            exitCode = process.ExitCode;
             output += "Exit Code: " + exitCode.ToString() + "\n";
 
             return output;
         }
 
+        public static string IssueCommand(ProcessType processType, string command)
+        {
+            var process = CreateProcess(processType);
+
+            string output = "";
+
+            process.Start();
+
+            process.StandardInput.WriteLine(command);
+            output += processType.ToString().ToUpper() + " - " + command + "\n";
+            
+            process.StandardInput.WriteLine("exit");
+
+            output += ReadProcessStandardOutput(process);
+            int exitCode = ExitProcess(process);
+            output += "Exit Code: " + exitCode.ToString() + "\n";
+
+            return output;
+        }
+
+        /*
         private void SetupProcessInfo(ProcessType processType)
         {
-
             process.StartInfo.FileName = processType.ToString() + exeSuffix;
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -58,16 +84,30 @@ namespace GUIForDiskpart.main
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardInput = true;
         }
+        */
 
+        private static Process CreateProcess(ProcessType processType)
+        {
+            Process newProcess = new Process();
+            newProcess.StartInfo.FileName = processType.ToString() + exeSuffix;
+            newProcess.StartInfo.CreateNoWindow = true;
+            newProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            newProcess.StartInfo.UseShellExecute = false;
+            newProcess.StartInfo.RedirectStandardOutput = true;
+            newProcess.StartInfo.RedirectStandardInput = true;
+
+            return newProcess;
+        }
+        /*
         private string ExecuteCommand(ProcessType processType, string command)
         {
             process.StandardInput.WriteLine(command);
 
             return processType.ToString().ToUpper() + " - " + command + "\n";
         }
+        */
 
-
-        private int ExitProcess()
+        private static int ExitProcess(Process process)
         {
             process.WaitForExit();
 
@@ -78,7 +118,7 @@ namespace GUIForDiskpart.main
             return exitCode;
         }
 
-        private string ReadProcessStandardOutput()
+        private static string ReadProcessStandardOutput(Process process)
         {
             StreamReader streamReader = process.StandardOutput;
             return streamReader.ReadToEnd();

@@ -1,8 +1,10 @@
-﻿using GUIForDiskpart.main;
+﻿using GUIForDiskpart.diskpart;
+using GUIForDiskpart.main;
 using GUIForDiskpart.windows;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Management;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,6 +33,7 @@ namespace GUIForDiskpart
         {
             mainProgram = new MainProgram();
             RetrieveAndShowDriveData(true);
+            SetupDriveChangedWatcher();
         }
 
         private void Test()
@@ -62,25 +65,25 @@ namespace GUIForDiskpart
 
         private void ListVolume_Click(object sender, RoutedEventArgs e)
         {
-            AddTextToOutputConsole(mainProgram.dpFunctions.List(diskpart.DPListType.VOLUME));
+            AddTextToOutputConsole(DPFunctions.List(diskpart.DPListType.VOLUME));
         }
 
 
         private void ListDisk_Click(object sender, RoutedEventArgs e)
         {
-            AddTextToOutputConsole(mainProgram.dpFunctions.List(diskpart.DPListType.DISK));
+            AddTextToOutputConsole(DPFunctions.List(diskpart.DPListType.DISK));
 
         }
 
         private void ListPart_Click(object sender, RoutedEventArgs e)
         {
-            AddTextToOutputConsole(mainProgram.dpFunctions.List(diskpart.DPListType.PARTITION));
+            AddTextToOutputConsole(DPFunctions.List(diskpart.DPListType.PARTITION));
 
         }
 
         private void ListVdisk_Click(object sender, RoutedEventArgs e)
         {
-            AddTextToOutputConsole(mainProgram.dpFunctions.List(diskpart.DPListType.VDISK));
+            AddTextToOutputConsole(DPFunctions.List(diskpart.DPListType.VDISK));
 
         }
 
@@ -142,9 +145,7 @@ namespace GUIForDiskpart
 
         private void Website_Click(object sender, RoutedEventArgs e)
         {
-            CommandExecuter commandExecuter = new CommandExecuter();
-
-            commandExecuter.IssueCommand(ProcessType.cmd, "start " + websiteURL);
+            CommandExecuter.IssueCommand(ProcessType.cmd, "start " + websiteURL);
         }
 
         private void About_Click(object sender, RoutedEventArgs e)
@@ -152,6 +153,28 @@ namespace GUIForDiskpart
             AboutWindow aboutWindow = new AboutWindow(GetBuildNumberString());
             aboutWindow.Owner = this;
             aboutWindow.Show();
+        }
+
+        private void SetupDriveChangedWatcher()
+        {
+            try
+            {
+                WqlEventQuery query = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2 or EventType = 3");
+                ManagementEventWatcher watcher = new ManagementEventWatcher();
+                watcher.Query = query;
+                watcher.EventArrived += new EventArrivedEventHandler(OnDriveChanged);
+                watcher.Options.Timeout = TimeSpan.FromSeconds(3);
+                watcher.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void OnDriveChanged(object sender, EventArrivedEventArgs e)
+        {
+            RetrieveAndShowDriveData(false);
         }
     }
 }

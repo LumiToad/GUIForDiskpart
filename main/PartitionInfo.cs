@@ -4,29 +4,11 @@ namespace GUIForDiskpart.main
 {
     public class PartitionInfo
     {
-        private UInt16 additionalAvailability;
-        public UInt16 AdditionalAvailability { get { return additionalAvailability; } set { additionalAvailability = value; } }
-
         private UInt16 availability;
         public UInt16 Availability { get { return availability; } set { availability = value; } }
 
-        private UInt64 maxQuiesceTime;
-        public UInt64 MaxQuiesceTime { get { return maxQuiesceTime; } set { maxQuiesceTime = value; } }
-
-        private UInt64 otherIdentifyingInfo;
-        public UInt64 OtherIdentifyingInfo { get { return otherIdentifyingInfo; } set { otherIdentifyingInfo = value; } }
-
         private UInt16 statusInfo;
         public UInt16 StatusInfo { get { return statusInfo; } set { statusInfo = value; } }
-
-        private UInt64 powerOnHours;
-        public UInt64 PowerOnHours { get { return powerOnHours; } set { powerOnHours = value; } }
-
-        private UInt64 totalPowerOnHours;
-        public UInt64 TotalPowerOnHours { get { return totalPowerOnHours; } set { totalPowerOnHours = value; } }
-
-        private UInt16 access;
-        public UInt16 Access { get { return access; } set { access = value; } }
 
         private UInt64 blockSize;
         public UInt64 BlockSize { get { return blockSize; } set { blockSize = value; } }
@@ -64,8 +46,8 @@ namespace GUIForDiskpart.main
         private UInt32 hiddenSectors;
         public UInt32 HiddenSectors { get { return hiddenSectors; } set { hiddenSectors = value; } }
 
-        private UInt32 index;
-        public UInt32 Index { get { return index; } set { index = value; } }
+        private UInt32 partitionIndex;
+        public UInt32 PartitionIndex { get { return partitionIndex; } set { partitionIndex = value; } }
 
         private DateTime installDate;
         public DateTime InstallDate { get { return installDate; } set { installDate = value; } }
@@ -101,18 +83,7 @@ namespace GUIForDiskpart.main
         public string SystemName { get { return systemName; } set { systemName = value; } }
 
         private string partitionName;
-        public string PartitionName 
-        { 
-            get {  return partitionName; }
-            set 
-            {
-                partitionName = value;
-                PartitionIndex = ParsePartitionNumber(partitionName);
-            } 
-        }
-
-        private int partitionIndex;
-        public int PartitionIndex { get { return partitionIndex; } set { partitionIndex = value; } }
+        public string PartitionName { get {  return partitionName; } set { partitionName = value; } }
 
         private bool bootable;
         public bool Bootable { get { return bootable; } set { bootable = value; } }
@@ -134,8 +105,6 @@ namespace GUIForDiskpart.main
 
         public LogicalDriveInfo logicalDriveInfo;
         public LogicalDriveInfo LogicalDriveInfo { get { return logicalDriveInfo; } }
-
-        
 
         public void PrintToConsole()
         {
@@ -177,21 +146,5 @@ namespace GUIForDiskpart.main
 
         public bool IsLogicalPartition()
         {  return logicalDriveInfo != null; }
-
-        public int ParsePartitionNumber(string name)
-        {
-            int spacerIndex = 0;
-
-            for (int i = name.Length -1; i != 0; i-- )
-            {
-                if (name[i] == ' ')
-                {
-                    spacerIndex = i;
-                    break;
-                }
-            }
-
-            return int.Parse(name.Substring(spacerIndex));
-        }
     }
 }

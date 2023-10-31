@@ -5,54 +5,37 @@ using System.Text.RegularExpressions;
 
 namespace GUIForDiskpart.diskpart
 {
-    public class DPFunctions
+    public static class DPFunctions
     {
-        private CommandExecuter commandExecuter;
-        private List<string> dpInfoExcludeStrings = new List<string>();
+        private static List<string> dpInfoExcludeStrings = new List<string>();
 
-        public DPFunctions()
+        static DPFunctions()
         {
-            commandExecuter = new CommandExecuter();
-;
             GetDPInfoExcludeStrings();
         }
 
-        private void GetDPInfoExcludeStrings()
-        {
-            string output = commandExecuter.IssueCommand(ProcessType.diskpart, "");
+        
 
-            foreach (string line in output.Split('\r', StringSplitOptions.TrimEntries)) 
-            {
-                dpInfoExcludeStrings.Add(line);
-            }
-            dpInfoExcludeStrings.RemoveAt(0);
-            dpInfoExcludeStrings.RemoveAt(dpInfoExcludeStrings.Count - 1);
+        public static string List(DPListType type)
+        {
+            string[] commands = new string[1];
+                
+            commands[0] = "List " + type.ToString();
+
+            return ExecuteInternal(commands);
         }
 
-        public string List(DPListType type)
-        {
-            string command = "List " + type.ToString();
-
-            string output = commandExecuter.IssueCommand(ProcessType.diskpart, command);
-            output = RemoveDPInfo(output);
-            
-            return output;
-        }
-
-        public string DetailDisk(uint diskIndex) 
+        public static string DetailDisk(uint diskIndex) 
         {
             string[] commands = new string[2];
 
             commands[0] = "Select " + "DISK " + diskIndex.ToString();
             commands[1] = "Detail " + "DISK ";
 
-            string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
-            output = RemoveDPInfo(output);
-
-            return output;
+            return ExecuteInternal(commands);
         }
 
-        public string DetailPart(uint diskIndex, int partIndex)
+        public static string DetailPart(uint diskIndex, uint partIndex)
         {
             string[] commands = new string[3];
 
@@ -60,31 +43,12 @@ namespace GUIForDiskpart.diskpart
             commands[1] = "Select " + "PART " + partIndex.ToString();
             commands[2] = "Detail " + "PART ";
 
-            string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
-            output = RemoveDPInfo(output);
-
-            return output;
+            return ExecuteInternal(commands);
         }
 
-        private string RemoveDPInfo(string info)
-        {
-            string output = info;
-            
-            foreach(string line in dpInfoExcludeStrings)
-            {
-                if (line == "") continue;
+        
 
-                if (info.Contains(line) || info.Contains(" \n"))
-                {
-                    output = output.Replace(line, "");
-                    output = Regex.Replace(output, @"[\r\n]+", "\n");
-                }
-            }
-
-            return output;
-        }
-
-        public string CreatePartition(uint diskIndex, CreatePartitionOptions option, UInt64 sizeInMB, bool isNoErr)
+        public static string CreatePartition(uint diskIndex, CreatePartitionOptions option, UInt64 sizeInMB, bool isNoErr)
         {
             string[] commands = new string[2];
 
@@ -101,13 +65,10 @@ namespace GUIForDiskpart.diskpart
                 commands[1] += "NOERR ";
             }
 
-            string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
-            output = RemoveDPInfo(output);
-
-            return output;
+            return ExecuteInternal(commands);
         }
 
-        public string CreateVolume(uint diskIndex, CreateVolumeOptions option, UInt64 sizeInMB, bool isNoErr)
+        public static string CreateVolume(uint diskIndex, CreateVolumeOptions option, UInt64 sizeInMB, bool isNoErr)
         {
             string[] commands = new string[1];
 
@@ -124,13 +85,10 @@ namespace GUIForDiskpart.diskpart
                 commands[1] += "NOERR ";
             }
 
-            string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
-            output = RemoveDPInfo(output);
-
-            return output;
+            return ExecuteInternal(commands);
         }
 
-        public string CreateVDisk(uint diskIndex, string filePath, bool isNoErr)
+        public static string CreateVDisk(uint diskIndex, string filePath, bool isNoErr)
         {
             string[] commands = new string[1];
 
@@ -142,13 +100,10 @@ namespace GUIForDiskpart.diskpart
                 commands[1] += "NOERR ";
             }
 
-            string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
-            output = RemoveDPInfo(output);
-
-            return output;
+            return ExecuteInternal(commands);
         }
 
-        public string Format(uint diskIndex, int partitionIndex, FileSystem fileSystem,
+        public static string Format(uint diskIndex, uint partitionIndex, FileSystem fileSystem,
             string volumeName, bool isQuickFormatting, bool isCompressed, bool isOverride, bool isNoWait, bool isNoErr)
         {
             string[] commands = new string[3];
@@ -187,13 +142,10 @@ namespace GUIForDiskpart.diskpart
                 commands[2] += "NOERR ";
             }
 
-            string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
-            output = RemoveDPInfo(output);
-
-            return output;
+            return ExecuteInternal(commands);
         }
 
-        public string Delete(uint diskIndex, int partitionIndex, bool isNoErr, bool isOverride)
+        public static string Delete(uint diskIndex, uint partitionIndex, bool isNoErr, bool isOverride)
         {
             string[] commands = new string[3];
 
@@ -211,13 +163,10 @@ namespace GUIForDiskpart.diskpart
                 commands[2] += "OVERRIDE ";
             }
 
-            string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
-            output = RemoveDPInfo(output);
-
-            return output;
+            return ExecuteInternal(commands);
         }
 
-        public string Assign(uint diskIndex, int partitionIndex, char diskLetter, bool isNoErr)
+        public static string Assign(uint diskIndex, int partitionIndex, char diskLetter, bool isNoErr)
         {
             string[] commands = new string[3];
 
@@ -230,13 +179,10 @@ namespace GUIForDiskpart.diskpart
                 commands[2] += "NOERR ";
             }
 
-            string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
-            output = RemoveDPInfo(output);
-
-            return output;
+            return ExecuteInternal(commands);
         }
 
-        public string Assign(uint diskIndex, int partitionIndex, bool isNoErr)
+        public static string Assign(uint diskIndex, int partitionIndex, bool isNoErr)
         {
             string[] commands = new string[3];
 
@@ -249,13 +195,10 @@ namespace GUIForDiskpart.diskpart
                 commands[2] += "NOERR ";
             }
 
-            string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
-            output = RemoveDPInfo(output);
-
-            return output;
+            return ExecuteInternal(commands);
         }
 
-        public string Clean(uint diskIndex, bool isCleanAll)
+        public static string Clean(uint diskIndex, bool isCleanAll)
         {
             string[] commands = new string[2];
 
@@ -267,23 +210,60 @@ namespace GUIForDiskpart.diskpart
                 commands[1] += "ALL";
             }
 
-            string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
-            output = RemoveDPInfo(output);
-
-            return output;
+            return ExecuteInternal(commands);
         }
 
-        public string Convert(uint diskIndex, ConvertOptions options)
+        public static string Convert(uint diskIndex, ConvertOptions options)
         {
             string[] commands = new string[2];
 
             commands[0] = "Select " + DPListType.DISK.ToString() + " " + diskIndex.ToString();
             commands[1] = "Convert " + options.ToString();
 
-            string output = commandExecuter.IssueCommand(ProcessType.diskpart, commands);
-            output = RemoveDPInfo(output);
+            return ExecuteInternal(commands);
+        }
+
+        #region private
+
+        private static string RemoveDPInfo(string info)
+        {
+            string fullOutput = info;
+            string output = string.Empty;
+
+            foreach (string line in dpInfoExcludeStrings)
+            {
+                if (line == "") continue;
+
+                if (info.Contains(line) || info.Contains(" \n"))
+                {
+                    fullOutput = fullOutput.Replace(line, "");
+                    output = Regex.Replace(fullOutput, @"[\r\n]+", "\n");
+                }
+            }
 
             return output;
         }
+
+        private static void GetDPInfoExcludeStrings()
+        {
+            string output = CommandExecuter.IssueCommand(ProcessType.diskpart, "");
+
+            foreach (string line in output.Split('\r', StringSplitOptions.TrimEntries))
+            {
+                dpInfoExcludeStrings.Add(line);
+            }
+            dpInfoExcludeStrings.RemoveAt(0);
+            dpInfoExcludeStrings.RemoveAt(dpInfoExcludeStrings.Count - 1);
+        }
+
+        private static string ExecuteInternal(string[] commands)
+        {
+            string fullOutput = CommandExecuter.IssueCommand(ProcessType.diskpart, commands);
+            string output = RemoveDPInfo(fullOutput);
+
+            return output;
+        }
+
+        #endregion private
     }
 }

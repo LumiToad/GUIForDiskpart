@@ -14,7 +14,6 @@ namespace GUIForDiskpart
     public partial class PhysicalDriveEntryUI : UserControl
     {
         MainWindow mainWindow;
-        DPFunctions dpFunctions;
 
         DriveInfo driveInfo;
 
@@ -30,7 +29,6 @@ namespace GUIForDiskpart
         private void Initialize()
         {
             mainWindow = (MainWindow)Application.Current.MainWindow;
-            dpFunctions = mainWindow.mainProgram.dpFunctions;
         }
 
         public void AddDriveInfo(DriveInfo physicalDrive)
@@ -67,7 +65,7 @@ namespace GUIForDiskpart
 
         private void Detail_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.AddTextToOutputConsole(dpFunctions.DetailDisk(driveInfo.DiskIndex));
+            mainWindow.AddTextToOutputConsole(DPFunctions.DetailDisk(driveInfo.DiskIndex));
         }
 
         private void Clean_Click(object sender, RoutedEventArgs e)
@@ -79,11 +77,9 @@ namespace GUIForDiskpart
 
             if (messageBoxResult == MessageBoxResult.OK) 
             {
-                DPFunctions dpFunctions = new DPFunctions();
-
                 string output = string.Empty;
 
-                output = dpFunctions.Clean(driveInfo.DiskIndex, false);
+                output = DPFunctions.Clean(driveInfo.DiskIndex, false);
 
                 mainWindow.AddTextToOutputConsole(output);
 

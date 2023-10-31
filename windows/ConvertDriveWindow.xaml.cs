@@ -34,9 +34,6 @@ namespace GUIForDiskpart.windows
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            DPFunctions dpFunctions = new DPFunctions();
-
-
             ConvertOptions option = ConvertOptions.GPT;
 
             switch (SelectedOptionAsString())
@@ -56,7 +53,7 @@ namespace GUIForDiskpart.windows
             }
 
             string output = string.Empty;
-            output = dpFunctions.Convert(driveInfo.DiskIndex, option);
+            output = DPFunctions.Convert(driveInfo.DiskIndex, option);
 
             mainWindow.AddTextToOutputConsole(output);
 

@@ -2,26 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
-using System.Threading;
-using System.Windows;
 
 namespace GUIForDiskpart.main
 {
     public class DriveRetriever
     {
-        MainWindow mainWindow;
-
         private List<DriveInfo> physicalDrives = new List<DriveInfo>();
         public List<DriveInfo> PhysicalDrives { get { return physicalDrives; } }
 
         private List<ManagementObject> managementObjectDrives = new List<ManagementObject>();
 
-        Thread thread;
-
         public void Initialize()
         {
-            mainWindow = (MainWindow)Application.Current.MainWindow;
-            SetupDriveChangedWatcher();
         }
 
         public void RetrieveDrives()
@@ -53,28 +45,6 @@ namespace GUIForDiskpart.main
 
             return output;
         }
-        
-        private void SetupDriveChangedWatcher()
-        {
-            try
-            {
-                WqlEventQuery query = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2 or EventType = 3");
-                ManagementEventWatcher watcher = new ManagementEventWatcher();
-                watcher.Query = query;
-                watcher.EventArrived += new EventArrivedEventHandler(OnDriveChanged);
-                watcher.Options.Timeout = TimeSpan.FromSeconds(3);
-                watcher.Start();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-        
-        private void OnDriveChanged(object sender, EventArrivedEventArgs e)
-        {
-            mainWindow.RetrieveAndShowDriveData(false);
-        }
 
         private void RetrieveWMIObjectsToList()
         {
@@ -91,8 +61,7 @@ namespace GUIForDiskpart.main
             foreach (ManagementObject drive in managementObjectDrives)
             {
                 string deviceId = Convert.ToString(drive.Properties["DeviceId"].Value);
-                //string physicalName = Convert.ToString(drive.Properties["Name"].Value);
-                string physicalName = (string)drive.Properties["Name"].Value;
+                string physicalName = Convert.ToString(drive.Properties["Name"].Value);
                 string caption = Convert.ToString(drive.Properties["Caption"].Value);
                 string diskModel = Convert.ToString(drive.Properties["Model"].Value);
                 string status = Convert.ToString(drive.Properties["Status"].Value);
@@ -152,8 +121,11 @@ namespace GUIForDiskpart.main
                     numberOfMediaSupported, pnpDeviceID, powerManagementSupported, scsiBus, scsiLogicalUnit, scsiPort, scsiTargetId, sectorsPerTrack,
                     serialNumber, statusInfo, systemCreationClassName, systemName, totalCylinders, totalHeads, totalSectors, totalTracks, tracksPerCylinder);
 
-                var partitionQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_DiskDriveToDiskPartition", drive.Path.RelativePath);
-                var partitionQuery = new ManagementObjectSearcher(partitionQueryText);
+                //var partitionQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_DiskDriveToDiskPartition", drive.Path.RelativePath);
+
+                var partitionQueryText = "SELECT * from Win32_DiskPartition";
+                var partitionQuery = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM CIM_DiskPartition");
+                //var partitionQuery = new ManagementObjectSearcher(partitionQueryText);
 
                 foreach (ManagementObject partition in partitionQuery.Get())
                 {
@@ -171,37 +143,48 @@ namespace GUIForDiskpart.main
         private PartitionInfo RetrievePartitions(ManagementObject partition, uint diskIndex)
         {
             PartitionInfo newPartition = new PartitionInfo();
-
-            /*
-            newPartition.AdditionalAvailability = Convert.ToUInt16(partition.Properties["AdditionalAvailability"].Value);
+            
             newPartition.Availability = Convert.ToUInt16(partition.Properties["Availability"].Value);
-            newPartition.MaxQuiesceTime = Convert.ToUInt64(partition.Properties["MaxQuiesceTime"].Value);
-            newPartition.OtherIdentifyingInfo = Convert.ToUInt64(partition.Properties["OtherIdentifyingInfo"].Value);
             newPartition.StatusInfo = Convert.ToUInt16(partition.Properties["StatusInfo"].Value);
-            newPartition.PowerOnHours = Convert.ToUInt64(partition.Properties["PowerOnHours"].Value);
-            newPartition.TotalPowerOnHours = Convert.ToUInt64(partition.Properties["TotalPowerOnHours"].Value);
-            newPartition.Access = Convert.ToUInt16(partition.Properties["Access"].Value);
             newPartition.BlockSize = Convert.ToUInt64(partition.Properties["BlockSize"].Value);
             newPartition.Bootable = Convert.ToBoolean(partition.Properties["Bootable"].Value);
             newPartition.BootPartition = Convert.ToBoolean(partition.Properties["BootPartition"].Value);
-            */
-            newPartition.Caption = (string)partition.Properties["Caption"].Value; 
-
+            newPartition.Caption = Convert.ToString(partition.Properties["Caption"].Value);
 
             newPartition.ConfigManagerErrorCode = Convert.ToUInt32(partition.Properties["ConfigManagerErrorCode"].Value);
             newPartition.ConfigManagerUserConfig = Convert.ToBoolean(partition.Properties["ConfigManagerUserConfig"].Value);
             newPartition.CreationClassName = Convert.ToString(partition.Properties["CreationClassName"].Value);
             newPartition.Description = Convert.ToString(partition.Properties["Description"].Value);
             newPartition.DeviceID = Convert.ToString(partition.Properties["DeviceID"].Value);
-            newPartition.DiskIndex = diskIndex;
+            newPartition.DiskIndex = Convert.ToUInt32(partition.Properties["DiskIndex"].Value);
+            
+            newPartition.ErrorCleared = Convert.ToBoolean(partition.Properties["ErrorCleared"].Value);
+            newPartition.ErrorDescription = Convert.ToString(partition.Properties["ErrorDescription"].Value);
+            newPartition.ErrorMethodology = Convert.ToString(partition.Properties["ErrorMethodology"].Value);
 
+            newPartition.HiddenSectors = Convert.ToUInt32(partition.Properties["ConfigManagerErrorCode"].Value);
+            newPartition.PartitionIndex = Convert.ToUInt32(partition.Properties["Index"].Value);
 
+            newPartition.InstallDate = Convert.ToDateTime(partition.Properties["InstallDate"].Value);
+            newPartition.LastErrorCode = Convert.ToUInt32(partition.Properties["LastErrorCode"].Value);
             newPartition.PartitionName = Convert.ToString(partition.Properties["Name"].Value);
+            newPartition.NumberOfBlocks = Convert.ToUInt64(partition.Properties["NumberOfBlocks"].Value);
+
+            newPartition.PNPDeviceID = Convert.ToString(partition.Properties["PNPDeviceID"].Value);
+            newPartition.PowerManagementSupported = Convert.ToBoolean(partition.Properties["PowerManagementSupported"].Value);
             newPartition.PrimaryPartition = Convert.ToBoolean(partition.Properties["PrimaryPartition"].Value);
+            newPartition.Purpose = Convert.ToString(partition.Properties["Purpose"].Value);
+            newPartition.RewritePartition = Convert.ToBoolean(partition.Properties["RewritePartition"].Value);
             newPartition.Size = Convert.ToUInt64(partition.Properties["Size"].Value);
+            newPartition.StartingOffset = Convert.ToUInt64(partition.Properties["StartingOffset"].Value);
             newPartition.Status = Convert.ToString(partition.Properties["Status"].Value);
+            newPartition.SystemCreationClassName = Convert.ToString(partition.Properties["SystemCreationClassName"].Value);
+            newPartition.SystemName = Convert.ToString(partition.Properties["SystemName"].Value);
+
             newPartition.Type = Convert.ToString(partition.Properties["Type"].Value);
-            newPartition.PartitionIndex = (int)Convert.ToUInt32(partition.Properties["Index"].Value);
+
+            Console.WriteLine($"Function diskIndex: {diskIndex}, retrieved diskIndex: {newPartition.DiskIndex}, retrieved partIndex: {newPartition.PartitionIndex}, Size: {newPartition.Size}, " +
+                $"\nstartingOffset: {newPartition.StartingOffset}, systemCreationClassName: {newPartition.SystemCreationClassName}, purpose: {newPartition.Purpose}");
 
             var logicalDriveQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_LogicalDiskToPartition", partition.Path.RelativePath);
             var logicalDriveQuery = new ManagementObjectSearcher(logicalDriveQueryText);

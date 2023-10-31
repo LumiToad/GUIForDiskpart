@@ -85,7 +85,7 @@ namespace GUIForDiskpart.windows {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/GUIForDiskpart;V1.0.2310.197;component/windows/convertdrivewindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/GUIForDiskpart;V1.0.2310.285;component/windows/convertdrivewindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\windows\ConvertDriveWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

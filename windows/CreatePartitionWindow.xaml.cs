@@ -55,10 +55,10 @@ namespace GUIForDiskpart.windows
                     break;
             }
 
-            DPFunctions dpFunctions = new DPFunctions();
+
             string output = string.Empty;
             
-            output += dpFunctions.CreatePartition(driveInfo.DiskIndex, option, GetSizeValue(), false);
+            output += DPFunctions.CreatePartition(driveInfo.DiskIndex, option, GetSizeValue(), false);
 
             mainWindow.AddTextToOutputConsole(output);
             mainWindow.RetrieveAndShowDriveData(false);
