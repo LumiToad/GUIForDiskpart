@@ -5,7 +5,7 @@
   },
   "projects": {
     "E:\\Projekte\\0_Programmieren\\CSharp\\GUIForDiskpart\\GUIForDiskpart.csproj": {
-      "version": "1.0.179",
+      "version": "1.0.197",
       "restore": {
         "projectUniqueName": "E:\\Projekte\\0_Programmieren\\CSharp\\GUIForDiskpart\\GUIForDiskpart.csproj",
         "projectName": "GUIForDiskpart",
@@ -64,7 +64,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Management;
 using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Threading;
 
 namespace GUIForDiskpart.main
 {
@@ -95,8 +91,9 @@ namespace GUIForDiskpart.main
             foreach (ManagementObject drive in managementObjectDrives)
             {
                 string deviceId = Convert.ToString(drive.Properties["DeviceId"].Value);
-                string physicalName = Convert.ToString(drive.Properties["Name"].Value);
-                string diskName = Convert.ToString(drive.Properties["Caption"].Value);
+                //string physicalName = Convert.ToString(drive.Properties["Name"].Value);
+                string physicalName = (string)drive.Properties["Name"].Value;
+                string caption = Convert.ToString(drive.Properties["Caption"].Value);
                 string diskModel = Convert.ToString(drive.Properties["Model"].Value);
                 string status = Convert.ToString(drive.Properties["Status"].Value);
                 bool mediaLoaded = Convert.ToBoolean(drive.Properties["MediaLoaded"].Value);
@@ -148,7 +145,7 @@ namespace GUIForDiskpart.main
                 UInt64 totalTracks = Convert.ToUInt64(drive.Properties["TotalTracks"].Value);
                 UInt32 tracksPerCylinder = Convert.ToUInt32(drive.Properties["TracksPerCylinder"].Value);
 
-                DriveInfo physicalDrive = new DriveInfo(deviceId, physicalName, diskName, diskModel, mediaStatus, mediaLoaded, totalSpace, partitionCount,
+                DriveInfo physicalDrive = new DriveInfo(deviceId, physicalName, caption, diskModel, mediaStatus, mediaLoaded, totalSpace, partitionCount,
                     interfaceType, mediaSignature, driveName, mediaType, availability, bytesPerSector, compressionMethod, configManagerErrorCode,
                     configManagerUserConfig, creationClassName, defaultBlockSize, description, errorCleared, errorDescription, errorMethodology,
                     firmwareRevision, index, installDate, lastErrorCode, manufacturer, maxBlockSize, maxMediaSize, minBlockSize, needsCleaning,
@@ -160,7 +157,7 @@ namespace GUIForDiskpart.main
 
                 foreach (ManagementObject partition in partitionQuery.Get())
                 {
-                    physicalDrive.AddPartitionDriveToList(RetrievePartitions(partition, physicalDrive.DriveIndex));
+                    physicalDrive.AddPartitionToList(RetrievePartitions(partition, physicalDrive.DiskIndex));
                 }
 
                 physicalDrive.UnpartSpace = physicalDrive.CalcUnpartSpace(physicalDrive.TotalSpace);
@@ -171,19 +168,40 @@ namespace GUIForDiskpart.main
             physicalDrives = SortPhysicalDrivesByDeviceID(physicalDrives);
         }
 
-        private PartitionInfo RetrievePartitions(ManagementObject partition, uint driveIndex)
+        private PartitionInfo RetrievePartitions(ManagementObject partition, uint diskIndex)
         {
             PartitionInfo newPartition = new PartitionInfo();
-            
-            newPartition.PartitionName = Convert.ToString(partition.Properties["Name"].Value);
+
+            /*
+            newPartition.AdditionalAvailability = Convert.ToUInt16(partition.Properties["AdditionalAvailability"].Value);
+            newPartition.Availability = Convert.ToUInt16(partition.Properties["Availability"].Value);
+            newPartition.MaxQuiesceTime = Convert.ToUInt64(partition.Properties["MaxQuiesceTime"].Value);
+            newPartition.OtherIdentifyingInfo = Convert.ToUInt64(partition.Properties["OtherIdentifyingInfo"].Value);
+            newPartition.StatusInfo = Convert.ToUInt16(partition.Properties["StatusInfo"].Value);
+            newPartition.PowerOnHours = Convert.ToUInt64(partition.Properties["PowerOnHours"].Value);
+            newPartition.TotalPowerOnHours = Convert.ToUInt64(partition.Properties["TotalPowerOnHours"].Value);
+            newPartition.Access = Convert.ToUInt16(partition.Properties["Access"].Value);
+            newPartition.BlockSize = Convert.ToUInt64(partition.Properties["BlockSize"].Value);
             newPartition.Bootable = Convert.ToBoolean(partition.Properties["Bootable"].Value);
             newPartition.BootPartition = Convert.ToBoolean(partition.Properties["BootPartition"].Value);
+            */
+            newPartition.Caption = (string)partition.Properties["Caption"].Value; 
+
+
+            newPartition.ConfigManagerErrorCode = Convert.ToUInt32(partition.Properties["ConfigManagerErrorCode"].Value);
+            newPartition.ConfigManagerUserConfig = Convert.ToBoolean(partition.Properties["ConfigManagerUserConfig"].Value);
+            newPartition.CreationClassName = Convert.ToString(partition.Properties["CreationClassName"].Value);
+            newPartition.Description = Convert.ToString(partition.Properties["Description"].Value);
+            newPartition.DeviceID = Convert.ToString(partition.Properties["DeviceID"].Value);
+            newPartition.DiskIndex = diskIndex;
+
+
+            newPartition.PartitionName = Convert.ToString(partition.Properties["Name"].Value);
             newPartition.PrimaryPartition = Convert.ToBoolean(partition.Properties["PrimaryPartition"].Value);
             newPartition.Size = Convert.ToUInt64(partition.Properties["Size"].Value);
             newPartition.Status = Convert.ToString(partition.Properties["Status"].Value);
             newPartition.Type = Convert.ToString(partition.Properties["Type"].Value);
             newPartition.PartitionIndex = (int)Convert.ToUInt32(partition.Properties["Index"].Value);
-            newPartition.DriveIndex = driveIndex;
 
             var logicalDriveQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_LogicalDiskToPartition", partition.Path.RelativePath);
             var logicalDriveQuery = new ManagementObjectSearcher(logicalDriveQueryText);
@@ -214,7 +232,7 @@ namespace GUIForDiskpart.main
 
         private List<DriveInfo> SortPhysicalDrivesByDeviceID(List<DriveInfo> list)
         {
-            List<DriveInfo> sortedList = list.OrderBy(o => o.DriveIndex).ToList();
+            List<DriveInfo> sortedList = list.OrderBy(o => o.DiskIndex).ToList();
             return sortedList;
         }
     }

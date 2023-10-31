@@ -95,7 +95,7 @@ namespace GUIForDiskpart
 
         private void Detail_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.AddTextToOutputConsole(dpFunctions.DetailPart(partitionInfo.DriveIndex, partitionInfo.PartitionIndex));
+            mainWindow.AddTextToOutputConsole(dpFunctions.DetailPart(partitionInfo.DiskIndex, partitionInfo.PartitionIndex));
         }
 
         private void Format_Click(object sender, RoutedEventArgs e)
@@ -109,7 +109,7 @@ namespace GUIForDiskpart
 
             string output = string.Empty;
 
-            output += dpFunctions.Delete(partitionInfo.DriveIndex, partitionInfo.PartitionIndex, false, true);
+            output += dpFunctions.Delete(partitionInfo.DiskIndex, partitionInfo.PartitionIndex, false, true);
 
             mainWindow.AddTextToOutputConsole(output);
             mainWindow.RetrieveAndShowDriveData(false);

@@ -1,11 +1,106 @@
 ﻿using System;
-using System.Windows.Controls;
 
 namespace GUIForDiskpart.main
 {
     public class PartitionInfo
     {
-        public string partitionName;
+        private UInt16 additionalAvailability;
+        public UInt16 AdditionalAvailability { get { return additionalAvailability; } set { additionalAvailability = value; } }
+
+        private UInt16 availability;
+        public UInt16 Availability { get { return availability; } set { availability = value; } }
+
+        private UInt64 maxQuiesceTime;
+        public UInt64 MaxQuiesceTime { get { return maxQuiesceTime; } set { maxQuiesceTime = value; } }
+
+        private UInt64 otherIdentifyingInfo;
+        public UInt64 OtherIdentifyingInfo { get { return otherIdentifyingInfo; } set { otherIdentifyingInfo = value; } }
+
+        private UInt16 statusInfo;
+        public UInt16 StatusInfo { get { return statusInfo; } set { statusInfo = value; } }
+
+        private UInt64 powerOnHours;
+        public UInt64 PowerOnHours { get { return powerOnHours; } set { powerOnHours = value; } }
+
+        private UInt64 totalPowerOnHours;
+        public UInt64 TotalPowerOnHours { get { return totalPowerOnHours; } set { totalPowerOnHours = value; } }
+
+        private UInt16 access;
+        public UInt16 Access { get { return access; } set { access = value; } }
+
+        private UInt64 blockSize;
+        public UInt64 BlockSize { get { return blockSize; } set { blockSize = value; } }
+
+        private string caption;
+        public string Caption { get { return caption; } set { caption = value; } }
+
+        private UInt32 configManagerErrorCode;
+        public UInt32 ConfigManagerErrorCode { get { return configManagerErrorCode; } set { configManagerErrorCode = value; } }
+
+        private bool configManagerUserConfig;
+        public bool ConfigManagerUserConfig { get { return configManagerUserConfig; } set { configManagerUserConfig = value; } }
+
+        private string creationClassName;
+        public string CreationClassName { get { return creationClassName; } set { creationClassName = value; } }
+
+        private string description;
+        public string Description { get { return description; } set { description = value; } }
+
+        private string deviceID;
+        public string DeviceID { get { return deviceID; } set { deviceID = value; } }
+
+        private UInt32 diskIndex;
+        public UInt32 DiskIndex { get { return diskIndex; } set { diskIndex = value; } }
+
+        private bool errorCleared;
+        public bool ErrorCleared { get { return errorCleared; } set { errorCleared = value; } }
+
+        private string errorDescription;
+        public string ErrorDescription { get { return errorDescription; } set { errorDescription = value; } }
+
+        private string errorMethodology;
+        public string ErrorMethodology { get { return errorMethodology; } set { errorMethodology = value; } }
+
+        private UInt32 hiddenSectors;
+        public UInt32 HiddenSectors { get { return hiddenSectors; } set { hiddenSectors = value; } }
+
+        private UInt32 index;
+        public UInt32 Index { get { return index; } set { index = value; } }
+
+        private DateTime installDate;
+        public DateTime InstallDate { get { return installDate; } set { installDate = value; } }
+
+        private UInt32 lastErrorCode;
+        public UInt32 LastErrorCode { get { return lastErrorCode; } set { lastErrorCode = value; } }
+
+        private string name;
+        public string Name { get { return name; } set { name = value; } }
+
+        private UInt64 numberOfBlocks;
+        public UInt64 NumberOfBlocks { get { return numberOfBlocks; } set { numberOfBlocks = value; } }
+
+        private string pnpDeviceID;
+        public string PNPDeviceID { get { return pnpDeviceID; } set { pnpDeviceID = value; } }
+
+        private bool powerManagementSupported;
+        public bool PowerManagementSupported { get { return powerManagementSupported; } set { powerManagementSupported = value; } }
+
+        private string purpose;
+        public string Purpose { get { return purpose; } set { purpose = value; } }
+
+        private bool rewritePartition;
+        public bool RewritePartition { get { return rewritePartition; } set { rewritePartition = value; } }
+
+        private UInt64 startingOffset;
+        public UInt64 StartingOffset { get { return startingOffset; } set { startingOffset = value; } }
+
+        private string systemCreationClassName;
+        public string SystemCreationClassName { get { return systemCreationClassName; } set { systemCreationClassName = value; } }
+
+        private string systemName;
+        public string SystemName { get { return systemName; } set { systemName = value; } }
+
+        private string partitionName;
         public string PartitionName 
         { 
             get {  return partitionName; }
@@ -16,32 +111,31 @@ namespace GUIForDiskpart.main
             } 
         }
 
-        public int partitionIndex;
-        public int PartitionIndex { get; set; }
+        private int partitionIndex;
+        public int PartitionIndex { get { return partitionIndex; } set { partitionIndex = value; } }
 
-        private uint driveIndex;
-        public uint DriveIndex { get; set; }
+        private bool bootable;
+        public bool Bootable { get { return bootable; } set { bootable = value; } }
 
-        public bool bootable;
-        public bool Bootable { get; set; }
+        private bool bootPartition;
+        public bool BootPartition { get { return bootPartition; } set { bootPartition = value; } }
 
-        public bool bootPartition;
-        public bool BootPartition { get; set; }
+        private bool primaryPartition;
+        public bool PrimaryPartition { get { return primaryPartition; } set { primaryPartition = value; } }
 
-        public bool primaryPartition;
-        public bool PrimaryPartition { get; set; }
+        private UInt64 size;
+        public UInt64 Size { get { return size; } set { size = value; } }
 
-        public UInt64 size;
-        public UInt64 Size { get; set; }
+        private string status;
+        public string Status { get { return status; } set { status = value; } }
 
-        public string status;
-        public string Status { get; set; }
-
-        public string type;
-        public string Type { get; set; }
+        private string type;
+        public string Type { get { return type; } set { type = value; } }
 
         public LogicalDriveInfo logicalDriveInfo;
         public LogicalDriveInfo LogicalDriveInfo { get { return logicalDriveInfo; } }
+
+        
 
         public void PrintToConsole()
         {

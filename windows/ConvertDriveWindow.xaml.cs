@@ -56,7 +56,7 @@ namespace GUIForDiskpart.windows
             }
 
             string output = string.Empty;
-            output = dpFunctions.Convert(driveInfo.DriveIndex, option);
+            output = dpFunctions.Convert(driveInfo.DiskIndex, option);
 
             mainWindow.AddTextToOutputConsole(output);
 

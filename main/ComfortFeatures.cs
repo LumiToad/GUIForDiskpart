@@ -16,13 +16,13 @@ namespace GUIForDiskpart.main
 
             output += outputConsoleAppliationName + "Easy drive format\n";
 
-            output += dpFunctions.Clean(drive.DriveIndex, false);
-            output += dpFunctions.Convert(drive.DriveIndex, ConvertOptions.GPT);
-            output += dpFunctions.Delete(drive.DriveIndex, 1, false, true);
+            output += dpFunctions.Clean(drive.DiskIndex, false);
+            output += dpFunctions.Convert(drive.DiskIndex, ConvertOptions.GPT);
+            output += dpFunctions.Delete(drive.DiskIndex, 1, false, true);
 
-            output += dpFunctions.CreatePartition(drive.DriveIndex, CreatePartitionOptions.PRIMARY, sizeInMB, isNoErr);
-            output += dpFunctions.Format(drive.DriveIndex, 1, fileSystem, volumeName, isQuickFormatting, isCompressed, isOverride, isNoWait, isNoErr);
-            output += dpFunctions.Assign(drive.DriveIndex, 1, driveLetter, isNoErr);
+            output += dpFunctions.CreatePartition(drive.DiskIndex, CreatePartitionOptions.PRIMARY, sizeInMB, isNoErr);
+            output += dpFunctions.Format(drive.DiskIndex, 1, fileSystem, volumeName, isQuickFormatting, isCompressed, isOverride, isNoWait, isNoErr);
+            output += dpFunctions.Assign(drive.DiskIndex, 1, driveLetter, isNoErr);
             
             return output;
         }
@@ -33,30 +33,30 @@ namespace GUIForDiskpart.main
         {
             string output = string.Empty;
 
-            output += dpFunctions.Clean(drive.DriveIndex, false);
-            output += dpFunctions.Convert(drive.DriveIndex, ConvertOptions.GPT);
-            output += dpFunctions.Delete(drive.DriveIndex, 1, false, true);
+            output += dpFunctions.Clean(drive.DiskIndex, false);
+            output += dpFunctions.Convert(drive.DiskIndex, ConvertOptions.GPT);
+            output += dpFunctions.Delete(drive.DiskIndex, 1, false, true);
 
-            output += dpFunctions.CreatePartition(drive.DriveIndex, CreatePartitionOptions.PRIMARY, sizeInMB, isNoErr);
-            output += dpFunctions.Format(drive.DriveIndex, 1, fileSystem, volumeName, isQuickFormatting, isCompressed, isOverride, isNoWait, isNoErr);
-            output += dpFunctions.Assign(drive.DriveIndex, 1, isNoErr);
+            output += dpFunctions.CreatePartition(drive.DiskIndex, CreatePartitionOptions.PRIMARY, sizeInMB, isNoErr);
+            output += dpFunctions.Format(drive.DiskIndex, 1, fileSystem, volumeName, isQuickFormatting, isCompressed, isOverride, isNoWait, isNoErr);
+            output += dpFunctions.Assign(drive.DiskIndex, 1, isNoErr);
 
             return output;
         }
 
-        public string EasyDriveFormat(DriveInfo drive, FileSystem fileSystem,
+        public string EasyDiskFormat(DriveInfo drive, FileSystem fileSystem,
             string volumeName, bool isQuickFormatting,
             bool isCompressed, bool isOverride, bool isNoWait, bool isNoErr)
         {
             string output = string.Empty;
 
-            output += dpFunctions.Clean(drive.DriveIndex, false);
-            output += dpFunctions.Convert(drive.DriveIndex, ConvertOptions.GPT);
-            output += dpFunctions.Delete(drive.DriveIndex, 1, false, true);
+            output += dpFunctions.Clean(drive.DiskIndex, false);
+            output += dpFunctions.Convert(drive.DiskIndex, ConvertOptions.GPT);
+            output += dpFunctions.Delete(drive.DiskIndex, 1, false, true);
 
-            output += dpFunctions.CreatePartition(drive.DriveIndex, CreatePartitionOptions.PRIMARY, 0, isNoErr);
-            output += dpFunctions.Format(drive.DriveIndex, 1, fileSystem, volumeName, isQuickFormatting, isCompressed, isOverride, isNoWait, isNoErr);
-            output += dpFunctions.Assign(drive.DriveIndex, 1, isNoErr);
+            output += dpFunctions.CreatePartition(drive.DiskIndex, CreatePartitionOptions.PRIMARY, 0, isNoErr);
+            output += dpFunctions.Format(drive.DiskIndex, 1, fileSystem, volumeName, isQuickFormatting, isCompressed, isOverride, isNoWait, isNoErr);
+            output += dpFunctions.Assign(drive.DiskIndex, 1, isNoErr);
 
             return output;
         }

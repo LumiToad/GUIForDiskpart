@@ -18,7 +18,7 @@ namespace GUIForDiskpart
 
         DriveInfo driveInfo;
 
-        public uint DriveIndex { get { return driveInfo.DriveIndex; } }
+        public uint DiskIndex { get { return driveInfo.DiskIndex; } }
 
         public PhysicalDriveEntryUI()
         {
@@ -41,7 +41,7 @@ namespace GUIForDiskpart
 
         private void DriveDataToThisUI()
         {
-            DriveNumberValueLabel.Content = driveInfo.DriveIndex.ToString();
+            DriveNumberValueLabel.Content = driveInfo.DiskIndex.ToString();
             DiskNameValueLabel.Content = driveInfo.DiskName;
 
             ByteFormatter byteFormatter = new ByteFormatter();
@@ -50,7 +50,7 @@ namespace GUIForDiskpart
             StatusValueLabel.Content = driveInfo.MediaStatus;
             PartitionsValueLabel.Content = driveInfo.PartitionCount;
 
-            foreach (PartitionInfo partitionInfo in driveInfo.PartitionDrives)
+            foreach (PartitionInfo partitionInfo in driveInfo.Partitions)
             {
                 PartitionDriveEntryUI partitionDriveEntryUI = new PartitionDriveEntryUI();
                 partitionDriveEntryUI.AddPartitionInfo(partitionInfo);
@@ -67,7 +67,7 @@ namespace GUIForDiskpart
 
         private void Detail_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.AddTextToOutputConsole(dpFunctions.DetailDisk(driveInfo.DriveIndex));
+            mainWindow.AddTextToOutputConsole(dpFunctions.DetailDisk(driveInfo.DiskIndex));
         }
 
         private void Clean_Click(object sender, RoutedEventArgs e)
@@ -83,7 +83,7 @@ namespace GUIForDiskpart
 
                 string output = string.Empty;
 
-                output = dpFunctions.Clean(driveInfo.DriveIndex, false);
+                output = dpFunctions.Clean(driveInfo.DiskIndex, false);
 
                 mainWindow.AddTextToOutputConsole(output);
 
