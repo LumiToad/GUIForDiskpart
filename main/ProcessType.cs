@@ -1,9 +1,9 @@
 ﻿namespace GUIForDiskpart.main
 {
-    public enum ProcessType
+    public static class ProcessType
     {
-        None = 0,
-        cmd = 10,
-        diskpart = 20
+        public static string NONE { get { return ""; } }
+        public static string CMD { get { return "cmd"; } }
+        public static string DISKPART { get { return "diskpart"; } }
     }
 }

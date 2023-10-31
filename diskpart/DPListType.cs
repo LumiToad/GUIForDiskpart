@@ -1,11 +1,14 @@
 ﻿
 namespace GUIForDiskpart.diskpart
 {
-    public enum DPListType
+    public static class DPListType
     {
-        DISK = 0,
-        PARTITION = 10,
-        VOLUME = 20,
-        VDISK = 30
+        public static string DISK { get { return "DISK"; } }
+        public static string PARTITION { get { return "PARTITION"; } }
+        public static string VOLUME { get { return "VOLUME"; } }
+        public static string VDISK { get { return "VDISK"; } }
+        
+        
+        
     }
 }

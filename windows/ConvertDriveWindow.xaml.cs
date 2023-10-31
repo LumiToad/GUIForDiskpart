@@ -34,7 +34,7 @@ namespace GUIForDiskpart.windows
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            ConvertOptions option = ConvertOptions.GPT;
+            string option = ConvertOptions.GPT;
 
             switch (SelectedOptionAsString())
             {

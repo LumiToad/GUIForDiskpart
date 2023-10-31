@@ -1,10 +1,10 @@
 ﻿namespace GUIForDiskpart.diskpart
 {
-    public enum ConvertOptions
+    public static class ConvertOptions
     {
-        BASIC = 10,
-        DYNAMIC = 20,
-        GPT = 30,
-        MBR = 40
+        public static string BASIC { get { return "BASIC"; } }
+        public static string DYNAMIC { get { return "DYNAMIC"; } }
+        public static string GPT { get { return "GPT"; } }
+        public static string MBR { get { return "MBR"; } }
     }
 }

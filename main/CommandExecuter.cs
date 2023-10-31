@@ -5,31 +5,9 @@ namespace GUIForDiskpart.main
 {
     public static class CommandExecuter
     {
-        //Process process = new Process();
-
         private const string exeSuffix = ".exe";
 
-        /*
-
-        public string IssueCommand(ProcessType processType, string command)
-        {
-            SetupProcessInfo(processType);
-            
-            string output = "";
-
-            process.Start();
-            output += ExecuteCommand(processType, command);
-            process.StandardInput.WriteLine("exit");
-
-            output += ReadProcessStandardOutput();
-            int exitCode = ExitProcess();
-            output += "Exit Code: " + exitCode.ToString() + "\n";
-
-            return output;
-        }
-
-        */
-        public static string IssueCommand(ProcessType processType, string[] commands)
+        public static string IssueCommand(string processType, string[] commands)
         {
             var process = CreateProcess(processType);
 
@@ -54,7 +32,7 @@ namespace GUIForDiskpart.main
             return output;
         }
 
-        public static string IssueCommand(ProcessType processType, string command)
+        public static string IssueCommand(string processType, string command)
         {
             var process = CreateProcess(processType);
 
@@ -74,22 +52,10 @@ namespace GUIForDiskpart.main
             return output;
         }
 
-        /*
-        private void SetupProcessInfo(ProcessType processType)
-        {
-            process.StartInfo.FileName = processType.ToString() + exeSuffix;
-            process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardInput = true;
-        }
-        */
-
-        private static Process CreateProcess(ProcessType processType)
+        private static Process CreateProcess(string processType)
         {
             Process newProcess = new Process();
-            newProcess.StartInfo.FileName = processType.ToString() + exeSuffix;
+            newProcess.StartInfo.FileName = processType + exeSuffix;
             newProcess.StartInfo.CreateNoWindow = true;
             newProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             newProcess.StartInfo.UseShellExecute = false;
@@ -98,14 +64,6 @@ namespace GUIForDiskpart.main
 
             return newProcess;
         }
-        /*
-        private string ExecuteCommand(ProcessType processType, string command)
-        {
-            process.StandardInput.WriteLine(command);
-
-            return processType.ToString().ToUpper() + " - " + command + "\n";
-        }
-        */
 
         private static int ExitProcess(Process process)
         {

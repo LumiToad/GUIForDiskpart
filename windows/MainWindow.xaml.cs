@@ -30,7 +30,7 @@ namespace GUIForDiskpart
         private void Initialize()
         {
             RetrieveAndShowDriveData(true);
-            SetupDriveChangedWatcher();
+            SetupDiskChangedWatcher();
         }
 
         private void Test()
@@ -142,7 +142,7 @@ namespace GUIForDiskpart
 
         private void Website_Click(object sender, RoutedEventArgs e)
         {
-            CommandExecuter.IssueCommand(ProcessType.cmd, "start " + websiteURL);
+            CommandExecuter.IssueCommand(ProcessType.CMD, "start " + websiteURL);
         }
 
         private void About_Click(object sender, RoutedEventArgs e)
@@ -152,14 +152,16 @@ namespace GUIForDiskpart
             aboutWindow.Show();
         }
 
-        private void SetupDriveChangedWatcher()
+        #region DiskChangedWatcher
+
+        private void SetupDiskChangedWatcher()
         {
             try
             {
                 WqlEventQuery query = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2 or EventType = 3");
                 ManagementEventWatcher watcher = new ManagementEventWatcher();
                 watcher.Query = query;
-                watcher.EventArrived += new EventArrivedEventHandler(OnDriveChanged);
+                watcher.EventArrived += new EventArrivedEventHandler(OnDiskChanged);
                 watcher.Options.Timeout = TimeSpan.FromSeconds(3);
                 watcher.Start();
             }
@@ -169,9 +171,11 @@ namespace GUIForDiskpart
             }
         }
 
-        private void OnDriveChanged(object sender, EventArrivedEventArgs e)
+        private void OnDiskChanged(object sender, EventArrivedEventArgs e)
         {
             RetrieveAndShowDriveData(false);
         }
+
+        #endregion DiskChangedWatcher
     }
 }

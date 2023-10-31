@@ -1,19 +1,19 @@
 ﻿namespace GUIForDiskpart.diskpart
 {
-    public enum CreatePartitionOptions
+    public static class CreatePartitionOptions
     {
-        EFI = 10,
-        EXTENDED = 20,
-        LOGICAL = 30,
-        MSR = 40,
-        PRIMARY = 50
+        public static string EFI { get { return "EFI"; } }
+        public static string EXTENDED { get { return "EXTENDED"; } }
+        public static string LOGICAL { get { return "LOGICAL"; } }
+        public static string MSR { get { return "MSR"; } }
+        public static string PRIMARY { get { return "PRIMARY"; } }
     }
 
-    public enum CreateVolumeOptions
+    public static class CreateVolumeOptions
     {
-        RAID = 10,
-        SIMPLE = 20,
-        STRIPE = 30,
-        MIRROR = 40,
+        public static string RAID { get { return "RAID"; } }
+        public static string SIMPLE { get { return "SIMPLE"; } }
+        public static string STRIPE { get { return "STRIPE"; } }
+        public static string MIRROR { get { return "MIRROR"; } }
     }
 }

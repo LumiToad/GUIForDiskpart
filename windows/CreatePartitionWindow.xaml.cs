@@ -34,7 +34,7 @@ namespace GUIForDiskpart.windows
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            CreatePartitionOptions option = CreatePartitionOptions.EFI;
+            string option = CreatePartitionOptions.EFI;
 
             switch (SelectedOptionAsString())
             {
