@@ -5,7 +5,7 @@
   },
   "projects": {
     "E:\\Projekte\\0_Programmieren\\CSharp\\GUIForDiskpart\\GUIForDiskpart.csproj": {
-      "version": "1.0.330",
+      "version": "1.0.347",
       "restore": {
         "projectUniqueName": "E:\\Projekte\\0_Programmieren\\CSharp\\GUIForDiskpart\\GUIForDiskpart.csproj",
         "projectName": "GUIForDiskpart",
@@ -47,10 +47,6 @@
             "System.Management": {
               "target": "Package",
               "version": "[7.0.2, )"
-            },
-            "System.Management.Automation": {
-              "target": "Package",
-              "version": "[7.2.16, )"
             }
           },
           "imports": [

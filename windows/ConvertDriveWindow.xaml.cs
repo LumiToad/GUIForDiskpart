@@ -12,9 +12,9 @@ namespace GUIForDiskpart.windows
     {
         private MainWindow mainWindow;
 
-        private DriveInfo driveInfo;
+        private DiskInfo driveInfo;
 
-        public ConvertDriveWindow(DriveInfo drive)
+        public ConvertDriveWindow(DiskInfo drive)
         {
             InitializeComponent();
 

@@ -7,7 +7,7 @@ namespace GUIForDiskpart.main
     {
         private const string outputConsoleAppliationName = "GUIFD - ";
 
-        public static string EasyDriveFormat(DriveInfo drive, FileSystem fileSystem,
+        public static string EasyDiskFormat(DiskInfo drive, FileSystem fileSystem,
             string volumeName, char driveLetter, UInt64 sizeInMB, bool isQuickFormatting,
             bool isCompressed, bool isOverride, bool isNoWait, bool isNoErr)
         {
@@ -26,7 +26,7 @@ namespace GUIForDiskpart.main
             return output;
         }
 
-        public static string EasyDriveFormat(DriveInfo drive, FileSystem fileSystem,
+        public static string EasyDiskFormat(DiskInfo drive, FileSystem fileSystem,
             string volumeName, UInt64 sizeInMB, bool isQuickFormatting,
             bool isCompressed, bool isOverride, bool isNoWait, bool isNoErr)
         {
@@ -43,7 +43,7 @@ namespace GUIForDiskpart.main
             return output;
         }
 
-        public static string EasyDiskFormat(DriveInfo drive, FileSystem fileSystem,
+        public static string EasyDiskFormat(DiskInfo drive, FileSystem fileSystem,
             string volumeName, bool isQuickFormatting,
             bool isCompressed, bool isOverride, bool isNoWait, bool isNoErr)
         {

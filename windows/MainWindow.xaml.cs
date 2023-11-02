@@ -96,13 +96,13 @@ namespace GUIForDiskpart
 
         private void RetrieveAndShowDriveData_Internal(bool outputText)
         {
-            DriveRetriever.ReloadDriveInformation();
+            DiskRetriever.ReloadDriveInformation();
 
             AddLogicalDrivesToStackPanel();
 
             if (outputText) 
             { 
-                AddTextToOutputConsole(DriveRetriever.GetDrivesOutput());
+                AddTextToOutputConsole(DiskRetriever.GetDrivesOutput());
             }
         }
 
@@ -110,7 +110,7 @@ namespace GUIForDiskpart
         {
             DriveStackPanel.Children.Clear();
 
-            foreach (DriveInfo physicalDrive in DriveRetriever.PhysicalDrives)
+            foreach (DiskInfo physicalDrive in DiskRetriever.PhysicalDrives)
             {
                 PhysicalDriveEntryUI driveListEntry = new PhysicalDriveEntryUI();
                 driveListEntry.AddDriveInfo(physicalDrive);

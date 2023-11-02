@@ -17,7 +17,7 @@ namespace GUIForDiskpart
 
         private ulong freeSpace;
 
-        private DriveInfo driveInfo;
+        private DiskInfo driveInfo;
 
         private const string freeSpaceBorder = "#FFE3E3E3";
 
@@ -38,7 +38,7 @@ namespace GUIForDiskpart
             }
         }
 
-        public FreeSpaceEntryUI(UInt64 space, DriveInfo drive)
+        public FreeSpaceEntryUI(UInt64 space, DiskInfo drive)
         {
             InitializeComponent();
             

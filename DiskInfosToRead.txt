@@ -1,9 +1,0 @@
-Physische Drives
-On/Offline
-Size
-ID
-
-Partitionen
-Size
-DriveLetter (if any)
-Some Info

@@ -12,9 +12,9 @@ namespace GUIForDiskpart
     {
         private MainWindow mainWindow;
 
-        private DriveInfo driveInfo;
+        private DiskInfo driveInfo;
 
-        public FormatDriveWindow(DriveInfo drive)
+        public FormatDriveWindow(DiskInfo drive)
         {
             InitializeComponent();
 
@@ -77,14 +77,14 @@ namespace GUIForDiskpart
 
             if (DriveLetterValue.Text == "")
             {
-                output = ComfortFeatures.EasyDriveFormat(driveInfo, fileSystem, VolumeValue.Text,
+                output = ComfortFeatures.EasyDiskFormat(driveInfo, fileSystem, VolumeValue.Text,
                     size, (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, true, false);
             }
             else
             {
                 char driveLetter = DriveLetterValue.Text.ToCharArray()[0];
 
-                output = ComfortFeatures.EasyDriveFormat(driveInfo, fileSystem, VolumeValue.Text,
+                output = ComfortFeatures.EasyDiskFormat(driveInfo, fileSystem, VolumeValue.Text,
                     driveLetter, size, (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, true, false);
             }
 

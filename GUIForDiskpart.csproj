@@ -7,14 +7,30 @@
     <UseWPF>true</UseWPF>
     <ApplicationManifest>main\app.manifest</ApplicationManifest>
 	<Deterministic>false</Deterministic>
-	<Version>1.0.330</Version>
-	<AssemblyVersion>1.0.2310.330</AssemblyVersion>
-	<FileVersion>1.0.2310.330</FileVersion>
+	<Version>1.0.347</Version>
+	<AssemblyVersion>1.0.2311.347</AssemblyVersion>
+	<FileVersion>1.0.2311.347</FileVersion>
 	<Copyright>MIT License</Copyright>
 	<ApplicationIcon>resources\guifdLogo.ico</ApplicationIcon>
+	<Platforms>AnyCPU;x64</Platforms>
+	<PlatformTarget>AnyCPU</PlatformTarget>
+	<BaseOutputPath>E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\builds</BaseOutputPath>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <ShouldCreateLogs>True</ShouldCreateLogs>
+    <AdvancedSettingsExpanded>True</AdvancedSettingsExpanded>
+    <UpdateAssemblyVersion>False</UpdateAssemblyVersion>
+    <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
+    <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+    <UpdatePackageVersion>True</UpdatePackageVersion>
+    <PackageVersionSettings>AssemblyVersion.IncrementWithAutoReset.None</PackageVersionSettings>
+    <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
+    <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ShouldCreateLogs>True</ShouldCreateLogs>
     <AdvancedSettingsExpanded>True</AdvancedSettingsExpanded>
     <UpdateAssemblyVersion>False</UpdateAssemblyVersion>
@@ -44,7 +60,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.16" />
     <PackageReference Include="System.Management" Version="7.0.2" />
-    <PackageReference Include="System.Management.Automation" Version="7.2.16" />
   </ItemGroup>
 
   <ItemGroup>

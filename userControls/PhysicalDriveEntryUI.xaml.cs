@@ -15,7 +15,7 @@ namespace GUIForDiskpart
     {
         MainWindow mainWindow;
 
-        DriveInfo driveInfo;
+        DiskInfo driveInfo;
 
         public uint DiskIndex { get { return driveInfo.DiskIndex; } }
 
@@ -31,7 +31,7 @@ namespace GUIForDiskpart
             mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
-        public void AddDriveInfo(DriveInfo physicalDrive)
+        public void AddDriveInfo(DiskInfo physicalDrive)
         {
             this.driveInfo = physicalDrive;
             DriveDataToThisUI();
