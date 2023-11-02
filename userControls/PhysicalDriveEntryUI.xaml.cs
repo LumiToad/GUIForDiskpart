@@ -11,15 +11,15 @@ namespace GUIForDiskpart
     /// <summary>
     /// Interaktionslogik für PhysicalDriveEntryUI.xaml
     /// </summary>
-    public partial class PhysicalDriveEntryUI : UserControl
+    public partial class PhysicalDiskEntryUI : UserControl
     {
         MainWindow mainWindow;
 
-        DiskInfo driveInfo;
+        DiskInfo diskInfo;
 
-        public uint DiskIndex { get { return driveInfo.DiskIndex; } }
+        public uint DiskIndex { get { return diskInfo.DiskIndex; } }
 
-        public PhysicalDriveEntryUI()
+        public PhysicalDiskEntryUI()
         {
             InitializeComponent();
 
@@ -31,41 +31,42 @@ namespace GUIForDiskpart
             mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
-        public void AddDriveInfo(DiskInfo physicalDrive)
+        public void AddDriveInfo(DiskInfo physicalDisk)
         {
-            this.driveInfo = physicalDrive;
+            this.diskInfo = physicalDisk;
             DriveDataToThisUI();
         }
 
         private void DriveDataToThisUI()
         {
-            DriveNumberValueLabel.Content = driveInfo.DiskIndex.ToString();
-            DiskNameValueLabel.Content = driveInfo.DiskName;
+            DriveNumberValueLabel.Content = diskInfo.DiskIndex.ToString();
+            DiskNameValueLabel.Content = diskInfo.DiskName;
 
             ByteFormatter byteFormatter = new ByteFormatter();
-            TotalSpaceValueLabel.Content = byteFormatter.FormatBytes((long)driveInfo.TotalSpace);
+            TotalSpaceValueLabel.Content = byteFormatter.FormatBytes((long)diskInfo.TotalSpace);
 
-            StatusValueLabel.Content = driveInfo.MediaStatus;
-            PartitionsValueLabel.Content = driveInfo.PartitionCount;
+            StatusValueLabel.Content = diskInfo.MediaStatus;
+            PartitionsValueLabel.Content = diskInfo.PartitionCount;
 
-            foreach (PartitionInfo partitionInfo in driveInfo.Partitions)
+            foreach (WSMPartition wsmPartition in diskInfo.WSMPartitions)
             {
                 PartitionDriveEntryUI partitionDriveEntryUI = new PartitionDriveEntryUI();
-                partitionDriveEntryUI.AddPartitionInfo(partitionInfo);
+                Console.WriteLine("COUNT: " + diskInfo.WSMPartitions.Count);
+                partitionDriveEntryUI.AddPartitionInfo(wsmPartition);
                 PartitionStackPanel.Children.Add(partitionDriveEntryUI);
             }
 
-            if (driveInfo.UnpartSpace > 0) 
+            if (diskInfo.UnpartSpace > 0) 
             {
-                Console.WriteLine(driveInfo.UnpartSpace.ToString());
-                FreeSpaceEntryUI freeSpaceEntryUI = new FreeSpaceEntryUI(driveInfo.UnpartSpace, driveInfo);
+                Console.WriteLine(diskInfo.UnpartSpace.ToString());
+                FreeSpaceEntryUI freeSpaceEntryUI = new FreeSpaceEntryUI(diskInfo.UnpartSpace, diskInfo);
                 PartitionStackPanel.Children.Add(freeSpaceEntryUI);
             }
         }
 
         private void Detail_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.AddTextToOutputConsole(DPFunctions.DetailDisk(driveInfo.DiskIndex));
+            mainWindow.AddTextToOutputConsole(DPFunctions.DetailDisk(diskInfo.DiskIndex));
         }
 
         private void Clean_Click(object sender, RoutedEventArgs e)
@@ -79,7 +80,7 @@ namespace GUIForDiskpart
             {
                 string output = string.Empty;
 
-                output = DPFunctions.Clean(driveInfo.DiskIndex, false);
+                output = DPFunctions.Clean(diskInfo.DiskIndex, false);
 
                 mainWindow.AddTextToOutputConsole(output);
 
@@ -93,7 +94,7 @@ namespace GUIForDiskpart
 
         private void Convert_Click(object sender, RoutedEventArgs e)
         {
-            ConvertDriveWindow convertDriveWindow = new ConvertDriveWindow(driveInfo);
+            ConvertDriveWindow convertDriveWindow = new ConvertDriveWindow(diskInfo);
             convertDriveWindow.Owner = mainWindow;
             convertDriveWindow.Focus();
             
@@ -117,7 +118,7 @@ namespace GUIForDiskpart
 
         private void Format_Click(object sender, RoutedEventArgs e)
         {
-            FormatDriveWindow formatWindow = new FormatDriveWindow(driveInfo);
+            FormatDriveWindow formatWindow = new FormatDriveWindow(diskInfo);
             formatWindow.Owner = mainWindow;
             formatWindow.Focus();
 

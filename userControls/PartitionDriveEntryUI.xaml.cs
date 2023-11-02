@@ -13,7 +13,8 @@ namespace GUIForDiskpart
     public partial class PartitionDriveEntryUI : UserControl
     {
         MainWindow mainWindow;
-        PartitionInfo partitionInfo;
+        WMIPartition wmiPartition;
+        WSMPartition wsmPartition;
 
         private const string partitionBorder = "#FF00C4B4";
         private const string logicalBorder = "#FF0A70C5";
@@ -48,34 +49,62 @@ namespace GUIForDiskpart
             mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
-        public void AddPartitionInfo(PartitionInfo partitionInfo)
+        public void AddPartitionInfo(WMIPartition wmiPartition)
         {
-            this.partitionInfo = partitionInfo;
+            this.wmiPartition = wmiPartition;
             PartitionDataToThisUI();
         }
 
-        public void PartitionDataToThisUI()
+        public void AddPartitionInfo(WSMPartition wsmPartition)
         {
-            PartitionNameValue.Text = partitionInfo.PartitionName;
-            BootPartitionValue.IsChecked = partitionInfo.BootPartition;
-            TotalSizeValue.Text = partitionInfo.Size.ToString();
-            PartitionTableValue.Text = partitionInfo.Type;
+            this.wsmPartition = wsmPartition;
+            PartitionDataToThisUI();
+        }
 
-            if (partitionInfo.IsLogicalPartition())
+        private void PartitionDataToThisUI()
+        {
+            PartitionNumberValue.Text = wsmPartition.PartitionNumber.ToString();
+            BootPartitionValue.IsChecked = wsmPartition.IsBoot;
+            
+            ByteFormatter byteFormatter = new ByteFormatter();
+            string bytes = byteFormatter.FormatBytes(wsmPartition.Size);
+
+            TotalSizeValue.Text = bytes;
+            PartitionTableValue.Text = wsmPartition.PartitionTable;
+
+            DriveLetterValue.Text = wsmPartition.DriveLetter.ToString();
+            
+            //BAD CODE!
+
+            if (wsmPartition.PartitionTable == "MBR")
             {
-                VolumeNameValue.Text = partitionInfo.LogicalDriveInfo.VolumeName;
-                DriveLetterValue.Text = partitionInfo.LogicalDriveInfo.DriveLetter;
-                FreeSpaceValue.Text = partitionInfo.LogicalDriveInfo.FreeSpace.ToString();
-                FileSystemValue.Text = partitionInfo.LogicalDriveInfo.FileSystem;
-                ChangeUIBorder(logicalBorder);
+                TypeValue.Text = WSM_MBR_PartitionTypes.GetTypeByUInt16(wsmPartition.MBRType);
             }
             else
             {
-                VolumeNameValue.Text = "";
-                DriveLetterValue.Text = "";
-                FreeSpaceValue.Text = "";
-                ChangeUIBorder(partitionBorder);
+                TypeValue.Text = WSM_GPT_PartitionTypes.GetTypeByGUID(wsmPartition.GPTType);
             }
+
+            //BAD CODE END!
+
+            ChangeUIBorder(partitionBorder);
+
+
+            //if (wmiPartition.IsLogicalPartition())
+            //{
+            //    VolumeNameValue.Text = wmiPartition.LogicalDriveInfo.VolumeName;
+            //    DriveLetterValue.Text = wmiPartition.LogicalDriveInfo.DriveLetter;
+            //    FreeSpaceValue.Text = wmiPartition.LogicalDriveInfo.FreeSpace.ToString();
+            //    FileSystemValue.Text = wmiPartition.LogicalDriveInfo.FileSystem;
+            //    ChangeUIBorder(logicalBorder);
+            //}
+            //else
+            //{
+            //    VolumeNameValue.Text = "";
+            //    DriveLetterValue.Text = "";
+            //    FreeSpaceValue.Text = "";
+            //    ChangeUIBorder(partitionBorder);
+            //}
         }
 
         private void ChangeUIBorder(string borderColorValue)
@@ -92,7 +121,7 @@ namespace GUIForDiskpart
 
         private void Detail_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.AddTextToOutputConsole(DPFunctions.DetailPart(partitionInfo.DiskIndex, partitionInfo.WSMPartitionNumber));
+            mainWindow.AddTextToOutputConsole(DPFunctions.DetailPart(wsmPartition.DiskNumber, wsmPartition.PartitionNumber));
         }
 
         private void Format_Click(object sender, RoutedEventArgs e)
@@ -104,10 +133,10 @@ namespace GUIForDiskpart
         {
             string output = string.Empty;
 
-            output += DPFunctions.Delete(partitionInfo.DiskIndex, partitionInfo.PartitionIndex, false, true);
+            output += DPFunctions.Delete(wmiPartition.DiskIndex, wmiPartition.PartitionIndex, false, true);
 
             mainWindow.AddTextToOutputConsole(output);
-            mainWindow.RetrieveAndShowDriveData(false);
+            mainWindow.RetrieveAndShowDiskData(false);
         }
 
         private void Assign_Click(object sender, RoutedEventArgs e)

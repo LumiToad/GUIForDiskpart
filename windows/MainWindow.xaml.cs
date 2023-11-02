@@ -24,18 +24,12 @@ namespace GUIForDiskpart
         {
             InitializeComponent();
             Initialize();
-            Test();
         }
 
         private void Initialize()
         {
-            RetrieveAndShowDriveData(true);
+            RetrieveAndShowDiskData(true);
             SetupDiskChangedWatcher();
-        }
-
-        private void Test()
-        {
-            Console.WriteLine("test");
         }
 
         private string GetBuildNumberString()
@@ -84,21 +78,21 @@ namespace GUIForDiskpart
 
         }
 
-        private void RetrieveDriveData_Click(object sender, RoutedEventArgs e)
+        private void RetrieveDiskData_Click(object sender, RoutedEventArgs e)
         {
-            RetrieveAndShowDriveData(true);
+            RetrieveAndShowDiskData(true);
         }
 
-        public void RetrieveAndShowDriveData(bool outputText)
+        public void RetrieveAndShowDiskData(bool outputText)
         {
-            Application.Current.Dispatcher.Invoke(RetrieveAndShowDriveData_Internal, outputText);
+            Application.Current.Dispatcher.Invoke(RetrieveAndShowDiskData_Internal, outputText);
         }
 
-        private void RetrieveAndShowDriveData_Internal(bool outputText)
+        private void RetrieveAndShowDiskData_Internal(bool outputText)
         {
             DiskRetriever.ReloadDriveInformation();
 
-            AddLogicalDrivesToStackPanel();
+            AddDisksToStackPanel();
 
             if (outputText) 
             { 
@@ -106,16 +100,16 @@ namespace GUIForDiskpart
             }
         }
 
-        private void AddLogicalDrivesToStackPanel()
+        private void AddDisksToStackPanel()
         {
             DriveStackPanel.Children.Clear();
 
-            foreach (DiskInfo physicalDrive in DiskRetriever.PhysicalDrives)
+            foreach (DiskInfo physicalDisk in DiskRetriever.PhysicalDrives)
             {
-                PhysicalDriveEntryUI driveListEntry = new PhysicalDriveEntryUI();
-                driveListEntry.AddDriveInfo(physicalDrive);
+                PhysicalDiskEntryUI diskListEntry = new PhysicalDiskEntryUI();
+                diskListEntry.AddDriveInfo(physicalDisk);
 
-                DriveStackPanel.Children.Add(driveListEntry);
+                DriveStackPanel.Children.Add(diskListEntry);
             }
         }
 
@@ -173,7 +167,7 @@ namespace GUIForDiskpart
 
         private void OnDiskChanged(object sender, EventArrivedEventArgs e)
         {
-            RetrieveAndShowDriveData(false);
+            RetrieveAndShowDiskData(false);
         }
 
         #endregion DiskChangedWatcher

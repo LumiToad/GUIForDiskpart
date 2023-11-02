@@ -12,19 +12,19 @@ namespace GUIForDiskpart.windows
     {
         private MainWindow mainWindow;
 
-        private DiskInfo driveInfo;
+        private DiskInfo diskInfo;
 
-        public ConvertDriveWindow(DiskInfo drive)
+        public ConvertDriveWindow(DiskInfo disk)
         {
             InitializeComponent();
 
-            driveInfo = drive;
+            diskInfo = disk;
             mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
         public void DriveInfoToTextBox()
         {
-            DiskDetailValue.Text = driveInfo.GetOutputAsString();
+            DiskDetailValue.Text = diskInfo.GetOutputAsString();
         }
 
         private string SelectedOptionAsString()
@@ -53,7 +53,7 @@ namespace GUIForDiskpart.windows
             }
 
             string output = string.Empty;
-            output = DPFunctions.Convert(driveInfo.DiskIndex, option);
+            output = DPFunctions.Convert(diskInfo.DiskIndex, option);
 
             mainWindow.AddTextToOutputConsole(output);
 

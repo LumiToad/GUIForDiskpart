@@ -1,4 +1,4 @@
-﻿<UserControl x:Name="userControl" x:Class="GUIForDiskpart.PhysicalDriveEntryUI"
+﻿<UserControl x:Name="userControl" x:Class="GUIForDiskpart.PhysicalDiskEntryUI"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -56,7 +56,7 @@
                 <Label x:Name="StatusValueLabel" Content="OK?" FontSize="14" Grid.IsSharedSizeScope="False" UseLayoutRounding="True" MinWidth="100" Padding="1,1,1,1"/>
                 <Label x:Name="PartitionsValueLabel" Content="99" FontSize="14" Grid.IsSharedSizeScope="False" UseLayoutRounding="True" MinWidth="100" Padding="1,1,1,1"/>
             </StackPanel>
-            <ScrollViewer x:Name="scrollViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" MinWidth="100" HorizontalAlignment="Left" CanContentScroll="True" MaxWidth="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:PhysicalDriveEntryUI}}}" UseLayoutRounding="False" HorizontalContentAlignment="Right">
+            <ScrollViewer x:Name="scrollViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" MinWidth="100" HorizontalAlignment="Left" CanContentScroll="True" MaxWidth="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:PhysicalDiskEntryUI}}}" UseLayoutRounding="False" HorizontalContentAlignment="Right">
                 <StackPanel x:Name="PartitionStackPanel" Orientation="Horizontal" Grid.IsSharedSizeScope="True"/>
             </ScrollViewer>
         </StackPanel>

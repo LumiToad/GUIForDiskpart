@@ -10,31 +10,31 @@ namespace GUIForDiskpart.main
 {
     public static class LogicalDiskRetriever
     {
-        public static void GetAndAddLogicalDisks(ManagementObject partition, PartitionInfo partitionInfo)
+        public static void GetAndAddLogicalDisks(ManagementObject partition, WMIPartition partitionInfo)
         {
             var logicalDriveQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_LogicalDiskToPartition", partition.Path.RelativePath);
             var logicalDriveQuery = new ManagementObjectSearcher(logicalDriveQueryText);
-            foreach (ManagementObject logicalDrive in logicalDriveQuery.Get())
+            foreach (ManagementObject logicalDisk in logicalDriveQuery.Get())
             {
-                partitionInfo.AddLogicalDrive(RetrieveLogicalDrives(logicalDrive));
+                partitionInfo.AddLogicalDisk(RetrieveLogicalDisks(logicalDisk));
             }
         }
 
-        private static LogicalDriveInfo RetrieveLogicalDrives(ManagementObject logicalDrive)
+        private static LogicalDiskInfo RetrieveLogicalDisks(ManagementObject logicalDisk)
         {
-            LogicalDriveInfo newLogicalDrive = new LogicalDriveInfo();
+            LogicalDiskInfo newLogicalDisk = new LogicalDiskInfo();
 
-            newLogicalDrive.DriveType = Convert.ToUInt32(logicalDrive.Properties["DriveType"].Value); // C: - 3
-            newLogicalDrive.FileSystem = Convert.ToString(logicalDrive.Properties["FileSystem"].Value); // NTFS
-            newLogicalDrive.FreeSpace = Convert.ToUInt64(logicalDrive.Properties["FreeSpace"].Value); // in bytes
-            newLogicalDrive.TotalSpace = Convert.ToUInt64(logicalDrive.Properties["Size"].Value); // in bytes
-            newLogicalDrive.VolumeName = Convert.ToString(logicalDrive.Properties["VolumeName"].Value); // System
-            newLogicalDrive.VolumeSerial = Convert.ToString(logicalDrive.Properties["VolumeSerialNumber"].Value); // 12345678
-            newLogicalDrive.DriveLetter = Convert.ToString(logicalDrive.Properties["Name"].Value);
+            newLogicalDisk.DriveType = Convert.ToUInt32(logicalDisk.Properties["DriveType"].Value); // C: - 3
+            newLogicalDisk.FileSystem = Convert.ToString(logicalDisk.Properties["FileSystem"].Value); // NTFS
+            newLogicalDisk.FreeSpace = Convert.ToUInt64(logicalDisk.Properties["FreeSpace"].Value); // in bytes
+            newLogicalDisk.TotalSpace = Convert.ToUInt64(logicalDisk.Properties["Size"].Value); // in bytes
+            newLogicalDisk.VolumeName = Convert.ToString(logicalDisk.Properties["VolumeName"].Value); // System
+            newLogicalDisk.VolumeSerial = Convert.ToString(logicalDisk.Properties["VolumeSerialNumber"].Value); // 12345678
+            newLogicalDisk.DriveLetter = Convert.ToString(logicalDisk.Properties["Name"].Value);
 
-            newLogicalDrive.PrintToConsole();
+            newLogicalDisk.PrintToConsole();
 
-            return newLogicalDrive;
+            return newLogicalDisk;
         }
     }
 }

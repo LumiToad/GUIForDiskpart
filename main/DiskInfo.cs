@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace GUIForDiskpart.main
 {
     public class DiskInfo
     {
-        readonly public string deviceID;
+        readonly private string deviceID;
         public string DeviceId { get { return deviceID; } }
 
         readonly private string physicalName;
@@ -156,9 +155,11 @@ namespace GUIForDiskpart.main
         readonly private UInt32 tracksPerCylinder;
         public UInt32 TracksPerCylinder { get => tracksPerCylinder; }
 
+        private List<WMIPartition> wmiPartitions = new List<WMIPartition>();
+        public List<WMIPartition> WMIPartitions { get { return wmiPartitions; } }
 
-        private List<PartitionInfo> partitions = new List<PartitionInfo>();
-        public List<PartitionInfo> Partitions { get { return partitions; } }
+        private List<WSMPartition> wsmPartitions = new List<WSMPartition>();
+        public List<WSMPartition> WSMPartitions { get { return wsmPartitions; } set { wsmPartitions = value; } }
 
         public DiskInfo(
             string deviceID,
@@ -303,23 +304,28 @@ namespace GUIForDiskpart.main
             output += "Index: " + DiskIndex + '\n';
             output += "_________________" + '\n';
             
-            foreach (PartitionInfo partitionInfo in partitions)
+            foreach (WMIPartition wmiPartition in wmiPartitions)
             {
-                output += partitionInfo.GetOutputAsString();
+                output += wmiPartition.GetOutputAsString();
             }
+            foreach (WSMPartition wsmPartition in wsmPartitions)
+            {
+                output += wsmPartition.GetOutputAsString();
+            }
+
             return output;
         }
 
-        public void AddPartitionToList(PartitionInfo partition)
+        public void AddPartitionToList(WMIPartition partition)
         {
-            partitions.Add(partition);
+            wmiPartitions.Add(partition);
         }
 
         public UInt64 CalcUnpartSpace(UInt64 space)
         {
             UInt64 result = space;
 
-            foreach (PartitionInfo partitionInfo in partitions)
+            foreach (WMIPartition partitionInfo in wmiPartitions)
             {
                 Console.WriteLine(partitionInfo.Size);
                 result -= partitionInfo.Size;

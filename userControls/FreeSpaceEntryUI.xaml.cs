@@ -17,7 +17,7 @@ namespace GUIForDiskpart
 
         private ulong freeSpace;
 
-        private DiskInfo driveInfo;
+        private DiskInfo diskInfo;
 
         private const string freeSpaceBorder = "#FFE3E3E3";
 
@@ -38,12 +38,12 @@ namespace GUIForDiskpart
             }
         }
 
-        public FreeSpaceEntryUI(UInt64 space, DiskInfo drive)
+        public FreeSpaceEntryUI(UInt64 space, DiskInfo disk)
         {
             InitializeComponent();
             
             freeSpace = space;
-            driveInfo = drive;
+            diskInfo = disk;
 
             Initialize();
         }
@@ -65,7 +65,7 @@ namespace GUIForDiskpart
 
         private void CreatePartition_Click(object sender, RoutedEventArgs e)
         {
-            CreatePartitionWindow createPartitionWindow = new CreatePartitionWindow(driveInfo, freeSpace);
+            CreatePartitionWindow createPartitionWindow = new CreatePartitionWindow(diskInfo, freeSpace);
             createPartitionWindow.Owner = mainWindow;
             createPartitionWindow.Focus();
             

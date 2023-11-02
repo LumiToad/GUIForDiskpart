@@ -42,7 +42,7 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Margin="0,0,10,0" Height="NaN" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <StackPanel Width="104" Margin="0,0,5,0">
-                <TextBlock x:Name="NameTextBlock" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
+                <TextBlock x:Name="PartTextBlock" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14" Text="Partition">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -50,7 +50,7 @@
                             <RotateTransform Angle="0.423"/>
                             <TranslateTransform/>
                         </TransformGroup>
-                    </TextBlock.RenderTransform><Run Language="de-de" Text="N"/><Run Text="ame:"/></TextBlock>
+                    </TextBlock.RenderTransform></TextBlock>
                 <TextBlock x:Name="BootPartitionTextBox" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
@@ -105,7 +105,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </TextBlock.RenderTransform><Run Language="de-de" Text="File System:"/></TextBlock>
-                <TextBlock x:Name="FreeSpaceTextBox" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
+                <TextBlock x:Name="TypeTextBox" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14" Text="Type:">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -113,10 +113,10 @@
                             <RotateTransform Angle="0.423"/>
                             <TranslateTransform/>
                         </TransformGroup>
-                    </TextBlock.RenderTransform><Run Language="de-de" Text="Free Space:"/></TextBlock>
+                    </TextBlock.RenderTransform></TextBlock>
             </StackPanel>
             <StackPanel VerticalAlignment="Top">
-                <TextBlock x:Name="PartitionNameValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
+                <TextBlock x:Name="PartitionNumberValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -171,7 +171,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </TextBlock.RenderTransform><Run Language="de-de" Text="XXX"/></TextBlock>
-                <TextBlock x:Name="FreeSpaceValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
+                <TextBlock x:Name="TypeValue" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" FontSize="14">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>

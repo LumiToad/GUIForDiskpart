@@ -1,5 +1,5 @@
 ﻿GUIForDiskpart
-1.0.2311.347
+1.0.2311.376
 
 exe
 C#
@@ -12,7 +12,7 @@ TRACE;RELEASE;NET;NET6_0;NETCOREAPP
 E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\App.xaml
 8-884163024
 1-884504622
-28610353317
+31-1400258256
 239-2031884855
 userControls\FreeSpaceEntryUI.xaml;userControls\PartitionDriveEntryUI.xaml;userControls\PhysicalDriveEntryUI.xaml;windows\AboutWindow.xaml;windows\ConvertDriveWindow.xaml;windows\CreatePartitionWindow.xaml;windows\FormatWindow.xaml;windows\MainWindow.xaml;
 

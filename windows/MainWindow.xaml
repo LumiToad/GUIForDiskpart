@@ -18,7 +18,7 @@
                 </MenuItem>
 
                 <MenuItem Header="Commands">
-                    <MenuItem Header="Reload Drives" Click="RetrieveDriveData_Click">
+                    <MenuItem Header="Reload Drives" Click="RetrieveDiskData_Click">
                         <MenuItem.Icon>
                             <Image Source="/resources/guifdG.png" />
                         </MenuItem.Icon>

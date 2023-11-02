@@ -12,13 +12,13 @@ namespace GUIForDiskpart
     {
         private MainWindow mainWindow;
 
-        private DiskInfo driveInfo;
+        private DiskInfo diskInfo;
 
-        public FormatDriveWindow(DiskInfo drive)
+        public FormatDriveWindow(DiskInfo disk)
         {
             InitializeComponent();
 
-            driveInfo = drive;
+            diskInfo = disk;
             DriveInfoToTextBox();
 
             mainWindow = (MainWindow)Application.Current.MainWindow;
@@ -26,7 +26,7 @@ namespace GUIForDiskpart
 
         public void DriveInfoToTextBox()
         {
-            DiskDetailValue.Text = driveInfo.GetOutputAsString();
+            DiskDetailValue.Text = diskInfo.GetOutputAsString();
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -77,14 +77,14 @@ namespace GUIForDiskpart
 
             if (DriveLetterValue.Text == "")
             {
-                output = ComfortFeatures.EasyDiskFormat(driveInfo, fileSystem, VolumeValue.Text,
+                output = ComfortFeatures.EasyDiskFormat(diskInfo, fileSystem, VolumeValue.Text,
                     size, (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, true, false);
             }
             else
             {
                 char driveLetter = DriveLetterValue.Text.ToCharArray()[0];
 
-                output = ComfortFeatures.EasyDiskFormat(driveInfo, fileSystem, VolumeValue.Text,
+                output = ComfortFeatures.EasyDiskFormat(diskInfo, fileSystem, VolumeValue.Text,
                     driveLetter, size, (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, true, false);
             }
 

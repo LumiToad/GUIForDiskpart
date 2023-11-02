@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
-using System.Management.Automation;
 
 
 namespace GUIForDiskpart.main
@@ -70,7 +69,7 @@ namespace GUIForDiskpart.main
                 string mediaType = Convert.ToString(disk.Properties["MediaType"].Value);
                 UInt32 mediaSignature = Convert.ToUInt32(disk.Properties["Signature"].Value);
                 string mediaStatus = Convert.ToString(disk.Properties["Status"].Value);
-                string driveName = Convert.ToString(disk.Properties["Name"].Value);
+                string name = Convert.ToString(disk.Properties["Name"].Value);
                 UInt16 availability = Convert.ToUInt16(disk.Properties["Availability"].Value);
                 UInt32 bytesPerSector = Convert.ToUInt32(disk.Properties["BytesPerSector"].Value);
                 //UInt16 Capabilities[];
@@ -113,13 +112,16 @@ namespace GUIForDiskpart.main
                 UInt32 tracksPerCylinder = Convert.ToUInt32(disk.Properties["TracksPerCylinder"].Value);
 
                 DiskInfo physicalDisk = new DiskInfo(deviceId, physicalName, caption, diskModel, mediaStatus, mediaLoaded, totalSpace, partitionCount,
-                    interfaceType, mediaSignature, driveName, mediaType, availability, bytesPerSector, compressionMethod, configManagerErrorCode,
+                    interfaceType, mediaSignature, name, mediaType, availability, bytesPerSector, compressionMethod, configManagerErrorCode,
                     configManagerUserConfig, creationClassName, defaultBlockSize, description, errorCleared, errorDescription, errorMethodology,
                     firmwareRevision, index, installDate, lastErrorCode, manufacturer, maxBlockSize, maxMediaSize, minBlockSize, needsCleaning,
                     numberOfMediaSupported, pnpDeviceID, powerManagementSupported, scsiBus, scsiLogicalUnit, scsiPort, scsiTargetId, sectorsPerTrack,
                     serialNumber, statusInfo, systemCreationClassName, systemName, totalCylinders, totalHeads, totalSectors, totalTracks, tracksPerCylinder);
 
-                PartitionRetriever.GetAndAddPartitionsToDisk(disk, physicalDisk);
+                PartitionRetriever.GetAndAddWSMPartitionToDisk(physicalDisk);
+                PartitionRetriever.GetAndAddWMIPartitionsToDisk(disk, physicalDisk);
+                Console.WriteLine(physicalDisk.WMIPartitions.Count);
+                Console.WriteLine(physicalDisk.WSMPartitions.Count);
 
                 physicalDisk.UnpartSpace = physicalDisk.CalcUnpartSpace(physicalDisk.TotalSpace);
 
