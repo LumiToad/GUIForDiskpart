@@ -42,8 +42,7 @@ namespace GUIForDiskpart
             DriveNumberValueLabel.Content = diskInfo.DiskIndex.ToString();
             DiskNameValueLabel.Content = diskInfo.DiskName;
 
-            ByteFormatter byteFormatter = new ByteFormatter();
-            TotalSpaceValueLabel.Content = byteFormatter.FormatBytes((long)diskInfo.TotalSpace);
+            TotalSpaceValueLabel.Content = ByteFormatter.FormatBytes((long)diskInfo.TotalSpace);
 
             StatusValueLabel.Content = diskInfo.MediaStatus;
             PartitionsValueLabel.Content = diskInfo.PartitionCount;
@@ -51,15 +50,13 @@ namespace GUIForDiskpart
             foreach (WSMPartition wsmPartition in diskInfo.WSMPartitions)
             {
                 PartitionDriveEntryUI partitionDriveEntryUI = new PartitionDriveEntryUI();
-                Console.WriteLine("COUNT: " + diskInfo.WSMPartitions.Count);
                 partitionDriveEntryUI.AddPartitionInfo(wsmPartition);
                 PartitionStackPanel.Children.Add(partitionDriveEntryUI);
             }
 
             if (diskInfo.UnpartSpace > 0) 
             {
-                Console.WriteLine(diskInfo.UnpartSpace.ToString());
-                FreeSpaceEntryUI freeSpaceEntryUI = new FreeSpaceEntryUI(diskInfo.UnpartSpace, diskInfo);
+                FreeSpaceEntryUI freeSpaceEntryUI = new FreeSpaceEntryUI(Convert.ToInt64(diskInfo.UnpartSpace), diskInfo);
                 PartitionStackPanel.Children.Add(freeSpaceEntryUI);
             }
         }
@@ -123,11 +120,6 @@ namespace GUIForDiskpart
             formatWindow.Focus();
 
             formatWindow.Show();
-        }
-
-        private void ChildrenCount_Click(object sender, RoutedEventArgs e)
-        {
-            Console.WriteLine("Count: " + PartitionStackPanel.Children.Count);
         }
     }
 }

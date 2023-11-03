@@ -19,7 +19,7 @@ namespace GUIForDiskpart.main
             RetrieveDisksToList();
         }
 
-        public static void ReloadDriveInformation()
+        public static void ReloadDsikInformation()
         {
             DeleteDiskInformation();
             RetrieveDisks();
@@ -31,7 +31,7 @@ namespace GUIForDiskpart.main
             managementObjectDisks.Clear();
         }
 
-        public static string GetDrivesOutput()
+        public static string GetDiskOutput()
         {
             string output = string.Empty;
 
@@ -118,12 +118,7 @@ namespace GUIForDiskpart.main
                     numberOfMediaSupported, pnpDeviceID, powerManagementSupported, scsiBus, scsiLogicalUnit, scsiPort, scsiTargetId, sectorsPerTrack,
                     serialNumber, statusInfo, systemCreationClassName, systemName, totalCylinders, totalHeads, totalSectors, totalTracks, tracksPerCylinder);
 
-                PartitionRetriever.GetAndAddWSMPartitionToDisk(physicalDisk);
-                PartitionRetriever.GetAndAddWMIPartitionsToDisk(disk, physicalDisk);
-                Console.WriteLine(physicalDisk.WMIPartitions.Count);
-                Console.WriteLine(physicalDisk.WSMPartitions.Count);
-
-                physicalDisk.UnpartSpace = physicalDisk.CalcUnpartSpace(physicalDisk.TotalSpace);
+                PartitionRetriever.GetPartitionsAndAddToDisk(disk, physicalDisk);
 
                 physicalDisks.Add(physicalDisk);
             }

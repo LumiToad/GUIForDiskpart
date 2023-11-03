@@ -11,13 +11,13 @@ namespace GUIForDiskpart.windows
     /// </summary>
     public partial class CreatePartitionWindow : Window
     {
-        private UInt64 freeSpace;
+        private Int64 freeSpace;
 
         private MainWindow mainWindow;
 
         private DiskInfo diskInfo;
 
-        public CreatePartitionWindow(DiskInfo disk, ulong freeSpace)
+        public CreatePartitionWindow(DiskInfo disk, long freeSpace)
         {
             InitializeComponent();
 

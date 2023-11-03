@@ -15,7 +15,7 @@ namespace GUIForDiskpart
     {
         MainWindow mainWindow;
 
-        private ulong freeSpace;
+        private long freeSpace;
 
         private DiskInfo diskInfo;
 
@@ -38,7 +38,7 @@ namespace GUIForDiskpart
             }
         }
 
-        public FreeSpaceEntryUI(UInt64 space, DiskInfo disk)
+        public FreeSpaceEntryUI(Int64 space, DiskInfo disk)
         {
             InitializeComponent();
             
@@ -57,10 +57,7 @@ namespace GUIForDiskpart
 
         public void AddSpaceToUI()
         {
-            ByteFormatter byteFormatter = new ByteFormatter();
-
-            UnPartSpaceValue.Content = byteFormatter.FormatBytes((long)freeSpace);
-            
+            UnPartSpaceValue.Content = ByteFormatter.FormatBytes(freeSpace);
         }
 
         private void CreatePartition_Click(object sender, RoutedEventArgs e)
@@ -89,7 +86,7 @@ namespace GUIForDiskpart
 
         private void UserControl_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Console.WriteLine(sender.ToString());
+            //Console.WriteLine(sender.ToString());
 
             MarkAsSelected();
         }

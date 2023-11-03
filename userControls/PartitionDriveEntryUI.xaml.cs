@@ -66,26 +66,14 @@ namespace GUIForDiskpart
             PartitionNumberValue.Text = wsmPartition.PartitionNumber.ToString();
             BootPartitionValue.IsChecked = wsmPartition.IsBoot;
             
-            ByteFormatter byteFormatter = new ByteFormatter();
-            string bytes = byteFormatter.FormatBytes(wsmPartition.Size);
+            string bytes = ByteFormatter.FormatBytes(wsmPartition.Size);
 
             TotalSizeValue.Text = bytes;
             PartitionTableValue.Text = wsmPartition.PartitionTable;
 
             DriveLetterValue.Text = wsmPartition.DriveLetter.ToString();
-            
-            //BAD CODE!
 
-            if (wsmPartition.PartitionTable == "MBR")
-            {
-                TypeValue.Text = WSM_MBR_PartitionTypes.GetTypeByUInt16(wsmPartition.MBRType);
-            }
-            else
-            {
-                TypeValue.Text = WSM_GPT_PartitionTypes.GetTypeByGUID(wsmPartition.GPTType);
-            }
-
-            //BAD CODE END!
+            TypeValue.Text = wsmPartition.PartitionType;
 
             ChangeUIBorder(partitionBorder);
 
@@ -146,7 +134,7 @@ namespace GUIForDiskpart
 
         private void UserControl_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Console.WriteLine(sender.ToString());
+            //Console.WriteLine(sender.ToString());
 
             MarkAsSelected();
         }

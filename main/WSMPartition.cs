@@ -55,7 +55,33 @@ namespace GUIForDiskpart.main
         private bool noDefaultDriveLetter;
         public bool NoDefaultDriveLetter { get {  return noDefaultDriveLetter; } set {  noDefaultDriveLetter = value; } }
 
+        private UInt64 offset;
+        public UInt64 Offset { get { return offset; } set { offset = value; } }
+
+        private WMIPartition wmiPartition;
+        public WMIPartition WMIPartition 
+        { get { return wmiPartition; } set { wmiPartition = value; } }
+
+        public string PartitionType => GetPartitionType();
+
         public string PartitionTable => GetPartitionTable();
+
+        private string GetPartitionType()
+        {
+            
+            string result = "Type unknown...";
+            
+            if (PartitionTable == "MBR")
+            {
+                result = WSM_MBR_PartitionTypes.GetTypeByUInt16(MBRType);
+            }
+            else if (PartitionTable == "GPT")
+            {
+                result = WSM_GPT_PartitionTypes.GetTypeByGUID(GPTType);
+            }
+            
+            return result;
+        }
 
         public void PrintToConsole()
         {
@@ -73,8 +99,8 @@ namespace GUIForDiskpart.main
             output += "\t\tOperationalStatus: " + OperationalStatus + "\n";
             output += "\t\tTransitionState: " + TransitionState + "\n";
             output += "\t\tSize: " + Size + " bytes" + "\n";
-            output += "\t\tMBR Type: " + WSM_MBR_PartitionTypes.GetTypeByUInt16(mbrType) + "\n";
-            output += "\t\tGPT Type: " + WSM_GPT_PartitionTypes.GetTypeByGUID(gptType) + " " + gptType + "\n";
+            output += "\t\tMBR Type: " + GetPartitionType() + "\n";
+            output += "\t\tGPT Type: " + GetPartitionType() + "\n";
             output += "\t\tGUID: " + GUID + "\n";
             output += "\t\tIsReadOnly: " + IsReadOnly + "\n";
             output += "\t\tIsOffline: " + IsOffline + "\n";
@@ -86,6 +112,11 @@ namespace GUIForDiskpart.main
             output += "\t\tNoDefaultDriveLetter: " + NoDefaultDriveLetter + "\n";
                          
             output += "\t\t_________________" + "\n";
+
+            if (wmiPartition != null) 
+            {
+                output += wmiPartition.GetOutputAsString();
+            }
 
             return output;
         }

@@ -2,9 +2,9 @@
 
 namespace GUIForDiskpart.main
 {
-    public class ByteFormatter
+    public static class ByteFormatter
     {
-        public string FormatBytes(long bytes)
+        public static string FormatBytes(long bytes)
         {
             string[] Suffix = { "B", "KB", "MB", "GB", "TB" };
             int i;
@@ -16,8 +16,8 @@ namespace GUIForDiskpart.main
 
             return String.Format("{0:0.##} {1}", dblSByte, Suffix[i]);
         }
-
-        public string FormatBytes(ulong bytes)
+        
+        public static string FormatBytes(UInt64 bytes)
         {
             string[] Suffix = { "B", "KB", "MB", "GB", "TB" };
             int i;
@@ -29,5 +29,6 @@ namespace GUIForDiskpart.main
 
             return String.Format("{0:0.##} {1}", dblSByte, Suffix[i]);
         }
+        
     }
 }

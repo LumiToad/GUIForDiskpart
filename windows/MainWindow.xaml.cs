@@ -90,13 +90,13 @@ namespace GUIForDiskpart
 
         private void RetrieveAndShowDiskData_Internal(bool outputText)
         {
-            DiskRetriever.ReloadDriveInformation();
+            DiskRetriever.ReloadDsikInformation();
 
             AddDisksToStackPanel();
 
             if (outputText) 
             { 
-                AddTextToOutputConsole(DiskRetriever.GetDrivesOutput());
+                AddTextToOutputConsole(DiskRetriever.GetDiskOutput());
             }
         }
 

@@ -7,50 +7,84 @@ namespace GUIForDiskpart.main
 {
     public static class PartitionRetriever
     {
-        public static void GetAndAddWMIPartitionsToDisk(ManagementObject disk, DiskInfo physicalDisk)
+        public static void GetPartitionsAndAddToDisk(ManagementObject disk, DiskInfo diskInfo)
         {
+            List<WSMPartition> wsmPartitions = GetWSMPartitions(diskInfo);
+            List<WMIPartition> wmiPartitions = GetWMIPartitions(disk, diskInfo);
+
+            foreach (WSMPartition wsmPart in wsmPartitions)
+            {
+                foreach (WMIPartition wmiPart in wmiPartitions)
+                {
+                    if (wmiPart.StartingOffset == wsmPart.Offset)
+                    {
+                        wsmPart.WMIPartition = wmiPart;
+                    }
+                }
+            }
+
+            foreach (WSMPartition wsmPart in wsmPartitions)
+            {
+                diskInfo.WSMPartitions.Add(wsmPart);
+            }
+        }
+
+        private static List<WSMPartition> GetWSMPartitions(DiskInfo diskInfo)
+        {
+            List<WSMPartition> wsmPartitions = new List<WSMPartition>();
+
+            foreach (PSObject psObject in GetWSMPartitionsByDisk(diskInfo))
+            {
+                wsmPartitions.Add(RetrieveWSMPartition(psObject));
+            }
+
+            return wsmPartitions;
+        }
+
+        private static List<WMIPartition> GetWMIPartitions(ManagementObject disk, DiskInfo diskInfo)
+        {
+            List<WMIPartition> wmiPartitions = new List<WMIPartition>();
+
             var partitionQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_DiskDriveToDiskPartition", disk.Path.RelativePath);
             var partitionQuery = new ManagementObjectSearcher(partitionQueryText);
 
             foreach (ManagementObject partitionManagementObject in partitionQuery.Get())
             {
-                WMIPartition newPartitionInfo = RetrieveWMIPartitions(partitionManagementObject, physicalDisk.DiskIndex);
+                WMIPartition wmiPartition = RetrieveWMIPartitions(partitionManagementObject, diskInfo.DiskIndex);
 
-                LogicalDiskRetriever.GetAndAddLogicalDisks(partitionManagementObject, newPartitionInfo);
+                LogicalDiskRetriever.GetAndAddLogicalDisks(partitionManagementObject, wmiPartition);
 
-                physicalDisk.AddPartitionToList(newPartitionInfo);
+                wmiPartitions.Add(wmiPartition);
             }
+
+            return wmiPartitions;
         }
 
-        public static void GetAndAddWSMPartitionToDisk(DiskInfo disk)
+        private static WSMPartition RetrieveWSMPartition(PSObject psObject)
         {
-            List<WSMPartition> wsmPartitions = new List<WSMPartition>();
+            WSMPartition wsmPartition = new WSMPartition();
 
-            foreach (PSObject psObject in GetWSMPartitionsByDisk(disk))
-            {
-                WSMPartition newWSMPartition = new WSMPartition();
+            wsmPartition.DiskNumber = Convert.ToUInt32(psObject.Properties["DiskNumber"].Value);
+            wsmPartition.PartitionNumber = Convert.ToUInt32(psObject.Properties["PartitionNumber"].Value);
+            wsmPartition.DriveLetter = Convert.ToChar(psObject.Properties["DriveLetter"].Value);
+            wsmPartition.OperationalStatus = Convert.ToUInt16(psObject.Properties["OperationalStatus"].Value);
+            wsmPartition.TransitionState = Convert.ToUInt16(psObject.Properties["TransitionState"].Value);
+            wsmPartition.Size = Convert.ToUInt64(psObject.Properties["Size"].Value);
+            wsmPartition.MBRType = Convert.ToUInt16(psObject.Properties["MbrType"].Value);
+            wsmPartition.GPTType = Convert.ToString(psObject.Properties["GptType"].Value);
+            wsmPartition.IsReadOnly = Convert.ToBoolean(psObject.Properties["IsReadOnly"].Value);
+            wsmPartition.IsOffline = Convert.ToBoolean(psObject.Properties["IsOffline"].Value);
+            wsmPartition.IsSystem = Convert.ToBoolean(psObject.Properties["IsSystem"].Value);
+            wsmPartition.IsBoot = Convert.ToBoolean(psObject.Properties["IsBoot"].Value);
+            wsmPartition.IsActive = Convert.ToBoolean(psObject.Properties["IsActive"].Value);
+            wsmPartition.IsHidden = Convert.ToBoolean(psObject.Properties["IsHidden"].Value);
+            wsmPartition.IsShadowCopy = Convert.ToBoolean(psObject.Properties["IsShadowCopy"].Value);
+            wsmPartition.NoDefaultDriveLetter = Convert.ToBoolean(psObject.Properties["NoDefaultDriveLetter"].Value);
+            wsmPartition.Offset = Convert.ToUInt64(psObject.Members["Offset"].Value);
 
-                newWSMPartition.DiskNumber = Convert.ToUInt32(psObject.Properties["DiskNumber"].Value);
-                newWSMPartition.PartitionNumber = Convert.ToUInt32(psObject.Properties["PartitionNumber"].Value);
-                newWSMPartition.DriveLetter = Convert.ToChar(psObject.Properties["DriveLetter"].Value);
-                newWSMPartition.OperationalStatus = Convert.ToUInt16(psObject.Properties["OperationalStatus"].Value);
-                newWSMPartition.TransitionState = Convert.ToUInt16(psObject.Properties["TransitionState"].Value);
-                newWSMPartition.Size = Convert.ToUInt64(psObject.Properties["Size"].Value);
-                newWSMPartition.MBRType = Convert.ToUInt16(psObject.Properties["MbrType"].Value);
-                newWSMPartition.GPTType = Convert.ToString(psObject.Properties["GptType"].Value);
-                newWSMPartition.IsReadOnly = Convert.ToBoolean(psObject.Properties["IsReadOnly"].Value);
-                newWSMPartition.IsOffline = Convert.ToBoolean(psObject.Properties["IsOffline"].Value);
-                newWSMPartition.IsSystem = Convert.ToBoolean(psObject.Properties["IsSystem"].Value);
-                newWSMPartition.IsBoot = Convert.ToBoolean(psObject.Properties["IsBoot"].Value);
-                newWSMPartition.IsActive = Convert.ToBoolean(psObject.Properties["IsActive"].Value);
-                newWSMPartition.IsHidden = Convert.ToBoolean(psObject.Properties["IsHidden"].Value);
-                newWSMPartition.IsShadowCopy = Convert.ToBoolean(psObject.Properties["IsShadowCopy"].Value);
-                newWSMPartition.NoDefaultDriveLetter = Convert.ToBoolean(psObject.Properties["NoDefaultDriveLetter"].Value);
+            wsmPartition.PrintToConsole();
 
-                newWSMPartition.PrintToConsole();
-
-                disk.WSMPartitions.Add(newWSMPartition);
-            }
+            return wsmPartition;
         }
 
         private static WMIPartition RetrieveWMIPartitions(ManagementObject partition, uint diskIndex)
@@ -98,15 +132,11 @@ namespace GUIForDiskpart.main
             return newPartition;
         }
 
+        /*
         private static UInt32? GetWSMPartitionNumber(DiskInfo physicalDisk, WMIPartition newPartition)
         {
             foreach (PSObject psObject in GetWSMPartitionsByDisk(physicalDisk))
             {
-                UInt16 mbrType = Convert.ToUInt16(psObject.Properties["MbrType"].Value);
-                string? gptType = Convert.ToString(psObject.Properties["GptType"].Value);
-
-                Console.WriteLine($"mbrType: {mbrType} gptType: {gptType}");
-
                 if ((UInt64)psObject.Properties["Offset"].Value == newPartition.StartingOffset)
                 {
                     return (UInt32)psObject.Properties["PartitionNumber"].Value;
@@ -114,6 +144,7 @@ namespace GUIForDiskpart.main
             }
             return null;
         }
+        */
 
         private static List<object> GetWSMPartitionsByDisk(DiskInfo diskInfo)
         {

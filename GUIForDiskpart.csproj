@@ -7,9 +7,9 @@
     <UseWPF>true</UseWPF>
     <ApplicationManifest>main\app.manifest</ApplicationManifest>
 	<Deterministic>false</Deterministic>
-	<Version>1.0.376</Version>
-	<AssemblyVersion>1.0.2311.376</AssemblyVersion>
-	<FileVersion>1.0.2311.376</FileVersion>
+	<Version>1.0.434</Version>
+	<AssemblyVersion>1.0.2311.434</AssemblyVersion>
+	<FileVersion>1.0.2311.434</FileVersion>
 	<Copyright>MIT License</Copyright>
 	<ApplicationIcon>resources\guifdLogo.ico</ApplicationIcon>
 	<Platforms>AnyCPU;x64</Platforms>

@@ -26,8 +26,7 @@ namespace GUIForDiskpart.main
         readonly private UInt64 totalSpace;
         public UInt64 TotalSpace { get { return totalSpace; } }
 
-        readonly private UInt64 unpartSpace;
-        public UInt64 UnpartSpace { get; set; }
+        public Int64 UnpartSpace => CalcUnpartSpace();
 
         readonly private UInt32 partitionCount;
         public UInt32 PartitionCount { get { return partitionCount; } }
@@ -154,9 +153,6 @@ namespace GUIForDiskpart.main
 
         readonly private UInt32 tracksPerCylinder;
         public UInt32 TracksPerCylinder { get => tracksPerCylinder; }
-
-        private List<WMIPartition> wmiPartitions = new List<WMIPartition>();
-        public List<WMIPartition> WMIPartitions { get { return wmiPartitions; } }
 
         private List<WSMPartition> wsmPartitions = new List<WSMPartition>();
         public List<WSMPartition> WSMPartitions { get { return wsmPartitions; } set { wsmPartitions = value; } }
@@ -304,10 +300,6 @@ namespace GUIForDiskpart.main
             output += "Index: " + DiskIndex + '\n';
             output += "_________________" + '\n';
             
-            foreach (WMIPartition wmiPartition in wmiPartitions)
-            {
-                output += wmiPartition.GetOutputAsString();
-            }
             foreach (WSMPartition wsmPartition in wsmPartitions)
             {
                 output += wsmPartition.GetOutputAsString();
@@ -316,19 +308,13 @@ namespace GUIForDiskpart.main
             return output;
         }
 
-        public void AddPartitionToList(WMIPartition partition)
+        public Int64 CalcUnpartSpace()
         {
-            wmiPartitions.Add(partition);
-        }
+            Int64 result = Convert.ToInt64(TotalSpace);
 
-        public UInt64 CalcUnpartSpace(UInt64 space)
-        {
-            UInt64 result = space;
-
-            foreach (WMIPartition partitionInfo in wmiPartitions)
+            foreach (WSMPartition wsmPartition in wsmPartitions)
             {
-                Console.WriteLine(partitionInfo.Size);
-                result -= partitionInfo.Size;
+                result -= Convert.ToInt64(wsmPartition.Size);
             }
 
             return result;

@@ -103,6 +103,8 @@ namespace GUIForDiskpart.main
         private string type;
         public string Type { get { return type; } set { type = value; } }
 
+        public bool IsLogicalPartition => GetLogicalPartition();
+
         public LogicalDiskInfo logicalDriveInfo;
         public LogicalDiskInfo LogicalDriveInfo { get { return logicalDriveInfo; } }
 
@@ -144,7 +146,7 @@ namespace GUIForDiskpart.main
             logicalDriveInfo = disk;
         }
 
-        public bool IsLogicalPartition()
+        private bool GetLogicalPartition()
         {  return logicalDriveInfo != null; }
     }
 }
