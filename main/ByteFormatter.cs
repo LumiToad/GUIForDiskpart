@@ -16,19 +16,5 @@ namespace GUIForDiskpart.main
 
             return String.Format("{0:0.##} {1}", dblSByte, Suffix[i]);
         }
-        
-        public static string FormatBytes(UInt64 bytes)
-        {
-            string[] Suffix = { "B", "KB", "MB", "GB", "TB" };
-            int i;
-            double dblSByte = Convert.ToDouble(bytes);
-            for (i = 0; i < Suffix.Length && bytes >= 1024; i++, bytes /= 1024)
-            {
-                dblSByte = Convert.ToDouble(bytes) / 1024.0;
-            }
-
-            return String.Format("{0:0.##} {1}", dblSByte, Suffix[i]);
-        }
-        
     }
 }

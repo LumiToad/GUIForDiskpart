@@ -66,7 +66,7 @@ namespace GUIForDiskpart
             PartitionNumberValue.Text = wsmPartition.PartitionNumber.ToString();
             BootPartitionValue.IsChecked = wsmPartition.IsBoot;
             
-            string bytes = ByteFormatter.FormatBytes(wsmPartition.Size);
+            string bytes = ByteFormatter.FormatBytes(Convert.ToInt64(wsmPartition.Size));
 
             TotalSizeValue.Text = bytes;
             PartitionTableValue.Text = wsmPartition.PartitionTable;

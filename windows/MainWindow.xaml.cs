@@ -3,11 +3,9 @@ using GUIForDiskpart.main;
 using GUIForDiskpart.windows;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Management;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Controls;
 
 
 namespace GUIForDiskpart
@@ -24,6 +22,9 @@ namespace GUIForDiskpart
         {
             InitializeComponent();
             Initialize();
+            
+            Test test = new Test();
+            test.Show();
         }
 
         private void Initialize()
@@ -42,16 +43,9 @@ namespace GUIForDiskpart
             return build;
         }
 
-        private void ConsoleReturn_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-            ConsoleReturn.ScrollToEnd();
-        }
-
         public void AddTextToOutputConsole(string text)
         {
-            ConsoleReturn.Text += "\n";
-            ConsoleReturn.Text += "[" + DateTime.Now + "]\n";
-            ConsoleReturn.Text += text;
+            ConsoleReturn.AddTextToOutputConsole(text);
         }
 
         private void ListVolume_Click(object sender, RoutedEventArgs e)
@@ -120,7 +114,7 @@ namespace GUIForDiskpart
 
         private void SaveLog(object sender, RoutedEventArgs e)
         {
-            string log = ConsoleReturn.Text;
+            string log = ConsoleReturn.TextBox.Text;
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Text file (*.txt)|*.txt";
