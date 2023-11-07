@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUIForDiskpart"
-             mc:Ignorable="d" MinWidth="400" Width="NaN" Height="NaN" BorderBrush="#FFA7A7A7" BorderThickness="6,6,6,6" Margin="0,5,0,0">
+             mc:Ignorable="d" Width="200" Height="100" Focusable="True">
     <UserControl.ContextMenu>
         <ContextMenu>
             <MenuItem Header="DISKPART - Detail" Click="Detail_Click">
@@ -39,26 +39,30 @@
         </ContextMenu>
 
     </UserControl.ContextMenu>
-    <Grid x:Name="MainGrid" Background="#FF5D7487">
+    <Button x:Name="DiskEntryButton" MinWidth="150" MinHeight="100" HorizontalContentAlignment="Right" Click="Button_Click" Background="#FFA5A4A4" Focusable="False">
+        <Grid Width="NaN" Height="NaN">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Horizontal">
-            <StackPanel MinWidth="85">
-                <Label x:Name="DriveNumberLabel" Content="Drive:" UseLayoutRounding="True" Padding="1,1,1,1" FontSize="14"/>
-                <Label x:Name="DiskNameLabel" Content="Name:" Grid.IsSharedSizeScope="False" UseLayoutRounding="True" Width="NaN" Padding="1,1,1,1" FontSize="14"/>
-                <Label x:Name="TotalSpaceLabel" Content="Total Space:" Grid.IsSharedSizeScope="False" UseLayoutRounding="True" Padding="1,1,1,1" FontSize="14"/>
-                <Label x:Name="StatusLabel" Content="Status:" Grid.IsSharedSizeScope="False" UseLayoutRounding="True" Padding="1,1,1,1" FontSize="14"/>
-                <Label x:Name="PartitionsLabel" Content="Partitions:" Grid.IsSharedSizeScope="False" UseLayoutRounding="True" Padding="1,1,1,1" FontSize="14"/>
+            <StackPanel Width="NaN" Grid.ColumnSpan="2">
+                <Image x:Name="DiskIcon" MinWidth="16" MinHeight="16" Width="24" Height="24" MaxWidth="32" MaxHeight="32"/>
+                <Image x:Name="MediaTypeIcon" MinWidth="16" MinHeight="16" Margin="0,5,0,0" MaxWidth="32" MaxHeight="32" Width="24" Height="24"/>
+                <RadioButton x:Name="EntrySelected" Content="" Padding="0,0,0,0" Width="NaN" Height="NaN" HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="False" Focusable="False" Margin="0,17,0,0" GroupName="SelectedDisk"/>
             </StackPanel>
-            <StackPanel MinWidth="200" MaxWidth="200" Width="200">
-                <Label x:Name="DriveNumberValueLabel" Content="00" FontSize="14" Grid.IsSharedSizeScope="False" UseLayoutRounding="True" MinWidth="100" Padding="1,1,1,1"/>
-                <Label x:Name="DiskNameValueLabel" Content="SomeName" FontSize="14" Grid.IsSharedSizeScope="False" UseLayoutRounding="True" MinWidth="100" Padding="1,1,1,1"/>
-                <Label x:Name="TotalSpaceValueLabel" Content="1000" FontSize="14" Grid.IsSharedSizeScope="False" UseLayoutRounding="True" MinWidth="100" Padding="1,1,1,1"/>
-                <Label x:Name="StatusValueLabel" Content="OK?" FontSize="14" Grid.IsSharedSizeScope="False" UseLayoutRounding="True" MinWidth="100" Padding="1,1,1,1"/>
-                <Label x:Name="PartitionsValueLabel" Content="99" FontSize="14" Grid.IsSharedSizeScope="False" UseLayoutRounding="True" MinWidth="100" Padding="1,1,1,1"/>
+
+            <StackPanel MinWidth="120" Margin="0,0,0,4" Grid.Column="2">
+                <Label x:Name="DiskIndex" Content="00" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="16"/>
+                <Label x:Name="DiskModel" Content="Model" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" Width="NaN" Height="23.28"/>
+                <Label x:Name="TotalSpace" Content="1000" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="16" Width="NaN"/>
+                <Label x:Name="WSMPartitionCount" Content="99" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="16" Width="NaN"/>
+                <StackPanel Height="100"/>
             </StackPanel>
-            <ScrollViewer x:Name="scrollViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" MinWidth="100" HorizontalAlignment="Left" CanContentScroll="True" MaxWidth="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:PhysicalDiskEntryUI}}}" UseLayoutRounding="False" HorizontalContentAlignment="Right">
-                <StackPanel x:Name="PartitionStackPanel" Orientation="Horizontal" Grid.IsSharedSizeScope="True"/>
-            </ScrollViewer>
-        </StackPanel>
-    </Grid>
+        </Grid>
+    </Button>
 </UserControl>
+    
+
+    

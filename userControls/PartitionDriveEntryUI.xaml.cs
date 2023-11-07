@@ -1,6 +1,7 @@
 ﻿using GUIForDiskpart.diskpart;
 using GUIForDiskpart.main;
 using System;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -10,11 +11,20 @@ namespace GUIForDiskpart
     /// <summary>
     /// Interaktionslogik für PartitionDriveEntryUI.xaml
     /// </summary>
-    public partial class PartitionDriveEntryUI : UserControl
+    public partial class PartitionEntryUI : UserControl
     {
         MainWindow mainWindow;
-        WMIPartition wmiPartition;
-        WSMPartition wsmPartition;
+
+        private WSMPartition wsmPartition;
+        public WSMPartition WSMPartition
+        { 
+            get { return wsmPartition; }
+            set 
+            {
+                wsmPartition = value;
+                PartitionDataToThisUI();
+            }
+        }
 
         private const string partitionBorder = "#FF00C4B4";
         private const string logicalBorder = "#FF0A70C5";
@@ -22,22 +32,9 @@ namespace GUIForDiskpart
         private const string basicBackground = "#FFBBBBBB";
         private const string selectBackground = "#FF308EBF";
 
-        private bool isSelected = false;
-        public bool IsSelected 
-        { 
-            get 
-            {
-                return isSelected; 
-            } 
-            
-            private set
-            {
-                isSelected = value;
-            }
-        }
+        public bool? IsSelected { get { return EntrySelected.IsChecked; } }
 
-
-        public PartitionDriveEntryUI()
+        public PartitionEntryUI()
         {
             InitializeComponent();
 
@@ -49,62 +46,31 @@ namespace GUIForDiskpart
             mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
-        public void AddPartitionInfo(WMIPartition wmiPartition)
-        {
-            this.wmiPartition = wmiPartition;
-            PartitionDataToThisUI();
-        }
-
-        public void AddPartitionInfo(WSMPartition wsmPartition)
-        {
-            this.wsmPartition = wsmPartition;
-            PartitionDataToThisUI();
-        }
-
         private void PartitionDataToThisUI()
         {
-            PartitionNumberValue.Text = wsmPartition.PartitionNumber.ToString();
-            BootPartitionValue.IsChecked = wsmPartition.IsBoot;
-            
-            string bytes = ByteFormatter.FormatBytes(Convert.ToInt64(wsmPartition.Size));
+            PartitionNumber.Content = $"#{WSMPartition.PartitionNumber}";
 
-            TotalSizeValue.Text = bytes;
-            PartitionTableValue.Text = wsmPartition.PartitionTable;
+            DriveNameAndLetter.Content = GetDriveNameText();
 
-            DriveLetterValue.Text = wsmPartition.DriveLetter.ToString();
+            TotalSpace.Content = WSMPartition.FormattedSize;
+            IsBoot.IsChecked = WSMPartition.IsBoot;
+            PartitionType.Content = $"{WSMPartition.PartitionTable}: {WSMPartition.PartitionType}";
 
-            TypeValue.Text = wsmPartition.PartitionType;
-
-            ChangeUIBorder(partitionBorder);
-
-
-            //if (wmiPartition.IsLogicalPartition())
-            //{
-            //    VolumeNameValue.Text = wmiPartition.LogicalDriveInfo.VolumeName;
-            //    DriveLetterValue.Text = wmiPartition.LogicalDriveInfo.DriveLetter;
-            //    FreeSpaceValue.Text = wmiPartition.LogicalDriveInfo.FreeSpace.ToString();
-            //    FileSystemValue.Text = wmiPartition.LogicalDriveInfo.FileSystem;
-            //    ChangeUIBorder(logicalBorder);
-            //}
-            //else
-            //{
-            //    VolumeNameValue.Text = "";
-            //    DriveLetterValue.Text = "";
-            //    FreeSpaceValue.Text = "";
-            //    ChangeUIBorder(partitionBorder);
-            //}
+            if (WSMPartition.IsBoot)
+            {
+               WinVolumeIcon.Source = Win32Icons.GetSystemIconByType(SystemIconType.WinLogo);
+            }
         }
 
-        private void ChangeUIBorder(string borderColorValue)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var borderBrushColor = new BrushConverter();
-            UserControl.BorderBrush = (Brush)borderBrushColor.ConvertFrom(borderColorValue);
+            SelectEntryRadioButton();
         }
 
-        private void ChangeBackgroundColor(string backgroundColorValue)
+        public void SelectEntryRadioButton()
         {
-            var backgroundBrushColor = new BrushConverter();
-            MainGrid.Background = (Brush)backgroundBrushColor.ConvertFrom(backgroundColorValue);
+            EntrySelected.IsChecked = !EntrySelected.IsChecked;
+            mainWindow.PartitionEntry_Click(this);
         }
 
         private void Detail_Click(object sender, RoutedEventArgs e)
@@ -121,7 +87,7 @@ namespace GUIForDiskpart
         {
             string output = string.Empty;
 
-            output += DPFunctions.Delete(wmiPartition.DiskIndex, wmiPartition.PartitionIndex, false, true);
+            //output += DPFunctions.Delete(WSMPartition.DiskNumber, WSMPartition.PartitionNumber, false, true);
 
             mainWindow.AddTextToOutputConsole(output);
             mainWindow.RetrieveAndShowDiskData(false);
@@ -132,25 +98,31 @@ namespace GUIForDiskpart
 
         }
 
-        private void UserControl_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private string GetDriveNameText()
         {
-            //Console.WriteLine(sender.ToString());
-
-            MarkAsSelected();
-        }
-
-        public void MarkAsSelected()
-        {            
-            IsSelected = !IsSelected;
-
-            if (IsSelected) 
+            string driveNameText = string.Empty;
+            
+            if 
+                (
+                (WSMPartition.WMIPartition) != null &&
+                (WSMPartition.WMIPartition.LogicalDriveInfo) != null &&
+                (!string.IsNullOrEmpty(WSMPartition.WMIPartition.LogicalDriveInfo.VolumeName))
+                )
             {
-                ChangeBackgroundColor(selectBackground);
+                driveNameText += $"{WSMPartition.WMIPartition.LogicalDriveInfo.VolumeName} ";
             }
-            else
+
+            if (WSMPartition.DriveLetter > 65)
             {
-                ChangeBackgroundColor(basicBackground);
+                driveNameText += $"[{WSMPartition.DriveLetter}:\\]";
             }
+
+            if (driveNameText == string.Empty)
+            {
+                driveNameText = "No letter";
+            }
+
+            return driveNameText;
         }
     }
 }

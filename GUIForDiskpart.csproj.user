@@ -33,12 +33,24 @@
     <Compile Update="userControls\PhysicalDriveEntryUI.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\Test.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="MSSample.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\Win95Button.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\MSSample.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="userControls\ConsoleReturn.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Win95Button.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="windows\AboutWindow.xaml">
@@ -60,9 +72,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="userControls\PhysicalDriveEntryUI.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="windows\Test.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

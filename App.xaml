@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:GUIForDiskpart"
              StartupUri="windows/MainWindow.xaml">
     <Application.Resources>
-         
+        <!--<ResourceDictionary x:Name="MSSample" Source="/MSSample.xaml"/>-->
+        <ResourceDictionary x:Name="Win95Button" Source="/Win95Button.xaml"/>
     </Application.Resources>
 </Application>

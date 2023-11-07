@@ -7,9 +7,9 @@
     <UseWPF>true</UseWPF>
     <ApplicationManifest>main\app.manifest</ApplicationManifest>
 	<Deterministic>false</Deterministic>
-	<Version>1.0.448</Version>
-	<AssemblyVersion>1.0.2311.448</AssemblyVersion>
-	<FileVersion>1.0.2311.448</FileVersion>
+	<Version>1.0.648</Version>
+	<AssemblyVersion>1.0.2311.648</AssemblyVersion>
+	<FileVersion>1.0.2311.648</FileVersion>
 	<Copyright>MIT License</Copyright>
 	<ApplicationIcon>resources\guifdLogo.ico</ApplicationIcon>
 	<Platforms>AnyCPU;x64</Platforms>
@@ -51,6 +51,7 @@
     <None Remove="resources\DiskpartD.png" />
     <None Remove="resources\FroggoCorner.png" />
     <None Remove="resources\guifdG.png" />
+    <None Remove="resources\winLogo.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,14 +64,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Themes\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="resources\CmdC.png" />
     <Resource Include="resources\DiskpartD.png" />
     <Resource Include="resources\FroggoCorner.png" />
     <Resource Include="resources\guifdG.png" />
+    <Resource Include="resources\winLogo.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace GUIForDiskpart.main
 {
     public class DiskInfo
     {
+        private const string wmiInfoString = "---WINDOWS MANAGEMENT INSTRUMENTATION INFO---";
+
         readonly private string deviceID;
         public string DeviceId { get { return deviceID; } }
 
@@ -28,8 +31,10 @@ namespace GUIForDiskpart.main
 
         public Int64 UnpartSpace => CalcUnpartSpace();
 
-        readonly private UInt32 partitionCount;
-        public UInt32 PartitionCount { get { return partitionCount; } }
+        readonly private UInt32 wmiPartitionCount;
+        public UInt32 WMIPartitionCount { get { return wmiPartitionCount; } }
+
+        public int WSMPartitionCount => wsmPartitions.Count;
 
         readonly private string interfaceType;
         public string InterfaceType { get { return interfaceType; } }
@@ -157,6 +162,9 @@ namespace GUIForDiskpart.main
         private List<WSMPartition> wsmPartitions = new List<WSMPartition>();
         public List<WSMPartition> WSMPartitions { get { return wsmPartitions; } set { wsmPartitions = value; } }
 
+        public string FormattedTotalSpace => ByteFormatter.FormatBytes(TotalSpace);
+        public string FormattedUnpartSpace => ByteFormatter.FormatBytes(UnpartSpace);
+
         public DiskInfo(
             string deviceID,
             string physicalName,
@@ -208,17 +216,17 @@ namespace GUIForDiskpart.main
             ulong totalTracks,
             uint tracksPerCylinder)
         {
-            this.deviceID = deviceID;
-            this.physicalName = physicalName;
+            this.deviceID = deviceID + " ID";
+            this.physicalName = physicalName + " physicalName";
             this.caption = caption;
             this.diskModel = diskModel;
             this.mediaStatus = mediaStatus;
             this.mediaLoaded = mediaLoaded;
             this.totalSpace = totalSpace;
-            this.partitionCount = partitionCount;
+            this.wmiPartitionCount = partitionCount;
             this.interfaceType = interfaceType;
             this.mediaSignature = mediaSignature;
-            this.diskName = diskName;
+            this.diskName = diskName + " diskName";
             this.mediaType = mediaType;
             this.availability = availability;
             this.bytesPerSector = bytesPerSector;
@@ -259,22 +267,6 @@ namespace GUIForDiskpart.main
             this.tracksPerCylinder = tracksPerCylinder;
         }
 
-        public void PrintToConsoleOld()
-        {
-            Console.WriteLine("PhysicalName: {0}", PhysicalName);
-            Console.WriteLine("DiskIndex: {0}", DiskIndex);
-            Console.WriteLine("DiskName: {0}", DiskName);
-            Console.WriteLine("DiskModel: {0}", DiskModel);
-            Console.WriteLine("MediaLoaded: {0}", MediaLoaded);
-            Console.WriteLine("MediaStatus: {0}", MediaStatus);
-            Console.WriteLine("TotalSpace: {0}", TotalSpace);
-            Console.WriteLine("InterfaceType: {0}", InterfaceType);
-            Console.WriteLine("MediaType: {0}", MediaType);
-            Console.WriteLine("MediaSignature: {0}", MediaSignature);
-            Console.WriteLine("DiskName: {0}", DiskName);
-            Console.WriteLine(new string('-', 79));
-        }
-
         public void PrintToConsole()
         {
             Console.WriteLine(GetOutputAsString());
@@ -283,21 +275,59 @@ namespace GUIForDiskpart.main
         public string GetOutputAsString()
         {
             string output = string.Empty;
+
+            output += "HardwareDeviceID: " + DeviceId + '\n';
             output += "PhysicalName: " + PhysicalName + '\n';
-            output += "DiskIndex: " + DiskIndex + '\n';
             output += "DiskName: " + DiskName + '\n';
             output += "DiskModel: " + DiskModel + '\n';
-            output += "MediaLoaded: " + MediaLoaded + '\n';
             output += "MediaStatus: " + MediaStatus + '\n';
-            output += "TotalSpace: " + TotalSpace + '\n';
-            output += "UnpartSpace: " + UnpartSpace + '\n';
+            output += "MediaLoaded: " + MediaLoaded + '\n';
+            output += $"TotalSpace: {ByteFormatter.FormatBytes(TotalSpace)} {ByteFormatter.GetBytesAsStringAndUnit(TotalSpace)}\n";
+            output += $"UnpartSpace: {ByteFormatter.FormatBytes(UnpartSpace)} {ByteFormatter.GetBytesAsStringAndUnit(UnpartSpace)}\n";
+            output += "WMIPartitionCount: " + WMIPartitionCount + '\n';
+            output += "WSMPartitionCount: " + WSMPartitionCount + " (includes hidden and reserved)" + '\n';
             output += "InterfaceType: " + InterfaceType + '\n';
-            output += "MediaType: " + MediaType + '\n';
             output += "MediaSignature: " + MediaSignature + '\n';
-            output += "DiskName: " + DiskName + '\n';
-            output += "SystemName: " + SystemName + '\n';
+            output += "Caption: " + Caption + '\n';
+            output += "MediaType: " + MediaType + '\n';
+            output += "Avaiability: " + Availability + '\n';
+            output += "BytesPerSector: " + BytesPerSector + '\n';
+            output += "CompressionMethod: " + CompressionMethod + '\n';
+            output += "ConfigManagerErrorCode: " + ConfigManagerErrorCode + '\n';
+            output += "ConfigManagerUserConfig: " + ConfigManagerUserConfig + '\n';
+            output += "CreationClassName: " + CreationClassName + '\n';
+            output += "DefaultBlockSize: " + DefaultBlockSize + '\n';
+            output += "Description: " + Description + '\n';
+            output += "ErrorCleared: " + ErrorCleared + '\n';
+            output += "ErrorDescription: " + ErrorDescription + '\n';
+            output += "ErrorMethodology: " + ErrorMethodology + '\n';
+            output += "FirmwareRevision: " + FirmwareRevision + '\n';
+            output += "DiskIndex: " + DiskIndex + '\n';
+            output += "InstallDate: " + InstallDate + '\n';
+            output += "LastErrorCode: " + LastErrorCode + '\n';
+            output += "Manufacturer: " + Manufacturer + '\n';
+            output += "MaxBlockSize: " + MaxBlockSize + '\n';
+            output += "MinBlockSize: " + MinBlockSize + '\n';
+            output += "MaxMediaSize: " + MaxMediaSize + '\n';
+            output += "NeedsCleaning: " + NeedsCleaning + '\n';
+            output += "NumberOfMediaSupported: " + NumberOfMediaSupported + '\n';
+            output += "PNPDeviceID: " + PNPDeviceID + '\n';
+            output += "PowerManagementSupported: " + PowerManagementSupported + '\n';
             output += "SCSIBus: " + SCSIBus + '\n';
-            output += "Index: " + DiskIndex + '\n';
+            output += "SCSILogicalUnit: " + SCSILogicalUnit + '\n';
+            output += "SCSIPort: " + SCSIPort + '\n';
+            output += "SCSITargetID: " + SCSITargetID + '\n';
+            output += "SectorsPerTrack: " + SectorsPerTrack + '\n';
+            output += "SerialNumber: " + SerialNumber + '\n';
+            output += "StatusInfo: " + StatusInfo + '\n';
+            output += "SystemCreationClassName: " + SystemCreationClassName + '\n';
+            output += "SystemName: " + SystemName + '\n';
+            output += "TotalCylinders: " + TotalCylinders + '\n';
+            output += "TotalHeads: " + TotalHeads + '\n';
+            output += "TotalSectors: " + TotalSectors + '\n';
+            output += "TotalTracks: " + TotalTracks + '\n';
+            output += "TracksPerCylinder: " + TracksPerCylinder + '\n';
+
             output += "_________________" + '\n';
             
             foreach (WSMPartition wsmPartition in wsmPartitions)
@@ -317,7 +347,38 @@ namespace GUIForDiskpart.main
                 result -= Convert.ToInt64(wsmPartition.Size);
             }
 
-            return result;
+            return result > 0 ? result : 0;
+        }
+
+        public Dictionary<string, object?> GetKeyValuePairs() 
+        {
+            Dictionary<string, object?> data = new Dictionary<string, object?>();
+            PropertyInfo[] properties = typeof(DiskInfo).GetProperties();
+
+            data.Add(wmiInfoString, "THESE DATA ARE MOSTLY HARDWARE RELATED");
+
+            foreach (PropertyInfo property in properties)
+            {
+                string key = property.Name;
+                object? value = property.GetValue(this);
+
+                if (data.ContainsKey(key)) continue;
+                if (key == "TotalSpace") continue;
+                if (key == "UnpartSpace") continue;
+                if (typeof(List<WSMPartition>) == property.PropertyType) continue;
+
+                if (key == "FormattedTotalSpace")
+                {
+                    key = "TotalSpace"; 
+                }
+
+                if (key == "FormattedUnpartSpace")
+                { key = "UnallocatedSpace"; }
+
+                data.Add(key, value);
+            }
+
+            return data;
         }
     }
 }

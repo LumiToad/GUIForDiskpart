@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace GUIForDiskpart.main
 {
     public class LogicalDiskInfo
     {
+        public string FormattedTotalSpace => ByteFormatter.FormatBytes(TotalSpace);
+        public string FormattedFreeSpace => ByteFormatter.FormatBytes(FreeSpace);
+
         private string driveLetter;
         public string DriveLetter { get; set; }
 
@@ -49,6 +54,36 @@ namespace GUIForDiskpart.main
             output += "\t\tVolumeSerial: " + VolumeSerial + "\n";
 
             return output;
+        }
+
+        public Dictionary<string, object?> GetKeyValuePairs()
+        {
+            Dictionary<string, object?> data = new Dictionary<string, object?>();
+            PropertyInfo[] wmiProperties = typeof(LogicalDiskInfo).GetProperties();
+
+            foreach (PropertyInfo property in wmiProperties)
+            {
+                string key = $"WMI {property.Name}";
+                object? value = property.GetValue(this);
+
+                if (data.ContainsKey(key)) continue;
+                if (key == "WMI TotalSpace") continue;
+                if (key == "WMI FreeSpace") continue;
+
+                if (key == "WMI FormattedTotalSpace")
+                {
+                    key = "WMI TotalSpace";
+                }
+
+                if (key == "WMI FormattedFreeSpace")
+                {
+                    key = "WMI FreeSpace";
+                }
+
+                data.Add(key, value);
+            }
+
+            return data;
         }
     }
 }

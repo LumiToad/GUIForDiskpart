@@ -22,9 +22,6 @@ namespace GUIForDiskpart
         {
             InitializeComponent();
             Initialize();
-            
-            Test test = new Test();
-            test.Show();
         }
 
         private void Initialize()
@@ -46,6 +43,17 @@ namespace GUIForDiskpart
         public void AddTextToOutputConsole(string text)
         {
             ConsoleReturn.AddTextToOutputConsole(text);
+        }
+
+        public void DiskEntry_Click(DiskInfo diskInfo)
+        {
+            EntryData.ItemsSource = diskInfo.GetKeyValuePairs();
+            AddPartitionsToStackPanel(diskInfo);
+        }
+
+        public void PartitionEntry_Click(PartitionEntryUI entry)
+        {
+            EntryData.ItemsSource = entry.WSMPartition.GetKeyValuePairs();
         }
 
         private void ListVolume_Click(object sender, RoutedEventArgs e)
@@ -101,9 +109,24 @@ namespace GUIForDiskpart
             foreach (DiskInfo physicalDisk in DiskRetriever.PhysicalDrives)
             {
                 PhysicalDiskEntryUI diskListEntry = new PhysicalDiskEntryUI();
-                diskListEntry.AddDriveInfo(physicalDisk);
+                diskListEntry.DiskInfo = physicalDisk;
 
                 DriveStackPanel.Children.Add(diskListEntry);
+            }
+            PhysicalDiskEntryUI entry = (PhysicalDiskEntryUI)DriveStackPanel.Children[0];
+            entry.SelectEntryRadioButton();
+        }
+
+        private void AddPartitionsToStackPanel(DiskInfo diskInfo)
+        {
+            PartitionStackPanel.Children.Clear();
+
+            foreach (WSMPartition wsmPartition in diskInfo.WSMPartitions)
+            {
+                PartitionEntryUI partitionEntry = new PartitionEntryUI();
+                partitionEntry.WSMPartition = wsmPartition;
+
+                PartitionStackPanel.Children.Add(partitionEntry);
             }
         }
 
@@ -138,6 +161,44 @@ namespace GUIForDiskpart
             AboutWindow aboutWindow = new AboutWindow(GetBuildNumberString());
             aboutWindow.Owner = this;
             aboutWindow.Show();
+        }
+
+        private void CopySelectedRow_Click(object sender, RoutedEventArgs e)
+        {
+            string copyToClipboard = string.Empty;
+
+            foreach (var entry in EntryData.SelectedItems)
+            {
+                copyToClipboard += entry.ToString() + '\n';
+            }
+
+            Clipboard.SetDataObject(copyToClipboard);
+        }
+
+        private void CopySelectedProperty_Click(object sender, RoutedEventArgs e)
+        {
+            string copyToClipboard = string.Empty;
+
+            foreach (var entry in EntryData.SelectedCells)
+            {
+                copyToClipboard += entry.ToString() + '\n';
+            }
+
+            Clipboard.SetDataObject(copyToClipboard);
+        }
+
+        private void CopySelectedValue_Click(object sender, RoutedEventArgs e)
+        {
+            string copyToClipboard = string.Empty;
+
+            foreach (var entry in EntryData.SelectedCells)
+            {
+                //CONTINUE HERE
+                Console.WriteLine(entry.Column + entry.Column.Header.GetType().Name);
+                copyToClipboard += entry.ToString() + '\n';
+            }
+
+            Clipboard.SetDataObject(copyToClipboard);
         }
 
         #region DiskChangedWatcher

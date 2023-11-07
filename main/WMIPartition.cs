@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Windows.Markup;
 
 namespace GUIForDiskpart.main
 {
     public class WMIPartition
     {
+        private const string wmiInfoString = "---WINDOWS MANAGEMENT INSTRUMENTATION INFO---";
+
         private UInt16 availability;
         public UInt16 Availability { get { return availability; } set { availability = value; } }
 
@@ -148,5 +153,37 @@ namespace GUIForDiskpart.main
 
         private bool GetLogicalPartition()
         {  return logicalDriveInfo != null; }
+
+        public Dictionary<string, object?> GetKeyValuePairs()
+        {
+            Dictionary<string, object?> data = new Dictionary<string, object?>();
+            PropertyInfo[] wmiProperties = typeof(WMIPartition).GetProperties();
+
+            data.Add(wmiInfoString, "DATA DRAWN FROM THE DATABASE, WHICH DEVICE MANAGER IS USING");
+
+            foreach (PropertyInfo property in wmiProperties)
+            {
+                string key = $"WMI {property.Name}";
+                object? value = property.GetValue(this);
+
+                if (data.ContainsKey(key)) continue;
+                if (key == "size") continue;
+
+                if (typeof(LogicalDiskInfo) == property.PropertyType) continue;
+                
+                data.Add(key, value);
+            }
+
+            if (logicalDriveInfo != null)
+            {
+                Dictionary<string, object?> logicalKeyValuePairs = logicalDriveInfo.GetKeyValuePairs();
+                foreach (string key in logicalKeyValuePairs.Keys)
+                {
+                    data.Add(key, logicalKeyValuePairs[key]);
+                }
+            }
+
+            return data;
+        }
     }
 }

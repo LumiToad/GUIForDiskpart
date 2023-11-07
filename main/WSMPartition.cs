@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace GUIForDiskpart.main
 {
     public class WSMPartition
     {
+        private const string wsmInfoString = "---WINDOWS STORAGE MANAGEMENT INFO---";
+
         private UInt32 diskNumber;
         public UInt32 DiskNumber { get { return diskNumber; } set { diskNumber = value; } }
 
@@ -52,8 +56,8 @@ namespace GUIForDiskpart.main
         private bool isShadowCopy;
         public bool IsShadowCopy { get { return isShadowCopy; } set { isShadowCopy = value; } }
 
-        private bool noDefaultDriveLetter;
-        public bool NoDefaultDriveLetter { get {  return noDefaultDriveLetter; } set {  noDefaultDriveLetter = value; } }
+        private bool? noDefaultDriveLetter;
+        public bool? NoDefaultDriveLetter { get {  return noDefaultDriveLetter; } set {  noDefaultDriveLetter = value; } }
 
         private UInt64 offset;
         public UInt64 Offset { get { return offset; } set { offset = value; } }
@@ -61,6 +65,8 @@ namespace GUIForDiskpart.main
         private WMIPartition wmiPartition;
         public WMIPartition WMIPartition 
         { get { return wmiPartition; } set { wmiPartition = value; } }
+
+        public string FormattedSize => ByteFormatter.FormatBytes(Size);
 
         public string PartitionType => GetPartitionType();
 
@@ -125,17 +131,55 @@ namespace GUIForDiskpart.main
         {
             string result = string.Empty;
 
-            if (mbrType != 0 || mbrType != null) 
+            if (mbrType != null) 
             {
                 result = "MBR";
             }
 
-            if (gptType != "" || gptType != null)
+            if (!string.IsNullOrWhiteSpace(gptType))
             {
                 result = "GPT";
             }
 
             return result;
+        }
+
+        public Dictionary<string, object?> GetKeyValuePairs()
+        {
+            Dictionary<string, object?> data = new Dictionary<string, object?>();
+            PropertyInfo[] wsmProperties = typeof(WSMPartition).GetProperties();
+
+            data.Add(wsmInfoString, "DRAWN FROM POWERSHELL, CORRESPONDS TO DISKPART");
+
+            foreach (PropertyInfo property in wsmProperties)
+            {
+                string key = $"WSM {property.Name}";
+                object? value = property.GetValue(this);
+
+                if (data.ContainsKey(key)) continue;
+                if (key == "Size") continue;
+                
+                if (key == "WSM FormattedSize")
+                {
+                    key = "WSM TotalSpace";
+                }
+
+                if (typeof(WMIPartition) == property.PropertyType) continue;
+                
+
+                data.Add(key, value);
+            }
+
+            if (WMIPartition != null)
+            {
+                Dictionary<string, object?> wmiKeyValuePairs = WMIPartition.GetKeyValuePairs();
+                foreach (string key in wmiKeyValuePairs.Keys)
+                {
+                    data.Add(key, wmiKeyValuePairs[key]);
+                }
+            }
+
+            return data;
         }
     }
 }

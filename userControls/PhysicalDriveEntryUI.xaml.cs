@@ -1,10 +1,10 @@
 ﻿using GUIForDiskpart.diskpart;
 using GUIForDiskpart.main;
 using GUIForDiskpart.windows;
-using System;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Windows.Media;
 
 namespace GUIForDiskpart
 {
@@ -14,15 +14,22 @@ namespace GUIForDiskpart
     public partial class PhysicalDiskEntryUI : UserControl
     {
         MainWindow mainWindow;
+        private DiskInfo diskInfo;
+        public DiskInfo DiskInfo
+        { 
+            get { return diskInfo; } 
+            set 
+            { 
+                diskInfo = value; 
+                DriveDataToThisUI();
+            }
+        }
 
-        DiskInfo diskInfo;
-
-        public uint DiskIndex { get { return diskInfo.DiskIndex; } }
+        public bool? IsSelected { get { return EntrySelected.IsChecked; } }
 
         public PhysicalDiskEntryUI()
         {
             InitializeComponent();
-
             Initialize();
         }
 
@@ -31,34 +38,16 @@ namespace GUIForDiskpart
             mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
-        public void AddDriveInfo(DiskInfo physicalDisk)
-        {
-            this.diskInfo = physicalDisk;
-            DriveDataToThisUI();
-        }
-
         private void DriveDataToThisUI()
         {
-            DriveNumberValueLabel.Content = diskInfo.DiskIndex.ToString();
-            DiskNameValueLabel.Content = diskInfo.DiskName;
+            DiskIndex.Content = $"#{diskInfo.DiskIndex}";
+            DiskModel.Content = diskInfo.DiskModel;
+            TotalSpace.Content = diskInfo.FormattedTotalSpace;
+            WSMPartitionCount.Content = $"{diskInfo.WSMPartitionCount} partitions";
 
-            TotalSpaceValueLabel.Content = ByteFormatter.FormatBytes((long)diskInfo.TotalSpace);
 
-            StatusValueLabel.Content = diskInfo.MediaStatus;
-            PartitionsValueLabel.Content = diskInfo.PartitionCount;
-
-            foreach (WSMPartition wsmPartition in diskInfo.WSMPartitions)
-            {
-                PartitionDriveEntryUI partitionDriveEntryUI = new PartitionDriveEntryUI();
-                partitionDriveEntryUI.AddPartitionInfo(wsmPartition);
-                PartitionStackPanel.Children.Add(partitionDriveEntryUI);
-            }
-
-            if (diskInfo.UnpartSpace > 0) 
-            {
-                FreeSpaceEntryUI freeSpaceEntryUI = new FreeSpaceEntryUI(Convert.ToInt64(diskInfo.UnpartSpace), diskInfo);
-                PartitionStackPanel.Children.Add(freeSpaceEntryUI);
-            }
+            DiskIcon.Source = GetDiskIcon();
+            MediaTypeIcon.Source = GetMediaTypeIcon();
         }
 
         private void Detail_Click(object sender, RoutedEventArgs e)
@@ -120,6 +109,52 @@ namespace GUIForDiskpart
             formatWindow.Focus();
 
             formatWindow.Show();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SelectEntryRadioButton();
+        }
+
+        public void SelectEntryRadioButton()
+        {
+            EntrySelected.IsChecked = true;
+            mainWindow.DiskEntry_Click(DiskInfo);
+        }
+
+        private ImageSource? GetDiskIcon()
+        {
+            ImageSource? result = Win32Icons.GetShellIconByType(Shell32IconType.Drive, true);
+
+            if (diskInfo.InterfaceType == "USB")
+            {
+                result = Win32Icons.GetShellIconByType(Shell32IconType.USB, true);
+            }
+
+            return result;
+        }
+
+        private ImageSource? GetMediaTypeIcon()
+        {
+            ImageSource? result = Win32Icons.GetShellIconByType(Shell32IconType.QuestionMark, true);
+
+            switch (diskInfo.MediaType)
+            {
+                case ("External hard disk media"):
+                    result = Win32Icons.GetShellIconByType(Shell32IconType.UpArrow, true);
+                    break;
+                case ("Removable Media"):
+                    result = Win32Icons.GetShellIconByType(Shell32IconType.UpArrow, true);
+                    break;
+                case ("Fixed hard disk media"):
+                    result = Win32Icons.GetShellIconByType(Shell32IconType.Fixed, true);
+                    break;
+                case ("Unknown"):
+                    result = Win32Icons.GetShellIconByType(Shell32IconType.QuestionMark, true);
+                    break;
+            }
+
+            return result;
         }
     }
 }
