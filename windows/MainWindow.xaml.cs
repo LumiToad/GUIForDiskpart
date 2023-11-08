@@ -3,10 +3,11 @@ using GUIForDiskpart.main;
 using GUIForDiskpart.windows;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Management;
 using System.Reflection;
 using System.Windows;
-
+using System.Windows.Controls;
 
 namespace GUIForDiskpart
 {
@@ -135,20 +136,11 @@ namespace GUIForDiskpart
             System.Windows.Application.Current.Shutdown();
         }
 
-        private void SaveLog(object sender, RoutedEventArgs e)
+        private void SaveLog_Click(object sender, RoutedEventArgs e)
         {
             string log = ConsoleReturn.TextBox.Text;
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Text file (*.txt)|*.txt";
-
-            string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
-            saveFileDialog.FileName = "guifd_log_" + currentDateTime;
-
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                System.IO.File.WriteAllText(saveFileDialog.FileName, log);
-            }
+            SaveAsTextfile(log, "log");
         }
 
         private void Website_Click(object sender, RoutedEventArgs e)
@@ -163,6 +155,85 @@ namespace GUIForDiskpart
             aboutWindow.Show();
         }
 
+        private void SaveEntryData_Click(object sender, RoutedEventArgs e)
+        {
+            string entrieString = string.Empty;
+
+            bool noneSelected = false;
+
+            if (EntryData.SelectedCells.Count == 0)
+            {
+                EntryData.SelectAllCells();
+                noneSelected = true;
+            }
+
+            foreach (var entry in EntryData.SelectedCells)
+            {
+                entrieString += entry.Item + "\n";
+            }
+
+            if (noneSelected) 
+            {
+                EntryData.UnselectAllCells();
+            }
+
+            SaveAsTextfile(entrieString, "data");
+        }
+
+        private void SaveAsTextfile(string text, string name)
+        {
+            //should be a static class
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text file (*.txt)|*.txt";
+
+            string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
+            saveFileDialog.FileName = $"guifd_{name}_{currentDateTime}";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                System.IO.File.WriteAllText(saveFileDialog.FileName, text);
+            }
+        }
+
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            EntryData.SelectAllCells();
+
+            List<DataGridCellInfo> cells = new List<DataGridCellInfo>();
+
+            foreach (var entry in EntryData.SelectedCells)
+            {
+                if (entry.Item.ToString().Contains(SearchBar.Text))
+                {
+                    cells.Add(entry);
+                }
+            }
+
+            EntryData.UnselectAllCells();
+
+            if (cells.Count > 0) 
+            {
+                foreach (var cell in cells) 
+                {
+                    EntryData.SelectedCells.Add(cell);
+                }
+            }
+            
+            if (string.IsNullOrEmpty(SearchBar.Text))
+            { 
+                EntryData.UnselectAllCells(); 
+            }
+        }
+
+        private void SearchBar_CursorFocus(object sender, DependencyPropertyChangedEventArgs e) 
+        {
+            if (!SearchBar.IsFocused)
+            {
+                SearchBar.Text = "";
+            }
+        }
+
+        /*
         private void CopySelectedRow_Click(object sender, RoutedEventArgs e)
         {
             string copyToClipboard = string.Empty;
@@ -179,9 +250,9 @@ namespace GUIForDiskpart
         {
             string copyToClipboard = string.Empty;
 
-            foreach (var entry in EntryData.SelectedCells)
+            foreach (KeyValuePair<string, object?> entry in EntryData.SelectedItems)
             {
-                copyToClipboard += entry.ToString() + '\n';
+                copyToClipboard += entry.Key + "\n";
             }
 
             Clipboard.SetDataObject(copyToClipboard);
@@ -189,17 +260,17 @@ namespace GUIForDiskpart
 
         private void CopySelectedValue_Click(object sender, RoutedEventArgs e)
         {
+            
             string copyToClipboard = string.Empty;
 
-            foreach (var entry in EntryData.SelectedCells)
+            foreach (KeyValuePair<string, object?> entry in EntryData.SelectedItems)
             {
-                //CONTINUE HERE
-                Console.WriteLine(entry.Column + entry.Column.Header.GetType().Name);
-                copyToClipboard += entry.ToString() + '\n';
+                copyToClipboard += entry.Value + "\n";
             }
 
             Clipboard.SetDataObject(copyToClipboard);
         }
+        */
 
         #region DiskChangedWatcher
 

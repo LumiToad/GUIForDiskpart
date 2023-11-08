@@ -26,6 +26,10 @@
         public static string MicrosoftRecovery
         { get { return microsoftReserved; } }
 
+        private const string androidGUIDOne = "{193d1ea4-b3ca-11e4-b075-10604b889dcf}";
+        public static string AndroidGUIDOne
+        { get { return androidGUIDOne; } }
+
         public static string GetTypeByGUID(string? guid)
         {
             string result = string.Empty;
@@ -50,8 +54,14 @@
                 case (microsoftRecovery):
                     result = "Recovery";
                     break;
-                case (null):
+                case (androidGUIDOne):
+                    result = "...Android?";
                     break;
+            }
+
+            if (string.IsNullOrEmpty(guid))
+            {
+                result = "...Unknown";
             }
 
             return result;
