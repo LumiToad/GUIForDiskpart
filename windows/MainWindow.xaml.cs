@@ -140,7 +140,7 @@ namespace GUIForDiskpart
         {
             string log = ConsoleReturn.TextBox.Text;
 
-            SaveAsTextfile(log, "log");
+            SaveFile.SaveAsTextfile(log, "log");
         }
 
         private void Website_Click(object sender, RoutedEventArgs e)
@@ -177,22 +177,7 @@ namespace GUIForDiskpart
                 EntryData.UnselectAllCells();
             }
 
-            SaveAsTextfile(entrieString, "data");
-        }
-
-        private void SaveAsTextfile(string text, string name)
-        {
-            //should be a static class
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Text file (*.txt)|*.txt";
-
-            string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
-            saveFileDialog.FileName = $"guifd_{name}_{currentDateTime}";
-
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                System.IO.File.WriteAllText(saveFileDialog.FileName, text);
-            }
+            SaveFile.SaveAsTextfile(entrieString, "data");
         }
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)

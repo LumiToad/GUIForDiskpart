@@ -12,6 +12,9 @@
     <Compile Update="userControls\ConsoleReturn.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="userControls\EntryData.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="windows\AboutWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -48,6 +51,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="userControls\ConsoleReturn.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="userControls\EntryData.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Win95Button.xaml">
