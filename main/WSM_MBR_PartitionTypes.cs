@@ -28,6 +28,18 @@ namespace GUIForDiskpart.main
                 case (12):
                     result = "FAT32";
                     break;
+                case (14):
+                    result = "16-Bit FAT INT13";
+                    break;
+                case (15):
+                    result = "Extended INT13";
+                    break;
+                case (82):
+                    result = "Linux SWAP";
+                    break;
+                case (83):
+                    result = "Linux FileSystem";
+                    break;
             }
 
             return result;

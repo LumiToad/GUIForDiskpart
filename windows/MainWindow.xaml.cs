@@ -1,9 +1,7 @@
 ﻿using GUIForDiskpart.diskpart;
 using GUIForDiskpart.main;
 using GUIForDiskpart.windows;
-using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Management;
 using System.Reflection;
 using System.Windows;
@@ -48,13 +46,13 @@ namespace GUIForDiskpart
 
         public void DiskEntry_Click(DiskInfo diskInfo)
         {
-            EntryData.ItemsSource = diskInfo.GetKeyValuePairs();
             AddPartitionsToStackPanel(diskInfo);
+            EntryDataUI.AddDataToGrid(diskInfo.GetKeyValuePairs());
         }
 
         public void PartitionEntry_Click(PartitionEntryUI entry)
         {
-            EntryData.ItemsSource = entry.WSMPartition.GetKeyValuePairs();
+            EntryDataUI.AddDataToGrid(entry.WSMPartition.GetKeyValuePairs());
         }
 
         private void ListVolume_Click(object sender, RoutedEventArgs e)
@@ -71,14 +69,34 @@ namespace GUIForDiskpart
 
         private void ListPart_Click(object sender, RoutedEventArgs e)
         {
-            AddTextToOutputConsole(DPFunctions.List(diskpart.DPListType.PARTITION));
-
+            UInt32? index = GetIndexOfSelected(DiskStackPanel);
+            if (index == null) return;
+            AddTextToOutputConsole(DPFunctions.ListPart(index));
         }
 
         private void ListVdisk_Click(object sender, RoutedEventArgs e)
         {
             AddTextToOutputConsole(DPFunctions.List(diskpart.DPListType.VDISK));
+        }
 
+        private void CreateVDisk_Click(object sender, RoutedEventArgs e)
+        {
+            //create vdisk window
+        }
+
+        private void AttachVDisk_Click(object sender, RoutedEventArgs e)
+        {
+            //create vdisk window
+        }
+
+        private void ChildVDisk_Click(object sender, RoutedEventArgs e)
+        {
+            //create vdisk window
+        }
+
+        private void CopyVDisk_Click(object sender, RoutedEventArgs e)
+        {
+            //create vdisk window
         }
 
         private void RetrieveDiskData_Click(object sender, RoutedEventArgs e)
@@ -105,17 +123,19 @@ namespace GUIForDiskpart
 
         private void AddDisksToStackPanel()
         {
-            DriveStackPanel.Children.Clear();
+            DiskStackPanel.Children.Clear();
 
             foreach (DiskInfo physicalDisk in DiskRetriever.PhysicalDrives)
             {
                 PhysicalDiskEntryUI diskListEntry = new PhysicalDiskEntryUI();
                 diskListEntry.DiskInfo = physicalDisk;
 
-                DriveStackPanel.Children.Add(diskListEntry);
+                DiskStackPanel.Children.Add(diskListEntry);
             }
-            PhysicalDiskEntryUI entry = (PhysicalDiskEntryUI)DriveStackPanel.Children[0];
+            PhysicalDiskEntryUI entry = (PhysicalDiskEntryUI)DiskStackPanel.Children[0];
             entry.SelectEntryRadioButton();
+
+            Console.WriteLine(DriveLetterManager.GetAvailableDriveLetters(DiskRetriever.PhysicalDrives));
         }
 
         private void AddPartitionsToStackPanel(DiskInfo diskInfo)
@@ -129,6 +149,29 @@ namespace GUIForDiskpart
 
                 PartitionStackPanel.Children.Add(partitionEntry);
             }
+        }
+
+        private UInt32? GetIndexOfSelected(StackPanel stackPanel)
+        {
+            PhysicalDiskEntryUI disk;
+            PartitionEntryUI partition;
+
+            foreach (object? entry in stackPanel.Children)
+            {
+                if (entry.GetType() == typeof(PhysicalDiskEntryUI)) 
+                {
+                    disk = (PhysicalDiskEntryUI)entry;
+                    if (disk != null && disk.IsSelected == true) return disk.DiskInfo.DiskIndex;
+                }
+
+                if (entry.GetType() == typeof(PartitionEntryUI))
+                {
+                    partition = (PartitionEntryUI)entry;
+                    if (partition != null && partition.IsSelected == true) return partition.WSMPartition.PartitionNumber;
+                }
+            }
+
+            return null;
         }
 
         private void Quit_Click(object sender, RoutedEventArgs e)
@@ -155,107 +198,10 @@ namespace GUIForDiskpart
             aboutWindow.Show();
         }
 
-        private void SaveEntryData_Click(object sender, RoutedEventArgs e)
+        private void SaveEntryData_Click(object sender, RoutedEventArgs e) 
         {
-            string entrieString = string.Empty;
-
-            bool noneSelected = false;
-
-            if (EntryData.SelectedCells.Count == 0)
-            {
-                EntryData.SelectAllCells();
-                noneSelected = true;
-            }
-
-            foreach (var entry in EntryData.SelectedCells)
-            {
-                entrieString += entry.Item + "\n";
-            }
-
-            if (noneSelected) 
-            {
-                EntryData.UnselectAllCells();
-            }
-
-            SaveFile.SaveAsTextfile(entrieString, "data");
+            EntryDataUI.SaveEntryData_Click(sender, e);
         }
-
-        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            EntryData.SelectAllCells();
-
-            List<DataGridCellInfo> cells = new List<DataGridCellInfo>();
-
-            foreach (var entry in EntryData.SelectedCells)
-            {
-                if (entry.Item.ToString().Contains(SearchBar.Text))
-                {
-                    cells.Add(entry);
-                }
-            }
-
-            EntryData.UnselectAllCells();
-
-            if (cells.Count > 0) 
-            {
-                foreach (var cell in cells) 
-                {
-                    EntryData.SelectedCells.Add(cell);
-                }
-            }
-            
-            if (string.IsNullOrEmpty(SearchBar.Text))
-            { 
-                EntryData.UnselectAllCells(); 
-            }
-        }
-
-        private void SearchBar_CursorFocus(object sender, DependencyPropertyChangedEventArgs e) 
-        {
-            if (!SearchBar.IsFocused)
-            {
-                SearchBar.Text = "";
-            }
-        }
-
-        /*
-        private void CopySelectedRow_Click(object sender, RoutedEventArgs e)
-        {
-            string copyToClipboard = string.Empty;
-
-            foreach (var entry in EntryData.SelectedItems)
-            {
-                copyToClipboard += entry.ToString() + '\n';
-            }
-
-            Clipboard.SetDataObject(copyToClipboard);
-        }
-
-        private void CopySelectedProperty_Click(object sender, RoutedEventArgs e)
-        {
-            string copyToClipboard = string.Empty;
-
-            foreach (KeyValuePair<string, object?> entry in EntryData.SelectedItems)
-            {
-                copyToClipboard += entry.Key + "\n";
-            }
-
-            Clipboard.SetDataObject(copyToClipboard);
-        }
-
-        private void CopySelectedValue_Click(object sender, RoutedEventArgs e)
-        {
-            
-            string copyToClipboard = string.Empty;
-
-            foreach (KeyValuePair<string, object?> entry in EntryData.SelectedItems)
-            {
-                copyToClipboard += entry.Value + "\n";
-            }
-
-            Clipboard.SetDataObject(copyToClipboard);
-        }
-        */
 
         #region DiskChangedWatcher
 

@@ -13,18 +13,27 @@ namespace GUIForDiskpart.windows
         private MainWindow mainWindow;
 
         private DiskInfo diskInfo;
+        public DiskInfo DiskInfo
+        {
+            get { return diskInfo; } 
+            set 
+            {
+                diskInfo = value;
+                AddTextToConsole();
+            }
+        }
 
         public ConvertDriveWindow(DiskInfo disk)
         {
             InitializeComponent();
 
-            diskInfo = disk;
+            DiskInfo = disk;
             mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
-        public void DriveInfoToTextBox()
+        public void AddTextToConsole()
         {
-            DiskDetailValue.Text = diskInfo.GetOutputAsString();
+            ConsoleReturn.AddTextToOutputConsole(diskInfo.GetOutputAsString());
         }
 
         private string SelectedOptionAsString()

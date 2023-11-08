@@ -51,6 +51,15 @@
                         <MenuItem Header="Partition" Click="ListPart_Click"/>
                         <MenuItem Header="VDisk" Click="ListVdisk_Click"/>
                     </MenuItem>
+                    <MenuItem Header="VDisk">
+                        <MenuItem.Icon>
+                            <Image Source="/resources/DiskpartD.png" />
+                        </MenuItem.Icon>
+                        <MenuItem Header="Create VDisk" Click="CreateVDisk_Click"/>
+                        <MenuItem Header="Attach VDisk" Click="AttachVDisk_Click"/>
+                        <MenuItem Header="Create Child VDisk" Click="ChildVDisk_Click"/>
+                        <MenuItem Header="Copy VDisk" Click="CopyVDisk_Click"/>
+                    </MenuItem>
                 </MenuItem>
 
                 <MenuItem Header="Help">
@@ -69,40 +78,20 @@
                     <RowDefinition Height="120"/>
                     <RowDefinition Height="120"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
                     <RowDefinition Height="3"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="200"/>
                 </Grid.RowDefinitions>
 
                 <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" Width="{Binding ActualWidth, ElementName=grid, Mode=OneWay}">
-                    <StackPanel x:Name="DriveStackPanel" Orientation="Horizontal" CanHorizontallyScroll="True" HorizontalAlignment="Center"/>
+                    <StackPanel x:Name="DiskStackPanel" Orientation="Horizontal" CanHorizontallyScroll="True" HorizontalAlignment="Center"/>
                 </ScrollViewer>
                 <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" Width="{Binding ActualWidth, ElementName=grid, Mode=OneWay}" Grid.Row="1">
                     <StackPanel x:Name="PartitionStackPanel" Orientation="Horizontal" CanHorizontallyScroll="True" HorizontalAlignment="Center"/>
                 </ScrollViewer>
-                <DataGrid x:Name="EntryData" Grid.Row="2" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" GridLinesVisibility="Vertical" AlternationCount="1" AlternatingRowBackground="#FFF3F5E0" RowBackground="#FFC7C7C7" IsReadOnly="True" SelectionUnit="Cell" CanUserDeleteRows="False" CanUserAddRows="False" CanUserResizeRows="False" ForceCursor="True" Margin="0,0,0,18" Grid.RowSpan="2">
-                    <DataGrid.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="Copy" Command="Copy"/>
-                            <MenuItem Header="Save Entries" Click="SaveEntryData_Click"/>
-                            <!--
-                            <Separator/>
-                            <MenuItem Header="...selected Propertys" Click="CopySelectedProperty_Click"/>
-                            <MenuItem Header="...selected Values" Click="CopySelectedValue_Click"/>
-                            -->
-                        </ContextMenu>
-                    </DataGrid.ContextMenu>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Property" Binding="{Binding Key}" Width="*"/>
-                        <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*"/>
-                    </DataGrid.Columns>
-                    <DataGrid.Resources>
-                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="CornflowerBlue"/>
-                    </DataGrid.Resources>
-                </DataGrid>
-                <TextBox x:Name="SearchBar" Grid.Row="3" TextWrapping="Wrap" Text="Search..." VerticalContentAlignment="Center" TextChanged="SearchBar_TextChanged" Width="{Binding ActualWidth, ElementName=grid, Mode=OneWay}" IsKeyboardFocusedChanged="SearchBar_CursorFocus" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-                <GridSplitter Grid.Row="4" Height="3" Width="auto" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"/>
-                <userControls:ConsoleReturnUI x:Name="ConsoleReturn" HorizontalAlignment="Center" Grid.Row="5" Height="NaN" Width="{Binding ActualWidth, ElementName=grid, Mode=OneWay}"/>
+                <userControls:EntryDataUI x:Name="EntryDataUI" HorizontalAlignment="Center" Grid.Row="2" Height="NaN"/>
+
+                <GridSplitter Grid.Row="3" Height="3" Width="auto" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"/>
+                <userControls:ConsoleReturnUI x:Name="ConsoleReturn" HorizontalAlignment="Center" Grid.Row="4" Height="NaN" Width="{Binding ActualWidth, ElementName=grid, Mode=OneWay}"/>
             </Grid>
         </DockPanel>
 

@@ -47,8 +47,8 @@
                 <Label x:Name="PartitionNumber" Content="00" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="15"/>
                 <Label x:Name="DriveNameAndLetter" Content="Letter" Grid.IsSharedSizeScope="False" Height="23.28" Width="NaN" Padding="2,4,0,0"/>
                 <Label x:Name="TotalSpace" Content="1000" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="15" Width="NaN"/>
-                <CheckBox x:Name="IsBoot" Content="Is boot partition" FontSize="14" IsChecked="False" IsEnabled="False"/>
-                <Label x:Name="PartitionType" Content="GPT: Type" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="15" Width="NaN"/>
+                <Label x:Name="FileSystemText" Content="????" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="14" Width="NaN"/>
+                <Label x:Name="PartitionType" Content="???: ???" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="15" Width="NaN"/>
             </StackPanel>
         </Grid>
     </Button>

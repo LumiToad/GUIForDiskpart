@@ -1,14 +1,22 @@
-﻿<Window x:Class="GUIForDiskpart.FormatDriveWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUIForDiskpart"
+        xmlns:userControls="clr-namespace:GUIForDiskpart.userControls" x:Class="GUIForDiskpart.FormatDriveWindow"
         mc:Ignorable="d"
-        Title="Format selected drive" Height="299" Width="530" ResizeMode="NoResize">
+        Title="Format selected drive" Height="279" Width="575" ResizeMode="NoResize">
     <Grid x:Name="MainGrid" Background="#FF3E3E3E" Margin="0,0,0,-6">
-        <TextBlock x:Name="DiskDetailValue" HorizontalAlignment="Left" Margin="21,23,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="197" Width="171" Foreground="#FF66CE51"/>
-        <Border HorizontalAlignment="Left" Height="196" Margin="197,20,0,0" VerticalAlignment="Top" Width="264">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="198"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border HorizontalAlignment="Left" Height="196" VerticalAlignment="Center" Width="264" Grid.Column="1">
             <Grid>
                 <ComboBox x:Name="FileSystemValue" HorizontalAlignment="Left" Margin="143,2,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged">
                     <ComboBoxItem IsSelected="True" Content="NTFS"/>
@@ -29,6 +37,7 @@
                 <Button x:Name="CancelButton" Content="Cancel" Margin="143,163,35,0" Click="CancelButton_Click"/>
             </Grid>
         </Border>
-        <Label x:Name="ErrorMessageValue" Content="" HorizontalAlignment="Left" Margin="201,221,0,0" VerticalAlignment="Top" Width="267" Foreground="Red"/>
+        <Label x:Name="ErrorMessageValue" Content="" Width="267" Foreground="Red" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.RowSpan="2" Grid.Row="1"/>
+        <userControls:ConsoleReturnUI x:Name="ConsoleReturn" Grid.RowSpan="2"/>
     </Grid>
 </Window>

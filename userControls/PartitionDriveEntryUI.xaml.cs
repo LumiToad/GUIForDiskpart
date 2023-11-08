@@ -1,5 +1,6 @@
 ﻿using GUIForDiskpart.diskpart;
 using GUIForDiskpart.main;
+using GUIForDiskpart.windows;
 using System;
 using System.Drawing;
 using System.Windows;
@@ -49,11 +50,9 @@ namespace GUIForDiskpart
         private void PartitionDataToThisUI()
         {
             PartitionNumber.Content = $"#{WSMPartition.PartitionNumber}";
-
             DriveNameAndLetter.Content = GetDriveNameText();
-
             TotalSpace.Content = WSMPartition.FormattedSize;
-            IsBoot.IsChecked = WSMPartition.IsBoot;
+            FileSystemText.Content = GetFileSystemText();
             PartitionType.Content = $"{WSMPartition.PartitionTable}: {WSMPartition.PartitionType}";
 
             if (WSMPartition.IsBoot)
@@ -80,14 +79,28 @@ namespace GUIForDiskpart
 
         private void Format_Click(object sender, RoutedEventArgs e)
         {
-
+            FormatPartitionWindow formatPartitionWindow = new FormatPartitionWindow(WSMPartition);
+            formatPartitionWindow.Owner = mainWindow;
+            formatPartitionWindow.Show();
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
+
+            string todo = "Delete the partition! ALL DATA WILL BE LOST!";
+            string confirmKey = $"Drive: {WSMPartition.DiskNumber} Partition: {WSMPartition.PartitionNumber}";
+
+            SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(todo, confirmKey);
+            securityCheckWindow.Owner = mainWindow;
+            securityCheckWindow.OnClick += ExecuteDelete;
+            securityCheckWindow.Show();
+        }
+
+        private void ExecuteDelete(bool value)
+        {
             string output = string.Empty;
 
-            //output += DPFunctions.Delete(WSMPartition.DiskNumber, WSMPartition.PartitionNumber, false, true);
+            output += DPFunctions.Delete(WSMPartition.DiskNumber, WSMPartition.PartitionNumber, false, true);
 
             mainWindow.AddTextToOutputConsole(output);
             mainWindow.RetrieveAndShowDiskData(false);
@@ -123,6 +136,23 @@ namespace GUIForDiskpart
             }
 
             return driveNameText;
+        }
+
+        private string GetFileSystemText()
+        {
+            if
+                (
+                WSMPartition.WMIPartition != null &&
+                WSMPartition.WMIPartition.LogicalDriveInfo != null &&
+                WSMPartition.WMIPartition.LogicalDriveInfo.FileSystem != null
+                )
+            {
+                return WSMPartition.WMIPartition.LogicalDriveInfo.FileSystem;
+            }
+            else
+            {
+                return "No Windows Volume";
+            }
         }
     }
 }

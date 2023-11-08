@@ -1,0 +1,43 @@
+﻿<Window x:Class="GUIForDiskpart.windows.FormatPartitionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUIForDiskpart.windows"
+        xmlns:userControls="clr-namespace:GUIForDiskpart.userControls"
+        mc:Ignorable="d"
+        Title="FormatPartitionWindow" Height="280" Width="575">
+    <Grid x:Name="MainGrid" Background="#FF3E3E3E" Margin="0,0,0,-6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="198"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border HorizontalAlignment="Left" Height="196" VerticalAlignment="Center" Width="264" Grid.Column="1">
+            <Grid>
+                <ComboBox x:Name="FileSystemValue" HorizontalAlignment="Left" Margin="143,2,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBoxItem IsSelected="True" Content="NTFS"/>
+                    <ComboBoxItem Content="exFAT"/>
+                    <ComboBoxItem Content="FAT32"/>
+                </ComboBox>
+                <Label Content="File System: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <TextBox x:Name="VolumeValue" HorizontalAlignment="Left" Margin="143,30,0,0" TextWrapping="Wrap" Text="Volume" VerticalAlignment="Top" Width="120" />
+                <Label Content="Volume Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,26,0,0"/>
+                <TextBox x:Name="SizeValue" HorizontalAlignment="Left" Margin="143,56,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" TextChanged="SizeValue_TextChanged"/>
+                <Label Content="Size in MB:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,52,0,0"/>
+                <TextBox x:Name="DriveLetterValue" HorizontalAlignment="Left" Margin="143,83,0,0" TextWrapping="Wrap" Text="Z" VerticalAlignment="Top" Width="120" MaxLength="1"
+                CharacterCasing="Upper" AcceptsTab="False" AcceptsReturn="False" />
+                <Label Content="Drive Letter:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,79,0,0"/>
+                <CheckBox x:Name="QuickFormattingValue" Content="Quick Formatting" IsChecked="True" Margin="144,115,1,60"/>
+                <CheckBox x:Name="CompressionValue" Content="Compression" IsEnabled="True" Margin="144,130,1,45"/>
+                <Button x:Name="ConfirmButton" Content="Format" Margin="43,163,135,0" Click="ConfirmButton_Click"/>
+                <Button x:Name="CancelButton" Content="Cancel" Margin="143,163,35,0" Click="CancelButton_Click"/>
+            </Grid>
+        </Border>
+        <Label x:Name="ErrorMessageValue" Content="" Width="267" Foreground="Red" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.RowSpan="2" Grid.Row="1"/>
+        <userControls:ConsoleReturnUI x:Name="ConsoleReturn" Grid.RowSpan="2"/>
+    </Grid>
+</Window>

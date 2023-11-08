@@ -216,8 +216,8 @@ namespace GUIForDiskpart.main
             ulong totalTracks,
             uint tracksPerCylinder)
         {
-            this.deviceID = deviceID + " ID";
-            this.physicalName = physicalName + " physicalName";
+            this.deviceID = deviceID;
+            this.physicalName = physicalName;
             this.caption = caption;
             this.diskModel = diskModel;
             this.mediaStatus = mediaStatus;
@@ -226,7 +226,7 @@ namespace GUIForDiskpart.main
             this.wmiPartitionCount = partitionCount;
             this.interfaceType = interfaceType;
             this.mediaSignature = mediaSignature;
-            this.diskName = diskName + " diskName";
+            this.diskName = diskName;
             this.mediaType = mediaType;
             this.availability = availability;
             this.bytesPerSector = bytesPerSector;

@@ -157,7 +157,7 @@ namespace GUIForDiskpart.main
                 object? value = property.GetValue(this);
 
                 if (data.ContainsKey(key)) continue;
-                if (key == "Size") continue;
+                if (key == "WSM Size") continue;
                 
                 if (key == "WSM FormattedSize")
                 {

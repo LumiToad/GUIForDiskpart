@@ -11,20 +11,25 @@ namespace GUIForDiskpart.windows
     /// </summary>
     public partial class CreatePartitionWindow : Window
     {
-        private Int64 freeSpace;
-
         private MainWindow mainWindow;
 
         private DiskInfo diskInfo;
+        public DiskInfo DiskInfo
+        {
+            get { return diskInfo; }
+            set
+            {
+                diskInfo = value;
+                AddTextToConsole();
+            }
+        }
 
-        public CreatePartitionWindow(DiskInfo disk, long freeSpace)
+        public CreatePartitionWindow(DiskInfo disk)
         {
             InitializeComponent();
 
-
             mainWindow = (MainWindow)Application.Current.MainWindow;
-            this.freeSpace = freeSpace;
-            this.diskInfo = disk;
+            DiskInfo = disk;
         }
 
         private string SelectedOptionAsString()
@@ -83,9 +88,9 @@ namespace GUIForDiskpart.windows
             this.Close();
         }
 
-        public void DriveInfoToTextBox()
+        public void AddTextToConsole()
         {
-            DiskDetailValue.Text = diskInfo.GetOutputAsString();
+            ConsoleReturn.AddTextToOutputConsole(DiskInfo.GetOutputAsString());
         }
     }
 }

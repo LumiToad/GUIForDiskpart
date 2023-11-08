@@ -55,6 +55,11 @@ namespace GUIForDiskpart
             mainWindow.AddTextToOutputConsole(DPFunctions.DetailDisk(diskInfo.DiskIndex));
         }
 
+        private void ListPart_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.AddTextToOutputConsole(DPFunctions.ListPart(diskInfo.DiskIndex));
+        }
+
         private void Clean_Click(object sender, RoutedEventArgs e)
         {
             //Still needs "clean all" option
@@ -89,17 +94,20 @@ namespace GUIForDiskpart
 
         private void CreatePart_Click(object sender, RoutedEventArgs e)
         {
+            CreatePartitionWindow createPartitionWindow = new CreatePartitionWindow(diskInfo);
+            createPartitionWindow.Owner = mainWindow;
+            createPartitionWindow.Focus();
 
+            createPartitionWindow.Show();
         }
 
         private void CreateVolume_Click(object sender, RoutedEventArgs e)
         {
+            CreateVolumeWindow createVolumeWindow = new CreateVolumeWindow(diskInfo);
+            createVolumeWindow.Owner = mainWindow;
+            createVolumeWindow.Focus();
 
-        }
-
-        private void CreateVDisk_Click(object sender, RoutedEventArgs e)
-        {
-
+            createVolumeWindow.Show();
         }
 
         private void Format_Click(object sender, RoutedEventArgs e)

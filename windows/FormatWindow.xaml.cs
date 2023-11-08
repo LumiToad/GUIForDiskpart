@@ -1,5 +1,7 @@
 ﻿using GUIForDiskpart.main;
+using GUIForDiskpart.windows;
 using System;
+using System.DirectoryServices;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -13,20 +15,28 @@ namespace GUIForDiskpart
         private MainWindow mainWindow;
 
         private DiskInfo diskInfo;
+        public DiskInfo DiskInfo
+        {
+            get { return diskInfo; }
+            set
+            {
+                diskInfo = value;
+                AddTextToConsole();
+            }
+        }
 
         public FormatDriveWindow(DiskInfo disk)
         {
             InitializeComponent();
 
-            diskInfo = disk;
-            DriveInfoToTextBox();
+            DiskInfo = disk;
 
             mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
-        public void DriveInfoToTextBox()
+        public void AddTextToConsole()
         {
-            DiskDetailValue.Text = diskInfo.GetOutputAsString();
+            ConsoleReturn.AddTextToOutputConsole(diskInfo.GetOutputAsString());
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -48,14 +58,27 @@ namespace GUIForDiskpart
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
+            string todo = "Format the whole drive! ALL DATA WILL BE LOST!";
+            string confirmKey = DiskInfo.DiskName;
+
+            SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(todo, confirmKey);
+            securityCheckWindow.Owner = this;
+            securityCheckWindow.OnClick += ExecuteFormat;
+            securityCheckWindow.Show();
+        }
+
+        private void ExecuteFormat(bool value)
+        {
+            if (!value) return;
+
             FileSystem fileSystem = FileSystem.NTFS;
 
             Console.WriteLine(SelectedFileSystemAsString());
 
-            switch (SelectedFileSystemAsString()) 
+            switch (SelectedFileSystemAsString())
             {
                 case ("NTFS"):
-                    fileSystem = FileSystem.NTFS;                    
+                    fileSystem = FileSystem.NTFS;
                     break;
                 case ("FAT32"):
                     fileSystem = FileSystem.FAT32;
@@ -71,7 +94,7 @@ namespace GUIForDiskpart
             {
                 size = 32768;
             }
-                
+
             string output = string.Empty;
 
 
@@ -89,7 +112,7 @@ namespace GUIForDiskpart
             }
 
             mainWindow.AddTextToOutputConsole(output);
-            
+
             this.Close();
         }
 

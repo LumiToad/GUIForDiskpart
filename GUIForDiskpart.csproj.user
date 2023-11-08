@@ -24,16 +24,22 @@
     <Compile Update="windows\CreatePartitionWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\FormatWindow.xaml.cs">
+    <Compile Update="windows\CreateVolumeWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="userControls\FreeSpaceEntryUI.xaml.cs">
+    <Compile Update="windows\FormatPartitionWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="windows\FormatWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="userControls\PartitionDriveEntryUI.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="userControls\PhysicalDriveEntryUI.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="windows\SecurityCheckWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -68,16 +74,22 @@
     <Page Update="windows\CreatePartitionWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\FormatWindow.xaml">
+    <Page Update="windows\CreateVolumeWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="userControls\FreeSpaceEntryUI.xaml">
+    <Page Update="windows\FormatPartitionWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="windows\FormatWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="userControls\PartitionDriveEntryUI.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="userControls\PhysicalDriveEntryUI.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="windows\SecurityCheckWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
