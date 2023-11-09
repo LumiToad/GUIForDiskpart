@@ -10,7 +10,7 @@ namespace GUIForDiskpart.windows
     /// </summary>
     public partial class ConvertDriveWindow : Window
     {
-        private MainWindow mainWindow;
+        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
         private DiskInfo diskInfo;
         public DiskInfo DiskInfo
@@ -28,7 +28,6 @@ namespace GUIForDiskpart.windows
             InitializeComponent();
 
             DiskInfo = disk;
-            mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
         public void AddTextToConsole()
@@ -64,7 +63,7 @@ namespace GUIForDiskpart.windows
             string output = string.Empty;
             output = DPFunctions.Convert(diskInfo.DiskIndex, option);
 
-            mainWindow.AddTextToOutputConsole(output);
+            MainWindow.AddTextToOutputConsole(output);
 
             this.Close();
         }

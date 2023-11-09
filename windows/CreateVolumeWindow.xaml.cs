@@ -21,7 +21,7 @@ namespace GUIForDiskpart.windows
     /// </summary>
     public partial class CreateVolumeWindow : Window
     {
-        private MainWindow mainWindow;
+        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
         private DiskInfo diskInfo;
         public DiskInfo DiskInfo
@@ -37,8 +37,6 @@ namespace GUIForDiskpart.windows
         public CreateVolumeWindow(DiskInfo disk)
         {
             InitializeComponent();
-
-            mainWindow = (MainWindow)Application.Current.MainWindow;
             DiskInfo = disk;
         }
 
@@ -48,8 +46,8 @@ namespace GUIForDiskpart.windows
 
             output += DPFunctions.CreateVolume(diskInfo.DiskIndex, CreateVolumeOptions.SIMPLE, GetSizeValue(), false);
 
-            mainWindow.AddTextToOutputConsole(output);
-            mainWindow.RetrieveAndShowDiskData(false);
+            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.RetrieveAndShowDiskData(false);
 
             this.Close();
         }
@@ -75,5 +73,7 @@ namespace GUIForDiskpart.windows
         {
             ConsoleReturn.AddTextToOutputConsole(DiskInfo.GetOutputAsString());
         }
+
+        
     }
 }

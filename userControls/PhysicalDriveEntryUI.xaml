@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GUIForDiskpart"
-             mc:Ignorable="d" Width="200" Height="100" Focusable="True">
+             mc:Ignorable="d" Width="220" Height="100" Focusable="True">
     <UserControl.ContextMenu>
         <ContextMenu>
             <MenuItem Header="DISKPART - List Partition" Click="ListPart_Click">
@@ -43,12 +43,13 @@
         </ContextMenu>
 
     </UserControl.ContextMenu>
-    <Button x:Name="DiskEntryButton" MinWidth="150" MinHeight="100" HorizontalContentAlignment="Right" Click="Button_Click" Background="#FFA5A4A4" Focusable="False">
-        <Grid Width="NaN" Height="NaN">
+    <Button x:Name="DiskEntryButton" MinWidth="150" MinHeight="100" HorizontalContentAlignment="Right" Click="Button_Click" Background="#FFA5A4A4">
+        <Grid Width="220" Height="100">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0"/>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="20"/>
             </Grid.ColumnDefinitions>
 
             <StackPanel Width="NaN" Grid.ColumnSpan="2">
@@ -64,6 +65,19 @@
                 <Label x:Name="WSMPartitionCount" Content="99" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="16" Width="NaN"/>
                 <StackPanel Height="100"/>
             </StackPanel>
+            <Button Grid.Column="3" Click="OpenContextMenu_Click" Content="..." HorizontalAlignment="Left" Height="20" Width="20" VerticalContentAlignment="Center" VerticalAlignment="Bottom"/>
+            <Border Grid.Column="3" Height="80" Width="19" BorderThickness="2,2,2,2" BorderBrush="#FF676767" CornerRadius="0.2,0.2,0.2,0.2" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                <ProgressBar x:Name="SizeBar" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Orientation="Vertical" BorderBrush="DimGray" Foreground="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" BorderThickness="0,0,0,0" Value="0" Height="76">
+                    <ProgressBar.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </ProgressBar.RenderTransform>
+                </ProgressBar>
+            </Border>
         </Grid>
     </Button>
 </UserControl>

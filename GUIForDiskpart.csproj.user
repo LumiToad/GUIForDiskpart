@@ -15,6 +15,9 @@
     <Compile Update="userControls\EntryData.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="userControls\UnallocatedEntryUI.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="windows\AboutWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -60,6 +63,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="userControls\EntryData.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="userControls\UnallocatedEntryUI.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Win95Button.xaml">

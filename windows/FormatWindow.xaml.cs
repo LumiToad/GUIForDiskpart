@@ -12,7 +12,7 @@ namespace GUIForDiskpart
     /// </summary>
     public partial class FormatDriveWindow : Window
     {
-        private MainWindow mainWindow;
+        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
         private DiskInfo diskInfo;
         public DiskInfo DiskInfo
@@ -30,8 +30,6 @@ namespace GUIForDiskpart
             InitializeComponent();
 
             DiskInfo = disk;
-
-            mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
         public void AddTextToConsole()
@@ -111,7 +109,7 @@ namespace GUIForDiskpart
                     driveLetter, size, (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, true, false);
             }
 
-            mainWindow.AddTextToOutputConsole(output);
+            MainWindow.AddTextToOutputConsole(output);
 
             this.Close();
         }

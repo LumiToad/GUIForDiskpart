@@ -3,6 +3,7 @@ using GUIForDiskpart.main;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace GUIForDiskpart.windows
 {
@@ -11,7 +12,7 @@ namespace GUIForDiskpart.windows
     /// </summary>
     public partial class CreatePartitionWindow : Window
     {
-        private MainWindow mainWindow;
+        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
         private DiskInfo diskInfo;
         public DiskInfo DiskInfo
@@ -28,7 +29,6 @@ namespace GUIForDiskpart.windows
         {
             InitializeComponent();
 
-            mainWindow = (MainWindow)Application.Current.MainWindow;
             DiskInfo = disk;
         }
 
@@ -65,8 +65,8 @@ namespace GUIForDiskpart.windows
             
             output += DPFunctions.CreatePartition(diskInfo.DiskIndex, option, GetSizeValue(), false);
 
-            mainWindow.AddTextToOutputConsole(output);
-            mainWindow.RetrieveAndShowDiskData(false);
+            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.RetrieveAndShowDiskData(false);
 
             this.Close();
         }
@@ -92,5 +92,6 @@ namespace GUIForDiskpart.windows
         {
             ConsoleReturn.AddTextToOutputConsole(DiskInfo.GetOutputAsString());
         }
+
     }
 }

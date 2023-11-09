@@ -5,6 +5,7 @@ using System;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace GUIForDiskpart
@@ -14,7 +15,7 @@ namespace GUIForDiskpart
     /// </summary>
     public partial class PartitionEntryUI : UserControl
     {
-        MainWindow mainWindow;
+        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
         private WSMPartition wsmPartition;
         public WSMPartition WSMPartition
@@ -38,13 +39,6 @@ namespace GUIForDiskpart
         public PartitionEntryUI()
         {
             InitializeComponent();
-
-            Initialize();
-        }
-
-        private void Initialize()
-        {
-            mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
         private void PartitionDataToThisUI()
@@ -64,23 +58,23 @@ namespace GUIForDiskpart
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SelectEntryRadioButton();
+            MainWindow.PartitionEntry_Click(this);
         }
 
         public void SelectEntryRadioButton()
         {
             EntrySelected.IsChecked = !EntrySelected.IsChecked;
-            mainWindow.PartitionEntry_Click(this);
         }
 
         private void Detail_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.AddTextToOutputConsole(DPFunctions.DetailPart(wsmPartition.DiskNumber, wsmPartition.PartitionNumber));
+            MainWindow.AddTextToOutputConsole(DPFunctions.DetailPart(wsmPartition.DiskNumber, wsmPartition.PartitionNumber));
         }
 
         private void Format_Click(object sender, RoutedEventArgs e)
         {
             FormatPartitionWindow formatPartitionWindow = new FormatPartitionWindow(WSMPartition);
-            formatPartitionWindow.Owner = mainWindow;
+            formatPartitionWindow.Owner = MainWindow;
             formatPartitionWindow.Show();
         }
 
@@ -91,7 +85,7 @@ namespace GUIForDiskpart
             string confirmKey = $"Drive: {WSMPartition.DiskNumber} Partition: {WSMPartition.PartitionNumber}";
 
             SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(todo, confirmKey);
-            securityCheckWindow.Owner = mainWindow;
+            securityCheckWindow.Owner = MainWindow;
             securityCheckWindow.OnClick += ExecuteDelete;
             securityCheckWindow.Show();
         }
@@ -102,8 +96,8 @@ namespace GUIForDiskpart
 
             output += DPFunctions.Delete(WSMPartition.DiskNumber, WSMPartition.PartitionNumber, false, true);
 
-            mainWindow.AddTextToOutputConsole(output);
-            mainWindow.RetrieveAndShowDiskData(false);
+            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.RetrieveAndShowDiskData(false);
         }
 
         private void Assign_Click(object sender, RoutedEventArgs e)
@@ -153,6 +147,11 @@ namespace GUIForDiskpart
             {
                 return "No Windows Volume";
             }
+        }
+
+        private void OpenContextMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ContextMenu.IsOpen = !ContextMenu.IsOpen;
         }
     }
 }

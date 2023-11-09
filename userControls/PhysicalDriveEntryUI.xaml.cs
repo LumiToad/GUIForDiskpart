@@ -4,6 +4,7 @@ using GUIForDiskpart.windows;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace GUIForDiskpart
@@ -13,7 +14,8 @@ namespace GUIForDiskpart
     /// </summary>
     public partial class PhysicalDiskEntryUI : UserControl
     {
-        MainWindow mainWindow;
+        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+
         private DiskInfo diskInfo;
         public DiskInfo DiskInfo
         { 
@@ -30,12 +32,6 @@ namespace GUIForDiskpart
         public PhysicalDiskEntryUI()
         {
             InitializeComponent();
-            Initialize();
-        }
-
-        private void Initialize()
-        {
-            mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
         private void DriveDataToThisUI()
@@ -44,7 +40,7 @@ namespace GUIForDiskpart
             DiskModel.Content = diskInfo.DiskModel;
             TotalSpace.Content = diskInfo.FormattedTotalSpace;
             WSMPartitionCount.Content = $"{diskInfo.WSMPartitionCount} partitions";
-
+            SetValueInProgressBar(diskInfo.TotalSpace, diskInfo.UnpartSpace);
 
             DiskIcon.Source = GetDiskIcon();
             MediaTypeIcon.Source = GetMediaTypeIcon();
@@ -52,12 +48,12 @@ namespace GUIForDiskpart
 
         private void Detail_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.AddTextToOutputConsole(DPFunctions.DetailDisk(diskInfo.DiskIndex));
+            MainWindow.AddTextToOutputConsole(DPFunctions.DetailDisk(diskInfo.DiskIndex));
         }
 
         private void ListPart_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.AddTextToOutputConsole(DPFunctions.ListPart(diskInfo.DiskIndex));
+            MainWindow.AddTextToOutputConsole(DPFunctions.ListPart(diskInfo.DiskIndex));
         }
 
         private void Clean_Click(object sender, RoutedEventArgs e)
@@ -73,7 +69,7 @@ namespace GUIForDiskpart
 
                 output = DPFunctions.Clean(diskInfo.DiskIndex, false);
 
-                mainWindow.AddTextToOutputConsole(output);
+                MainWindow.AddTextToOutputConsole(output);
 
                 return;
             }
@@ -86,7 +82,7 @@ namespace GUIForDiskpart
         private void Convert_Click(object sender, RoutedEventArgs e)
         {
             ConvertDriveWindow convertDriveWindow = new ConvertDriveWindow(diskInfo);
-            convertDriveWindow.Owner = mainWindow;
+            convertDriveWindow.Owner = MainWindow;
             convertDriveWindow.Focus();
             
             convertDriveWindow.Show();
@@ -95,7 +91,7 @@ namespace GUIForDiskpart
         private void CreatePart_Click(object sender, RoutedEventArgs e)
         {
             CreatePartitionWindow createPartitionWindow = new CreatePartitionWindow(diskInfo);
-            createPartitionWindow.Owner = mainWindow;
+            createPartitionWindow.Owner = MainWindow;
             createPartitionWindow.Focus();
 
             createPartitionWindow.Show();
@@ -104,7 +100,7 @@ namespace GUIForDiskpart
         private void CreateVolume_Click(object sender, RoutedEventArgs e)
         {
             CreateVolumeWindow createVolumeWindow = new CreateVolumeWindow(diskInfo);
-            createVolumeWindow.Owner = mainWindow;
+            createVolumeWindow.Owner = MainWindow;
             createVolumeWindow.Focus();
 
             createVolumeWindow.Show();
@@ -113,7 +109,7 @@ namespace GUIForDiskpart
         private void Format_Click(object sender, RoutedEventArgs e)
         {
             FormatDriveWindow formatWindow = new FormatDriveWindow(diskInfo);
-            formatWindow.Owner = mainWindow;
+            formatWindow.Owner = MainWindow;
             formatWindow.Focus();
 
             formatWindow.Show();
@@ -122,12 +118,12 @@ namespace GUIForDiskpart
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SelectEntryRadioButton();
+            MainWindow.DiskEntry_Click(this);
         }
 
         public void SelectEntryRadioButton()
         {
             EntrySelected.IsChecked = true;
-            mainWindow.DiskEntry_Click(DiskInfo);
         }
 
         private ImageSource? GetDiskIcon()
@@ -163,6 +159,18 @@ namespace GUIForDiskpart
             }
 
             return result;
+        }
+
+        private void OpenContextMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ContextMenu.IsOpen = !ContextMenu.IsOpen;
+        }
+
+        private void SetValueInProgressBar(ulong totalSize, long freeSize)
+        {
+            SizeBar.Maximum = totalSize;
+            SizeBar.Minimum = 0;
+            SizeBar.Value = (long)totalSize - freeSize;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace GUIForDiskpart.windows
     /// </summary>
     public partial class FormatPartitionWindow : Window
     {
-        private MainWindow mainWindow;
+        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
         private WSMPartition wsmPartition;
         public WSMPartition WSMPartition
@@ -27,10 +27,7 @@ namespace GUIForDiskpart.windows
         public FormatPartitionWindow(WSMPartition partition)
         {
             InitializeComponent();
-
             WSMPartition = partition;
-
-            mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
         public void AddTextToConsole()
@@ -99,7 +96,7 @@ namespace GUIForDiskpart.windows
             output = DPFunctions.Format(WSMPartition.DiskNumber, wsmPartition.PartitionNumber, fileSystem,
                     VolumeValue.Text, (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, true, false);
 
-            mainWindow.AddTextToOutputConsole(output);
+            MainWindow.AddTextToOutputConsole(output);
 
             this.Close();
         }

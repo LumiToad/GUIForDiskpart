@@ -1,7 +1,9 @@
 ﻿using GUIForDiskpart.diskpart;
 using GUIForDiskpart.main;
+using GUIForDiskpart.userControls;
 using GUIForDiskpart.windows;
 using System;
+using System.Collections.Generic;
 using System.Management;
 using System.Reflection;
 using System.Windows;
@@ -16,6 +18,9 @@ namespace GUIForDiskpart
     {
         private const string websiteURL = "https://github.com/LumiToad/GUIForDiskpart";
         private const string buildStage = "Alpha";
+
+        public DiskInfo LastSelectedDisk { get; set; }
+        public WSMPartition LastSelectedPartition { get; set; }
 
         public MainWindow()
         {
@@ -44,15 +49,27 @@ namespace GUIForDiskpart
             ConsoleReturn.AddTextToOutputConsole(text);
         }
 
-        public void DiskEntry_Click(DiskInfo diskInfo)
+        public void DiskEntry_Click(PhysicalDiskEntryUI entry)
         {
-            AddPartitionsToStackPanel(diskInfo);
-            EntryDataUI.AddDataToGrid(diskInfo.GetKeyValuePairs());
+            AddEntrysToStackPanel(PartitionStackPanel, entry.DiskInfo.WSMPartitions);
+            if (entry.DiskInfo.UnpartSpace > 0) 
+            {
+                UnallocatedEntryUI unallocatedEntryUI = new UnallocatedEntryUI(entry.DiskInfo.FormattedUnpartSpace);
+                PartitionStackPanel.Children.Add(unallocatedEntryUI);
+            }
+            EntryDataUI.AddDataToGrid(entry.DiskInfo.GetKeyValuePairs());
+            LastSelectedDisk = entry.DiskInfo;
         }
 
         public void PartitionEntry_Click(PartitionEntryUI entry)
         {
             EntryDataUI.AddDataToGrid(entry.WSMPartition.GetKeyValuePairs());
+            LastSelectedPartition = entry.WSMPartition;
+        }
+
+        public void UnallocatedEntry_Click(UnallocatedEntryUI entry)
+        {
+            EntryDataUI.AddDataToGrid(entry.Entry);
         }
 
         private void ListVolume_Click(object sender, RoutedEventArgs e)
@@ -113,7 +130,7 @@ namespace GUIForDiskpart
         {
             DiskRetriever.ReloadDsikInformation();
 
-            AddDisksToStackPanel();
+            AddEntrysToStackPanel<DiskInfo>(DiskStackPanel, DiskRetriever.PhysicalDrives);
 
             if (outputText) 
             { 
@@ -121,33 +138,28 @@ namespace GUIForDiskpart
             }
         }
 
-        private void AddDisksToStackPanel()
+        private void AddEntrysToStackPanel<T>(StackPanel stackPanel, List<T> collection)
         {
-            DiskStackPanel.Children.Clear();
+            stackPanel.Children.Clear();
 
-            foreach (DiskInfo physicalDisk in DiskRetriever.PhysicalDrives)
+            foreach (T thing in collection)
             {
-                PhysicalDiskEntryUI diskListEntry = new PhysicalDiskEntryUI();
-                diskListEntry.DiskInfo = physicalDisk;
+                UserControl userControl = new UserControl();
 
-                DiskStackPanel.Children.Add(diskListEntry);
-            }
-            PhysicalDiskEntryUI entry = (PhysicalDiskEntryUI)DiskStackPanel.Children[0];
-            entry.SelectEntryRadioButton();
-
-            Console.WriteLine(DriveLetterManager.GetAvailableDriveLetters(DiskRetriever.PhysicalDrives));
-        }
-
-        private void AddPartitionsToStackPanel(DiskInfo diskInfo)
-        {
-            PartitionStackPanel.Children.Clear();
-
-            foreach (WSMPartition wsmPartition in diskInfo.WSMPartitions)
-            {
-                PartitionEntryUI partitionEntry = new PartitionEntryUI();
-                partitionEntry.WSMPartition = wsmPartition;
-
-                PartitionStackPanel.Children.Add(partitionEntry);
+                switch (thing) 
+                {
+                    case DiskInfo disk:
+                        PhysicalDiskEntryUI diskEntry = new PhysicalDiskEntryUI();
+                        diskEntry.DiskInfo = disk;
+                        userControl = diskEntry;
+                        break;
+                    case WSMPartition partition:
+                        PartitionEntryUI partitionEntry = new PartitionEntryUI();
+                        partitionEntry.WSMPartition = partition;
+                        userControl = partitionEntry;
+                        break;
+                }
+                stackPanel.Children.Add(userControl);
             }
         }
 
