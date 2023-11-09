@@ -4,7 +4,6 @@ using GUIForDiskpart.userControls;
 using GUIForDiskpart.windows;
 using System;
 using System.Collections.Generic;
-using System.Management;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,9 +18,6 @@ namespace GUIForDiskpart
         private const string websiteURL = "https://github.com/LumiToad/GUIForDiskpart";
         private const string buildStage = "Alpha";
 
-        public DiskInfo LastSelectedDisk { get; set; }
-        public WSMPartition LastSelectedPartition { get; set; }
-
         public MainWindow()
         {
             InitializeComponent();
@@ -31,7 +27,8 @@ namespace GUIForDiskpart
         private void Initialize()
         {
             RetrieveAndShowDiskData(true);
-            SetupDiskChangedWatcher();
+            DiskRetriever.SetupDiskChangedWatcher();
+            DiskRetriever.OnDiskChanged += OnDiskChanged;
         }
 
         private string GetBuildNumberString()
@@ -49,6 +46,8 @@ namespace GUIForDiskpart
             ConsoleReturn.AddTextToOutputConsole(text);
         }
 
+        #region EntriesClick
+
         public void DiskEntry_Click(PhysicalDiskEntryUI entry)
         {
             AddEntrysToStackPanel(PartitionStackPanel, entry.DiskInfo.WSMPartitions);
@@ -58,13 +57,11 @@ namespace GUIForDiskpart
                 PartitionStackPanel.Children.Add(unallocatedEntryUI);
             }
             EntryDataUI.AddDataToGrid(entry.DiskInfo.GetKeyValuePairs());
-            LastSelectedDisk = entry.DiskInfo;
         }
 
         public void PartitionEntry_Click(PartitionEntryUI entry)
         {
             EntryDataUI.AddDataToGrid(entry.WSMPartition.GetKeyValuePairs());
-            LastSelectedPartition = entry.WSMPartition;
         }
 
         public void UnallocatedEntry_Click(UnallocatedEntryUI entry)
@@ -72,23 +69,26 @@ namespace GUIForDiskpart
             EntryDataUI.AddDataToGrid(entry.Entry);
         }
 
+        private void ListPart_Click(object sender, RoutedEventArgs e)
+        {
+            UInt32? index = GetDataIndexOfSelected(DiskStackPanel);
+            if (index == null) return;
+            AddTextToOutputConsole(DPFunctions.ListPart(index));
+        }
+
+        #endregion EntriesClick
+
+        #region TopBarDiskPartMenu
+
         private void ListVolume_Click(object sender, RoutedEventArgs e)
         {
             AddTextToOutputConsole(DPFunctions.List(diskpart.DPListType.VOLUME));
         }
 
-
         private void ListDisk_Click(object sender, RoutedEventArgs e)
         {
             AddTextToOutputConsole(DPFunctions.List(diskpart.DPListType.DISK));
 
-        }
-
-        private void ListPart_Click(object sender, RoutedEventArgs e)
-        {
-            UInt32? index = GetIndexOfSelected(DiskStackPanel);
-            if (index == null) return;
-            AddTextToOutputConsole(DPFunctions.ListPart(index));
         }
 
         private void ListVdisk_Click(object sender, RoutedEventArgs e)
@@ -116,27 +116,29 @@ namespace GUIForDiskpart
             //create vdisk window
         }
 
+        #endregion TopBarDiskPartMenu
+
+        #region TopBarCommandsMenu
+
         private void RetrieveDiskData_Click(object sender, RoutedEventArgs e)
         {
             RetrieveAndShowDiskData(true);
         }
 
-        public void RetrieveAndShowDiskData(bool outputText)
+        private void ScanVolume_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Dispatcher.Invoke(RetrieveAndShowDiskData_Internal, outputText);
-        }
-
-        private void RetrieveAndShowDiskData_Internal(bool outputText)
-        {
-            DiskRetriever.ReloadDsikInformation();
-
-            AddEntrysToStackPanel<DiskInfo>(DiskStackPanel, DiskRetriever.PhysicalDrives);
-
-            if (outputText) 
-            { 
-                AddTextToOutputConsole(DiskRetriever.GetDiskOutput());
+            foreach (PartitionEntryUI entry in PartitionStackPanel.Children) 
+            {
+                if (entry.IsSelected == true)
+                {
+                    entry.OpenScanVolumeWindow();
+                }
             }
         }
+
+        #endregion TopBarCommandsMenu
+
+        #region StackPanelLogic
 
         private void AddEntrysToStackPanel<T>(StackPanel stackPanel, List<T> collection)
         {
@@ -149,13 +151,11 @@ namespace GUIForDiskpart
                 switch (thing) 
                 {
                     case DiskInfo disk:
-                        PhysicalDiskEntryUI diskEntry = new PhysicalDiskEntryUI();
-                        diskEntry.DiskInfo = disk;
+                        PhysicalDiskEntryUI diskEntry = new PhysicalDiskEntryUI(disk);
                         userControl = diskEntry;
                         break;
                     case WSMPartition partition:
-                        PartitionEntryUI partitionEntry = new PartitionEntryUI();
-                        partitionEntry.WSMPartition = partition;
+                        PartitionEntryUI partitionEntry = new PartitionEntryUI(partition);
                         userControl = partitionEntry;
                         break;
                 }
@@ -163,7 +163,7 @@ namespace GUIForDiskpart
             }
         }
 
-        private UInt32? GetIndexOfSelected(StackPanel stackPanel)
+        private UInt32? GetDataIndexOfSelected(StackPanel stackPanel)
         {
             PhysicalDiskEntryUI disk;
             PartitionEntryUI partition;
@@ -186,10 +186,9 @@ namespace GUIForDiskpart
             return null;
         }
 
-        private void Quit_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Application.Current.Shutdown();
-        }
+        #endregion StackPanelLogic
+
+        #region TopBarFileMenu
 
         private void SaveLog_Click(object sender, RoutedEventArgs e)
         {
@@ -197,6 +196,20 @@ namespace GUIForDiskpart
 
             SaveFile.SaveAsTextfile(log, "log");
         }
+
+        private void SaveEntryData_Click(object sender, RoutedEventArgs e)
+        {
+            EntryDataUI.SaveEntryData_Click(sender, e);
+        }
+
+        private void Quit_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+
+        #endregion TopBarFileMenu
+
+        #region TopBarHelpMenu
 
         private void Website_Click(object sender, RoutedEventArgs e)
         {
@@ -210,35 +223,31 @@ namespace GUIForDiskpart
             aboutWindow.Show();
         }
 
-        private void SaveEntryData_Click(object sender, RoutedEventArgs e) 
-        {
-            EntryDataUI.SaveEntryData_Click(sender, e);
-        }
+        #endregion TopBarHelpMenu
 
-        #region DiskChangedWatcher
-
-        private void SetupDiskChangedWatcher()
-        {
-            try
-            {
-                WqlEventQuery query = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2 or EventType = 3");
-                ManagementEventWatcher watcher = new ManagementEventWatcher();
-                watcher.Query = query;
-                watcher.EventArrived += new EventArrivedEventHandler(OnDiskChanged);
-                watcher.Options.Timeout = TimeSpan.FromSeconds(3);
-                watcher.Start();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void OnDiskChanged(object sender, EventArrivedEventArgs e)
+        #region RetrieveDisk
+        private void OnDiskChanged()
         {
             RetrieveAndShowDiskData(false);
         }
 
-        #endregion DiskChangedWatcher
+        public void RetrieveAndShowDiskData(bool outputText)
+        {
+            Application.Current.Dispatcher.Invoke(RetrieveAndShowDiskData_Internal, outputText);
+        }
+
+        private void RetrieveAndShowDiskData_Internal(bool outputText)
+        {
+            DiskRetriever.ReloadDsikInformation();
+
+            AddEntrysToStackPanel<DiskInfo>(DiskStackPanel, DiskRetriever.PhysicalDrives);
+
+            if (outputText)
+            {
+                AddTextToOutputConsole(DiskRetriever.GetDiskOutput());
+            }
+        }
+
+        #endregion RetrieveDisk
     }
 }

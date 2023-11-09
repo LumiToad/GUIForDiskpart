@@ -394,13 +394,18 @@ namespace GUIForDiskpart.diskpart
             return ExecuteInternal(commands);
         }
 
-        public static string Assign(uint diskIndex, int partitionIndex, char diskLetter, bool isNoErr)
+        public static string Assign(uint diskIndex, uint partitionIndex, char? diskLetter, bool isNoErr)
         {
             string[] commands = new string[3];
 
             commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
             commands[1] = "Select " + DPListType.PARTITION + " " + partitionIndex;
-            commands[2] = "Assign " + "LETTER=" + diskLetter + " ";
+            commands[2] = "Assign ";
+
+            if (diskLetter != null)
+            {
+                commands[2] += "LETTER=" + diskLetter + " ";
+            }
 
             if (isNoErr)
             {
@@ -410,20 +415,9 @@ namespace GUIForDiskpart.diskpart
             return ExecuteInternal(commands);
         }
 
-        public static string Assign(uint diskIndex, int partitionIndex, bool isNoErr)
+        public static string Assign(uint diskIndex, uint partitionIndex, bool isNoErr)
         {
-            string[] commands = new string[3];
-
-            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
-            commands[1] = "Select " + DPListType.PARTITION + " " + partitionIndex;
-            commands[2] = "Assign ";
-
-            if (isNoErr)
-            {
-                commands[2] += "NOERR ";
-            }
-
-            return ExecuteInternal(commands);
+            return Assign(diskIndex, partitionIndex, null, isNoErr);
         }
 
         public static string Clean(uint diskIndex, bool isCleanAll)

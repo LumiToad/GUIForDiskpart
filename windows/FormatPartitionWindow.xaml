@@ -7,7 +7,7 @@
         xmlns:userControls="clr-namespace:GUIForDiskpart.userControls"
         mc:Ignorable="d"
         Title="FormatPartitionWindow" Height="280" Width="575">
-    <Grid x:Name="MainGrid" Background="#FF3E3E3E" Margin="0,0,0,-6">
+    <Grid x:Name="MainGrid" Background="#FF525252" Margin="0,0,0,-6">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="*"/>

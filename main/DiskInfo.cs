@@ -376,7 +376,6 @@ namespace GUIForDiskpart.main
 
                 if (key.Contains("Formatted"))
                 {
-                    Console.WriteLine("FOUND!");
                     key = key.Replace("Formatted", ""); 
                 }
 

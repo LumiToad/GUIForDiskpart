@@ -8,6 +8,9 @@ namespace GUIForDiskpart.main
 {
     public static class DiskRetriever
     {
+        public delegate void DiskChanged();
+        public static event DiskChanged OnDiskChanged;
+
         private static List<DiskInfo> physicalDisks = new List<DiskInfo>();
         public static List<DiskInfo> PhysicalDrives { get { return physicalDisks; } }
 
@@ -17,6 +20,28 @@ namespace GUIForDiskpart.main
         {
             RetrieveWMIObjectsToList();
             RetrieveDisksToList();
+        }
+
+        public static void SetupDiskChangedWatcher()
+        {
+            try
+            {
+                WqlEventQuery query = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2 or EventType = 3");
+                ManagementEventWatcher watcher = new ManagementEventWatcher();
+                watcher.Query = query;
+                watcher.EventArrived += OnDiskChangedInternal;
+                watcher.Options.Timeout = TimeSpan.FromSeconds(3);
+                watcher.Start();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
+        }
+
+        private static void OnDiskChangedInternal(object sender, EventArrivedEventArgs e)
+        {
+            OnDiskChanged();
         }
 
         public static void ReloadDsikInformation()

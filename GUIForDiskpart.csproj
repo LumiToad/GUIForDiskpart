@@ -1,21 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationManifest>main\app.manifest</ApplicationManifest>
 	<Deterministic>false</Deterministic>
-	<Version>1.0.853</Version>
-	<AssemblyVersion>1.0.2311.858</AssemblyVersion>
-	<FileVersion>1.0.2311.858</FileVersion>
+	<Version>1.0.957</Version>
+	<AssemblyVersion>1.0.2311.962</AssemblyVersion>
+	<FileVersion>1.0.2311.962</FileVersion>
 	<Copyright>MIT License</Copyright>
 	<ApplicationIcon>resources\guifdLogo.ico</ApplicationIcon>
 	<Platforms>AnyCPU;x64</Platforms>
 	<PlatformTarget>AnyCPU</PlatformTarget>
 	<BaseOutputPath>E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\builds</BaseOutputPath>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -55,7 +56,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="resources\guifdLogo.ico" />
+    <Resource Include="resources\guifdLogo.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -70,10 +73,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="resources\CmdC.png" />
-    <Resource Include="resources\DiskpartD.png" />
-    <Resource Include="resources\FroggoCorner.png" />
-    <Resource Include="resources\guifdG.png" />
+    <Resource Include="resources\CmdC.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\DiskpartD.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\FroggoCorner.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\guifdG.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="resources\winLogo.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

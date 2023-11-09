@@ -29,9 +29,10 @@ namespace GUIForDiskpart
 
         public bool? IsSelected { get { return EntrySelected.IsChecked; } }
 
-        public PhysicalDiskEntryUI()
+        public PhysicalDiskEntryUI(DiskInfo diskInfo)
         {
             InitializeComponent();
+            DiskInfo = diskInfo;
         }
 
         private void DriveDataToThisUI()
@@ -58,25 +59,10 @@ namespace GUIForDiskpart
 
         private void Clean_Click(object sender, RoutedEventArgs e)
         {
-            //Still needs "clean all" option
+            CleanWindow cleanWindow = new CleanWindow(DiskInfo);
+            cleanWindow.Owner = MainWindow;
 
-            MessageBoxResult messageBoxResult = MessageBox.Show("This will delete and also clean everything on this drive!",
-               "Are you sure?", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
-
-            if (messageBoxResult == MessageBoxResult.OK) 
-            {
-                string output = string.Empty;
-
-                output = DPFunctions.Clean(diskInfo.DiskIndex, false);
-
-                MainWindow.AddTextToOutputConsole(output);
-
-                return;
-            }
-            else
-            {
-                return;
-            }
+            cleanWindow.Show();
         }
 
         private void Convert_Click(object sender, RoutedEventArgs e)

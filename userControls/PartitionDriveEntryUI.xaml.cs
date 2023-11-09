@@ -15,9 +15,9 @@ namespace GUIForDiskpart
 
         private WSMPartition wsmPartition;
         public WSMPartition WSMPartition
-        { 
+        {
             get { return wsmPartition; }
-            set 
+            set
             {
                 wsmPartition = value;
                 PartitionDataToThisUI();
@@ -26,15 +26,17 @@ namespace GUIForDiskpart
 
         private const string partitionBorder = "#FF00C4B4";
         private const string logicalBorder = "#FF0A70C5";
-        
+
         private const string basicBackground = "#FFBBBBBB";
         private const string selectBackground = "#FF308EBF";
 
         public bool? IsSelected { get { return EntrySelected.IsChecked; } }
 
-        public PartitionEntryUI()
+        public PartitionEntryUI(WSMPartition wsmPartition)
         {
             InitializeComponent();
+
+            WSMPartition = wsmPartition;
         }
 
         private void PartitionDataToThisUI()
@@ -45,14 +47,29 @@ namespace GUIForDiskpart
             FileSystemText.Content = GetFileSystemText();
             PartitionType.Content = $"{WSMPartition.PartitionTable}: {WSMPartition.PartitionType}";
 
-            if (WSMPartition.WMIPartition != null && WSMPartition.WMIPartition.LogicalDriveInfo != null) 
+            if (WSMPartition.WMIPartition != null && WSMPartition.WMIPartition.LogicalDriveInfo != null)
             {
                 SetValueInProgressBar(WSMPartition.Size, WSMPartition.WMIPartition.LogicalDriveInfo.FreeSpace);
             }
 
             if (WSMPartition.IsBoot)
             {
-               WinVolumeIcon.Source = Win32Icons.GetSystemIconByType(SystemIconType.WinLogo);
+                WinVolumeIcon.Source = Win32Icons.GetSystemIconByType(SystemIconType.WinLogo);
+            }
+
+            PopulateContextMenu();
+        }
+
+        private void PopulateContextMenu()
+        {
+            if (WSMPartition.WMIPartition != null && WSMPartition.WMIPartition.LogicalDriveInfo != null) 
+            {
+                MenuItem menuItem = new MenuItem();
+                menuItem.Icon = "..\\..\\resources\\CmdC.png";
+                menuItem.Header = "CMD - CHKDSK";
+                menuItem.Click += ScanVolume_Click;
+                ContextMenu.Items.Add(new Separator());
+                ContextMenu.Items.Add(menuItem);
             }
         }
 
@@ -81,14 +98,9 @@ namespace GUIForDiskpart
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-
-            string todo = "Delete the partition! ALL DATA WILL BE LOST!";
-            string confirmKey = $"Drive: {WSMPartition.DiskNumber} Partition: {WSMPartition.PartitionNumber}";
-
-            SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(todo, confirmKey);
-            securityCheckWindow.Owner = MainWindow;
-            securityCheckWindow.OnClick += ExecuteDelete;
-            securityCheckWindow.Show();
+            DeleteWindow deleteWindow = new DeleteWindow(WSMPartition);
+            deleteWindow.Owner = MainWindow;
+            deleteWindow.Show();
         }
 
         private void ExecuteDelete(bool value)
@@ -103,7 +115,22 @@ namespace GUIForDiskpart
 
         private void Assign_Click(object sender, RoutedEventArgs e)
         {
+            AssignLetterWindow assignLetterWindow = new AssignLetterWindow(WSMPartition);
+            assignLetterWindow.Owner = MainWindow;
 
+            assignLetterWindow.Show();
+        }
+
+        private void ScanVolume_Click(object sender, RoutedEventArgs e)
+        {
+            OpenScanVolumeWindow();
+        }
+
+        public void OpenScanVolumeWindow()
+        {
+            CHKDSKWindow window = new CHKDSKWindow(WSMPartition);
+            window.Owner = MainWindow;
+            window.Show();
         }
 
         private string GetDriveNameText()

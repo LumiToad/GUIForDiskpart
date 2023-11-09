@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Title="SecurityCheckWindow" Height="200" Width="400"
         ResizeMode="NoResize">
-    <Grid x:Name="MainGrid" Background="#FF3E3E3E">
+    <Grid x:Name="MainGrid" Background="#FF525252">
         <Border HorizontalAlignment="Center" Height="151" Margin="0,10,0,0" VerticalAlignment="Top" Width="380">
             <Grid>
                 <Label Content="You are about to:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Label x:Name="AboutTo" Content="?" HorizontalAlignment="Left" Margin="106,0,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="AboutTo" Content="?" HorizontalAlignment="Left" Margin="106,0,0,0" VerticalAlignment="Top" Foreground="Red"/>
                 <Label Content="Enter this confirmation text below:" HorizontalAlignment="Left" Margin="0,31,0,0" VerticalAlignment="Top" Width="196"/>
                 <Label x:Name="ConfirmText" Content="?" HorizontalAlignment="Left" Margin="0,56,0,0" VerticalAlignment="Top" Width="196"/>
                 <TextBox x:Name="TextBox" TextWrapping="Wrap" Margin="0,87,0,39" TextChanged="TextBox_TextChanged"/>

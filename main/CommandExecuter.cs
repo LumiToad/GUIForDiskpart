@@ -4,38 +4,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Management.Automation.Runspaces;
+using System.Windows;
 
 namespace GUIForDiskpart.main
 {
     public static class CommandExecuter
     {
         private const string exeSuffix = ".exe";
-
-        /*
-        public static List<Object> IssuePowershellCommand(string command, string psParam)
-        {
-            PowerShell ps = PowerShell.Create();
-            List<object> objects = new List<object>();
-
-            ps.AddCommand("Set-ExecutionPolicy")
-                .AddParameter("ExecutionPolicy ", ExecutionPolicy.Unrestricted)
-                .AddParameter("Scope ", ExecutionPolicyScope.Process)
-                ;
-
-            ps.AddCommand(command)
-                .AddParameter(psParam)
-                ;
-
-            IAsyncResult asyncpl = ps.BeginInvoke();
-
-            foreach (PSObject result in ps.EndInvoke(asyncpl))
-            {
-                objects.Add(result);
-            }
-
-            return objects;
-        }
-        */
 
         public static List<Object> IssuePowershellCommand(string command, string psParam)
         {
@@ -104,6 +79,22 @@ namespace GUIForDiskpart.main
             output += ReadProcessStandardOutput(process);
             int exitCode = ExitProcess(process);
             output += "Exit Code: " + exitCode.ToString() + "\n";
+
+            return output;
+        }
+
+        public static string IssueCommandSeperateCMDWindow(string command)
+        {
+            string output = string.Empty;
+
+            Process process = new Process();
+            process.StartInfo.FileName = ProcessType.CMD + exeSuffix;
+            process.StartInfo.RedirectStandardInput = true;
+            process.Start();
+            process.StandardInput.WriteLine($"{command} & echo Please close this window & pause >nul");
+
+            output += $"{process.ProcessName} started with parameters:\n";
+            output += command;
 
             return output;
         }

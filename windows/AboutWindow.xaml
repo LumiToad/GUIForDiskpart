@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GUIForDiskpart.windows"
         mc:Ignorable="d"
         Title="About" ResizeMode="NoResize" Height="250" Width="400">
-    <Grid Background="#FF3E3E3E">
+    <Grid Background="#FF525252">
         <Label Content="GUIForDiskpart (guifd.exe)" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="#FFC8C8C8"/>
         <Label Content="Build:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Foreground="#FFC8C8C8"/>
         <Label x:Name="BuildNumberValue" Content="Value" HorizontalAlignment="Left" Margin="161,31,0,0" VerticalAlignment="Top" Foreground="#FFC8C8C8"/>

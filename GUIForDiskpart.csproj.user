@@ -21,6 +21,15 @@
     <Compile Update="windows\AboutWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="windows\AssignLetterWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="windows\CHKDSKWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="windows\CleanWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="windows\ConvertDriveWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -28,6 +37,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="windows\CreateVolumeWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="windows\DeleteWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="windows\FormatPartitionWindow.xaml.cs">
@@ -74,6 +86,15 @@
     <Page Update="windows\AboutWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="windows\AssignLetterWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="windows\CHKDSKWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="windows\CleanWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="windows\ConvertDriveWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -81,6 +102,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="windows\CreateVolumeWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="windows\DeleteWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="windows\FormatPartitionWindow.xaml">

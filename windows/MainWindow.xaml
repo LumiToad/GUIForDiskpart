@@ -18,7 +18,7 @@
             </StackPanel>
         </DataTemplate>
     </Window.Resources>
-    <Grid x:Name="MainGrid" Background="#FF3E3E3E">
+    <Grid x:Name="MainGrid" Background="#FF525252">
         <Grid.RowDefinitions>
             <RowDefinition Height="35*"/>
             <RowDefinition Height="197*"/>
@@ -37,6 +37,11 @@
                     <MenuItem Header="Reload Drives" Click="RetrieveDiskData_Click">
                         <MenuItem.Icon>
                             <Image Source="/resources/guifdG.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Scan Volume (CHKDSK)" Click="ScanVolume_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/resources/CmdC.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>

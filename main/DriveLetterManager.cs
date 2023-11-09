@@ -1,41 +1,36 @@
 ﻿using GUIForDiskpart.main;
+using System;
 using System.Collections.Generic;
 
 namespace GUIForDiskpart.main
 {
-    
-
     public static class DriveLetterManager
     {
-        private const string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        public static string Alphabet
-        { get => alphabet; }
+        private const string viableDriveLetters = "CDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        public static char[] GetAvailableDriveLetters(List<DiskInfo> list)
+        public static char[] GetAvailableDriveLetters()
         {
-            string availableLetters = string.Empty;
+            string availableLetters = viableDriveLetters;
 
-            char[] usedLetters = GetUsedDriveLetters(list);
+            char[] usedLetters = GetUsedDriveLetters();
 
             foreach (char usedLetter in usedLetters) 
             {
-                foreach (char letter in Alphabet)
+                if (availableLetters.Contains(usedLetter))
                 {
-                    if (usedLetter != letter)
-                    {
-                        availableLetters += letter;
-                    }
+                    availableLetters = availableLetters.Replace(usedLetter.ToString(), "");
+                    availableLetters.TrimEnd();
                 }
             }
 
             return availableLetters.ToCharArray();
         }
 
-        public static char[] GetUsedDriveLetters(List<DiskInfo> list)
+        public static char[] GetUsedDriveLetters()
         {
             string letters = string.Empty;
 
-            foreach (DiskInfo diskInfo in list)
+            foreach (DiskInfo diskInfo in DiskRetriever.PhysicalDrives)
             {
                 foreach (WSMPartition wsmPartition in diskInfo.WSMPartitions)
                 {
