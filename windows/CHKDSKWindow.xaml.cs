@@ -2,6 +2,7 @@
 using GUIForDiskpart.cmd;
 using System.Windows;
 using Microsoft.Win32;
+using System;
 
 namespace GUIForDiskpart.windows
 {
@@ -179,14 +180,15 @@ namespace GUIForDiskpart.windows
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
             string output = string.Empty;
-
-            string command = TextBoxPara.Text;
-            if (!string.IsNullOrEmpty(TextBoxDir.Text))
+            
+            if (string.IsNullOrEmpty(TextBoxDir.Text)) 
             {
-                command += $" > {TextBoxDir.Text} ";
+                output += CMDFunctions.CHKDSK(WSMPartition.DriveLetter, TextBoxPara.Text);
             }
-
-            output += CMDFunctions.CHKDSK(WSMPartition.DriveLetter, TextBoxPara.Text);
+            else
+            {
+                output += CMDFunctions.CHKDSK(WSMPartition.DriveLetter, TextBoxPara.Text, TextBoxDir.Text);
+            }
 
             MainWindow.AddTextToOutputConsole(output);
 
@@ -195,13 +197,7 @@ namespace GUIForDiskpart.windows
 
         private void Browse_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Text file (*.txt)|*.txt";
-
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                TextBoxDir.Text = saveFileDialog.FileName;
-            }
+            TextBoxDir.Text = SaveFile.GetSaveAsTextFilePath("CHKDSK");
         }
     }
 }

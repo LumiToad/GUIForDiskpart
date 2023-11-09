@@ -19,6 +19,21 @@ namespace GUIForDiskpart.main
             }
         }
 
+        public static string GetSaveAsTextFilePath(string name)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text file (*.txt)|*.txt";
+
+            string currentDateTime = GetFormattedDateTimeString();
+            saveFileDialog.FileName = $"{name}_{currentDateTime}";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                return saveFileDialog.FileName;
+            }
+            return "";
+        }
+
         private static string GetFormattedDateTimeString()
         {
             return DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");

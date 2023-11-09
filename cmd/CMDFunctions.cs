@@ -73,11 +73,21 @@ namespace GUIForDiskpart.cmd
 
         #endregion CHKNTFS_Parameters
 
+        public static string CHKDSK(char driveLetter, string parameters, string logFileLocation)
+        {
+            string command = string.Empty;
+            string closingCommand = $" DIR > \"{logFileLocation}\" & echo A log file has been created here: {logFileLocation} ";
+
+            command = $"CHKDSK {driveLetter}: {parameters} & {closingCommand}";
+
+            return ExecuteInternal(command);
+        }
+
         public static string CHKDSK(char driveLetter, string parameters)
         {
             string command = string.Empty;
 
-            command = $"CHKDSK {driveLetter}: {parameters}";
+            command = $"CHKDSK {driveLetter}: {parameters} ";
 
             return ExecuteInternal(command);
         }

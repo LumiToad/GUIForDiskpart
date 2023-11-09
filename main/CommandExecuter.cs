@@ -93,7 +93,7 @@ namespace GUIForDiskpart.main
             process.Start();
             process.StandardInput.WriteLine($"{command} & echo Please close this window & pause >nul");
 
-            output += $"{process.ProcessName} started with parameters:\n";
+            output += $"{process.ProcessName.ToUpper()}{exeSuffix} started with parameters:\n";
             output += command;
 
             return output;
