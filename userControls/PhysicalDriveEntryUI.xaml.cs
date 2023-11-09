@@ -40,7 +40,7 @@ namespace GUIForDiskpart
             DiskModel.Content = diskInfo.DiskModel;
             TotalSpace.Content = diskInfo.FormattedTotalSpace;
             WSMPartitionCount.Content = $"{diskInfo.WSMPartitionCount} partitions";
-            SetValueInProgressBar(diskInfo.TotalSpace, diskInfo.UnpartSpace);
+            SetValueInProgressBar(diskInfo.TotalSpace, diskInfo.FreeSpace);
 
             DiskIcon.Source = GetDiskIcon();
             MediaTypeIcon.Source = GetMediaTypeIcon();
@@ -166,11 +166,11 @@ namespace GUIForDiskpart
             ContextMenu.IsOpen = !ContextMenu.IsOpen;
         }
 
-        private void SetValueInProgressBar(ulong totalSize, long freeSize)
+        private void SetValueInProgressBar(ulong totalSize, ulong freeSize)
         {
             SizeBar.Maximum = totalSize;
             SizeBar.Minimum = 0;
-            SizeBar.Value = (long)totalSize - freeSize;
+            SizeBar.Value = totalSize - freeSize;
         }
     }
 }

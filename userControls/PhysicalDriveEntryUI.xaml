@@ -53,21 +53,21 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Width="NaN" Grid.ColumnSpan="2">
-                <Image x:Name="DiskIcon" MinWidth="16" MinHeight="16" Width="24" Height="24" MaxWidth="32" MaxHeight="32"/>
-                <Image x:Name="MediaTypeIcon" MinWidth="16" MinHeight="16" Margin="0,5,0,0" MaxWidth="32" MaxHeight="32" Width="24" Height="24"/>
+                <Image x:Name="DiskIcon" MinWidth="16" MinHeight="16" Width="24" Height="24" MaxWidth="32" MaxHeight="32" ToolTip="USB / Hard installed"/>
+                <Image x:Name="MediaTypeIcon" MinWidth="16" MinHeight="16" Margin="0,5,0,0" MaxWidth="32" MaxHeight="32" Width="24" Height="24" ToolTip="Green Arrow shows, when this Disk is removable"/>
                 <RadioButton x:Name="EntrySelected" Content="" Padding="0,0,0,0" Width="NaN" Height="NaN" HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="False" Focusable="False" Margin="0,17,0,0" GroupName="SelectedDisk"/>
             </StackPanel>
 
             <StackPanel MinWidth="120" Margin="0,0,0,4" Grid.Column="2">
-                <Label x:Name="DiskIndex" Content="00" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="16"/>
-                <Label x:Name="DiskModel" Content="Model" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" Width="NaN" Height="23.28"/>
-                <Label x:Name="TotalSpace" Content="1000" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="16" Width="NaN"/>
-                <Label x:Name="WSMPartitionCount" Content="99" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="16" Width="NaN"/>
+                <Label x:Name="DiskIndex" Content="00" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="16" ToolTip="{Binding Content, ElementName=DiskIndex}"/>
+                <Label x:Name="DiskModel" Content="Model" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" Width="NaN" Height="23.28" ToolTip="{Binding Content, ElementName=DiskModel}"/>
+                <Label x:Name="TotalSpace" Content="1000" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="16" Width="NaN" ToolTip="{Binding Content, ElementName=TotalSpace}"/>
+                <Label x:Name="WSMPartitionCount" Content="99" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="16" Width="NaN" ToolTip="{Binding Content, ElementName=WSMPartitionCount}"/>
                 <StackPanel Height="100"/>
             </StackPanel>
             <Button Grid.Column="3" Click="OpenContextMenu_Click" Content="..." HorizontalAlignment="Left" Height="20" Width="20" VerticalContentAlignment="Center" VerticalAlignment="Bottom"/>
             <Border Grid.Column="3" Height="80" Width="19" BorderThickness="2,2,2,2" BorderBrush="#FF676767" CornerRadius="0.2,0.2,0.2,0.2" VerticalAlignment="Top" HorizontalAlignment="Left" >
-                <ProgressBar x:Name="SizeBar" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Orientation="Vertical" BorderBrush="DimGray" Foreground="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" BorderThickness="0,0,0,0" Value="0" Height="76">
+                <ProgressBar x:Name="SizeBar" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Orientation="Vertical" BorderBrush="DimGray" Foreground="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" BorderThickness="0,0,0,0" Value="0" Height="76" ToolTip="Blue - used space | This only takes Logical Drives into account.">
                     <ProgressBar.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>

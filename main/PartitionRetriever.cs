@@ -70,8 +70,6 @@ namespace GUIForDiskpart.main
             wsmPartition.OperationalStatus = Convert.ToUInt16(psObject.Properties["OperationalStatus"].Value);
             wsmPartition.TransitionState = Convert.ToUInt16(psObject.Properties["TransitionState"].Value);
             wsmPartition.Size = Convert.ToUInt64(psObject.Properties["Size"].Value);
-            //wsmPartition.FreeSpace = Convert.ToUInt64(psObject.Properties["Free"]);
-            //wsmPartition.UsedSpace = Convert.ToUInt64(psObject.Properties["Used"]);
             wsmPartition.MBRType = Convert.ToUInt16(psObject.Properties["MbrType"].Value);
             wsmPartition.GPTType = Convert.ToString(psObject.Properties["GptType"].Value);
             wsmPartition.IsReadOnly = Convert.ToBoolean(psObject.Properties["IsReadOnly"].Value);
@@ -85,9 +83,6 @@ namespace GUIForDiskpart.main
             wsmPartition.Offset = Convert.ToUInt64(psObject.Members["Offset"].Value);
 
             wsmPartition.PrintToConsole();
-
-            foreach (var property in psObject.Properties)
-            { Console.WriteLine(property.ToString()); }
 
             return wsmPartition;
         }
@@ -136,20 +131,6 @@ namespace GUIForDiskpart.main
 
             return newPartition;
         }
-
-        /*
-        private static UInt32? GetWSMPartitionNumber(DiskInfo physicalDisk, WMIPartition newPartition)
-        {
-            foreach (PSObject psObject in GetWSMPartitionsByDisk(physicalDisk))
-            {
-                if ((UInt64)psObject.Properties["Offset"].Value == newPartition.StartingOffset)
-                {
-                    return (UInt32)psObject.Properties["PartitionNumber"].Value;
-                }
-            }
-            return null;
-        }
-        */
 
         private static List<object> GetWSMPartitionsByDisk(DiskInfo diskInfo)
         {

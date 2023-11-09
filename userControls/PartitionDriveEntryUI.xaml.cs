@@ -1,12 +1,8 @@
 ﻿using GUIForDiskpart.diskpart;
 using GUIForDiskpart.main;
 using GUIForDiskpart.windows;
-using System;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
 
 namespace GUIForDiskpart
 {
@@ -48,6 +44,11 @@ namespace GUIForDiskpart
             TotalSpace.Content = WSMPartition.FormattedSize;
             FileSystemText.Content = GetFileSystemText();
             PartitionType.Content = $"{WSMPartition.PartitionTable}: {WSMPartition.PartitionType}";
+
+            if (WSMPartition.WMIPartition != null && WSMPartition.WMIPartition.LogicalDriveInfo != null) 
+            {
+                SetValueInProgressBar(WSMPartition.Size, WSMPartition.WMIPartition.LogicalDriveInfo.FreeSpace);
+            }
 
             if (WSMPartition.IsBoot)
             {
@@ -152,6 +153,13 @@ namespace GUIForDiskpart
         private void OpenContextMenu_Click(object sender, RoutedEventArgs e)
         {
             ContextMenu.IsOpen = !ContextMenu.IsOpen;
+        }
+
+        private void SetValueInProgressBar(ulong totalSize, ulong freeSize)
+        {
+            SizeBar.Maximum = totalSize;
+            SizeBar.Minimum = 0;
+            SizeBar.Value = totalSize - freeSize;
         }
     }
 }

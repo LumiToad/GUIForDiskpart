@@ -26,12 +26,6 @@ namespace GUIForDiskpart.main
         private UInt64 size;
         public UInt64 Size { get { return size; } set { size = value; } }
 
-        private UInt64 usedSpace;
-        public UInt64 UsedSpace { get { return size; } set { size = value; } }
-
-        private UInt64 freeSpace;
-        public UInt64 FreeSpace { get { return size; } set { size = value; } }
-
         private UInt16? mbrType;
         public UInt16? MBRType { get { return mbrType; } set { mbrType = value; } }
 

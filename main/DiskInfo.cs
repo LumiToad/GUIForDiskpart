@@ -162,8 +162,13 @@ namespace GUIForDiskpart.main
         private List<WSMPartition> wsmPartitions = new List<WSMPartition>();
         public List<WSMPartition> WSMPartitions { get { return wsmPartitions; } set { wsmPartitions = value; } }
 
+        public UInt64 FreeSpace { get { return GetLogicalFreeSpace(); } }
+        public UInt64 UsedSpace { get { return TotalSpace - FreeSpace; } }
+        
+        public string FormattedFreeSpace => ByteFormatter.FormatBytes(GetLogicalFreeSpace());
         public string FormattedTotalSpace => ByteFormatter.FormatBytes(TotalSpace);
         public string FormattedUnpartSpace => ByteFormatter.FormatBytes(UnpartSpace);
+        public string FormattedUsedSpace => ByteFormatter.FormatBytes(UsedSpace);
 
         public DiskInfo(
             string deviceID,
@@ -365,20 +370,35 @@ namespace GUIForDiskpart.main
                 if (data.ContainsKey(key)) continue;
                 if (key == "TotalSpace") continue;
                 if (key == "UnpartSpace") continue;
+                if (key == "FreeSpace") continue;
+                if (key == "UsedSpace") continue;
                 if (typeof(List<WSMPartition>) == property.PropertyType) continue;
 
-                if (key == "FormattedTotalSpace")
+                if (key.Contains("Formatted"))
                 {
-                    key = "TotalSpace"; 
+                    Console.WriteLine("FOUND!");
+                    key = key.Replace("Formatted", ""); 
                 }
-
-                if (key == "FormattedUnpartSpace")
-                { key = "UnallocatedSpace"; }
 
                 data.Add(key, value);
             }
 
             return data;
+        }
+
+        private UInt64 GetLogicalFreeSpace()
+        {
+            UInt64 freeSpaceResult = new UInt64();
+
+            foreach (WSMPartition partition in WSMPartitions)
+            {
+                if (partition.WMIPartition != null && partition.WMIPartition.LogicalDriveInfo != null) 
+                {
+                    freeSpaceResult += partition.WMIPartition.LogicalDriveInfo.FreeSpace;
+                }
+            }
+
+            return freeSpaceResult;
         }
     }
 }

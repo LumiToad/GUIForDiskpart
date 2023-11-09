@@ -40,20 +40,20 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.ColumnSpan="2" Width="50" HorizontalAlignment="Left">
-                <Image x:Name="WinVolumeIcon" MinWidth="16" MinHeight="16" Margin="0,15,0,0" MaxWidth="24" MaxHeight="24" Width="16" Height="16"/>
+                <Image x:Name="WinVolumeIcon" MinWidth="16" MinHeight="16" Margin="0,15,0,0" MaxWidth="24" MaxHeight="24" Width="16" Height="16" ToolTip="Shows Windows-Logo if this is the Windows boot partition"/>
                 <RadioButton x:Name="EntrySelected" Content="" Padding="0,0,0,0" Width="NaN" Height="NaN" HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="False" Focusable="False" Margin="0,40,0,0" GroupName="SelectedPartition"/>
             </StackPanel>
 
             <StackPanel MinWidth="120" Margin="0,0,0,4" Grid.Column="1" Width="170">
-                <Label x:Name="PartitionNumber" Content="00" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="15"/>
-                <Label x:Name="DriveNameAndLetter" Content="Letter" Grid.IsSharedSizeScope="False" Height="23.28" Width="NaN" Padding="2,4,0,0"/>
-                <Label x:Name="TotalSpace" Content="1000" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="15" Width="NaN"/>
-                <Label x:Name="FileSystemText" Content="????" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="14" Width="NaN"/>
-                <Label x:Name="PartitionType" Content="???: ???" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="15" Width="NaN"/>
+                <Label x:Name="PartitionNumber" Content="00" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="15" ToolTip="Number of the partition"/>
+                <Label x:Name="DriveNameAndLetter" Content="Letter" Grid.IsSharedSizeScope="False" Height="23.28" Width="NaN" Padding="2,4,0,0" ToolTip="{Binding Content, ElementName=DriveNameAndLetter}"/>
+                <Label x:Name="TotalSpace" Content="1000" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="15" Width="NaN" ToolTip="Space"/>
+                <Label x:Name="FileSystemText" Content="????" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="14" Width="NaN" ToolTip="Shows the FileSystem, if Windows can recognize it"/>
+                <Label x:Name="PartitionType" Content="???: ???" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="15" Width="NaN" ToolTip="Partition table and type (GPT / MBR). Some types can not be recognized"/>
             </StackPanel>
             <Button Grid.Column="2" Click="OpenContextMenu_Click" Content="..." HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="20" Width="20"/>
             <Border Grid.Column="2" Height="80" Width="19" BorderThickness="2,2,2,2" BorderBrush="#FF676767" CornerRadius="0.2,0.2,0.2,0.2" HorizontalAlignment="Left" VerticalAlignment="Top" >
-                <ProgressBar x:Name="SizeBar" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Orientation="Vertical" BorderBrush="DimGray" Foreground="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" BorderThickness="0,0,0,0" Value="0" Height="76">
+                <ProgressBar x:Name="SizeBar" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Orientation="Vertical" BorderBrush="DimGray" Foreground="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" BorderThickness="0,0,0,0" Value="0" Height="76" ToolTip="Blue - used space | This only takes Logical Drives into account.">
                     <ProgressBar.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
