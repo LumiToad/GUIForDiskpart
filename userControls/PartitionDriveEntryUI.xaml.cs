@@ -62,14 +62,41 @@ namespace GUIForDiskpart
 
         private void PopulateContextMenu()
         {
+            if (WSMPartition.PartitionTable == "MBR")
+            {
+                MenuItem menuItem = new MenuItem();
+                menuItem.Icon = "..\\resources\\DiskpartD.png"; 
+                menuItem.Header = "Diskpart - " + (WSMPartition.IsActive ? "Inactive" : "Active");
+                menuItem.Click += Active_Click;
+                
+                ContextMenu.Items.Add(menuItem);
+            }
+
             if (WSMPartition.WMIPartition != null && WSMPartition.WMIPartition.LogicalDriveInfo != null) 
             {
                 MenuItem menuItem = new MenuItem();
                 menuItem.Icon = "..\\..\\resources\\CmdC.png";
                 menuItem.Header = "CMD - CHKDSK";
                 menuItem.Click += ScanVolume_Click;
-                ContextMenu.Items.Add(new Separator());
                 ContextMenu.Items.Add(menuItem);
+            }
+        }
+
+        private void Active_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show
+                (
+                "Setting an MBR partition active or inactive can result in the computer no longer booting correctly!",
+                "Diskpart - Active / Inactive",
+                MessageBoxButton.OKCancel);
+            switch (result)
+            {
+                case MessageBoxResult.OK:
+                    MainWindow.AddTextToOutputConsole(DPFunctions.Active(WSMPartition.DiskNumber, WSMPartition.PartitionNumber, !WSMPartition.IsActive));
+                    MainWindow.RetrieveAndShowDiskData(true);
+                    break;
+                case MessageBoxResult.Cancel:
+                    break;
             }
         }
 
@@ -128,6 +155,7 @@ namespace GUIForDiskpart
 
         public void OpenScanVolumeWindow()
         {
+            if (WSMPartition.WMIPartition.LogicalDriveInfo.DriveLetter == null) return;
             CHKDSKWindow window = new CHKDSKWindow(WSMPartition);
             window.Owner = MainWindow;
             window.Show();

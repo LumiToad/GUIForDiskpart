@@ -445,6 +445,17 @@ namespace GUIForDiskpart.diskpart
             return ExecuteInternal(commands);
         }
 
+        public static string Active(uint diskIndex, uint partitionIndex, bool isSetActive)
+        {
+            string[] commands = new string[3];
+
+            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
+            commands[1] = "Select " + DPListType.PARTITION + " " + partitionIndex;
+            commands[2] = (isSetActive ? "ACTIVE " : "INACTIVE");
+
+            return ExecuteInternal(commands);
+        }
+
         #region private
 
         private static string RemoveDPInfo(string info)

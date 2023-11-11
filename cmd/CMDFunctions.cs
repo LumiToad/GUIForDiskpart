@@ -5,6 +5,22 @@ namespace GUIForDiskpart.cmd
 {
     public static class CMDFunctions
     {
+        #region CMD_Basic_Commands
+        
+        private const string shutdownNoTimer = "/s";
+        public static string ShutdownNoTimer => shutdownNoTimer;
+
+        private const string shutdownForce = "/f";
+        public static string ShutdownForce => shutdownForce;
+
+        private const string shutdownTimer = "/t";
+        public static string ShutdownTimer => shutdownTimer;
+        
+        private const string shutdownRestart = "/r";
+        public static string ShutdownRestart => shutdownRestart;
+
+        #endregion CMD_Basic_Commands
+
         #region CHKDSK_Parameters
 
         private const string fixErrors = "/f";
@@ -78,7 +94,7 @@ namespace GUIForDiskpart.cmd
             string command = string.Empty;
             string closingCommand = $" DIR > \"{logFileLocation}\" & echo A log file has been created here: {logFileLocation} ";
 
-            command = $"CHKDSK {driveLetter}: {parameters} & {closingCommand}";
+            command = $"echo y | CHKDSK {driveLetter}: {parameters} & {closingCommand}";
 
             return ExecuteInternal(command);
         }
@@ -87,7 +103,7 @@ namespace GUIForDiskpart.cmd
         {
             string command = string.Empty;
 
-            command = $"CHKDSK {driveLetter}: {parameters} ";
+            command = $"echo y | CHKDSK {driveLetter}: {parameters} ";
 
             return ExecuteInternal(command);
         }

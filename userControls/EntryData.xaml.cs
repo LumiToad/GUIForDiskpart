@@ -23,7 +23,7 @@ namespace GUIForDiskpart.userControls
 
             foreach (var entry in EntryDataGrid.SelectedCells)
             {
-                if (entry.Item.ToString().Contains(SearchBar.Text))
+                if (entry.Item.ToString().Contains(SearchBar.Text, System.StringComparison.OrdinalIgnoreCase))
                 {
                     cells.Add(entry);
                 }

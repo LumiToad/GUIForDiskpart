@@ -8,6 +8,9 @@
         mc:Ignorable="d"
         Title="CHKDSKWindow" Height="475" Width="720"
         ResizeMode="NoResize" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+    <Window.Resources>
+        <AlternationConverter x:Key="AlternationConverter"/>
+    </Window.Resources>
     <Grid x:Name="MainGrid" Background="#FF525252" Margin="0,0,0,-16">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
@@ -43,7 +46,7 @@
             <CheckBox x:Name="ParaForceOff" Content="Bypass online repair (requires /scan) [/forceofflinefix]" Margin="10,0,0,0" Unchecked="ParaForceOff_Checked" Checked="ParaForceOff_Checked" IsEnabled="{Binding IsChecked, ElementName=ParaScan}"/>
             <CheckBox x:Name="ParaPerf" Content="Increase CHKDSK speed, heavily impact computer performance [/perf]" Unchecked="ParaPerf_Checked" Checked="ParaPerf_Checked" Margin="10,0,0,0" IsEnabled="{Binding IsChecked, ElementName=ParaScan}"/>
             <CheckBox x:Name="ParaSpotfix" Content="Runs spotfixing on the volume [/spotfix]" Unchecked="ParaSpotfix_Checked" Checked="ParaSpotfix_Checked"/>
-            <CheckBox x:Name="ParaSD" Content="Cleans garbade security descriptor data (sddl) [/sdcleanup]" Unchecked="ParaSD_Checked" Checked="ParaSD_Checked"/>
+            <CheckBox x:Name="ParaSD" Content="Cleans garbage security descriptor data (sddl) [/sdcleanup]" Unchecked="ParaSD_Checked" Checked="ParaSD_Checked"/>
             <Label Content="FAT / FAT32 / exFAT ONLY" Padding="20,0,0,0"/>
             <CheckBox x:Name="ParaFree" Content="Frees orphaned cluster chains, no recovery [/freeorphanedchains]" Unchecked="ParaFree_Checked" Checked="ParaFree_Checked"/>
             <CheckBox x:Name="ParaMarkClean" Content="If no corruption - Force marking as clean [/markclean]" Unchecked="ParaMarkClean_Checked" Checked="ParaMarkClean_Checked"/>
@@ -51,6 +54,13 @@
                 <Label Content="Save log to: " Padding="0,0,0,0"/>
                 <TextBox x:Name="TextBoxDir" MaxLength="999" TextWrapping="Wrap" Margin="10,0,0,0" Width="200" Height="18"/>
                 <Button Content="Browse..." Margin="5,0,0,0" Click="Browse_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <CheckBox x:Name="ParaShutdown" Content="Shutdown after completion - Shutdown mode: "/>
+                <ComboBox x:Name="ParaShutdownSelection" Margin="10,0,0,0" Padding="0,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="100">
+                    <ComboBoxItem Content="Shutdown" IsSelected="True" FontSize="12"/>
+                    <ComboBoxItem Content="Restart" FontSize="12"/>
+                </ComboBox>
             </StackPanel>
         </StackPanel>
         <Label Content="Volume:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>

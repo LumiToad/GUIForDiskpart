@@ -127,11 +127,12 @@ namespace GUIForDiskpart
 
         private void ScanVolume_Click(object sender, RoutedEventArgs e)
         {
-            foreach (PartitionEntryUI entry in PartitionStackPanel.Children) 
+            foreach (object entry in PartitionStackPanel.Children) 
             {
-                if (entry.IsSelected == true)
+                if (entry is not PartitionEntryUI) return;
+                if (((PartitionEntryUI)entry).IsSelected == true)
                 {
-                    entry.OpenScanVolumeWindow();
+                    ((PartitionEntryUI)entry).OpenScanVolumeWindow();
                 }
             }
         }

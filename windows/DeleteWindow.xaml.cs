@@ -45,10 +45,10 @@ namespace GUIForDiskpart.windows
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            string todo = "Clean the whole drive! ALL DATA WILL BE LOST!";
+            string todo = "Delete the whole partition! ALL DATA WILL BE LOST!";
             if ((bool)CleanAll.IsChecked)
             {
-                todo = "Clean and override the whole drive! MAKES DATA RESCUE CLOSE TO IMPOSSIBLE!";
+                todo = "Delete and override the whole partition! MAKES DATA RESCUE CLOSE TO IMPOSSIBLE!";
             }
             string confirmKey = $"Drive: {WSMPartition.DiskNumber} Partition: {WSMPartition.PartitionNumber}";
 

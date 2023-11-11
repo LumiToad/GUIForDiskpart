@@ -3,6 +3,7 @@ using GUIForDiskpart.cmd;
 using System.Windows;
 using Microsoft.Win32;
 using System;
+using System.Windows.Controls;
 
 namespace GUIForDiskpart.windows
 {
@@ -157,21 +158,6 @@ namespace GUIForDiskpart.windows
             WriteTextBoxPara(ParaMarkClean.IsChecked, CMDFunctions.MarkCleanFATfamily);
         }
 
-        private void WriteTextBoxPara(bool? value, string parameter)
-        {
-            if (value == true)
-            {
-                TextBoxPara.Text += $" {parameter} ";
-            }
-            else
-            {
-                if (TextBoxPara.Text.Contains(parameter))
-                {
-                    TextBoxPara.Text = TextBoxPara.Text.Replace($" {parameter} ", "");
-                }
-            }
-        }
-
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -180,6 +166,8 @@ namespace GUIForDiskpart.windows
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
             string output = string.Empty;
+
+            TextBoxPara.Text += GetOptionalParameters();
             
             if (string.IsNullOrEmpty(TextBoxDir.Text)) 
             {
@@ -195,9 +183,47 @@ namespace GUIForDiskpart.windows
             this.Close();
         }
 
+        private string GetOptionalParameters()
+        {
+            string result = string.Empty;
+
+            if (ParaShutdown.IsChecked == true)
+            {
+                string item = (string)ParaShutdownSelection.SelectionBoxItem;
+                string shutdown = $" & shutdown {CMDFunctions.ShutdownForce} ";
+                switch (item)
+                {
+                    case ("Shutdown"):
+                        shutdown += $"{CMDFunctions.ShutdownNoTimer} ";
+                        break;
+                    case ("Restart"):
+                        shutdown += $"{CMDFunctions.ShutdownRestart} ";
+                        break;
+                }
+                result += shutdown;
+            }        
+
+            return result;
+        }
+
         private void Browse_Click(object sender, RoutedEventArgs e)
         {
             TextBoxDir.Text = SaveFile.GetSaveAsTextFilePath("CHKDSK");
+        }
+
+        private void WriteTextBoxPara(bool? value, string parameter)
+        {
+            if (value == true)
+            {
+                TextBoxPara.Text += $" {parameter} ";
+            }
+            else
+            {
+                if (TextBoxPara.Text.Contains(parameter))
+                {
+                    TextBoxPara.Text = TextBoxPara.Text.Replace($" {parameter} ", "");
+                }
+            }
         }
     }
 }
