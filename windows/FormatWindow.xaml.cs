@@ -59,9 +59,8 @@ namespace GUIForDiskpart
             string todo = "Format the whole drive! ALL DATA WILL BE LOST!";
             string confirmKey = DiskInfo.DiskName;
 
-            SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(todo, confirmKey);
+            SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(ExecuteFormat, todo, confirmKey);
             securityCheckWindow.Owner = this;
-            securityCheckWindow.OnClick += ExecuteFormat;
             securityCheckWindow.Show();
         }
 
@@ -138,12 +137,10 @@ namespace GUIForDiskpart
 
         private void EvaluteFAT32SizeBox()
         {
+            ClearErrorMessage();
             if (SelectedFileSystemAsString() != "FAT32") return;
 
             UInt64 size = GetSizeValue();
-            Console.WriteLine(size.ToString());
-            Console.WriteLine(size);
-
 
             if (size <= 32768)
             {
@@ -169,7 +166,8 @@ namespace GUIForDiskpart
 
         private void ClearErrorMessage()
         {
-            ErrorMessageValue.Content = "";
+            if (ErrorMessageValue == null) return;
+            ErrorMessageValue.Content = " ";
         }
 
         private void SizeValue_TextChanged(object sender, TextChangedEventArgs e)

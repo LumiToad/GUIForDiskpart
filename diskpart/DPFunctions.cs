@@ -14,6 +14,8 @@ namespace GUIForDiskpart.diskpart
             GetDPInfoExcludeStrings();
         }
 
+        #region ListingAndDetail
+
         public static string List(string type)
         {
             string[] commands = new string[1];
@@ -54,12 +56,16 @@ namespace GUIForDiskpart.diskpart
             return ExecuteInternal(commands);
         }
 
+        #endregion ListingAndDetail
+
+        #region Create
+
         public static string CreatePartition(uint diskIndex, string option, UInt64 sizeInMB, bool isNoErr)
         {
             string[] commands = new string[2];
 
             commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
-            commands[1] = "Create PARTITION " +  option + " ";
+            commands[1] = "Create PARTITION " + option + " ";
 
             if (sizeInMB > 0)
             {
@@ -124,6 +130,8 @@ namespace GUIForDiskpart.diskpart
 
             return ExecuteInternal(commands);
         }
+
+        #endregion Create
 
         #region VDisk
 
@@ -331,6 +339,8 @@ namespace GUIForDiskpart.diskpart
 
         #endregion VDisk
 
+        #region Various
+
         public static string Format(uint diskIndex, uint partitionIndex, FileSystem fileSystem,
             string volumeName, bool isQuickFormatting, bool isCompressed, bool isOverride, bool isNoWait, bool isNoErr)
         {
@@ -455,6 +465,43 @@ namespace GUIForDiskpart.diskpart
 
             return ExecuteInternal(commands);
         }
+
+        public static string AttributesVolume(char driveLetter, bool isSet, string option, bool isNoErr)
+        {
+            string[] commands = new string[2];
+
+            commands[0] = "Select " + DPListType.VOLUME + " " + driveLetter;
+            commands[1] = "ATTRIBUTES " + DPListType.VOLUME + " ";
+
+            commands[1] += (isSet ? AttributesOptions.SET : AttributesOptions.CLEAR) + " ";
+            commands[1] += option + " ";
+
+            if (isNoErr)
+            {
+                commands[1] += "NOERR ";
+            }
+
+            return ExecuteInternal(commands);
+        }
+
+        public static string AttributesDisk(uint diskIndex, bool isSet, bool isNoErr)
+        {
+            string[] commands = new string[2];
+
+            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
+            commands[1] = "ATTRIBUTES " + DPListType.DISK + " ";
+            commands[1] += (isSet ? AttributesOptions.SET : AttributesOptions.CLEAR) + " ";
+            commands[1] += AttributesOptions.READONLY + " ";
+
+            if (isNoErr)
+            {
+                commands[1] += "NOERR ";
+            }
+
+            return ExecuteInternal(commands);
+        }
+
+        #endregion Various
 
         #region private
 

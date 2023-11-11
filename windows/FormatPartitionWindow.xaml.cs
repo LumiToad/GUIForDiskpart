@@ -57,9 +57,8 @@ namespace GUIForDiskpart.windows
             string todo = "Format the partition! ALL DATA WILL BE LOST!";
             string confirmKey = $"Drive: {WSMPartition.DiskNumber} Partition: {WSMPartition.PartitionNumber}";
 
-            SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(todo, confirmKey);
+            SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(ExecuteFormat, todo, confirmKey);
             securityCheckWindow.Owner = this;
-            securityCheckWindow.OnClick += ExecuteFormat;
             securityCheckWindow.Show();
         }
 
@@ -125,12 +124,10 @@ namespace GUIForDiskpart.windows
 
         private void EvaluteFAT32SizeBox()
         {
+            ClearErrorMessage();
             if (SelectedFileSystemAsString() != "FAT32") return;
 
             UInt64 size = GetSizeValue();
-            Console.WriteLine(size.ToString());
-            Console.WriteLine(size);
-
 
             if (size <= 32768)
             {
@@ -156,7 +153,8 @@ namespace GUIForDiskpart.windows
 
         private void ClearErrorMessage()
         {
-            ErrorMessageValue.Content = "";
+            if (ErrorMessageValue == null) return;
+            ErrorMessageValue.Content = " ";
         }
 
         private void SizeValue_TextChanged(object sender, TextChangedEventArgs e)

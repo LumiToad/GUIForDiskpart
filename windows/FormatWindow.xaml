@@ -37,7 +37,7 @@
                 <Button x:Name="CancelButton" Content="Cancel" Margin="143,163,35,0" Click="CancelButton_Click"/>
             </Grid>
         </Border>
-        <Label x:Name="ErrorMessageValue" Content="" Width="267" Foreground="Red" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.RowSpan="2" Grid.Row="1"/>
+        <Label x:Name="ErrorMessageValue" Width="267" Foreground="Red" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.RowSpan="2" Grid.Row="1"/>
         <userControls:ConsoleReturnUI x:Name="ConsoleReturn" Grid.RowSpan="2"/>
     </Grid>
 </Window>

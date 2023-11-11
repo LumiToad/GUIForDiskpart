@@ -52,9 +52,8 @@ namespace GUIForDiskpart.windows
             }
             string confirmKey = $"Drive: {WSMPartition.DiskNumber} Partition: {WSMPartition.PartitionNumber}";
 
-            SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(todo, confirmKey);
+            SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(ExecuteDelete, todo, confirmKey);
             securityCheckWindow.Owner = this;
-            securityCheckWindow.OnClick += ExecuteDelete;
             securityCheckWindow.Show();
         }
 

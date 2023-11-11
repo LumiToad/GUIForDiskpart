@@ -1,5 +1,8 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Drawing;
+using System.IO;
+using System.Windows.Media;
 
 namespace GUIForDiskpart.main
 {
@@ -37,6 +40,15 @@ namespace GUIForDiskpart.main
         private static string GetFormattedDateTimeString()
         {
             return DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
+        }
+
+        public static Icon LoadIconFromFile(string fileName) 
+        {
+            string filename = fileName;
+            FileStream fs = new FileStream(filename, FileMode.Open);
+            Icon icon = new Icon(fs);
+            fs.Close();
+            return icon;
         }
     }
 }

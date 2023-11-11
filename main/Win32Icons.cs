@@ -93,10 +93,7 @@ namespace GUIForDiskpart.main
                     icon = SystemIcons.Warning;
                     break;
                 case SystemIconType.WinLogo:
-                    string filename = "..\\..\\..\\resources\\winLogo.ico";
-                    FileStream fs = new FileStream(filename, FileMode.Open);
-                    icon = new Icon(fs);
-                    fs.Close();
+                    icon = SaveFile.LoadIconFromFile("..\\..\\..\\resources\\winLogo.ico");
                     break;
             }
 

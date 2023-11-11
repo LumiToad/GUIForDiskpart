@@ -1,6 +1,7 @@
 ﻿using GUIForDiskpart.diskpart;
 using GUIForDiskpart.main;
 using GUIForDiskpart.windows;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -65,21 +66,36 @@ namespace GUIForDiskpart
             if (WSMPartition.PartitionTable == "MBR")
             {
                 MenuItem menuItem = new MenuItem();
-                menuItem.Icon = "..\\resources\\DiskpartD.png"; 
+                //menuItem.Icon
                 menuItem.Header = "Diskpart - " + (WSMPartition.IsActive ? "Inactive" : "Active");
                 menuItem.Click += Active_Click;
-                
+                ContextMenu.Items.Add(menuItem);
+            }
+
+            if (WSMPartition.WMIPartition != null && WSMPartition.WMIPartition.LogicalDriveInfo != null && WSMPartition.WMIPartition.LogicalDriveInfo.DriveLetter != null)
+            {
+                MenuItem menuItem = new MenuItem();
+                //menuItem.Icon
+                menuItem.Header = "Diskpart - Attributes";
+                menuItem.Click += Attributes_Click;
                 ContextMenu.Items.Add(menuItem);
             }
 
             if (WSMPartition.WMIPartition != null && WSMPartition.WMIPartition.LogicalDriveInfo != null) 
             {
                 MenuItem menuItem = new MenuItem();
-                menuItem.Icon = "..\\..\\resources\\CmdC.png";
+                //menuItem.Icon
                 menuItem.Header = "CMD - CHKDSK";
                 menuItem.Click += ScanVolume_Click;
                 ContextMenu.Items.Add(menuItem);
             }
+        }
+
+        private void Attributes_Click(object sender, RoutedEventArgs e) 
+        {
+            AttributesVolumeWindow window = new AttributesVolumeWindow(WSMPartition);
+            window.Owner = MainWindow;
+            window.Show();
         }
 
         private void Active_Click(object sender, RoutedEventArgs e)

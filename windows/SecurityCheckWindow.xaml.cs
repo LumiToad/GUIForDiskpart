@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace GUIForDiskpart.windows
@@ -11,11 +12,12 @@ namespace GUIForDiskpart.windows
         public delegate void Result(bool result);
         public event Result OnClick;
 
-        public SecurityCheckWindow(string todo, string confirmKey)
+        public SecurityCheckWindow(Result result, string todo, string confirmKey)
         {
             InitializeComponent();
             AboutTo.Content = todo;
             ConfirmText.Content = confirmKey;
+            OnClick = result;
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -32,13 +34,13 @@ namespace GUIForDiskpart.windows
 
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
-            OnClick(true);
+            OnClick?.Invoke(true);
             this.Close();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            OnClick(false);
+            OnClick?.Invoke(false);
             this.Close();
         }
     }

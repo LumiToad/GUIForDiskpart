@@ -52,9 +52,8 @@ namespace GUIForDiskpart.windows
             }
             string confirmKey = DiskInfo.DiskName;
 
-            SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(todo, confirmKey);
+            SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(ExecuteClean,todo, confirmKey);
             securityCheckWindow.Owner = this;
-            securityCheckWindow.OnClick += ExecuteClean;
             securityCheckWindow.Show();
         }
 

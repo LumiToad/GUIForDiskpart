@@ -43,37 +43,37 @@ namespace GUIForDiskpart.windows
 
         private void ParaF_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara((bool)ParaF.IsChecked, CMDFunctions.FixErrors);
+            WriteTextBoxPara((bool)ParaF.IsChecked, CHKDSKParameters.FixErrors);
         }
 
         private void ParaR_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaR.IsChecked, CMDFunctions.LocateBad);
+            WriteTextBoxPara(ParaR.IsChecked, CHKDSKParameters.LocateBad);
         }
 
         private void ParaX_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaX.IsChecked, CMDFunctions.FixErrorsForceDismount);
+            WriteTextBoxPara(ParaX.IsChecked, CHKDSKParameters.FixErrorsForceDismount);
         }
 
         private void ParaV_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaV.IsChecked, CMDFunctions.DisplayNameOfEachFile);
+            WriteTextBoxPara(ParaV.IsChecked, CHKDSKParameters.DisplayNameOfEachFile);
         }
 
         private void ParaOfflineScanAndFix_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaOfflineScanAndFix.IsChecked, CMDFunctions.OfflineScanAndFix);
+            WriteTextBoxPara(ParaOfflineScanAndFix.IsChecked, CHKDSKParameters.OfflineScanAndFix);
         }
 
         private void ParaI_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaI.IsChecked, CMDFunctions.LessVigorousNTFS);
+            WriteTextBoxPara(ParaI.IsChecked, CHKDSKParameters.LessVigorousNTFS);
         }
 
         private void ParaC_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaC.IsChecked, CMDFunctions.NoCycleCheckNTFS);
+            WriteTextBoxPara(ParaC.IsChecked, CHKDSKParameters.NoCycleCheckNTFS);
         }
 
         private void ParaL_Checked(object sender, RoutedEventArgs e)
@@ -86,7 +86,7 @@ namespace GUIForDiskpart.windows
                 }
             }
             
-            WriteTextBoxPara(ParaL.IsChecked, CMDFunctions.LogFileSizeNTFS);
+            WriteTextBoxPara(ParaL.IsChecked, CHKDSKParameters.LogFileSizeNTFS);
             
             if (ParaL.IsChecked == true)
             {
@@ -107,7 +107,7 @@ namespace GUIForDiskpart.windows
             }
             else
             {
-                int index = TextBoxPara.Text.IndexOf(CMDFunctions.LogFileSizeNTFS);
+                int index = TextBoxPara.Text.IndexOf(CHKDSKParameters.LogFileSizeNTFS);
                 if (index == -1) return;
                 TextBoxPara.Text = TextBoxPara.Text.Insert(index + 3, TextBoxL.Text);
             }
@@ -118,44 +118,44 @@ namespace GUIForDiskpart.windows
 
         private void ParaB_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaB.IsChecked, CMDFunctions.ClearBadSectorListNTFS);
+            WriteTextBoxPara(ParaB.IsChecked, CHKDSKParameters.ClearBadSectorListNTFS);
         }
 
         private void ParaScan_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaScan.IsChecked, CMDFunctions.ScanNTFS);
+            WriteTextBoxPara(ParaScan.IsChecked, CHKDSKParameters.ScanNTFS);
             ParaForceOff.IsChecked = false;
-            WriteTextBoxPara(ParaForceOff.IsChecked, CMDFunctions.ForceOffLineFixNTFS);
+            WriteTextBoxPara(ParaForceOff.IsChecked, CHKDSKParameters.ForceOffLineFixNTFS);
         }
 
         private void ParaForceOff_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaForceOff.IsChecked, CMDFunctions.ForceOffLineFixNTFS);
+            WriteTextBoxPara(ParaForceOff.IsChecked, CHKDSKParameters.ForceOffLineFixNTFS);
         }
 
         private void ParaPerf_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaPerf.IsChecked, CMDFunctions.FullPerformance);
+            WriteTextBoxPara(ParaPerf.IsChecked, CHKDSKParameters.FullPerformance);
         }
 
         private void ParaSpotfix_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaSpotfix.IsChecked, CMDFunctions.SpotFix);
+            WriteTextBoxPara(ParaSpotfix.IsChecked, CHKDSKParameters.SpotFix);
         }
 
         private void ParaSD_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaSD.IsChecked, CMDFunctions.SDCleanNTFS);
+            WriteTextBoxPara(ParaSD.IsChecked, CHKDSKParameters.SDCleanNTFS);
         }
 
         private void ParaFree_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaFree.IsChecked, CMDFunctions.FreeOrphanedFATfamily);
+            WriteTextBoxPara(ParaFree.IsChecked, CHKDSKParameters.FreeOrphanedFATfamily);
         }
 
         private void ParaMarkClean_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaMarkClean.IsChecked, CMDFunctions.MarkCleanFATfamily);
+            WriteTextBoxPara(ParaMarkClean.IsChecked, CHKDSKParameters.MarkCleanFATfamily);
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -190,14 +190,14 @@ namespace GUIForDiskpart.windows
             if (ParaShutdown.IsChecked == true)
             {
                 string item = (string)ParaShutdownSelection.SelectionBoxItem;
-                string shutdown = $" & shutdown {CMDFunctions.ShutdownForce} ";
+                string shutdown = $" & shutdown {CMDBasicCommands.ShutdownForce} ";
                 switch (item)
                 {
                     case ("Shutdown"):
-                        shutdown += $"{CMDFunctions.ShutdownNoTimer} ";
+                        shutdown += $"{CMDBasicCommands.ShutdownNoTimer} ";
                         break;
                     case ("Restart"):
-                        shutdown += $"{CMDFunctions.ShutdownRestart} ";
+                        shutdown += $"{CMDBasicCommands.ShutdownRestart} ";
                         break;
                 }
                 result += shutdown;
