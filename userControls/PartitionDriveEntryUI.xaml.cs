@@ -3,7 +3,6 @@ using GUIForDiskpart.main;
 using GUIForDiskpart.windows;
 using System.Windows;
 using System.Windows.Controls;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace GUIForDiskpart
 {
@@ -14,13 +13,13 @@ namespace GUIForDiskpart
     {
         MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
-        private WSMPartition wsmPartition;
-        public WSMPartition WSMPartition
+        private Partition partition;
+        public Partition Partition
         {
-            get { return wsmPartition; }
+            get { return partition; }
             set
             {
-                wsmPartition = value;
+                partition = value;
                 PartitionDataToThisUI();
             }
         }
@@ -33,27 +32,27 @@ namespace GUIForDiskpart
 
         public bool? IsSelected { get { return EntrySelected.IsChecked; } }
 
-        public PartitionEntryUI(WSMPartition wsmPartition)
+        public PartitionEntryUI(Partition partition)
         {
             InitializeComponent();
 
-            WSMPartition = wsmPartition;
+            Partition = partition;
         }
 
         private void PartitionDataToThisUI()
         {
-            PartitionNumber.Content = $"#{WSMPartition.PartitionNumber}";
+            PartitionNumber.Content = $"#{Partition.WSMPartition.PartitionNumber}";
             DriveNameAndLetter.Content = GetDriveNameText();
-            TotalSpace.Content = WSMPartition.FormattedSize;
+            TotalSpace.Content = Partition.WSMPartition.FormattedSize;
             FileSystemText.Content = GetFileSystemText();
-            PartitionType.Content = $"{WSMPartition.PartitionTable}: {WSMPartition.PartitionType}";
+            PartitionType.Content = $"{Partition.WSMPartition.PartitionTable}: {Partition.WSMPartition.PartitionType}";
 
-            if (WSMPartition.WMIPartition != null && WSMPartition.WMIPartition.LogicalDriveInfo != null)
+            if (Partition.HasWSMPartition && Partition.IsLogicalDisk)
             {
-                SetValueInProgressBar(WSMPartition.Size, WSMPartition.WMIPartition.LogicalDriveInfo.FreeSpace);
+                SetValueInProgressBar(Partition.WSMPartition.Size, Partition.LogicalDiskInfo.FreeSpace);
             }
 
-            if (WSMPartition.IsBoot)
+            if (Partition.WSMPartition.IsBoot)
             {
                 WinVolumeIcon.Source = IconUtilities.GetSystemIconByType(SystemIconType.WinLogo);
             }
@@ -63,15 +62,15 @@ namespace GUIForDiskpart
 
         private void PopulateContextMenu()
         {
-            if (WSMPartition.PartitionTable == "MBR")
+            if (Partition.WSMPartition.PartitionTable == "MBR")
             {
-                string header = "Diskpart - " + (WSMPartition.IsActive ? "Inactive" : "Active");
+                string header = "Diskpart - " + (Partition.WSMPartition.IsActive ? "Inactive" : "Active");
                 string name = "DPInActive";
                 MenuItem menuItem = WPFUtilites.CreateContextMenuItem(IconUtilities.Diskpart, name, header, true, Active_Click);
                 ContextMenu.Items.Add(menuItem);
             }
 
-            if (WSMPartition.WMIPartition != null && WSMPartition.WMIPartition.LogicalDriveInfo != null && WSMPartition.WMIPartition.LogicalDriveInfo.DriveLetter != null)
+            if (Partition.IsLogicalDisk && Partition.LogicalDiskInfo.DriveLetter != null)
             {
                 string header = "DISKPART - Attributes";
                 string name = "DPAttributes";
@@ -79,7 +78,7 @@ namespace GUIForDiskpart
                 ContextMenu.Items.Add(menuItem);
             }
 
-            if (WSMPartition.WMIPartition != null && WSMPartition.WMIPartition.LogicalDriveInfo != null) 
+            if (Partition.IsLogicalDisk) 
             {
                 string header = "CMD - CHKDSK";
                 string name = "CMDCHDSK";
@@ -91,7 +90,7 @@ namespace GUIForDiskpart
 
         private void Attributes_Click(object sender, RoutedEventArgs e) 
         {
-            AttributesVolumeWindow window = new AttributesVolumeWindow(WSMPartition);
+            AttributesVolumeWindow window = new AttributesVolumeWindow(Partition.WSMPartition);
             window.Owner = MainWindow;
             window.Show();
         }
@@ -106,7 +105,7 @@ namespace GUIForDiskpart
             switch (result)
             {
                 case MessageBoxResult.OK:
-                    MainWindow.AddTextToOutputConsole(DPFunctions.Active(WSMPartition.DiskNumber, WSMPartition.PartitionNumber, !WSMPartition.IsActive));
+                    MainWindow.AddTextToOutputConsole(DPFunctions.Active(Partition.WSMPartition.DiskNumber, Partition.WSMPartition.PartitionNumber, !Partition.WSMPartition.IsActive));
                     MainWindow.RetrieveAndShowDiskData(true);
                     break;
                 case MessageBoxResult.Cancel:
@@ -127,19 +126,19 @@ namespace GUIForDiskpart
 
         private void Detail_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.AddTextToOutputConsole(DPFunctions.DetailPart(wsmPartition.DiskNumber, wsmPartition.PartitionNumber));
+            MainWindow.AddTextToOutputConsole(DPFunctions.DetailPart(partition.WSMPartition.DiskNumber, partition.WSMPartition.PartitionNumber));
         }
 
         private void Format_Click(object sender, RoutedEventArgs e)
         {
-            FormatPartitionWindow formatPartitionWindow = new FormatPartitionWindow(WSMPartition);
+            FormatPartitionWindow formatPartitionWindow = new FormatPartitionWindow(Partition.WSMPartition);
             formatPartitionWindow.Owner = MainWindow;
             formatPartitionWindow.Show();
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            DeleteWindow deleteWindow = new DeleteWindow(WSMPartition);
+            DeleteWindow deleteWindow = new DeleteWindow(Partition.WSMPartition);
             deleteWindow.Owner = MainWindow;
             deleteWindow.Show();
         }
@@ -148,7 +147,7 @@ namespace GUIForDiskpart
         {
             string output = string.Empty;
 
-            output += DPFunctions.Delete(WSMPartition.DiskNumber, WSMPartition.PartitionNumber, false, true);
+            output += DPFunctions.Delete(Partition.WSMPartition.DiskNumber, Partition.WSMPartition.PartitionNumber, false, true);
 
             MainWindow.AddTextToOutputConsole(output);
             MainWindow.RetrieveAndShowDiskData(false);
@@ -156,7 +155,7 @@ namespace GUIForDiskpart
 
         private void Assign_Click(object sender, RoutedEventArgs e)
         {
-            AssignLetterWindow assignLetterWindow = new AssignLetterWindow(WSMPartition);
+            AssignLetterWindow assignLetterWindow = new AssignLetterWindow(Partition.WSMPartition);
             assignLetterWindow.Owner = MainWindow;
 
             assignLetterWindow.Show();
@@ -169,8 +168,8 @@ namespace GUIForDiskpart
 
         public void OpenScanVolumeWindow()
         {
-            if (WSMPartition.WMIPartition.LogicalDriveInfo.DriveLetter == null) return;
-            CHKDSKWindow window = new CHKDSKWindow(WSMPartition);
+            if (Partition.IsLogicalDisk && Partition.LogicalDiskInfo.DriveLetter == null) return;
+            CHKDSKWindow window = new CHKDSKWindow(Partition);
             window.Owner = MainWindow;
             window.Show();
         }
@@ -179,19 +178,14 @@ namespace GUIForDiskpart
         {
             string driveNameText = string.Empty;
             
-            if 
-                (
-                (WSMPartition.WMIPartition) != null &&
-                (WSMPartition.WMIPartition.LogicalDriveInfo) != null &&
-                (!string.IsNullOrEmpty(WSMPartition.WMIPartition.LogicalDriveInfo.VolumeName))
-                )
+            if (Partition.IsLogicalDisk && (!string.IsNullOrEmpty(Partition.LogicalDiskInfo.VolumeName)))
             {
-                driveNameText += $"{WSMPartition.WMIPartition.LogicalDriveInfo.VolumeName} ";
+                driveNameText += $"{Partition.LogicalDiskInfo.VolumeName} ";
             }
 
-            if (WSMPartition.DriveLetter > 65)
+            if (Partition.WSMPartition.DriveLetter > 65)
             {
-                driveNameText += $"[{WSMPartition.DriveLetter}:\\]";
+                driveNameText += $"[{Partition.WSMPartition.DriveLetter}:\\]";
             }
 
             if (driveNameText == string.Empty)
@@ -204,14 +198,9 @@ namespace GUIForDiskpart
 
         private string GetFileSystemText()
         {
-            if
-                (
-                WSMPartition.WMIPartition != null &&
-                WSMPartition.WMIPartition.LogicalDriveInfo != null &&
-                WSMPartition.WMIPartition.LogicalDriveInfo.FileSystem != null
-                )
+            if (Partition.IsLogicalDisk && Partition.LogicalDiskInfo.FileSystem != null )
             {
-                return WSMPartition.WMIPartition.LogicalDriveInfo.FileSystem;
+                return Partition.LogicalDiskInfo.FileSystem;
             }
             else
             {

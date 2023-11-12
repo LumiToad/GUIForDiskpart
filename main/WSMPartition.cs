@@ -6,7 +6,9 @@ namespace GUIForDiskpart.main
 {
     public class WSMPartition
     {
-        private const string wsmInfoString = "---WINDOWS STORAGE MANAGEMENT INFO---";
+        private const string wsmInfoKey = "---WINDOWS STORAGE MANAGEMENT INFO---";
+        private const string wsmInfoValue = "---MSFT_Storage, obtained via Powershell---";
+        private const string keyPrefix = "WSM";
 
         private UInt32 diskNumber;
         public UInt32 DiskNumber { get { return diskNumber; } set { diskNumber = value; } }
@@ -62,10 +64,6 @@ namespace GUIForDiskpart.main
         private UInt64 offset;
         public UInt64 Offset { get { return offset; } set { offset = value; } }
 
-        private WMIPartition wmiPartition;
-        public WMIPartition WMIPartition 
-        { get { return wmiPartition; } set { wmiPartition = value; } }
-
         public string FormattedSize => ByteFormatter.FormatBytes(Size);
 
         public string PartitionType => GetPartitionType();
@@ -119,11 +117,6 @@ namespace GUIForDiskpart.main
                          
             output += "\t\t_________________" + "\n";
 
-            if (wmiPartition != null) 
-            {
-                output += wmiPartition.GetOutputAsString();
-            }
-
             return output;
         }
 
@@ -149,34 +142,22 @@ namespace GUIForDiskpart.main
             Dictionary<string, object?> data = new Dictionary<string, object?>();
             PropertyInfo[] wsmProperties = typeof(WSMPartition).GetProperties();
 
-            data.Add(wsmInfoString, "DRAWN FROM POWERSHELL, CORRESPONDS TO DISKPART");
+            data.Add(wsmInfoKey, wsmInfoValue);
 
             foreach (PropertyInfo property in wsmProperties)
             {
-                string key = $"WSM {property.Name}";
+                string key = $"{keyPrefix} {property.Name}";
                 object? value = property.GetValue(this);
 
                 if (data.ContainsKey(key)) continue;
-                if (key == "WSM Size") continue;
+                if (key == $"{keyPrefix} Size") continue;
                 
-                if (key == "WSM FormattedSize")
+                if (key == $"{keyPrefix} FormattedSize")
                 {
-                    key = "WSM TotalSpace";
+                    key = $"{keyPrefix} TotalSpace";
                 }
-
-                if (typeof(WMIPartition) == property.PropertyType) continue;
-                
 
                 data.Add(key, value);
-            }
-
-            if (WMIPartition != null)
-            {
-                Dictionary<string, object?> wmiKeyValuePairs = WMIPartition.GetKeyValuePairs();
-                foreach (string key in wmiKeyValuePairs.Keys)
-                {
-                    data.Add(key, wmiKeyValuePairs[key]);
-                }
             }
 
             return data;

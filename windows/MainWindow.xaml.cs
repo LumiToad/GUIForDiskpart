@@ -50,7 +50,7 @@ namespace GUIForDiskpart
 
         public void DiskEntry_Click(PhysicalDiskEntryUI entry)
         {
-            AddEntrysToStackPanel(PartitionStackPanel, entry.DiskInfo.WSMPartitions);
+            AddEntrysToStackPanel(PartitionStackPanel, entry.DiskInfo.Partitions);
             if (entry.DiskInfo.UnpartSpace > 0) 
             {
                 UnallocatedEntryUI unallocatedEntryUI = new UnallocatedEntryUI(entry.DiskInfo.FormattedUnpartSpace);
@@ -61,7 +61,7 @@ namespace GUIForDiskpart
 
         public void PartitionEntry_Click(PartitionEntryUI entry)
         {
-            EntryDataUI.AddDataToGrid(entry.WSMPartition.GetKeyValuePairs());
+            EntryDataUI.AddDataToGrid(entry.Partition.GetKeyValuePairs());
         }
 
         public void UnallocatedEntry_Click(UnallocatedEntryUI entry)
@@ -155,7 +155,7 @@ namespace GUIForDiskpart
                         PhysicalDiskEntryUI diskEntry = new PhysicalDiskEntryUI(disk);
                         userControl = diskEntry;
                         break;
-                    case WSMPartition partition:
+                    case Partition partition:
                         PartitionEntryUI partitionEntry = new PartitionEntryUI(partition);
                         userControl = partitionEntry;
                         break;
@@ -166,21 +166,23 @@ namespace GUIForDiskpart
 
         private UInt32? GetDataIndexOfSelected(StackPanel stackPanel)
         {
-            PhysicalDiskEntryUI disk;
-            PartitionEntryUI partition;
+            PhysicalDiskEntryUI diskEntry;
+            PartitionEntryUI partitionEntry;
 
             foreach (object? entry in stackPanel.Children)
             {
                 if (entry.GetType() == typeof(PhysicalDiskEntryUI)) 
                 {
-                    disk = (PhysicalDiskEntryUI)entry;
-                    if (disk != null && disk.IsSelected == true) return disk.DiskInfo.DiskIndex;
+                    diskEntry = (PhysicalDiskEntryUI)entry;
+                    if (diskEntry != null && diskEntry.IsSelected == true) 
+                        return diskEntry.DiskInfo.DiskIndex;
                 }
 
                 if (entry.GetType() == typeof(PartitionEntryUI))
                 {
-                    partition = (PartitionEntryUI)entry;
-                    if (partition != null && partition.IsSelected == true) return partition.WSMPartition.PartitionNumber;
+                    partitionEntry = (PartitionEntryUI)entry;
+                    if (partitionEntry != null && partitionEntry.IsSelected == true) 
+                        return partitionEntry.Partition.WSMPartition.PartitionNumber;
                 }
             }
 

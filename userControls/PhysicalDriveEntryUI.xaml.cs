@@ -40,7 +40,7 @@ namespace GUIForDiskpart
             DiskIndex.Content = $"#{diskInfo.DiskIndex}";
             DiskModel.Content = diskInfo.DiskModel;
             TotalSpace.Content = diskInfo.FormattedTotalSpace;
-            WSMPartitionCount.Content = $"{diskInfo.WSMPartitionCount} partitions";
+            WSMPartitionCount.Content = $"{diskInfo.PartitionCount} partitions";
             SetValueInProgressBar(diskInfo.TotalSpace, diskInfo.FreeSpace);
 
             DiskIcon.Source = GetDiskIcon();

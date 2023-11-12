@@ -1,9 +1,6 @@
-﻿using GUIForDiskpart.main;
-using GUIForDiskpart.cmd;
+﻿using GUIForDiskpart.cmd;
+using GUIForDiskpart.main;
 using System.Windows;
-using Microsoft.Win32;
-using System;
-using System.Windows.Controls;
 
 namespace GUIForDiskpart.windows
 {
@@ -14,26 +11,26 @@ namespace GUIForDiskpart.windows
     {
         MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
-        private WSMPartition wsmPartition;
-        public WSMPartition WSMPartition
+        private Partition partition;
+        public Partition Partition
         {
-            get { return wsmPartition; }
+            get { return partition; }
             set
             {
-                wsmPartition = value;
-                AddTextToConsole(wsmPartition.GetOutputAsString());
-                DriveLetterTop.Content = wsmPartition.WMIPartition.LogicalDriveInfo.VolumeName + " " + wsmPartition.DriveLetter + ":\\";
-                DriveLetterBottom.Content = wsmPartition.DriveLetter + ":\\";
+                partition = value;
+                AddTextToConsole(Partition.GetOutputAsString());
+                DriveLetterTop.Content = Partition.LogicalDiskInfo.VolumeName + " " + Partition.WSMPartition.DriveLetter + ":\\";
+                DriveLetterBottom.Content = Partition.WSMPartition.DriveLetter + ":\\";
             }
         }
 
         private string oldKBValue = "0";
 
-        public CHKDSKWindow(WSMPartition wsmPartition)
+        public CHKDSKWindow(Partition partition)
         {
             InitializeComponent();
 
-            WSMPartition = wsmPartition;
+            Partition = partition;
         }
 
         private void AddTextToConsole(string text)
@@ -171,11 +168,11 @@ namespace GUIForDiskpart.windows
             
             if (string.IsNullOrEmpty(TextBoxDir.Text)) 
             {
-                output += CMDFunctions.CHKDSK(WSMPartition.DriveLetter, TextBoxPara.Text);
+                output += CMDFunctions.CHKDSK(Partition.WSMPartition.DriveLetter, TextBoxPara.Text);
             }
             else
             {
-                output += CMDFunctions.CHKDSK(WSMPartition.DriveLetter, TextBoxPara.Text, TextBoxDir.Text);
+                output += CMDFunctions.CHKDSK(Partition.WSMPartition.DriveLetter, TextBoxPara.Text, TextBoxDir.Text);
             }
 
             MainWindow.AddTextToOutputConsole(output);

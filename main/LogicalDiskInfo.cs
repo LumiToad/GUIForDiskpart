@@ -1,11 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Windows.Input;
 
 namespace GUIForDiskpart.main
 {
     public class LogicalDiskInfo
     {
+        private const string wmiInfoSKey = "---WINDOWS MANAGEMENT INSTRUMENTATION Logical Disk---";
+        private const string ldInfoValue = "---Win32_LogicalDisk---";
+        private const string keyPrefix = "WMI-LD";
         public string FormattedTotalSpace => ByteFormatter.FormatBytes(TotalSpace);
         public string FormattedFreeSpace => ByteFormatter.FormatBytes(FreeSpace);
 
@@ -61,23 +66,25 @@ namespace GUIForDiskpart.main
             Dictionary<string, object?> data = new Dictionary<string, object?>();
             PropertyInfo[] wmiProperties = typeof(LogicalDiskInfo).GetProperties();
 
+            data.Add(wmiInfoSKey, ldInfoValue);
+
             foreach (PropertyInfo property in wmiProperties)
             {
-                string key = $"WMI {property.Name}";
+                string key = $"{keyPrefix} {property.Name}";
                 object? value = property.GetValue(this);
 
                 if (data.ContainsKey(key)) continue;
-                if (key == "WMI TotalSpace") continue;
-                if (key == "WMI FreeSpace") continue;
+                if (key == $"{keyPrefix} TotalSpace") continue;
+                if (key == $"{keyPrefix} FreeSpace") continue;
 
-                if (key == "WMI FormattedTotalSpace")
+                if (key == $"{keyPrefix} FormattedTotalSpace")
                 {
-                    key = "WMI TotalSpace";
+                    key = $"{keyPrefix} TotalSpace";
                 }
 
-                if (key == "WMI FormattedFreeSpace")
+                if (key == $"{keyPrefix} FormattedFreeSpace")
                 {
-                    key = "WMI FreeSpace";
+                    key = $"{keyPrefix} FreeSpace";
                 }
 
                 data.Add(key, value);

@@ -7,7 +7,9 @@ namespace GUIForDiskpart.main
 {
     public class WMIPartition
     {
-        private const string wmiInfoString = "---WINDOWS MANAGEMENT INSTRUMENTATION INFO---";
+        private const string wmiInfoSKey = "---WINDOWS MANAGEMENT INSTRUMENTATION INFO---";
+        private const string wmiInfoSValue = "---Win32_DiskPartition---";
+        private const string keyPrefix = "WMI";
 
         private UInt16 availability;
         public UInt16 Availability { get { return availability; } set { availability = value; } }
@@ -110,8 +112,8 @@ namespace GUIForDiskpart.main
 
         public bool IsLogicalPartition => GetLogicalPartition();
 
-        public LogicalDiskInfo logicalDriveInfo;
-        public LogicalDiskInfo LogicalDriveInfo { get { return logicalDriveInfo; } }
+        public LogicalDiskInfo logicalDiskInfo;
+        public LogicalDiskInfo LogicalDiskInfo { get { return logicalDiskInfo; } }
 
         public void PrintToConsole()
         {
@@ -136,9 +138,9 @@ namespace GUIForDiskpart.main
             output += "\tMediaStatus: " + Status + "\n";
             output += "\tMediaType: " + Type + "\n";
 
-            if (logicalDriveInfo != null) 
+            if (logicalDiskInfo != null) 
             { 
-                output += logicalDriveInfo.GetOutputAsString();
+                output += logicalDiskInfo.GetOutputAsString();
             }
 
             output += "\t_________________" + "\n";
@@ -148,39 +150,30 @@ namespace GUIForDiskpart.main
 
         public void AddLogicalDisk(LogicalDiskInfo disk)
         {
-            logicalDriveInfo = disk;
+            logicalDiskInfo = disk;
         }
 
         private bool GetLogicalPartition()
-        {  return logicalDriveInfo != null; }
+        {  return logicalDiskInfo != null; }
 
         public Dictionary<string, object?> GetKeyValuePairs()
         {
             Dictionary<string, object?> data = new Dictionary<string, object?>();
             PropertyInfo[] wmiProperties = typeof(WMIPartition).GetProperties();
 
-            data.Add(wmiInfoString, "DATA DRAWN FROM THE DATABASE, WHICH DEVICE MANAGER IS USING");
+            data.Add(wmiInfoSKey, wmiInfoSValue);
 
             foreach (PropertyInfo property in wmiProperties)
             {
-                string key = $"WMI {property.Name}";
+                string key = $"{keyPrefix} {property.Name}";
                 object? value = property.GetValue(this);
 
                 if (data.ContainsKey(key)) continue;
-                if (key == "size") continue;
+                if (key == $"{keyPrefix} Size") continue;
 
                 if (typeof(LogicalDiskInfo) == property.PropertyType) continue;
                 
                 data.Add(key, value);
-            }
-
-            if (logicalDriveInfo != null)
-            {
-                Dictionary<string, object?> logicalKeyValuePairs = logicalDriveInfo.GetKeyValuePairs();
-                foreach (string key in logicalKeyValuePairs.Keys)
-                {
-                    data.Add(key, logicalKeyValuePairs[key]);
-                }
             }
 
             return data;

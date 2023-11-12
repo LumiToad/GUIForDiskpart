@@ -34,7 +34,7 @@ namespace GUIForDiskpart.main
         readonly private UInt32 wmiPartitionCount;
         public UInt32 WMIPartitionCount { get { return wmiPartitionCount; } }
 
-        public int WSMPartitionCount => wsmPartitions.Count;
+        public int PartitionCount => Partitions.Count;
 
         readonly private string interfaceType;
         public string InterfaceType { get { return interfaceType; } }
@@ -159,8 +159,9 @@ namespace GUIForDiskpart.main
         readonly private UInt32 tracksPerCylinder;
         public UInt32 TracksPerCylinder { get => tracksPerCylinder; }
 
-        private List<WSMPartition> wsmPartitions = new List<WSMPartition>();
-        public List<WSMPartition> WSMPartitions { get { return wsmPartitions; } set { wsmPartitions = value; } }
+        private List<Partition> partitions = new List<Partition>();
+        public List<Partition> Partitions
+        { get { return partitions; } }
 
         public UInt64 FreeSpace { get { return GetLogicalFreeSpace(); } }
         public UInt64 UsedSpace { get { return TotalSpace - FreeSpace; } }
@@ -279,77 +280,77 @@ namespace GUIForDiskpart.main
 
         public string GetOutputAsString()
         {
-            string output = string.Empty;
+            string fullOutput = string.Empty;
 
-            output += "HardwareDeviceID: " + DeviceId + '\n';
-            output += "PhysicalName: " + PhysicalName + '\n';
-            output += "DiskName: " + DiskName + '\n';
-            output += "DiskModel: " + DiskModel + '\n';
-            output += "MediaStatus: " + MediaStatus + '\n';
-            output += "MediaLoaded: " + MediaLoaded + '\n';
-            output += $"TotalSpace: {ByteFormatter.FormatBytes(TotalSpace)} {ByteFormatter.GetBytesAsStringAndUnit(TotalSpace)}\n";
-            output += $"UnpartSpace: {ByteFormatter.FormatBytes(UnpartSpace)} {ByteFormatter.GetBytesAsStringAndUnit(UnpartSpace)}\n";
-            output += "WMIPartitionCount: " + WMIPartitionCount + '\n';
-            output += "WSMPartitionCount: " + WSMPartitionCount + " (includes hidden and reserved)" + '\n';
-            output += "InterfaceType: " + InterfaceType + '\n';
-            output += "MediaSignature: " + MediaSignature + '\n';
-            output += "Caption: " + Caption + '\n';
-            output += "MediaType: " + MediaType + '\n';
-            output += "Avaiability: " + Availability + '\n';
-            output += "BytesPerSector: " + BytesPerSector + '\n';
-            output += "CompressionMethod: " + CompressionMethod + '\n';
-            output += "ConfigManagerErrorCode: " + ConfigManagerErrorCode + '\n';
-            output += "ConfigManagerUserConfig: " + ConfigManagerUserConfig + '\n';
-            output += "CreationClassName: " + CreationClassName + '\n';
-            output += "DefaultBlockSize: " + DefaultBlockSize + '\n';
-            output += "Description: " + Description + '\n';
-            output += "ErrorCleared: " + ErrorCleared + '\n';
-            output += "ErrorDescription: " + ErrorDescription + '\n';
-            output += "ErrorMethodology: " + ErrorMethodology + '\n';
-            output += "FirmwareRevision: " + FirmwareRevision + '\n';
-            output += "DiskIndex: " + DiskIndex + '\n';
-            output += "InstallDate: " + InstallDate + '\n';
-            output += "LastErrorCode: " + LastErrorCode + '\n';
-            output += "Manufacturer: " + Manufacturer + '\n';
-            output += "MaxBlockSize: " + MaxBlockSize + '\n';
-            output += "MinBlockSize: " + MinBlockSize + '\n';
-            output += "MaxMediaSize: " + MaxMediaSize + '\n';
-            output += "NeedsCleaning: " + NeedsCleaning + '\n';
-            output += "NumberOfMediaSupported: " + NumberOfMediaSupported + '\n';
-            output += "PNPDeviceID: " + PNPDeviceID + '\n';
-            output += "PowerManagementSupported: " + PowerManagementSupported + '\n';
-            output += "SCSIBus: " + SCSIBus + '\n';
-            output += "SCSILogicalUnit: " + SCSILogicalUnit + '\n';
-            output += "SCSIPort: " + SCSIPort + '\n';
-            output += "SCSITargetID: " + SCSITargetID + '\n';
-            output += "SectorsPerTrack: " + SectorsPerTrack + '\n';
-            output += "SerialNumber: " + SerialNumber + '\n';
-            output += "StatusInfo: " + StatusInfo + '\n';
-            output += "SystemCreationClassName: " + SystemCreationClassName + '\n';
-            output += "SystemName: " + SystemName + '\n';
-            output += "TotalCylinders: " + TotalCylinders + '\n';
-            output += "TotalHeads: " + TotalHeads + '\n';
-            output += "TotalSectors: " + TotalSectors + '\n';
-            output += "TotalTracks: " + TotalTracks + '\n';
-            output += "TracksPerCylinder: " + TracksPerCylinder + '\n';
+            fullOutput += "HardwareDeviceID: " + DeviceId + '\n';
+            fullOutput += "PhysicalName: " + PhysicalName + '\n';
+            fullOutput += "DiskName: " + DiskName + '\n';
+            fullOutput += "DiskModel: " + DiskModel + '\n';
+            fullOutput += "MediaStatus: " + MediaStatus + '\n';
+            fullOutput += "MediaLoaded: " + MediaLoaded + '\n';
+            fullOutput += $"TotalSpace: {ByteFormatter.FormatBytes(TotalSpace)} {ByteFormatter.GetBytesAsStringAndUnit(TotalSpace)}\n";
+            fullOutput += $"UnpartSpace: {ByteFormatter.FormatBytes(UnpartSpace)} {ByteFormatter.GetBytesAsStringAndUnit(UnpartSpace)}\n";
+            fullOutput += "WMIPartitionCount: " + WMIPartitionCount + '\n';
+            fullOutput += "WSMPartitionCount: " + PartitionCount + " (includes hidden and reserved)" + '\n';
+            fullOutput += "InterfaceType: " + InterfaceType + '\n';
+            fullOutput += "MediaSignature: " + MediaSignature + '\n';
+            fullOutput += "Caption: " + Caption + '\n';
+            fullOutput += "MediaType: " + MediaType + '\n';
+            fullOutput += "Avaiability: " + Availability + '\n';
+            fullOutput += "BytesPerSector: " + BytesPerSector + '\n';
+            fullOutput += "CompressionMethod: " + CompressionMethod + '\n';
+            fullOutput += "ConfigManagerErrorCode: " + ConfigManagerErrorCode + '\n';
+            fullOutput += "ConfigManagerUserConfig: " + ConfigManagerUserConfig + '\n';
+            fullOutput += "CreationClassName: " + CreationClassName + '\n';
+            fullOutput += "DefaultBlockSize: " + DefaultBlockSize + '\n';
+            fullOutput += "Description: " + Description + '\n';
+            fullOutput += "ErrorCleared: " + ErrorCleared + '\n';
+            fullOutput += "ErrorDescription: " + ErrorDescription + '\n';
+            fullOutput += "ErrorMethodology: " + ErrorMethodology + '\n';
+            fullOutput += "FirmwareRevision: " + FirmwareRevision + '\n';
+            fullOutput += "DiskIndex: " + DiskIndex + '\n';
+            fullOutput += "InstallDate: " + InstallDate + '\n';
+            fullOutput += "LastErrorCode: " + LastErrorCode + '\n';
+            fullOutput += "Manufacturer: " + Manufacturer + '\n';
+            fullOutput += "MaxBlockSize: " + MaxBlockSize + '\n';
+            fullOutput += "MinBlockSize: " + MinBlockSize + '\n';
+            fullOutput += "MaxMediaSize: " + MaxMediaSize + '\n';
+            fullOutput += "NeedsCleaning: " + NeedsCleaning + '\n';
+            fullOutput += "NumberOfMediaSupported: " + NumberOfMediaSupported + '\n';
+            fullOutput += "PNPDeviceID: " + PNPDeviceID + '\n';
+            fullOutput += "PowerManagementSupported: " + PowerManagementSupported + '\n';
+            fullOutput += "SCSIBus: " + SCSIBus + '\n';
+            fullOutput += "SCSILogicalUnit: " + SCSILogicalUnit + '\n';
+            fullOutput += "SCSIPort: " + SCSIPort + '\n';
+            fullOutput += "SCSITargetID: " + SCSITargetID + '\n';
+            fullOutput += "SectorsPerTrack: " + SectorsPerTrack + '\n';
+            fullOutput += "SerialNumber: " + SerialNumber + '\n';
+            fullOutput += "StatusInfo: " + StatusInfo + '\n';
+            fullOutput += "SystemCreationClassName: " + SystemCreationClassName + '\n';
+            fullOutput += "SystemName: " + SystemName + '\n';
+            fullOutput += "TotalCylinders: " + TotalCylinders + '\n';
+            fullOutput += "TotalHeads: " + TotalHeads + '\n';
+            fullOutput += "TotalSectors: " + TotalSectors + '\n';
+            fullOutput += "TotalTracks: " + TotalTracks + '\n';
+            fullOutput += "TracksPerCylinder: " + TracksPerCylinder + '\n';
 
-            output += "_________________" + '\n';
+            fullOutput += "_________________" + '\n';
             
-            foreach (WSMPartition wsmPartition in wsmPartitions)
+            foreach (Partition partition in Partitions)
             {
-                output += wsmPartition.GetOutputAsString();
+                fullOutput += partition.GetOutputAsString();
             }
 
-            return output;
+            return fullOutput;
         }
 
         public Int64 CalcUnpartSpace()
         {
             Int64 result = Convert.ToInt64(TotalSpace);
 
-            foreach (WSMPartition wsmPartition in wsmPartitions)
+            foreach (Partition partition in Partitions)
             {
-                result -= Convert.ToInt64(wsmPartition.Size);
+                result -= Convert.ToInt64(partition.WSMPartition.Size);
             }
 
             return result > 0 ? result : 0;
@@ -389,11 +390,11 @@ namespace GUIForDiskpart.main
         {
             UInt64 freeSpaceResult = new UInt64();
 
-            foreach (WSMPartition partition in WSMPartitions)
+            foreach (Partition partition in Partitions)
             {
-                if (partition.WMIPartition != null && partition.WMIPartition.LogicalDriveInfo != null) 
+                if (partition.HasWMIPartition && partition.IsLogicalDisk) 
                 {
-                    freeSpaceResult += partition.WMIPartition.LogicalDriveInfo.FreeSpace;
+                    freeSpaceResult += partition.LogicalDiskInfo.FreeSpace;
                 }
             }
 

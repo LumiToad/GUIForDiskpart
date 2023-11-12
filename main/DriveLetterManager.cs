@@ -32,13 +32,12 @@ namespace GUIForDiskpart.main
 
             foreach (DiskInfo diskInfo in DiskRetriever.PhysicalDrives)
             {
-                foreach (WSMPartition wsmPartition in diskInfo.WSMPartitions)
+                foreach (Partition partition in diskInfo.Partitions)
                 {
-                    if (wsmPartition.WMIPartition == null) continue;
-                    if (wsmPartition.WMIPartition.LogicalDriveInfo == null) continue;
-                    if (!string.IsNullOrEmpty(wsmPartition.WMIPartition.LogicalDriveInfo.DriveLetter))
+                    if (!partition.IsLogicalDisk) continue;
+                    if (!string.IsNullOrEmpty(partition.LogicalDiskInfo.DriveLetter))
                     {
-                        letters += wsmPartition.WMIPartition.LogicalDriveInfo.DriveLetter[0];
+                        letters += partition.LogicalDiskInfo.DriveLetter[0];
                     }
                 }
             }

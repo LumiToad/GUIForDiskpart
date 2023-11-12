@@ -7,6 +7,7 @@ namespace GUIForDiskpart.main
 {
     public static class PartitionRetriever
     {
+        /*
         public static void GetPartitionsAndAddToDisk(ManagementObject disk, DiskInfo diskInfo)
         {
             List<WSMPartition> wsmPartitions = GetWSMPartitions(diskInfo);
@@ -26,6 +27,29 @@ namespace GUIForDiskpart.main
             foreach (WSMPartition wsmPart in wsmPartitions)
             {
                 diskInfo.WSMPartitions.Add(wsmPart);
+            }
+        }
+        */
+
+        public static void GetPartitionsAndAddToDisk(ManagementObject disk, DiskInfo diskInfo)
+        {
+            List<Partition> partitions = new List<Partition>();
+            List<WSMPartition> wsmPartitions = GetWSMPartitions(diskInfo);
+            List<WMIPartition> wmiPartitions = GetWMIPartitions(disk, diskInfo);
+
+            foreach (WSMPartition wsmPart in wsmPartitions)
+            {
+                Partition partition = new Partition();
+                partition.WSMPartition = wsmPart;
+                
+                foreach (WMIPartition wmiPart in wmiPartitions)
+                {
+                    if (wmiPart.StartingOffset == wsmPart.Offset)
+                    {
+                        partition.WMIPartition = wmiPart;
+                    }
+                }
+                diskInfo.Partitions.Add(partition);
             }
         }
 
