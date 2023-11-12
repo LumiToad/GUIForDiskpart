@@ -25,16 +25,15 @@
         </Grid.RowDefinitions>
         <DockPanel LastChildFill="true" Grid.RowSpan="2">
             <Menu DockPanel.Dock="Top" Height="20">
-
-                <MenuItem Header="File">
+                <MenuItem x:Name="File" Header="File">
                     <MenuItem Header="Save Log" Click="SaveLog_Click"/>
                     <MenuItem Header="Save Entries" Click="SaveEntryData_Click"/>
                     <Separator/>
                     <MenuItem Header="Quit" Click="Quit_Click"/>
                 </MenuItem>
 
-                <MenuItem Header="Commands">
-                    <MenuItem Header="Reload Drives" Click="RetrieveDiskData_Click">
+                <MenuItem x:Name="Commands" Header="Commands">
+                    <MenuItem x:Name="menuItem" Header="Reload Drives" Click="RetrieveDiskData_Click">
                         <MenuItem.Icon>
                             <Image Source="/resources/guifd.png" />
                         </MenuItem.Icon>
@@ -46,7 +45,7 @@
                     </MenuItem>
                 </MenuItem>
 
-                <MenuItem Header="Diskpart">
+                <MenuItem x:Name="Diskpart" Header="Diskpart">
                     <MenuItem Header="List">
                         <MenuItem.Icon>
                             <Image Source="/resources/diskpart.png" />
@@ -67,7 +66,7 @@
                     </MenuItem>
                 </MenuItem>
 
-                <MenuItem Header="Help">
+                <MenuItem x:Name="Help" Header="Help">
                     <MenuItem Header="About" Click="About_Click"/>
                     <MenuItem Header="To Wiki"/>
                     <MenuItem Header="To Website" Click="Website_Click"/>
