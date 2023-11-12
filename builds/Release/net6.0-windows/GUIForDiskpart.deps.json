@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "GUIForDiskpart/1.0.1043": {
+      "GUIForDiskpart/1.0.1078": {
         "dependencies": {
           "Microsoft.PowerShell.SDK": "7.2.16",
           "System.Management": "7.0.2"
@@ -1575,7 +1575,7 @@
     }
   },
   "libraries": {
-    "GUIForDiskpart/1.0.1043": {
+    "GUIForDiskpart/1.0.1078": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -1,12 +1,10 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Drawing;
 using System.IO;
-using System.Windows.Media;
 
 namespace GUIForDiskpart.main
 {
-    public static class SaveFile
+    public static class FileUtilites
     {
         public static void SaveAsTextfile(string text, string name)
         {
@@ -42,13 +40,10 @@ namespace GUIForDiskpart.main
             return DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
         }
 
-        public static Icon LoadIconFromFile(string fileName) 
+        public static FileStream LoadFromFile(string filePath) 
         {
-            string filename = fileName;
-            FileStream fs = new FileStream(filename, FileMode.Open);
-            Icon icon = new Icon(fs);
-            fs.Close();
-            return icon;
+            FileStream fileStream = File.OpenRead(filePath);
+            return fileStream;
         }
     }
 }

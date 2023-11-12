@@ -9,25 +9,24 @@
         <ContextMenu>
             <MenuItem Header="DISKPART - Detail" Click="Detail_Click">
                 <MenuItem.Icon>
-                    <Image Source="/resources/DiskpartD.png" />
+                    <Image Source="/resources/diskpart.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="DISKPART - Format" Click="Format_Click">
                 <MenuItem.Icon>
-                    <Image Source="/resources/DiskpartD.png" />
+                    <Image Source="/resources/diskpart.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="DISKPART - Delete" Click="Delete_Click">
                 <MenuItem.Icon>
-                    <Image Source="/resources/DiskpartD.png" />
+                    <Image Source="/resources/diskpart.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="DISKPART - Assign" Click="Assign_Click">
                 <MenuItem.Icon>
-                    <Image Source="/resources/DiskpartD.png" />
+                    <Image Source="/resources/diskpart.png" />
                 </MenuItem.Icon>
             </MenuItem>
-            <Separator />
         </ContextMenu>
 
     </UserControl.ContextMenu>

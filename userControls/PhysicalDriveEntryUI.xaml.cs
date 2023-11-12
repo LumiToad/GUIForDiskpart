@@ -114,11 +114,11 @@ namespace GUIForDiskpart
 
         private ImageSource? GetDiskIcon()
         {
-            ImageSource? result = Win32Icons.GetShellIconByType(Shell32IconType.Drive, true);
+            ImageSource? result = IconUtilities.GetShellIconByType(Shell32IconType.Drive, true);
 
             if (diskInfo.InterfaceType == "USB")
             {
-                result = Win32Icons.GetShellIconByType(Shell32IconType.USB, true);
+                result = IconUtilities.GetShellIconByType(Shell32IconType.USB, true);
             }
 
             return result;
@@ -126,21 +126,21 @@ namespace GUIForDiskpart
 
         private ImageSource? GetMediaTypeIcon()
         {
-            ImageSource? result = Win32Icons.GetShellIconByType(Shell32IconType.QuestionMark, true);
+            ImageSource? result = IconUtilities.GetShellIconByType(Shell32IconType.QuestionMark, true);
 
             switch (diskInfo.MediaType)
             {
                 case ("External hard disk media"):
-                    result = Win32Icons.GetShellIconByType(Shell32IconType.UpArrow, true);
+                    result = IconUtilities.GetShellIconByType(Shell32IconType.UpArrow, true);
                     break;
                 case ("Removable Media"):
-                    result = Win32Icons.GetShellIconByType(Shell32IconType.UpArrow, true);
+                    result = IconUtilities.GetShellIconByType(Shell32IconType.UpArrow, true);
                     break;
                 case ("Fixed hard disk media"):
-                    result = Win32Icons.GetShellIconByType(Shell32IconType.Fixed, true);
+                    result = IconUtilities.GetShellIconByType(Shell32IconType.Fixed, true);
                     break;
                 case ("Unknown"):
-                    result = Win32Icons.GetShellIconByType(Shell32IconType.QuestionMark, true);
+                    result = IconUtilities.GetShellIconByType(Shell32IconType.QuestionMark, true);
                     break;
             }
 

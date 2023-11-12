@@ -9,27 +9,27 @@
         <ContextMenu>
             <MenuItem Header="DISKPART - List Partition" Click="ListPart_Click">
                 <MenuItem.Icon>
-                    <Image Source="/resources/DiskpartD.png" />
+                    <Image Source="/resources/diskpart.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="DISKPART - Detail" Click="Detail_Click">
                 <MenuItem.Icon>
-                    <Image Source="/resources/DiskpartD.png" />
+                    <Image Source="/resources/diskpart.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="DISKPART - Clean" Click="Clean_Click">
                 <MenuItem.Icon>
-                    <Image Source="/resources/DiskpartD.png" />
+                    <Image Source="/resources/diskpart.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="DISKPART - Convert" Click="Convert_Click">
                 <MenuItem.Icon>
-                    <Image Source="/resources/DiskpartD.png" />
+                    <Image Source="/resources/diskpart.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="DISKPART - Create">
                 <MenuItem.Icon>
-                    <Image Source="/resources/DiskpartD.png" />
+                    <Image Source="/resources/diskpart.png" />
                 </MenuItem.Icon>
                 <MenuItem Header="Partition" Click="CreatePart_Click"/>
                 <MenuItem Header="Volume" Click="CreateVolume_Click"/>
@@ -37,7 +37,7 @@
             <Separator />
             <MenuItem Header="GUIFD - Format" Click="Format_Click">
                 <MenuItem.Icon>
-                    <Image Source="/resources/guifdG.png" />
+                    <Image Source="/resources/guifd.png" />
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>

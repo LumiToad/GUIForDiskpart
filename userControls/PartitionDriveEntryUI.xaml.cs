@@ -1,9 +1,9 @@
 ﻿using GUIForDiskpart.diskpart;
 using GUIForDiskpart.main;
 using GUIForDiskpart.windows;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace GUIForDiskpart
 {
@@ -55,7 +55,7 @@ namespace GUIForDiskpart
 
             if (WSMPartition.IsBoot)
             {
-                WinVolumeIcon.Source = Win32Icons.GetSystemIconByType(SystemIconType.WinLogo);
+                WinVolumeIcon.Source = IconUtilities.GetSystemIconByType(SystemIconType.WinLogo);
             }
 
             PopulateContextMenu();
@@ -65,28 +65,26 @@ namespace GUIForDiskpart
         {
             if (WSMPartition.PartitionTable == "MBR")
             {
-                MenuItem menuItem = new MenuItem();
-                //menuItem.Icon
-                menuItem.Header = "Diskpart - " + (WSMPartition.IsActive ? "Inactive" : "Active");
-                menuItem.Click += Active_Click;
+                string header = "Diskpart - " + (WSMPartition.IsActive ? "Inactive" : "Active");
+                string name = "DPInActive";
+                MenuItem menuItem = WPFUtilites.CreateContextMenuItem(IconUtilities.Diskpart, name, header, true, Active_Click);
                 ContextMenu.Items.Add(menuItem);
             }
 
             if (WSMPartition.WMIPartition != null && WSMPartition.WMIPartition.LogicalDriveInfo != null && WSMPartition.WMIPartition.LogicalDriveInfo.DriveLetter != null)
             {
-                MenuItem menuItem = new MenuItem();
-                //menuItem.Icon
-                menuItem.Header = "Diskpart - Attributes";
-                menuItem.Click += Attributes_Click;
+                string header = "DISKPART - Attributes";
+                string name = "DPAttributes";
+                MenuItem menuItem = WPFUtilites.CreateContextMenuItem(IconUtilities.Diskpart, name, header, true, Attributes_Click);
                 ContextMenu.Items.Add(menuItem);
             }
 
             if (WSMPartition.WMIPartition != null && WSMPartition.WMIPartition.LogicalDriveInfo != null) 
             {
-                MenuItem menuItem = new MenuItem();
-                //menuItem.Icon
-                menuItem.Header = "CMD - CHKDSK";
-                menuItem.Click += ScanVolume_Click;
+                string header = "CMD - CHKDSK";
+                string name = "CMDCHDSK";
+                MenuItem menuItem = WPFUtilites.CreateContextMenuItem(IconUtilities.CMD, name, header, true, ScanVolume_Click);
+                ContextMenu.Items.Add(new Separator());
                 ContextMenu.Items.Add(menuItem);
             }
         }

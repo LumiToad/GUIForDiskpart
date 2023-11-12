@@ -208,7 +208,7 @@ namespace GUIForDiskpart.windows
 
         private void Browse_Click(object sender, RoutedEventArgs e)
         {
-            TextBoxDir.Text = SaveFile.GetSaveAsTextFilePath("CHKDSK");
+            TextBoxDir.Text = FileUtilites.GetSaveAsTextFilePath("CHKDSK");
         }
 
         private void WriteTextBoxPara(bool? value, string parameter)

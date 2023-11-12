@@ -7,9 +7,9 @@
     <UseWPF>true</UseWPF>
     <ApplicationManifest>main\app.manifest</ApplicationManifest>
 	<Deterministic>false</Deterministic>
-	<Version>1.0.1043</Version>
-	<AssemblyVersion>1.0.2311.1048</AssemblyVersion>
-	<FileVersion>1.0.2311.1048</FileVersion>
+	<Version>1.0.1078</Version>
+	<AssemblyVersion>1.0.2311.1083</AssemblyVersion>
+	<FileVersion>1.0.2311.1083</FileVersion>
 	<Copyright>MIT License</Copyright>
 	<ApplicationIcon>resources\guifdLogo.ico</ApplicationIcon>
 	<Platforms>AnyCPU;x64</Platforms>
@@ -48,17 +48,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="resources\CmdC.png" />
-    <None Remove="resources\DiskpartD.png" />
+    <None Remove="resources\cmd.ico" />
+    <None Remove="resources\cmd.png" />
+    <None Remove="resources\command.ico" />
+    <None Remove="resources\commandline.ico" />
+    <None Remove="resources\commandline.png" />
+    <None Remove="resources\diskpart.ico" />
+    <None Remove="resources\diskpart.png" />
     <None Remove="resources\FroggoCorner.png" />
-    <None Remove="resources\guifdG.png" />
+    <None Remove="resources\guifd.ico" />
+    <None Remove="resources\guifd.png" />
+    <None Remove="resources\guifdLogo.ico" />
+    <None Remove="resources\guifdLogo.png" />
     <None Remove="resources\winLogo.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="resources\guifdLogo.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -73,16 +75,40 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="resources\CmdC.png">
+    <Resource Include="resources\cmd.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\DiskpartD.png">
+    <Resource Include="resources\cmd.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\command.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\commandline.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\commandline.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\diskpart.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\diskpart.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="resources\FroggoCorner.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\guifdG.png">
+    <Resource Include="resources\guifd.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\guifd.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\guifdLogo.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\guifdLogo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="resources\winLogo.ico">
@@ -91,11 +117,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

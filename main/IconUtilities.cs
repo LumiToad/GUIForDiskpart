@@ -39,8 +39,13 @@ public enum SystemIconType
 
 namespace GUIForDiskpart.main
 {
-    public static class Win32Icons
+    public static class IconUtilities
     {
+        public static System.Windows.Controls.Image Diskpart => GetImageFromFile("..\\..\\..\\resources\\diskpart.png");
+        public static System.Windows.Controls.Image CMD => GetImageFromFile("..\\..\\..\\resources\\cmd.png");
+        public static System.Windows.Controls.Image GUIFD => GetImageFromFile("..\\..\\..\\resources\\guifd.png");
+        public static System.Windows.Controls.Image Commandline => GetImageFromFile("..\\..\\..\\resources\\commandline.png");
+
         [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
         private static extern int ExtractIconEx(string lpszFile, int nIconIndex, out IntPtr phiconLarge, IntPtr phiconSmall, int nIcons);
 
@@ -93,11 +98,19 @@ namespace GUIForDiskpart.main
                     icon = SystemIcons.Warning;
                     break;
                 case SystemIconType.WinLogo:
-                    icon = SaveFile.LoadIconFromFile("..\\..\\..\\resources\\winLogo.ico");
+                    icon = LoadIconFromFile("..\\..\\..\\resources\\winLogo.ico");
                     break;
             }
 
             return icon.ToImageSource();
+        }
+
+        public static Icon LoadIconFromFile(string filePath)
+        {
+            FileStream fileStream = FileUtilites.LoadFromFile(filePath);
+            Icon icon = new Icon(fileStream);
+            fileStream.Close();
+            return icon;
         }
 
         private static Icon? Extract(string filePath, int index, bool largeIcon = true)
@@ -118,7 +131,7 @@ namespace GUIForDiskpart.main
             return hIcon != IntPtr.Zero ? Icon.FromHandle(hIcon) : null;
         }
 
-        private static ImageSource ToImageSource(this Icon icon)
+        public static ImageSource ToImageSource(this Icon icon)
         {
             ImageSource imageSource = Imaging.CreateBitmapSourceFromHIcon(
                 icon.Handle,
@@ -126,6 +139,14 @@ namespace GUIForDiskpart.main
                 BitmapSizeOptions.FromEmptyOptions());
 
             return imageSource;
+        }
+        
+        public static System.Windows.Controls.Image GetImageFromFile(string filePath)
+        {
+            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+            image.Source = new BitmapImage(new Uri(filePath, UriKind.Relative));
+
+            return image;
         }
     }
 }
