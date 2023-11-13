@@ -48,6 +48,11 @@ namespace GUIForDiskpart.main
         readonly private string mediaType;
         public string MediaType { get { return mediaType; } }
 
+        readonly private UInt16? msftMediaType;
+        public UInt16? MSFTMediaType { get { return msftMediaType; } }
+
+        public string DeviceMediaType => GetDeviceMediaType();
+
         readonly private UInt16 availability;
         public UInt16 Availability { get => availability;}
 
@@ -184,6 +189,7 @@ namespace GUIForDiskpart.main
             uint mediaSignature,
             string diskName,
             string mediaType,
+            ushort? msftMediaType,
             ushort availability,
             uint bytesPerSector,
             string compressionMethod,
@@ -234,6 +240,7 @@ namespace GUIForDiskpart.main
             this.mediaSignature = mediaSignature;
             this.diskName = diskName;
             this.mediaType = mediaType;
+            this.msftMediaType = msftMediaType;
             this.availability = availability;
             this.bytesPerSector = bytesPerSector;
             this.compressionMethod = compressionMethod;
@@ -296,6 +303,7 @@ namespace GUIForDiskpart.main
             fullOutput += "MediaSignature: " + MediaSignature + '\n';
             fullOutput += "Caption: " + Caption + '\n';
             fullOutput += "MediaType: " + MediaType + '\n';
+            fullOutput += "MSFTMediaType" + MSFTMediaType + '\n';
             fullOutput += "Avaiability: " + Availability + '\n';
             fullOutput += "BytesPerSector: " + BytesPerSector + '\n';
             fullOutput += "CompressionMethod: " + CompressionMethod + '\n';
@@ -373,6 +381,7 @@ namespace GUIForDiskpart.main
                 if (key == "UnallocatedSpace") continue;
                 if (key == "FreeSpace") continue;
                 if (key == "UsedSpace") continue;
+                if (key == "MSFTMediaType") continue;
                 if (typeof(List<Partition>) == property.PropertyType) continue;
 
                 if (key.Contains("Formatted"))
@@ -399,6 +408,32 @@ namespace GUIForDiskpart.main
             }
 
             return freeSpaceResult;
+        }
+
+        private string GetDeviceMediaType()
+        {
+            string result = string.Empty;
+
+            switch (MSFTMediaType)
+            {
+                case (null):
+                    result = "Could not resolve... (Virtual Disk or device name is insufficient)";
+                    break;
+                case (0):
+                    result = "Unspecified";
+                    break;
+                case (3):
+                    result = "HDD (Hard Disk Drive)";
+                    break;
+                case (4):
+                    result = "SSD (Solid-State Drive)";
+                    break;
+                case (5):
+                    result = "SCM (Storage Class Memory)";
+                    break;
+            }
+
+            return result;
         }
     }
 }

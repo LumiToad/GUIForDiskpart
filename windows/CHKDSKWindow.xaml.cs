@@ -222,5 +222,13 @@ namespace GUIForDiskpart.windows
                 }
             }
         }
+
+        private void JustScan_Click(object sender, RoutedEventArgs e)
+        {
+            ParaF.IsChecked = true;    
+            ParaR.IsChecked = true;   
+            ParaX.IsChecked = true; 
+            ParaScan.IsChecked = true;
+        }
     }
 }

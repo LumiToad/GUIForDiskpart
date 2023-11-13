@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
-
+using System.Management.Automation;
 
 namespace GUIForDiskpart.main
 {
@@ -92,6 +92,7 @@ namespace GUIForDiskpart.main
                 UInt32 partitionCount = Convert.ToUInt32(disk.Properties["Partitions"].Value);
                 string interfaceType = Convert.ToString(disk.Properties["InterfaceType"].Value);
                 string mediaType = Convert.ToString(disk.Properties["MediaType"].Value);
+                UInt16? mediaTypeValue = GetMediaTypeValue(caption);
                 UInt32 mediaSignature = Convert.ToUInt32(disk.Properties["Signature"].Value);
                 string mediaStatus = Convert.ToString(disk.Properties["Status"].Value);
                 string name = Convert.ToString(disk.Properties["Name"].Value);
@@ -137,7 +138,7 @@ namespace GUIForDiskpart.main
                 UInt32 tracksPerCylinder = Convert.ToUInt32(disk.Properties["TracksPerCylinder"].Value);
 
                 DiskInfo physicalDisk = new DiskInfo(deviceId, physicalName, caption, diskModel, mediaStatus, mediaLoaded, totalSpace, partitionCount,
-                    interfaceType, mediaSignature, name, mediaType, availability, bytesPerSector, compressionMethod, configManagerErrorCode,
+                    interfaceType, mediaSignature, name, mediaType, mediaTypeValue, availability, bytesPerSector, compressionMethod, configManagerErrorCode,
                     configManagerUserConfig, creationClassName, defaultBlockSize, description, errorCleared, errorDescription, errorMethodology,
                     firmwareRevision, index, installDate, lastErrorCode, manufacturer, maxBlockSize, maxMediaSize, minBlockSize, needsCleaning,
                     numberOfMediaSupported, pnpDeviceID, powerManagementSupported, scsiBus, scsiLogicalUnit, scsiPort, scsiTargetId, sectorsPerTrack,
@@ -149,6 +150,26 @@ namespace GUIForDiskpart.main
             }
 
             physicalDisks = SortPhysicalDrivesByDeviceID(physicalDisks);
+        }
+
+        private static UInt16? GetMediaTypeValue(string friendlyName)
+        {
+            if (string.IsNullOrEmpty(friendlyName)) return 99;
+
+            UInt16? result = null;
+
+            foreach (var name in friendlyName.Split(new[] { ' ', '-', '_', ':' }))
+            {
+                string[] commands = new string[2];
+                commands[0] += $"$Query = Get-CimInstance -Query \"select * from MSFT_PhysicalDisk WHERE FriendlyName Like '%{name}%'\" -Namespace root\\Microsoft\\Windows\\Storage";
+                commands[1] += $"$Query.MediaType";
+                List<PSObject> psObjects = CommandExecuter.IssuePowershellCommand(commands);
+                PSObject? data = psObjects[0];
+
+                if (data == null) continue;
+                result = (UInt16)data.BaseObject;
+            }
+            return result;
         }
 
         private static List<DiskInfo> SortPhysicalDrivesByDeviceID(List<DiskInfo> list)
