@@ -20,7 +20,7 @@
         <userControls:ConsoleReturnUI x:Name="ConsoleReturn" Grid.RowSpan="2"/>
         <StackPanel Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Top" Margin="10,90,0,0"/>
         <Button x:Name="ConfirmButton" Content="Confirm" Click="ConfirmButton_Click" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
-        <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" HorizontalContentAlignment="Right" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="71,10,0,0"/>
+        <Button x:Name="CancelButton" Content="Cancel" IsCancel="True"  Click="CancelButton_Click" HorizontalContentAlignment="Right" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="71,10,0,0"/>
         <Label Grid.Column="1" Content="Deleting this partition will delete all data!" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="265"/>
         <CheckBox x:Name="CleanAll" Grid.Column="1" Content="Clean all" HorizontalAlignment="Left" Margin="14,34,0,0" VerticalAlignment="Top"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="14,54,0,0" TextWrapping="Wrap" Text="Clean all option will override all data with zeros. This makes data rescue close to IMPOSSIBLE! When checked: Operation can take quite long." VerticalAlignment="Top" Height="63" Width="251"/>

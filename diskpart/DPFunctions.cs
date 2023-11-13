@@ -501,7 +501,7 @@ namespace GUIForDiskpart.diskpart
             return ExecuteInternal(commands);
         }
 
-        public static string Extend(uint diskIndex, char driveLetter, ulong sizeInMB, bool isNoErr)
+        public static string Extend(uint diskIndex, char driveLetter, uint sizeInMB, bool isNoErr)
         {
             string[] commands = new string[3];
 
@@ -511,7 +511,7 @@ namespace GUIForDiskpart.diskpart
             
             if (sizeInMB > 0)
             {
-                commands[2] += sizeInMB + " ";
+                commands[2] += "SIZE=" + sizeInMB + " ";
             }
 
             if (isNoErr)
@@ -522,7 +522,7 @@ namespace GUIForDiskpart.diskpart
             return ExecuteInternal(commands);
         }
 
-        public static string Extend(uint diskIndex, uint partitionIndex, ulong sizeInMB, bool isNoErr)
+        public static string Extend(uint diskIndex, uint partitionIndex, uint sizeInMB, bool isNoErr)
         {
             string[] commands = new string[3];
 
@@ -532,7 +532,7 @@ namespace GUIForDiskpart.diskpart
 
             if (sizeInMB > 0)
             {
-                commands[2] += sizeInMB + " ";
+                commands[2] += "SIZE=" + sizeInMB + " ";
             }
 
             if (isNoErr)
@@ -552,12 +552,12 @@ namespace GUIForDiskpart.diskpart
 
             if (desiredInMB > 0)
             {
-                commands[1] += desiredInMB + " ";
+                commands[1] += "DESIRED=" + desiredInMB + " ";
             }
 
             if (minimumInMB > 0)
             {
-                commands[1] += minimumInMB + " ";
+                commands[1] += "MINIMUM=" + minimumInMB + " ";
             }
 
             if (isNoWait)

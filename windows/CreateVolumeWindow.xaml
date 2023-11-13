@@ -22,7 +22,7 @@
         <Label Content="Size in MB:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="8,6,0,0"/>
         <StackPanel Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Top" Margin="10,40,0,0">
             <Button x:Name="ConfirmButton" Content="Create" Click="ConfirmButton_Click"/>
-            <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" Margin="20,0,0,0"/>
+            <Button x:Name="CancelButton" Content="Cancel" IsCancel="True"  Click="CancelButton_Click" Margin="20,0,0,0"/>
 
         </StackPanel>
         <Label x:Name="ErrorMessageValue" Content="" Foreground="Red" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1"/>

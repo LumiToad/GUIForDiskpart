@@ -29,7 +29,7 @@
         <StackPanel Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Top" Margin="10,80,0,0">
             <Button x:Name="ConfirmButton" Content="Set" Click="SetButton_Clear"/>
             <Button x:Name="ConfirmButton_Copy" Content="Clear" Click="ClearButton_Clear" Margin="20,0,0,0"/>
-            <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" Margin="20,0,0,0"/>
+            <Button x:Name="CancelButton" Content="Cancel" IsCancel="True"  Click="CancelButton_Click" Margin="20,0,0,0"/>
 
         </StackPanel>
         <TextBlock x:Name="MBRLabel" Grid.Column="1" HorizontalAlignment="Center" Margin="0,37,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="38" Width="210"/>

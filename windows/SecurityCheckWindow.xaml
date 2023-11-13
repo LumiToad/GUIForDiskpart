@@ -16,7 +16,7 @@
                 <Label x:Name="ConfirmText" Content="?" HorizontalAlignment="Left" Margin="0,56,0,0" VerticalAlignment="Top" Width="196"/>
                 <TextBox x:Name="TextBox" TextWrapping="Wrap" Margin="0,87,0,39" TextChanged="TextBox_TextChanged"/>
                 <Button x:Name="Confirm" Content="CONFIRM" HorizontalAlignment="Left" Margin="64,126,0,0" VerticalAlignment="Top" Foreground="#FFB90000" FontSize="20" Width="100" IsEnabled="False" Click="Confirm_Click"/>
-                <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="218,126,0,0" VerticalAlignment="Top" FontSize="20" Width="100" Click="Cancel_Click"/>
+                <Button x:Name="Cancel" Content="Cancel" IsCancel="True"  HorizontalAlignment="Left" Margin="218,126,0,0" VerticalAlignment="Top" FontSize="20" Width="100" Click="Cancel_Click"/>
 
             </Grid>
         </Border>

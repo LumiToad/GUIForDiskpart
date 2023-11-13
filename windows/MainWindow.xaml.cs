@@ -195,9 +195,7 @@ namespace GUIForDiskpart
 
         private void SaveLog_Click(object sender, RoutedEventArgs e)
         {
-            string log = ConsoleReturn.TextBox.Text;
-
-            FileUtilites.SaveAsTextfile(log, "log");
+            ConsoleReturn.SaveLog();
         }
 
         private void SaveEntryData_Click(object sender, RoutedEventArgs e)

@@ -64,7 +64,7 @@ namespace GUIForDiskpart
         {
             if (Partition.WSMPartition.PartitionTable == "MBR")
             {
-                string header = "Diskpart - " + (Partition.WSMPartition.IsActive ? "Inactive" : "Active");
+                string header = "DISKPART - " + (Partition.WSMPartition.IsActive ? "Inactive" : "Active");
                 string name = "DPInActive";
                 MenuItem menuItem = WPFUtilites.CreateContextMenuItem(IconUtilities.Diskpart, name, header, true, Active_Click);
                 ContextMenu.Items.Add(menuItem);
@@ -75,6 +75,16 @@ namespace GUIForDiskpart
                 string header = "DISKPART - Attributes";
                 string name = "DPAttributes";
                 MenuItem menuItem = WPFUtilites.CreateContextMenuItem(IconUtilities.Diskpart, name, header, true, Attributes_Click);
+                ContextMenu.Items.Add(menuItem);
+
+                header = "DISKPART - Shrink";
+                name = "DPShrink";
+                menuItem = WPFUtilites.CreateContextMenuItem(IconUtilities.Diskpart, name, header, true, Shrink_Click);
+                ContextMenu.Items.Add(menuItem);
+
+                header = "DISKPART - Extend";
+                name = "DPExtend";
+                menuItem = WPFUtilites.CreateContextMenuItem(IconUtilities.Diskpart, name, header, true, Extend_Click);
                 ContextMenu.Items.Add(menuItem);
             }
 
@@ -104,9 +114,24 @@ namespace GUIForDiskpart
             }
         }
 
+        private void Extend_Click(object sender, RoutedEventArgs e)
+        {
+            ExtendWindow window = new ExtendWindow(Partition);
+            window.Owner = MainWindow;
+            window.Show();
+        }
+
+        private void Shrink_Click(object sender, RoutedEventArgs e)
+        {
+            ShrinkWindow window = new ShrinkWindow(Partition);
+            window.Owner = MainWindow;
+            window.Show();
+        }
+
         private void AnalyzeDefrag_Click(object sender, RoutedEventArgs e)
         {
             Partition.DefragAnalysis = DefragAnalysisRetriever.AnalyzeVolumeDefrag(Partition);
+            MainWindow.AddTextToOutputConsole(Partition.DefragAnalysis.GetOutputAsString());
             MainWindow.EntryDataUI.AddDataToGrid(Partition.GetKeyValuePairs());
         }
 
@@ -123,7 +148,8 @@ namespace GUIForDiskpart
                 (
                 "Setting an MBR partition active or inactive can result in the computer no longer booting correctly!",
                 "Diskpart - Active / Inactive",
-                MessageBoxButton.OKCancel);
+                MessageBoxButton.OKCancel
+                );
             switch (result)
             {
                 case MessageBoxResult.OK:

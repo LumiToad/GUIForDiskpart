@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GUIForDiskpart.main;
+using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace GUIForDiskpart.userControls
@@ -8,6 +10,8 @@ namespace GUIForDiskpart.userControls
     /// </summary>
     public partial class ConsoleReturnUI : UserControl
     {
+        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+
         public ConsoleReturnUI()
         {
             InitializeComponent();
@@ -23,6 +27,18 @@ namespace GUIForDiskpart.userControls
             TextBox.Text += "\n";
             TextBox.Text += "[" + DateTime.Now + "]\n";
             TextBox.Text += text;
+        }
+
+        private void SaveLog_Click(object sender, RoutedEventArgs e) 
+        {
+            SaveLog();
+        }
+
+        public void SaveLog()
+        {
+            string log = TextBox.Text;
+
+            FileUtilites.SaveAsTextfile(log, "log");
         }
     }
 }

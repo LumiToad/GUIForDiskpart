@@ -7,6 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Save Log" Click="SaveLog_Click"/>
+            </ContextMenu>
+        </Grid.ContextMenu>
         <TextBox x:Name="TextBox" TextWrapping="Wrap" FontFamily="Consolas" AllowDrop="False" Background="#FF252525" IsUndoEnabled="False" Foreground="#FF009409" VerticalScrollBarVisibility="Visible" TextChanged="ConsoleReturn_TextChanged" IsReadOnly="True" Width="NaN" UseLayoutRounding="True" Padding="0,5,0,5" d:IsHidden="True"/>
 
     </Grid>

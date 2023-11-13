@@ -25,7 +25,7 @@
         </ComboBox>
         <StackPanel Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Top" Margin="10,70,0,0">
             <Button x:Name="ConfirmButton" Content="Convert" Click="ConfirmButton_Click"/>
-            <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" HorizontalContentAlignment="Right" Margin="20,0,0,0"/>
+            <Button x:Name="CancelButton" Content="Cancel" IsCancel="True"  Click="CancelButton_Click" HorizontalContentAlignment="Right" Margin="20,0,0,0"/>
 
         </StackPanel>
 

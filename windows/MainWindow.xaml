@@ -26,8 +26,16 @@
         <DockPanel LastChildFill="true" Grid.RowSpan="2">
             <Menu DockPanel.Dock="Top" Height="20">
                 <MenuItem x:Name="File" Header="File">
-                    <MenuItem Header="Save Log" Click="SaveLog_Click"/>
-                    <MenuItem Header="Save Entries" Click="SaveEntryData_Click"/>
+                    <MenuItem Header="Save Log" Click="SaveLog_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/resources/guifd.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Save Entries" Click="SaveEntryData_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/resources/guifd.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <Separator/>
                     <MenuItem Header="Quit" Click="Quit_Click"/>
                 </MenuItem>
@@ -71,7 +79,6 @@
                     <MenuItem Header="To Wiki"/>
                     <MenuItem Header="To Website" Click="Website_Click"/>
                 </MenuItem>
-
             </Menu>
             <Grid x:Name="grid">
                 <Grid.ColumnDefinitions>

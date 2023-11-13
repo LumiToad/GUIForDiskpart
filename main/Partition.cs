@@ -80,6 +80,11 @@ namespace GUIForDiskpart.main
                 fullOutput += LogicalDiskInfo.GetOutputAsString();
             }
 
+            if (IsDefragAnalysis)
+            {
+                fullOutput += DefragAnalysis.GetOutputAsString();
+            }
+
             return fullOutput;
         }
 

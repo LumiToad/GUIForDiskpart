@@ -35,7 +35,7 @@
                 <MenuItem Header="Volume" Click="CreateVolume_Click"/>
             </MenuItem>
             <Separator />
-            <MenuItem Header="GUIFD - Format" Click="Format_Click">
+            <MenuItem Header="GUIFD - Easy Format" Click="Format_Click">
                 <MenuItem.Icon>
                     <Image Source="/resources/guifd.png" />
                 </MenuItem.Icon>

@@ -45,7 +45,7 @@
     <Compile Update="windows\DeleteWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\ExpandWindow.xaml.cs">
+    <Compile Update="windows\ExtendWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="windows\FormatPartitionWindow.xaml.cs">
@@ -124,7 +124,7 @@
     <Page Update="windows\DeleteWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\ExpandWindow.xaml">
+    <Page Update="windows\ExtendWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="windows\FormatPartitionWindow.xaml">

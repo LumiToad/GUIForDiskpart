@@ -7,29 +7,13 @@
              mc:Ignorable="d" Width="220" Height="100">
     <UserControl.ContextMenu>
         <ContextMenu>
-            <MenuItem Header="DISKPART - Detail">
-                <MenuItem.Icon>
-                    <Image Source="/resources/DiskpartD.png" />
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem Header="DISKPART - Format">
-                <MenuItem.Icon>
-                    <Image Source="/resources/DiskpartD.png" />
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem Header="DISKPART - Delete">
-                <MenuItem.Icon>
-                    <Image Source="/resources/DiskpartD.png" />
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem Header="DISKPART - Assign">
+            <MenuItem Header="DISKPART - ???">
                 <MenuItem.Icon>
                     <Image Source="/resources/DiskpartD.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <Separator />
         </ContextMenu>
-
     </UserControl.ContextMenu>
     <Button x:Name="UnallocatedEntryButton" MinWidth="150" MinHeight="100" HorizontalContentAlignment="Right" Click="Button_Click" Background="#FFA5A4A4" Width="220" Height="100">
         <Grid Width="220" Height="100">

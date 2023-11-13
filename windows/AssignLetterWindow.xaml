@@ -22,6 +22,6 @@
         <Label Grid.Column="1" Content="Available Drive Letters:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="DriveLetterBox" Grid.Column="1" HorizontalAlignment="Left" Margin="15,36,0,0" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="ConfirmButton" Content="Confirm" Click="ConfirmButton_Click" Grid.Column="1" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,74,0,0"/>
-        <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" HorizontalContentAlignment="Right" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="86,74,0,0"/>
+        <Button x:Name="CancelButton" Content="Cancel" IsCancel="True"  Click="CancelButton_Click" HorizontalContentAlignment="Right" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="86,74,0,0"/>
     </Grid>
 </Window>
