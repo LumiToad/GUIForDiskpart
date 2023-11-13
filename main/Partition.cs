@@ -1,26 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Markup;
 
 namespace GUIForDiskpart.main
 {
     public class Partition
     {
+        private DiskInfo assignedDiskInfo;
+        public DiskInfo AssignedDiskInfo
+        { 
+            get => assignedDiskInfo;  
+            set => assignedDiskInfo = value; 
+        }
+
         private WSMPartition wsmPartition;
         public WSMPartition WSMPartition
         { 
-            get { return wsmPartition; } 
-            set { wsmPartition = value; }
+            get => wsmPartition; 
+            set => wsmPartition = value; 
         }
 
         private WMIPartition wmiPartition;
         public WMIPartition WMIPartition 
         { 
-            get { return wmiPartition; } 
-            set { wmiPartition = value; }
+            get => wmiPartition; 
+            set => wmiPartition = value;
         }
 
         public LogicalDiskInfo LogicalDiskInfo => WMIPartition.LogicalDiskInfo;
+
+        private DefragAnalysis defragAnalysis;
+        public DefragAnalysis DefragAnalysis
+        {
+            get => defragAnalysis;
+            set => defragAnalysis = value;
+        }
 
         public bool HasWSMPartition
         { get { return (WSMPartition == null) ? false : true; } }
@@ -36,6 +49,9 @@ namespace GUIForDiskpart.main
                 return (LogicalDiskInfo == null) ? false : true; 
             } 
         }
+
+        public bool IsDefragAnalysis
+        { get { return (DefragAnalysis == null) ? false : true; } }
 
         public bool IsVolume
         { get { if (HasWMIPartition && IsLogicalDisk) return true; return false; } }
@@ -85,6 +101,11 @@ namespace GUIForDiskpart.main
             if (IsLogicalDisk) 
             {
                 AppendDataToDict(data, LogicalDiskInfo.GetKeyValuePairs());
+            }
+
+            if (IsDefragAnalysis) 
+            {
+                AppendDataToDict(data, DefragAnalysis.GetKeyValuePairs());
             }
 
             return data;

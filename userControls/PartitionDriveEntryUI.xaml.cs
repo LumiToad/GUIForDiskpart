@@ -49,7 +49,7 @@ namespace GUIForDiskpart
 
             if (Partition.HasWSMPartition && Partition.IsLogicalDisk)
             {
-                SetValueInProgressBar(Partition.WSMPartition.Size, Partition.LogicalDiskInfo.FreeSpace);
+                SetValueInProgressBar(Partition.WSMPartition.Size, Partition.LogicalDiskInfo.UsedSpace);
             }
 
             if (Partition.WSMPartition.IsBoot)
@@ -86,6 +86,28 @@ namespace GUIForDiskpart
                 ContextMenu.Items.Add(new Separator());
                 ContextMenu.Items.Add(menuItem);
             }
+
+            if (Partition.IsVolume)
+            {
+                string header = "Powershell - DefragAnalysis";
+                string name = "PSAnalyzeDefrag";
+                MenuItem menuItem = WPFUtilites.CreateContextMenuItem(IconUtilities.Commandline, name, header, true, AnalyzeDefrag_Click);
+                menuItem.ToolTip = 
+                    (
+                    new ToolTip().Content = 
+                    "Will analyze the fragmentation of this volume." +
+                    " Will not actually start a defragmentation process." +
+                    " Retrieved data will be shown in the list entrys below." +
+                    " Can take a while!"
+                    );
+                ContextMenu.Items.Add(menuItem);
+            }
+        }
+
+        private void AnalyzeDefrag_Click(object sender, RoutedEventArgs e)
+        {
+            Partition.DefragAnalysis = DefragAnalysisRetriever.AnalyzeVolumeDefrag(Partition);
+            MainWindow.EntryDataUI.AddDataToGrid(Partition.GetKeyValuePairs());
         }
 
         private void Attributes_Click(object sender, RoutedEventArgs e) 
@@ -106,7 +128,7 @@ namespace GUIForDiskpart
             {
                 case MessageBoxResult.OK:
                     MainWindow.AddTextToOutputConsole(DPFunctions.Active(Partition.WSMPartition.DiskNumber, Partition.WSMPartition.PartitionNumber, !Partition.WSMPartition.IsActive));
-                    MainWindow.RetrieveAndShowDiskData(true);
+                    MainWindow.RetrieveAndShowDiskData(false);
                     break;
                 case MessageBoxResult.Cancel:
                     break;
@@ -213,11 +235,11 @@ namespace GUIForDiskpart
             ContextMenu.IsOpen = !ContextMenu.IsOpen;
         }
 
-        private void SetValueInProgressBar(ulong totalSize, ulong freeSize)
+        private void SetValueInProgressBar(ulong totalSize, ulong usedSpace)
         {
             SizeBar.Maximum = totalSize;
             SizeBar.Minimum = 0;
-            SizeBar.Value = totalSize - freeSize;
+            SizeBar.Value = usedSpace;
         }
     }
 }

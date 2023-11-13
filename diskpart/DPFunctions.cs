@@ -501,6 +501,78 @@ namespace GUIForDiskpart.diskpart
             return ExecuteInternal(commands);
         }
 
+        public static string Extend(uint diskIndex, char driveLetter, ulong sizeInMB, bool isNoErr)
+        {
+            string[] commands = new string[3];
+
+            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
+            commands[1] = "Select " + DPListType.VOLUME + " " + driveLetter;
+            commands[2] = "EXTEND ";
+            
+            if (sizeInMB > 0)
+            {
+                commands[2] += sizeInMB + " ";
+            }
+
+            if (isNoErr)
+            {
+                commands[2] += "NOERR ";
+            }
+
+            return ExecuteInternal(commands);
+        }
+
+        public static string Extend(uint diskIndex, uint partitionIndex, ulong sizeInMB, bool isNoErr)
+        {
+            string[] commands = new string[3];
+
+            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
+            commands[1] = "Select " + DPListType.PARTITION + " " + partitionIndex;
+            commands[2] = "EXTEND ";
+
+            if (sizeInMB > 0)
+            {
+                commands[2] += sizeInMB + " ";
+            }
+
+            if (isNoErr)
+            {
+                commands[2] += "NOERR ";
+            }
+
+            return ExecuteInternal(commands);
+        }
+
+        public static string Shrink(char driveLetter, uint desiredInMB, uint minimumInMB, bool isNoWait, bool isNoErr)
+        {
+            string[] commands = new string[2];
+
+            commands[0] = "Select " + DPListType.VOLUME + " " + driveLetter;
+            commands[1] = "SHRINK ";
+
+            if (desiredInMB > 0)
+            {
+                commands[1] += desiredInMB + " ";
+            }
+
+            if (minimumInMB > 0)
+            {
+                commands[1] += minimumInMB + " ";
+            }
+
+            if (isNoWait)
+            {
+                commands[1] += "NOWAIT ";
+            }
+
+            if (isNoErr)
+            {
+                commands[1] += "NOERR ";
+            }
+
+            return ExecuteInternal(commands);
+        }
+
         #endregion Various
 
         #region private

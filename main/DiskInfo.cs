@@ -29,7 +29,7 @@ namespace GUIForDiskpart.main
         readonly private UInt64 totalSpace;
         public UInt64 TotalSpace { get { return totalSpace; } }
 
-        public Int64 UnpartSpace => CalcUnpartSpace();
+        public Int64 UnallocatedSpace => CalcUnallocatedSpace();
 
         readonly private UInt32 wmiPartitionCount;
         public UInt32 WMIPartitionCount { get { return wmiPartitionCount; } }
@@ -164,11 +164,11 @@ namespace GUIForDiskpart.main
         { get { return partitions; } }
 
         public UInt64 FreeSpace { get { return GetLogicalFreeSpace(); } }
-        public UInt64 UsedSpace { get { return TotalSpace - FreeSpace; } }
+        public UInt64 UsedSpace { get { return (TotalSpace - Convert.ToUInt64(UnallocatedSpace)) - FreeSpace; } }
         
         public string FormattedFreeSpace => ByteFormatter.FormatBytes(GetLogicalFreeSpace());
         public string FormattedTotalSpace => ByteFormatter.FormatBytes(TotalSpace);
-        public string FormattedUnpartSpace => ByteFormatter.FormatBytes(UnpartSpace);
+        public string FormattedUnallocatedSpace => ByteFormatter.FormatBytes(UnallocatedSpace);
         public string FormattedUsedSpace => ByteFormatter.FormatBytes(UsedSpace);
 
         public DiskInfo(
@@ -289,7 +289,7 @@ namespace GUIForDiskpart.main
             fullOutput += "MediaStatus: " + MediaStatus + '\n';
             fullOutput += "MediaLoaded: " + MediaLoaded + '\n';
             fullOutput += $"TotalSpace: {ByteFormatter.FormatBytes(TotalSpace)} {ByteFormatter.GetBytesAsStringAndUnit(TotalSpace)}\n";
-            fullOutput += $"UnpartSpace: {ByteFormatter.FormatBytes(UnpartSpace)} {ByteFormatter.GetBytesAsStringAndUnit(UnpartSpace)}\n";
+            fullOutput += $"UnpartSpace: {ByteFormatter.FormatBytes(UnallocatedSpace)} {ByteFormatter.GetBytesAsStringAndUnit(UnallocatedSpace)}\n";
             fullOutput += "WMIPartitionCount: " + WMIPartitionCount + '\n';
             fullOutput += "WSMPartitionCount: " + PartitionCount + " (includes hidden and reserved)" + '\n';
             fullOutput += "InterfaceType: " + InterfaceType + '\n';
@@ -344,7 +344,7 @@ namespace GUIForDiskpart.main
             return fullOutput;
         }
 
-        public Int64 CalcUnpartSpace()
+        private Int64 CalcUnallocatedSpace()
         {
             Int64 result = Convert.ToInt64(TotalSpace);
 
@@ -370,10 +370,10 @@ namespace GUIForDiskpart.main
 
                 if (data.ContainsKey(key)) continue;
                 if (key == "TotalSpace") continue;
-                if (key == "UnpartSpace") continue;
+                if (key == "UnallocatedSpace") continue;
                 if (key == "FreeSpace") continue;
                 if (key == "UsedSpace") continue;
-                if (typeof(List<WSMPartition>) == property.PropertyType) continue;
+                if (typeof(List<Partition>) == property.PropertyType) continue;
 
                 if (key.Contains("Formatted"))
                 {

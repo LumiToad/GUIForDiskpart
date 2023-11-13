@@ -11,8 +11,6 @@ namespace GUIForDiskpart.main
         private const string wmiInfoSKey = "---WINDOWS MANAGEMENT INSTRUMENTATION Logical Disk---";
         private const string ldInfoValue = "---Win32_LogicalDisk---";
         private const string keyPrefix = "WMI-LD";
-        public string FormattedTotalSpace => ByteFormatter.FormatBytes(TotalSpace);
-        public string FormattedFreeSpace => ByteFormatter.FormatBytes(FreeSpace);
 
         private string driveLetter;
         public string DriveLetter { get; set; }
@@ -26,6 +24,9 @@ namespace GUIForDiskpart.main
         private UInt64 freeSpace;
         public UInt64 FreeSpace { get; set; }
 
+        public UInt64 UsedSpace
+        { get { return TotalSpace - FreeSpace; } }
+
         public UInt64 totalSpace;
         public UInt64 TotalSpace { get; set; }
 
@@ -34,6 +35,10 @@ namespace GUIForDiskpart.main
 
         private string volumeSerial;
         public string VolumeSerial { get; set; }
+
+        public string FormattedTotalSpace => ByteFormatter.FormatBytes(TotalSpace);
+        public string FormattedUsedSpace => ByteFormatter.FormatBytes(UsedSpace);
+        public string FormattedFreeSpace => ByteFormatter.FormatBytes(FreeSpace);
 
         public void PrintToConsole()
         {
@@ -75,11 +80,17 @@ namespace GUIForDiskpart.main
 
                 if (data.ContainsKey(key)) continue;
                 if (key == $"{keyPrefix} TotalSpace") continue;
+                if (key == $"{keyPrefix} UsedSpace") continue;
                 if (key == $"{keyPrefix} FreeSpace") continue;
 
                 if (key == $"{keyPrefix} FormattedTotalSpace")
                 {
                     key = $"{keyPrefix} TotalSpace";
+                }
+
+                if (key == $"{keyPrefix} FormattedUsedSpace")
+                {
+                    key = $"{keyPrefix} UsedSpace";
                 }
 
                 if (key == $"{keyPrefix} FormattedFreeSpace")

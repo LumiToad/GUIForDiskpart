@@ -38,7 +38,7 @@ namespace GUIForDiskpart.windows
             output += DPFunctions.Delete(WSMPartition.DiskNumber, WSMPartition.PartitionNumber, true, (bool)CleanAll.IsChecked);
 
             MainWindow.AddTextToOutputConsole(output);
-            MainWindow.RetrieveAndShowDiskData(true);
+            MainWindow.RetrieveAndShowDiskData(false);
 
             this.Close();
         }

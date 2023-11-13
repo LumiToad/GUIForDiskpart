@@ -51,9 +51,9 @@ namespace GUIForDiskpart
         public void DiskEntry_Click(PhysicalDiskEntryUI entry)
         {
             AddEntrysToStackPanel(PartitionStackPanel, entry.DiskInfo.Partitions);
-            if (entry.DiskInfo.UnpartSpace > 0) 
+            if (entry.DiskInfo.UnallocatedSpace > 0) 
             {
-                UnallocatedEntryUI unallocatedEntryUI = new UnallocatedEntryUI(entry.DiskInfo.FormattedUnpartSpace);
+                UnallocatedEntryUI unallocatedEntryUI = new UnallocatedEntryUI(entry.DiskInfo.FormattedUnallocatedSpace);
                 PartitionStackPanel.Children.Add(unallocatedEntryUI);
             }
             EntryDataUI.AddDataToGrid(entry.DiskInfo.GetKeyValuePairs());
@@ -181,7 +181,7 @@ namespace GUIForDiskpart
                 if (entry.GetType() == typeof(PartitionEntryUI))
                 {
                     partitionEntry = (PartitionEntryUI)entry;
-                    if (partitionEntry != null && partitionEntry.IsSelected == true) 
+                    if (partitionEntry != null && partitionEntry.IsSelected == true)
                         return partitionEntry.Partition.WSMPartition.PartitionNumber;
                 }
             }

@@ -57,7 +57,7 @@ namespace GUIForDiskpart.windows
             output += DPFunctions.Assign(WSMPartition.DiskNumber, WSMPartition.PartitionNumber, letter, true);
 
             MainWindow.AddTextToOutputConsole(output);
-            MainWindow.RetrieveAndShowDiskData(true);
+            MainWindow.RetrieveAndShowDiskData(false);
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)

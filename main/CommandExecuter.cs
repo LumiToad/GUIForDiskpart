@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Management.Automation;
 using System.Management.Automation.Runspaces;
-using System.Windows;
+
 
 namespace GUIForDiskpart.main
 {
@@ -12,7 +13,7 @@ namespace GUIForDiskpart.main
     {
         private const string exeSuffix = ".exe";
 
-        public static List<Object> IssuePowershellCommand(string command, string psParam)
+        public static List<object> IssuePowershellCommand(string command, string psParam)
         {
             InitialSessionState initialSessionState = InitialSessionState.CreateDefault();
             initialSessionState.ExecutionPolicy = ExecutionPolicy.Unrestricted;
@@ -36,7 +37,37 @@ namespace GUIForDiskpart.main
 
             return objects;
         }
-        
+
+        public static List<PSObject> IssuePowershellCommand(string[] commands)
+        {
+            InitialSessionState initialSessionState = InitialSessionState.CreateDefault();
+            initialSessionState.ExecutionPolicy = ExecutionPolicy.Unrestricted;
+
+            Runspace runspace = RunspaceFactory.CreateRunspace(initialSessionState);
+            runspace.Open();
+            List<PSObject> objects = new List<PSObject>();
+
+            Pipeline pipeline = runspace.CreatePipeline();
+            string fullCommand = string.Empty;
+            foreach (string command in commands)
+            {
+                fullCommand += $"{command}; ";
+            }
+
+            pipeline.Commands.AddScript($"{fullCommand}");
+
+            var results = pipeline.Invoke();
+
+            foreach (var result in results)
+            {
+                objects.Add(result);
+            }
+
+            runspace.Close();
+
+            return objects;
+        }
+
 
         public static string IssueCommand(string processType, string[] commands)
         {
