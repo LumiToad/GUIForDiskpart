@@ -62,6 +62,9 @@ namespace GUIForDiskpart
 
         private void PopulateContextMenu()
         {
+            MenuItem offline = WPFUtilites.CreateContextMenuItem(IconUtilities.Diskpart, "DPOffline", "DISKPART - Offline", true, OnOffline_Click);
+            MenuItem online = WPFUtilites.CreateContextMenuItem(IconUtilities.Diskpart, "DPOnline", "DISKPART - Online", true, OnOffline_Click);
+
             if (Partition.WSMPartition.PartitionTable == "MBR")
             {
                 string header = "DISKPART - " + (Partition.WSMPartition.IsActive ? "Inactive" : "Active");
@@ -86,6 +89,20 @@ namespace GUIForDiskpart
                 name = "DPExtend";
                 menuItem = WPFUtilites.CreateContextMenuItem(IconUtilities.Diskpart, name, header, true, Extend_Click);
                 ContextMenu.Items.Add(menuItem);
+
+                ContextMenu.Items.Add(offline);
+            }
+
+            if (Partition.WSMPartition.DriveLetter < 65)
+            {
+                if (Partition.WSMPartition.IsOffline)
+                {
+                    ContextMenu.Items.Add(online);
+                }
+                else
+                {
+                    ContextMenu.Items.Add(offline);
+                }
             }
 
             if (Partition.IsLogicalDisk) 
@@ -112,6 +129,28 @@ namespace GUIForDiskpart
                     );
                 ContextMenu.Items.Add(menuItem);
             }
+        }
+
+        private void OnOffline_Click(object sender, RoutedEventArgs e)
+        {
+            string output = string.Empty;
+
+            uint diskIndex = Partition.WSMPartition.DiskNumber;
+            uint partitionIndex = Partition.WSMPartition.PartitionNumber;
+            char driveLetter = Partition.WSMPartition.DriveLetter;
+
+            if (Partition.WSMPartition.IsOffline)
+            {
+                output = DPFunctions.OnlineVolume(diskIndex, partitionIndex, false);
+            }
+            else 
+            {
+                output = (Partition.WSMPartition.DriveLetter < 65) ?
+                DPFunctions.OfflineVolume(diskIndex, partitionIndex, false) :
+                DPFunctions.OfflineVolume(driveLetter, false);
+            }
+            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.RetrieveAndShowDiskData(false);
         }
 
         private void Extend_Click(object sender, RoutedEventArgs e)

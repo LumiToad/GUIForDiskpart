@@ -44,7 +44,7 @@ namespace GUIForDiskpart.main
             OnDiskChanged();
         }
 
-        public static void ReloadDsikInformation()
+        public static void ReloadDiskInformation()
         {
             DeleteDiskInformation();
             RetrieveDisks();

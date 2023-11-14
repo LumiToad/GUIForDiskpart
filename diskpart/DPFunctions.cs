@@ -573,6 +573,76 @@ namespace GUIForDiskpart.diskpart
             return ExecuteInternal(commands);
         }
 
+        public static string OfflineVolume(char driveLetter, bool isNoErr)
+        {
+            string[] commands = new string[3];
+
+            commands[0] = "Select " + DPListType.VOLUME + " " + driveLetter;
+            commands[1] = "REMOVE " + "LETTER=" + driveLetter;
+            commands[2] = "OFFLINE " + DPListType.VOLUME + " ";
+
+            if (isNoErr)
+            {
+                commands[1] += "NOERR ";
+            }
+
+            return ExecuteInternal(commands);
+        }
+
+        public static string OfflineVolume(uint diskIndex, uint partitionIndex, bool isNoErr)
+        {
+            string[] commands = new string[3];
+
+            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
+            commands[1] = "Select " + DPListType.PARTITION + " " + partitionIndex;
+            commands[2] = "OFFLINE " + DPListType.VOLUME + " ";
+
+            if (isNoErr)
+            {
+                commands[1] += "NOERR ";
+            }
+
+            return ExecuteInternal(commands);
+        }
+
+        public static string OnlineVolume(uint diskIndex, uint partitionIndex, bool isNoErr)
+        {
+            string[] commands = new string[3];
+
+            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
+            commands[1] = "Select " + DPListType.PARTITION + " " + partitionIndex;
+            commands[2] = "ONLINE " + DPListType.VOLUME + " ";
+
+            if (isNoErr)
+            {
+                commands[1] += "NOERR ";
+            }
+
+            return ExecuteInternal(commands);
+        }
+
+        public static string OnOfflineDisk(uint diskIndex, bool isSetOnline, bool isNoErr)
+        {
+            string[] commands = new string[2];
+
+            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
+            commands[1] = "OFFLINE ";
+
+            if (isSetOnline)
+            {
+                commands[1] = "ONLINE ";
+            }
+
+            commands[1] += DPListType.DISK + " ";
+
+            if (isNoErr)
+            {
+                commands[1] += "NOERR ";
+            }
+
+            return ExecuteInternal(commands);
+        }
+
         #endregion Various
 
         #region private

@@ -239,7 +239,7 @@ namespace GUIForDiskpart
 
         private void RetrieveAndShowDiskData_Internal(bool outputText)
         {
-            DiskRetriever.ReloadDsikInformation();
+            DiskRetriever.ReloadDiskInformation();
 
             AddEntrysToStackPanel<DiskInfo>(DiskStackPanel, DiskRetriever.PhysicalDrives);
 
@@ -247,6 +247,8 @@ namespace GUIForDiskpart
             {
                 AddTextToOutputConsole(DiskRetriever.GetDiskOutput());
             }
+
+            DiskEntry_Click((PhysicalDiskEntryUI)DiskStackPanel.Children[0]);
         }
 
         #endregion RetrieveDisk
