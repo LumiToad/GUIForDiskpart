@@ -8,7 +8,7 @@ namespace GUIForDiskpart.main
 {
     public class LogicalDiskInfo
     {
-        private const string wmiInfoSKey = "---WINDOWS MANAGEMENT INSTRUMENTATION Logical Disk---";
+        private const string ldInfoKey = "---WINDOWS MANAGEMENT INSTRUMENTATION Logical Disk---";
         private const string ldInfoValue = "---Win32_LogicalDisk---";
         private const string keyPrefix = "WMI-LD";
 
@@ -71,7 +71,7 @@ namespace GUIForDiskpart.main
             Dictionary<string, object?> data = new Dictionary<string, object?>();
             PropertyInfo[] wmiProperties = typeof(LogicalDiskInfo).GetProperties();
 
-            data.Add(wmiInfoSKey, ldInfoValue);
+            data.Add(ldInfoKey, ldInfoValue);
 
             foreach (PropertyInfo property in wmiProperties)
             {

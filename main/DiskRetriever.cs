@@ -82,67 +82,57 @@ namespace GUIForDiskpart.main
         {
             foreach (ManagementObject disk in managementObjectDisks)
             {
-                string deviceId = Convert.ToString(disk.Properties["DeviceId"].Value);
-                string physicalName = Convert.ToString(disk.Properties["Name"].Value);
-                string caption = Convert.ToString(disk.Properties["Caption"].Value);
-                string diskModel = Convert.ToString(disk.Properties["Model"].Value);
-                string status = Convert.ToString(disk.Properties["Status"].Value);
-                bool mediaLoaded = Convert.ToBoolean(disk.Properties["MediaLoaded"].Value);
-                UInt64 totalSpace = Convert.ToUInt64(disk.Properties["Size"].Value);
-                UInt32 partitionCount = Convert.ToUInt32(disk.Properties["Partitions"].Value);
-                string interfaceType = Convert.ToString(disk.Properties["InterfaceType"].Value);
-                string mediaType = Convert.ToString(disk.Properties["MediaType"].Value);
-                UInt16? mediaTypeValue = GetMediaTypeValue(caption);
-                UInt32 mediaSignature = Convert.ToUInt32(disk.Properties["Signature"].Value);
-                string mediaStatus = Convert.ToString(disk.Properties["Status"].Value);
-                string name = Convert.ToString(disk.Properties["Name"].Value);
-                UInt16 availability = Convert.ToUInt16(disk.Properties["Availability"].Value);
-                UInt32 bytesPerSector = Convert.ToUInt32(disk.Properties["BytesPerSector"].Value);
-                //UInt16 Capabilities[];
-                //string CapabilityDescriptions[];
-                string compressionMethod = Convert.ToString(disk.Properties["CompressionMethod"].Value);
-                UInt32 configManagerErrorCode = Convert.ToUInt32(disk.Properties["ConfigManagerErrorCode"].Value);
-                bool configManagerUserConfig = Convert.ToBoolean(disk.Properties["ConfigManagerUserConfig"].Value);
-                string creationClassName = Convert.ToString(disk.Properties["CreationClassName"].Value);
-                UInt64 defaultBlockSize = Convert.ToUInt64(disk.Properties["DefaultBlockSize"].Value);
-                string description = Convert.ToString(disk.Properties["Description"].Value);
-                bool errorCleared = Convert.ToBoolean(disk.Properties["ErrorCleared"].Value);
-                string errorDescription = Convert.ToString(disk.Properties["ErrorDescription"].Value);
-                string errorMethodology = Convert.ToString(disk.Properties["ErrorMethodology"].Value);
-                string firmwareRevision = Convert.ToString(disk.Properties["ErrorMethodology"].Value);
-                UInt32 index = Convert.ToUInt32(disk.Properties["Index"].Value);
-                DateTime installDate = Convert.ToDateTime(disk.Properties["InstallDate"].Value);
-                UInt32 lastErrorCode = Convert.ToUInt32(disk.Properties["LastErrorCode"].Value);
-                string manufacturer = Convert.ToString(disk.Properties["Manufacturer"].Value);
-                UInt64 maxBlockSize = Convert.ToUInt64(disk.Properties["MaxBlockSize"].Value);
-                UInt64 maxMediaSize = Convert.ToUInt64(disk.Properties["MaxMediaSize"].Value); 
-                UInt64 minBlockSize = Convert.ToUInt64(disk.Properties["MinBlockSize"].Value);
-                bool needsCleaning = Convert.ToBoolean(disk.Properties["NeedsCleaning"].Value);
-                UInt32 numberOfMediaSupported = Convert.ToUInt32(disk.Properties["NumberOfMediaSupported"].Value);
-                string pnpDeviceID = Convert.ToString(disk.Properties["PNPDeviceID"].Value);
-                //UInt16 PowerManagementCapabilities[];
-                bool powerManagementSupported = Convert.ToBoolean(disk.Properties["PowerManagementSupported"].Value);
-                UInt32 scsiBus = Convert.ToUInt32(disk.Properties["SCSIBus"].Value);
-                UInt16 scsiLogicalUnit = Convert.ToUInt16(disk.Properties["SCSILogicalUnit"].Value);
-                UInt16 scsiPort = Convert.ToUInt16(disk.Properties["SCSIPort"].Value);
-                UInt16 scsiTargetId = Convert.ToUInt16(disk.Properties["SCSITargetId"].Value);
-                UInt32 sectorsPerTrack = Convert.ToUInt32(disk.Properties["SectorsPerTrack"].Value);
-                string serialNumber = Convert.ToString(disk.Properties["SerialNumber"].Value);
-                UInt16 statusInfo = Convert.ToUInt16(disk.Properties["StatusInfo"].Value);
-                string systemCreationClassName = Convert.ToString(disk.Properties["SystemCreationClassName"].Value);
-                string systemName = Convert.ToString(disk.Properties["SystemName"].Value);
-                UInt64 totalCylinders = Convert.ToUInt64(disk.Properties["TotalCylinders"].Value);
-                UInt32 totalHeads = Convert.ToUInt32(disk.Properties["TotalHeads"].Value);
-                UInt64 totalSectors = Convert.ToUInt64(disk.Properties["TotalSectors"].Value);
-                UInt64 totalTracks = Convert.ToUInt64(disk.Properties["TotalTracks"].Value);
-                UInt32 tracksPerCylinder = Convert.ToUInt32(disk.Properties["TracksPerCylinder"].Value);
+                DiskInfo physicalDisk = new DiskInfo();
 
-                DiskInfo physicalDisk = new DiskInfo(deviceId, physicalName, caption, diskModel, mediaStatus, mediaLoaded, totalSpace, partitionCount,
-                    interfaceType, mediaSignature, name, mediaType, mediaTypeValue, availability, bytesPerSector, compressionMethod, configManagerErrorCode,
-                    configManagerUserConfig, creationClassName, defaultBlockSize, description, errorCleared, errorDescription, errorMethodology,
-                    firmwareRevision, index, installDate, lastErrorCode, manufacturer, maxBlockSize, maxMediaSize, minBlockSize, needsCleaning,
-                    numberOfMediaSupported, pnpDeviceID, powerManagementSupported, scsiBus, scsiLogicalUnit, scsiPort, scsiTargetId, sectorsPerTrack,
-                    serialNumber, statusInfo, systemCreationClassName, systemName, totalCylinders, totalHeads, totalSectors, totalTracks, tracksPerCylinder);
+                physicalDisk.DeviceID = Convert.ToString(disk.Properties["DeviceId"].Value);
+                physicalDisk.PhysicalName = Convert.ToString(disk.Properties["Name"].Value);
+                physicalDisk.Caption = Convert.ToString(disk.Properties["Caption"].Value);
+                physicalDisk.DiskModel = Convert.ToString(disk.Properties["Model"].Value);
+                physicalDisk.MediaStatus = Convert.ToString(disk.Properties["Status"].Value);
+                physicalDisk.MediaLoaded = Convert.ToBoolean(disk.Properties["MediaLoaded"].Value);
+                physicalDisk.TotalSpace = Convert.ToUInt64(disk.Properties["Size"].Value);
+                physicalDisk.InterfaceType = Convert.ToString(disk.Properties["InterfaceType"].Value);
+                physicalDisk.MediaType = Convert.ToString(disk.Properties["MediaType"].Value);
+                physicalDisk.MSFTMediaType = GetMediaTypeValue(physicalDisk.Caption);
+                physicalDisk.MediaSignature = Convert.ToUInt32(disk.Properties["Signature"].Value);
+                physicalDisk.MediaStatus = Convert.ToString(disk.Properties["Status"].Value);
+                physicalDisk.Availability = Convert.ToUInt16(disk.Properties["Availability"].Value);
+                physicalDisk.BytesPerSector = Convert.ToUInt32(disk.Properties["BytesPerSector"].Value);
+                physicalDisk.CompressionMethod = Convert.ToString(disk.Properties["CompressionMethod"].Value);
+                physicalDisk.ConfigManagerErrorCode = Convert.ToUInt32(disk.Properties["ConfigManagerErrorCode"].Value);
+                physicalDisk.ConfigManagerUserConfig = Convert.ToBoolean(disk.Properties["ConfigManagerUserConfig"].Value);
+                physicalDisk.CreationClassName = Convert.ToString(disk.Properties["CreationClassName"].Value);
+                physicalDisk.DefaultBlockSize = Convert.ToUInt64(disk.Properties["DefaultBlockSize"].Value);
+                physicalDisk.Description = Convert.ToString(disk.Properties["Description"].Value);
+                physicalDisk.ErrorCleared = Convert.ToBoolean(disk.Properties["ErrorCleared"].Value);
+                physicalDisk.ErrorDescription = Convert.ToString(disk.Properties["ErrorDescription"].Value);
+                physicalDisk.ErrorMethodology = Convert.ToString(disk.Properties["ErrorMethodology"].Value);
+                physicalDisk.FirmwareRevision = Convert.ToString(disk.Properties["ErrorMethodology"].Value);
+                physicalDisk.DiskIndex = Convert.ToUInt32(disk.Properties["Index"].Value);
+                physicalDisk.InstallDate = Convert.ToDateTime(disk.Properties["InstallDate"].Value);
+                physicalDisk.LastErrorCode = Convert.ToUInt32(disk.Properties["LastErrorCode"].Value);
+                physicalDisk.Manufacturer = Convert.ToString(disk.Properties["Manufacturer"].Value);
+                physicalDisk.MaxBlockSize = Convert.ToUInt64(disk.Properties["MaxBlockSize"].Value);
+                physicalDisk.MaxMediaSize = Convert.ToUInt64(disk.Properties["MaxMediaSize"].Value);
+                physicalDisk.MinBlockSize = Convert.ToUInt64(disk.Properties["MinBlockSize"].Value);
+                physicalDisk.NeedsCleaning = Convert.ToBoolean(disk.Properties["NeedsCleaning"].Value);
+                physicalDisk.NumberOfMediaSupported = Convert.ToUInt32(disk.Properties["NumberOfMediaSupported"].Value);
+                physicalDisk.PNPDeviceID = Convert.ToString(disk.Properties["PNPDeviceID"].Value);
+                physicalDisk.PowerManagementSupported = Convert.ToBoolean(disk.Properties["PowerManagementSupported"].Value);
+                physicalDisk.SCSIBus = Convert.ToUInt32(disk.Properties["SCSIBus"].Value);
+                physicalDisk.SCSILogicalUnit = Convert.ToUInt16(disk.Properties["SCSILogicalUnit"].Value);
+                physicalDisk.SCSIPort = Convert.ToUInt16(disk.Properties["SCSIPort"].Value);
+                physicalDisk.SCSITargetID = Convert.ToUInt16(disk.Properties["SCSITargetId"].Value);
+                physicalDisk.SectorsPerTrack = Convert.ToUInt32(disk.Properties["SectorsPerTrack"].Value);
+                physicalDisk.SerialNumber = Convert.ToString(disk.Properties["SerialNumber"].Value);
+                physicalDisk.StatusInfo = Convert.ToUInt16(disk.Properties["StatusInfo"].Value);
+                physicalDisk.SystemCreationClassName = Convert.ToString(disk.Properties["SystemCreationClassName"].Value);
+                physicalDisk.SystemName = Convert.ToString(disk.Properties["SystemName"].Value);
+                physicalDisk.TotalCylinders = Convert.ToUInt64(disk.Properties["TotalCylinders"].Value);
+                physicalDisk.TotalHeads = Convert.ToUInt32(disk.Properties["TotalHeads"].Value);
+                physicalDisk.TotalSectors = Convert.ToUInt64(disk.Properties["TotalSectors"].Value);
+                physicalDisk.TotalTracks = Convert.ToUInt64(disk.Properties["TotalTracks"].Value);
+                physicalDisk.TracksPerCylinder = Convert.ToUInt32(disk.Properties["TracksPerCylinder"].Value);
 
                 PartitionRetriever.GetPartitionsAndAddToDisk(disk, physicalDisk);
 

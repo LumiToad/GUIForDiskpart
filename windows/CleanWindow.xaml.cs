@@ -50,7 +50,7 @@ namespace GUIForDiskpart.windows
             {
                 todo = "Clean and override the whole drive! MAKES DATA RESCUE CLOSE TO IMPOSSIBLE!";
             }
-            string confirmKey = DiskInfo.DiskName;
+            string confirmKey = DiskInfo.PhysicalName;
 
             SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(ExecuteClean,todo, confirmKey);
             securityCheckWindow.Owner = this;

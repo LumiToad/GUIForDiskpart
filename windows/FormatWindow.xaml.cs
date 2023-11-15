@@ -57,7 +57,7 @@ namespace GUIForDiskpart
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             string todo = "Format the whole drive! ALL DATA WILL BE LOST!";
-            string confirmKey = DiskInfo.DiskName;
+            string confirmKey = DiskInfo.PhysicalName;
 
             SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(ExecuteFormat, todo, confirmKey);
             securityCheckWindow.Owner = this;

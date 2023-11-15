@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Windows.Markup;
 
 namespace GUIForDiskpart.main
 {
     public class WMIPartition
     {
-        private const string wmiInfoSKey = "---WINDOWS MANAGEMENT INSTRUMENTATION INFO---";
-        private const string wmiInfoSValue = "---Win32_DiskPartition---";
+        private const string wmiInfoKey = "---WINDOWS MANAGEMENT INSTRUMENTATION INFO---";
+        private const string wmiInfoValue = "---Win32_DiskPartition---";
         private const string keyPrefix = "WMI";
 
         private UInt16 availability;
@@ -161,7 +160,7 @@ namespace GUIForDiskpart.main
             Dictionary<string, object?> data = new Dictionary<string, object?>();
             PropertyInfo[] wmiProperties = typeof(WMIPartition).GetProperties();
 
-            data.Add(wmiInfoSKey, wmiInfoSValue);
+            data.Add(wmiInfoKey, wmiInfoValue);
 
             foreach (PropertyInfo property in wmiProperties)
             {
