@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Reflection;
 
 namespace GUIForDiskpart.main
@@ -8,12 +10,16 @@ namespace GUIForDiskpart.main
     {
         private const string wmiInfoKey = "---WINDOWS MANAGEMENT INSTRUMENTATION INFO---";
         private const string wmiInfoValue = "---Win32_DiskPartition---";
-        private const string keyPrefix = "WMI";
+        private const string wmiKeyPrefix = "WMI";
+        private const string msftInfoKey = "---WINDOWS STORAGE MANAGEMENT INFO---";
+        private const string msftInfoValue = "---WMI > MSFT_Disk / MSFT_PhysicalDisk---";
+        private const string msftKeyPrefix = "WSM-MSFT";
 
         private string deviceID;
         private string physicalName;
         private string diskModel;
         private string mediaStatus;
+        private UInt16[] operationalStatusValues;
         private bool mediaLoaded;
         private UInt64 totalSpace;
         private string interfaceType;
@@ -59,15 +65,18 @@ namespace GUIForDiskpart.main
         private UInt64 totalTracks;
         private UInt32 tracksPerCylinder;
 
+        public string DeviceMediaType => GetDeviceMediaType();
+        public string OperationalStatus => GetOperationalStatus(operationalStatusValues);
+        public bool IsOnline => OperationalStatus.Contains("Online");
         public string DeviceID { get => deviceID; set => deviceID = value; }
         public string PhysicalName { get => physicalName; set => physicalName = value; }
         public string DiskModel { get => diskModel; set => diskModel = value; }
         public string MediaStatus { get => mediaStatus; set => mediaStatus = value; }
+        public UInt16[] OperationalStatusValues { get => operationalStatusValues; set => operationalStatusValues = value; }
         public bool MediaLoaded { get => mediaLoaded; set => mediaLoaded = value; }
         public UInt64 TotalSpace { get => totalSpace; set => totalSpace = value; }
         public Int64 UnallocatedSpace => CalcUnallocatedSpace();
         public int PartitionCount => Partitions.Count;
-        public string DeviceMediaType => GetDeviceMediaType();
         public string InterfaceType { get => interfaceType; set => interfaceType = value; }
         public UInt32 MediaSignature { get => mediaSignature; set => mediaSignature = value; }
         public string Caption { get => caption; set => caption = value; }
@@ -208,18 +217,28 @@ namespace GUIForDiskpart.main
             Dictionary<string, object?> data = new Dictionary<string, object?>();
             PropertyInfo[] properties = typeof(DiskInfo).GetProperties();
 
+            data.Add(msftInfoKey, msftInfoValue);
+            data.Add($"{msftKeyPrefix} DeviceMediaType", DeviceMediaType);
+            data.Add($"{msftKeyPrefix} OperationalStatus", OperationalStatus);
+            data.Add($"{msftKeyPrefix} Online / Offline", (IsOnline) ? "Online" : "Offline");
+
             data.Add(wmiInfoKey, wmiInfoValue);
 
             foreach (PropertyInfo property in properties)
             {
-                string key = $"{keyPrefix} {property.Name}";
+                string key = $"{wmiKeyPrefix} {property.Name}";
                 object? value = property.GetValue(this);
 
-                if (key == $"{keyPrefix} TotalSpace") continue;
-                if (key == $"{keyPrefix} UnallocatedSpace") continue;
-                if (key == $"{keyPrefix} FreeSpace") continue;
-                if (key == $"{keyPrefix} UsedSpace") continue;
-                if (key == $"{keyPrefix} MSFTMediaType") continue;
+                if (key.Contains("DeviceMediaType")) continue;
+                if (key.Contains("OperationalStatus")) continue;
+                if (key.Contains("OperationalStatusValues")) continue;
+                if (key.Contains("IsOnline")) continue;
+                if (key.Contains("MSFTMediaType")) continue;
+                if (key.Contains("TotalSpace")) continue;
+                if (key.Contains("UnallocatedSpace")) continue;
+                if (key.Contains("FreeSpace")) continue;
+                if (key.Contains("UsedSpace")) continue;
+                
                 if (typeof(List<Partition>) == property.PropertyType) continue;
 
                 if (key.Contains("Formatted"))
@@ -270,6 +289,90 @@ namespace GUIForDiskpart.main
                 case (5):
                     result = "SCM (Storage Class Memory)";
                     break;
+            }
+            return result;
+        }
+
+        private string GetOperationalStatus(UInt16[] operationalStatus)
+        {
+            string result = string.Empty;
+
+            foreach (UInt16 status in operationalStatus)
+            {
+                switch (status)
+                {
+                    case (0):
+                        result += "Unknown";
+                        break;
+                    case (1):
+                        result += "Other";
+                        break;
+                    case (2):
+                        result += "OK";
+                        break;
+                    case (3):
+                        result += "Degraded";
+                        break;
+                    case (4):
+                        result += "Stressed";
+                        break;
+                    case (5):
+                        result += "Predictive Failure";
+                        break;
+                    case (6):
+                        result += "Error";
+                        break;
+                    case (7):
+                        result += "Non-Recoverable Error";
+                        break;
+                    case (8):
+                        result += "Starting";
+                        break;
+                    case (9):
+                        result += "Stopping";
+                        break;
+                    case (10):
+                        result += "Stopped";
+                        break;
+                    case (11):
+                        result += "In Service";
+                        break;
+                    case (12):
+                        result += "No Contact";
+                        break;
+                    case (13):
+                        result += "Lost Communication";
+                        break;
+                    case (14):
+                        result += "Aborted";
+                        break;
+                    case (15):
+                        result += "Dormant";
+                        break;
+                    case (16):
+                        result += "Supporting Entity in Error";
+                        break;
+                    case (17):
+                        result += "Completed";
+                        break;
+                    case (0xD010):
+                        result += "Online";
+                        break;
+                    case (0xD011):
+                        result += "Not Ready";
+                        break;
+                    case (0xD012):
+                        result += "No Media";
+                        break;
+                    case (0xD013):
+                        result += "Offline";
+                        break;
+                    case (0xD014):
+                        result += "Failed";
+                        break;
+                }
+                if (status == operationalStatus[operationalStatus.Length - 1]) continue;    
+                result += ", ";
             }
 
             return result;

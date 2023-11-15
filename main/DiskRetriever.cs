@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management;
 using System.Management.Automation;
+using System.Xml.Linq;
 
 namespace GUIForDiskpart.main
 {
@@ -84,11 +85,14 @@ namespace GUIForDiskpart.main
             {
                 DiskInfo physicalDisk = new DiskInfo();
 
+                physicalDisk.DiskIndex = Convert.ToUInt32(disk.Properties["Index"].Value);
+
                 physicalDisk.DeviceID = Convert.ToString(disk.Properties["DeviceId"].Value);
                 physicalDisk.PhysicalName = Convert.ToString(disk.Properties["Name"].Value);
                 physicalDisk.Caption = Convert.ToString(disk.Properties["Caption"].Value);
                 physicalDisk.DiskModel = Convert.ToString(disk.Properties["Model"].Value);
                 physicalDisk.MediaStatus = Convert.ToString(disk.Properties["Status"].Value);
+                physicalDisk.OperationalStatusValues = GetOperationalStatus(physicalDisk.DiskIndex);
                 physicalDisk.MediaLoaded = Convert.ToBoolean(disk.Properties["MediaLoaded"].Value);
                 physicalDisk.TotalSpace = Convert.ToUInt64(disk.Properties["Size"].Value);
                 physicalDisk.InterfaceType = Convert.ToString(disk.Properties["InterfaceType"].Value);
@@ -108,7 +112,6 @@ namespace GUIForDiskpart.main
                 physicalDisk.ErrorDescription = Convert.ToString(disk.Properties["ErrorDescription"].Value);
                 physicalDisk.ErrorMethodology = Convert.ToString(disk.Properties["ErrorMethodology"].Value);
                 physicalDisk.FirmwareRevision = Convert.ToString(disk.Properties["ErrorMethodology"].Value);
-                physicalDisk.DiskIndex = Convert.ToUInt32(disk.Properties["Index"].Value);
                 physicalDisk.InstallDate = Convert.ToDateTime(disk.Properties["InstallDate"].Value);
                 physicalDisk.LastErrorCode = Convert.ToUInt32(disk.Properties["LastErrorCode"].Value);
                 physicalDisk.Manufacturer = Convert.ToString(disk.Properties["Manufacturer"].Value);
@@ -134,6 +137,8 @@ namespace GUIForDiskpart.main
                 physicalDisk.TotalTracks = Convert.ToUInt64(disk.Properties["TotalTracks"].Value);
                 physicalDisk.TracksPerCylinder = Convert.ToUInt32(disk.Properties["TracksPerCylinder"].Value);
 
+
+               
                 PartitionRetriever.GetPartitionsAndAddToDisk(disk, physicalDisk);
 
                 physicalDisks.Add(physicalDisk);
@@ -144,7 +149,7 @@ namespace GUIForDiskpart.main
 
         private static UInt16? GetMediaTypeValue(string friendlyName)
         {
-            if (string.IsNullOrEmpty(friendlyName)) return 99;
+            if (string.IsNullOrEmpty(friendlyName)) return null;
 
             UInt16? result = null;
 
@@ -161,7 +166,19 @@ namespace GUIForDiskpart.main
             }
             return result;
         }
-
+        
+        private static UInt16[] GetOperationalStatus(UInt32 diskIndex)
+        {
+            ManagementScope scope = new ManagementScope(@"root\Microsoft\Windows\Storage");
+            SelectQuery query = new SelectQuery($"select * from MSFT_Disk WHERE Number={diskIndex}");
+            ManagementObjectSearcher msftDiskQuery = new ManagementObjectSearcher(scope, query);
+            foreach (ManagementObject msftDisk in msftDiskQuery.Get())
+            {
+                return (UInt16[])msftDisk.Properties["OperationalStatus"].Value;
+            }
+            return new UInt16[1] { 0 };
+        }
+        
         private static List<DiskInfo> SortPhysicalDrivesByDeviceID(List<DiskInfo> list)
         {
             List<DiskInfo> sortedList = list.OrderBy(o => o.DiskIndex).ToList();

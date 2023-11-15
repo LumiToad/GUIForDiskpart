@@ -28,6 +28,7 @@ namespace GUIForDiskpart.windows
             WSMPartition = partition;
             PopulateAttributesCombobox();
             MBRLabel.Text = (WSMPartition.PartitionTable == "MBR" ? "Will effect EVERY Volume on MBR drives!" : "Will effect just THIS Volume on GPT drives");
+            DriveLetterLabel.Content = WSMPartition.DriveLetter + ":/";
         }
 
         private void PopulateAttributesCombobox()

@@ -139,7 +139,7 @@ namespace GUIForDiskpart.diskpart
         {
             string[] commands = new string[1];
 
-            commands[0] = "Create VDISK FILE=" + savePath + " ";
+            commands[0] = "CREATE VDISK FILE=" + savePath + " ";
 
             if (isFixed)
             {
@@ -166,7 +166,7 @@ namespace GUIForDiskpart.diskpart
         {
             string[] commands = new string[1];
 
-            commands[0] = "Create VDISK FILE=" + savePath + " ";
+            commands[0] = "CREATE VDISK FILE=" + savePath + " ";
 
             if (isFixed)
             {
@@ -191,7 +191,7 @@ namespace GUIForDiskpart.diskpart
         {
             string[] commands = new string[1];
 
-            commands[0] = "Create VDISK FILE=" + savePath + " PARENT=" + parentFilePath + " ";
+            commands[0] = "CREATE VDISK FILE=" + savePath + " PARENT=" + parentFilePath + " ";
 
             if (isNoErr)
             {
@@ -205,7 +205,7 @@ namespace GUIForDiskpart.diskpart
         {
             string[] commands = new string[1];
 
-            commands[0] = "Create VDISK FILE=" + savePath + " SOURCE=" + sourceFilePath + " ";
+            commands[0] = "CREATE VDISK FILE=" + savePath + " SOURCE=" + sourceFilePath + " ";
 
             if (isNoErr)
             {
@@ -220,7 +220,7 @@ namespace GUIForDiskpart.diskpart
             string[] commands = new string[2];
 
             commands[0] = "Select VDISK FILE=" + filePath + " ";
-            commands[1] = "Attach VDISK ";
+            commands[1] = "ATTACH VDISK ";
 
             if (isReadOnly)
             {
@@ -243,7 +243,7 @@ namespace GUIForDiskpart.diskpart
             string[] commands = new string[2];
 
             commands[0] = "Select VDISK FILE=" + filePath + " ";
-            commands[1] = "Attach VDISK ";
+            commands[1] = "ATTACH VDISK ";
 
             if (isReadOnly)
             {
@@ -266,7 +266,7 @@ namespace GUIForDiskpart.diskpart
             string[] commands = new string[2];
 
             commands[0] = "Select VDISK FILE=" + filePath + " ";
-            commands[1] = "Compact VDISK ";
+            commands[1] = "COMPACT VDISK ";
 
             if (isNoErr)
             {
@@ -281,7 +281,7 @@ namespace GUIForDiskpart.diskpart
             string[] commands = new string[2];
 
             commands[0] = "Select VDISK FILE=" + filePath + " ";
-            commands[1] = "Detach VDISK ";
+            commands[1] = "DETACH VDISK ";
 
             if (isNoErr)
             {
@@ -297,7 +297,7 @@ namespace GUIForDiskpart.diskpart
             string[] commands = new string[2];
 
             commands[0] = "Select VDISK FILE=" + filePath + " ";
-            commands[1] = "Detail VDISK ";
+            commands[1] = "DETAIL VDISK ";
 
             if (isNoErr)
             {
@@ -312,7 +312,7 @@ namespace GUIForDiskpart.diskpart
             string[] commands = new string[2];
 
             commands[0] = "Select VDISK FILE=" + filePath + " ";
-            commands[1] = "Expand VDISK MAXIMUM=" + maxSizeInMB + " ";
+            commands[1] = "EXPAND VDISK MAXIMUM=" + maxSizeInMB + " ";
 
             if (isNoErr)
             {
@@ -327,7 +327,7 @@ namespace GUIForDiskpart.diskpart
             string[] commands = new string[2];
 
             commands[0] = "Select VDISK FILE=" + filePath + " ";
-            commands[1] = "Merge VDISK DEPTH=" + depth + " ";
+            commands[1] = "MERGE VDISK DEPTH=" + depth + " ";
 
             if (isNoErr)
             {
@@ -348,7 +348,7 @@ namespace GUIForDiskpart.diskpart
 
             commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
             commands[1] = "Select " + DPListType.PARTITION + " " + partitionIndex;
-            commands[2] = "Format " + "FS=" + fileSystem + " " ;
+            commands[2] = "FORMAT " + "FS=" + fileSystem + " " ;
 
             if (volumeName != "")
             {
@@ -389,7 +389,7 @@ namespace GUIForDiskpart.diskpart
 
             commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
             commands[1] = "Select " + DPListType.PARTITION + " " + partitionIndex;
-            commands[2] = "Delete " + "PART ";
+            commands[2] = "DELETE " + "PART ";
 
             if (isNoErr)
             {
@@ -410,7 +410,7 @@ namespace GUIForDiskpart.diskpart
 
             commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
             commands[1] = "Select " + DPListType.PARTITION + " " + partitionIndex;
-            commands[2] = "Assign ";
+            commands[2] = "ASSIGN ";
 
             if (diskLetter != null)
             {
@@ -430,12 +430,72 @@ namespace GUIForDiskpart.diskpart
             return Assign(diskIndex, partitionIndex, null, isNoErr);
         }
 
+        public static string Remove(char driveLetter, bool isDismount, bool isNoErr)
+        {
+            string[] commands = new string[2];
+
+            commands[0] = "Select " + DPListType.VOLUME + " " + driveLetter;
+            commands[1] = "REMOVE LETTER=" + driveLetter + " ";
+
+            if (isDismount)
+            {
+                commands[1] += "DISMOUNT ";
+            }
+
+            if (isNoErr)
+            {
+                commands[1] += "NOERR ";
+            }
+
+            return ExecuteInternal(commands);
+        }
+
+        public static string Remove(char driveLetter, string mountPath, bool isDismount, bool isNoErr)
+        {
+            string[] commands = new string[2];
+
+            commands[0] = "Select " + DPListType.VOLUME + " " + driveLetter;
+            commands[1] = "REMOVE MOUNT=" + mountPath + " ";
+
+            if (isDismount)
+            {
+                commands[1] += "DISMOUNT ";
+            }
+
+            if (isNoErr)
+            {
+                commands[1] += "NOERR ";
+            }
+
+            return ExecuteInternal(commands);
+        }
+
+        public static string RemoveAll(uint partitionIndex, bool isDismount, bool isNoErr)
+        {
+            string[] commands = new string[2];
+
+            commands[0] = "Select " + DPListType.PARTITION + " " + partitionIndex;
+            commands[1] = "REMOVE ALL ";
+
+            if (isDismount)
+            {
+                commands[1] += "DISMOUNT ";
+            }
+
+            if (isNoErr)
+            {
+                commands[1] += "NOERR ";
+            }
+
+            return ExecuteInternal(commands);
+        }
+
         public static string Clean(uint diskIndex, bool isCleanAll)
         {
             string[] commands = new string[2];
 
             commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
-            commands[1] = "Clean ";
+            commands[1] = "CLEAN ";
 
             if (isCleanAll)
             {
@@ -450,7 +510,7 @@ namespace GUIForDiskpart.diskpart
             string[] commands = new string[2];
 
             commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
-            commands[1] = "Convert " + options;
+            commands[1] = "CONVERT " + options;
 
             return ExecuteInternal(commands);
         }
@@ -634,6 +694,26 @@ namespace GUIForDiskpart.diskpart
             }
 
             commands[1] += DPListType.DISK + " ";
+
+            if (isNoErr)
+            {
+                commands[1] += "NOERR ";
+            }
+
+            return ExecuteInternal(commands);
+        }
+
+        public static string SetID(uint partitionIndex, string option, bool isOverride, bool isNoErr)
+        {
+            string[] commands = new string[2];
+
+            commands[0] = "Select " + DPListType.PARTITION + " " + partitionIndex;
+            commands[1] = "SET ID= " + option + " ";
+
+            if (isOverride)
+            {
+                commands[1] += "OVERRIDE ";
+            }
 
             if (isNoErr)
             {

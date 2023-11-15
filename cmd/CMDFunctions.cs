@@ -1,16 +1,46 @@
 ﻿using GUIForDiskpart.main;
-using System.ComponentModel.Design.Serialization;
+using System;
 
 namespace GUIForDiskpart.cmd
 {
     public static class CMDFunctions
     {
+        private static char? yesChar;
+        private static char? noChar;
+
+        static CMDFunctions()
+        {
+            SetYesNoLetters();
+        }
+        
+        private static void SetYesNoLetters()
+        {
+            string command = "CHOICE";
+            string cmdOutput = CommandExecuter.IssueCommandNoWait(ProcessType.CMD, command);
+            foreach (char c in new[] {'[', ']', ',', '?'})
+            {
+                cmdOutput = cmdOutput.Replace(c.ToString(),"");
+            }
+            cmdOutput = cmdOutput.Trim();
+
+            if (!string.IsNullOrEmpty(cmdOutput))
+            {
+                yesChar = cmdOutput[0];
+                noChar = cmdOutput[1];
+            }
+            else
+            {
+                yesChar = 'Y';
+                noChar = 'N';
+            }
+        }
+
         public static string CHKDSK(char driveLetter, string parameters, string logFileLocation)
         {
             string command = string.Empty;
             string closingCommand = $" DIR > \"{logFileLocation}\" & echo A log file has been created here: {logFileLocation} ";
 
-            command = $"echo y | CHKDSK {driveLetter}: {parameters} & {closingCommand}";
+            command = $"echo {yesChar} | CHKDSK {driveLetter}: {parameters} & {closingCommand}";
 
             return ExecuteInternal(command);
         }
@@ -19,7 +49,7 @@ namespace GUIForDiskpart.cmd
         {
             string command = string.Empty;
 
-            command = $"echo y | CHKDSK {driveLetter}: {parameters} ";
+            command = $"echo {yesChar} | CHKDSK {driveLetter}: {parameters} ";
 
             return ExecuteInternal(command);
         }

@@ -83,17 +83,10 @@ namespace GUIForDiskpart.windows
                     break;
             }
 
-            UInt64 size = GetSizeValue();
-
-            if (size == 0 && fileSystem == FileSystem.FAT32)
-            {
-                size = 32768;
-            }
-
             string output = string.Empty;
 
             output = DPFunctions.Format(WSMPartition.DiskNumber, wsmPartition.PartitionNumber, fileSystem,
-                    VolumeValue.Text, (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, true, false);
+                    VolumeValue.Text, (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, false, false);
 
             MainWindow.AddTextToOutputConsole(output);
 
@@ -110,26 +103,12 @@ namespace GUIForDiskpart.windows
             return (string)((ComboBoxItem)FileSystemValue.SelectedValue).Content;
         }
 
-        private UInt64 GetSizeValue()
-        {
-            UInt64 size = 0;
-
-            if (SizeValue.Text != "")
-            {
-                UInt64.TryParse(SizeValue.Text, out size);
-            }
-
-            return size;
-        }
-
         private void EvaluteFAT32SizeBox()
         {
             ClearErrorMessage();
             if (SelectedFileSystemAsString() != "FAT32") return;
 
-            UInt64 size = GetSizeValue();
-
-            if (size <= 32768)
+            if (((WSMPartition.Size / 1024) / 1024) <= 32768)
             {
                 ConfirmButton.IsEnabled = true;
                 ClearErrorMessage();
@@ -138,11 +117,6 @@ namespace GUIForDiskpart.windows
             {
                 ConfirmButton.IsEnabled = false;
                 SetErrorMessage("ERROR: FAT32 max size is 32768 MB!");
-            }
-
-            if (size == 0)
-            {
-                SetErrorMessage("Size will be 32768 MB -> FAT32 maximum.");
             }
         }
 
@@ -155,11 +129,6 @@ namespace GUIForDiskpart.windows
         {
             if (ErrorMessageValue == null) return;
             ErrorMessageValue.Content = " ";
-        }
-
-        private void SizeValue_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            EvaluteFAT32SizeBox();
         }
     }
 }

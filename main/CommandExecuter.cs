@@ -114,6 +114,22 @@ namespace GUIForDiskpart.main
             return output;
         }
 
+        public static string IssueCommandNoWait(string processType, string command)
+        {
+            var process = CreateProcess(processType);
+            process.StartInfo.Arguments = "/k";
+            
+            string? output = string.Empty;
+            
+            process.Start();
+            process.StandardInput.WriteLine($"echo ABCDEFGHIJKLMNOPQRSTUVWXYZ | {command}");
+            StreamReader streamReader = process.StandardOutput;
+            output = streamReader.ReadLine();
+            output = streamReader.ReadLine();
+            process.Close();
+            return output;
+        }
+
         public static string IssueCommandSeperateCMDWindow(string command)
         {
             string output = string.Empty;

@@ -1,6 +1,7 @@
 ﻿using GUIForDiskpart.diskpart;
 using GUIForDiskpart.main;
 using GUIForDiskpart.windows;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -21,6 +22,7 @@ namespace GUIForDiskpart
             {
                 partition = value;
                 PartitionDataToThisUI();
+                PopulateContextMenu();
             }
         }
 
@@ -56,8 +58,6 @@ namespace GUIForDiskpart
             {
                 WinVolumeIcon.Source = IconUtilities.GetSystemIconByType(SystemIconType.WinLogo);
             }
-
-            PopulateContextMenu();
         }
 
         private void PopulateContextMenu()
@@ -93,17 +93,8 @@ namespace GUIForDiskpart
                 ContextMenu.Items.Add(offline);
             }
 
-            if (Partition.WSMPartition.DriveLetter < 65)
-            {
-                if (Partition.WSMPartition.IsOffline)
-                {
-                    ContextMenu.Items.Add(online);
-                }
-                else
-                {
-                    ContextMenu.Items.Add(offline);
-                }
-            }
+            if (!ContextMenu.Items.Contains(offline))
+            { ContextMenu.Items.Add((Partition.WSMPartition.DriveLetter < 65) ? online : offline); }
 
             if (Partition.IsLogicalDisk) 
             {
@@ -285,14 +276,17 @@ namespace GUIForDiskpart
 
         private string GetFileSystemText()
         {
-            if (Partition.IsLogicalDisk && Partition.LogicalDiskInfo.FileSystem != null )
+            if (Partition.IsLogicalDisk && !string.IsNullOrWhiteSpace(Partition.LogicalDiskInfo.FileSystem))
             {
                 return Partition.LogicalDiskInfo.FileSystem;
             }
-            else
+            
+            if (Partition.IsLogicalDisk && string.IsNullOrWhiteSpace(Partition.LogicalDiskInfo.FileSystem))
             {
-                return "No Windows Volume";
+                return "No filesystem";
             }
+
+            return "No Windows Volume";
         }
 
         private void OpenContextMenu_Click(object sender, RoutedEventArgs e)

@@ -50,11 +50,17 @@ namespace GUIForDiskpart.main
             } 
         }
 
-        public bool IsDefragAnalysis
+        public bool HasDefragAnalysis
         { get { return (DefragAnalysis == null) ? false : true; } }
 
         public bool IsVolume
-        { get { if (HasWMIPartition && IsLogicalDisk) return true; return false; } }
+        { 
+            get 
+            { 
+                if (HasWSMPartition && IsLogicalDisk) return true;
+                return false; 
+            } 
+        }
 
         public void PrintToConsole()
         {
@@ -80,7 +86,7 @@ namespace GUIForDiskpart.main
                 fullOutput += LogicalDiskInfo.GetOutputAsString();
             }
 
-            if (IsDefragAnalysis)
+            if (HasDefragAnalysis)
             {
                 fullOutput += DefragAnalysis.GetOutputAsString();
             }
@@ -108,7 +114,7 @@ namespace GUIForDiskpart.main
                 AppendDataToDict(data, LogicalDiskInfo.GetKeyValuePairs());
             }
 
-            if (IsDefragAnalysis) 
+            if (HasDefragAnalysis) 
             {
                 AppendDataToDict(data, DefragAnalysis.GetKeyValuePairs());
             }

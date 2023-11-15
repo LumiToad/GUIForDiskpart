@@ -1,10 +1,8 @@
 ﻿using GUIForDiskpart.diskpart;
 using GUIForDiskpart.main;
 using GUIForDiskpart.windows;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 
 namespace GUIForDiskpart
@@ -24,6 +22,7 @@ namespace GUIForDiskpart
             { 
                 diskInfo = value; 
                 DriveDataToThisUI();
+                PopulateContextMenu();
             }
         }
 
@@ -45,6 +44,40 @@ namespace GUIForDiskpart
 
             DiskIcon.Source = GetDiskIcon();
             MediaTypeIcon.Source = GetMediaTypeIcon();
+        }
+
+        private void PopulateContextMenu()
+        {
+            string header = string.Empty;
+            string name = string.Empty;
+
+            header = "DISKPART - Online";
+            name = "DPOnline";
+
+            if (DiskInfo.IsOnline) 
+            {
+                header = "DISKPART - Offline";
+                name = "DPOffline";
+            }
+            MenuItem menuItem = WPFUtilites.CreateContextMenuItem(IconUtilities.Diskpart, name, header, true, OnOffline_Click);
+            ContextMenu.Items.Add(menuItem);
+        }
+
+        private void OnOffline_Click(object sender, RoutedEventArgs e)
+        {
+            string output = string.Empty;
+
+            if (DiskInfo.IsOnline) 
+            {
+                output += DPFunctions.OnOfflineDisk(DiskInfo.DiskIndex, false, false);
+            }
+            else 
+            {
+                output += DPFunctions.OnOfflineDisk(DiskInfo.DiskIndex, true, false);
+            }
+
+            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.RetrieveAndShowDiskData(false);
         }
 
         private void Detail_Click(object sender, RoutedEventArgs e)
@@ -92,7 +125,7 @@ namespace GUIForDiskpart
             createVolumeWindow.Show();
         }
 
-        private void Format_Click(object sender, RoutedEventArgs e)
+        private void EasyFormat_Click(object sender, RoutedEventArgs e)
         {
             FormatDriveWindow formatWindow = new FormatDriveWindow(diskInfo);
             formatWindow.Owner = MainWindow;
