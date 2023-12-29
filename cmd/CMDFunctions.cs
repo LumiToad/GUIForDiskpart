@@ -1,46 +1,57 @@
 ﻿using GUIForDiskpart.main;
 using System;
+using System.IO;
+using System.Windows.Forms;
 
 namespace GUIForDiskpart.cmd
 {
     public static class CMDFunctions
     {
-        private static char? yesChar;
-        private static char? noChar;
-
-        static CMDFunctions()
-        {
-            SetYesNoLetters();
-        }
+        private static string YesNoFilename = "ynchoice.cfg";
         
-        private static void SetYesNoLetters()
+        private static bool CheckYesNoFile()
         {
-            string command = "CHOICE";
-            string cmdOutput = CommandExecuter.IssueCommandNoWait(ProcessType.CMD, command);
-            foreach (char c in new[] {'[', ']', ',', '?'})
+            if (FileUtilites.CheckFileExists(YesNoFilename)) return true;
+
+            string message = "GUIFD will now try to detect the default Yes / No key for your system language.\n\nThis requires a certain workaround, which will cause error beeps from your Windows Command Shell. Click \"Ok\", when you are ready, TURNING OFF THE VOLUME IS SUGGESTED.";
+            string title = "Warning!";
+            MessageBoxButtons buttons = MessageBoxButtons.OKCancel;
+            DialogResult result = MessageBox.Show(message, title, buttons, MessageBoxIcon.Warning);
+            if (result == DialogResult.OK)
             {
-                cmdOutput = cmdOutput.Replace(c.ToString(),"");
+                CreateYesNoFile();
+                return true;
+            }
+            return false;
+        }
+
+        private static string GetYesNoFromFile()
+        {
+            return FileUtilites.LoadConfigFile(YesNoFilename);
+        }
+
+        private static void CreateYesNoFile()
+        {
+            string command = "echo ABCDEFGHIJKLMNOPQRSTUVWXYZ | CHOICE";
+            string cmdOutput = CommandExecuter.IssueCommandNoWait(ProcessType.CMD, command);
+
+            foreach (char c in new[] { '[', ']', ',', '?' })
+            {
+                cmdOutput = cmdOutput.Replace(c.ToString(), "");
             }
             cmdOutput = cmdOutput.Trim();
 
-            if (!string.IsNullOrEmpty(cmdOutput))
-            {
-                yesChar = cmdOutput[0];
-                noChar = cmdOutput[1];
-            }
-            else
-            {
-                yesChar = 'Y';
-                noChar = 'N';
-            }
+            FileUtilites.SaveConfigFile(cmdOutput, YesNoFilename);
         }
 
         public static string CHKDSK(char driveLetter, string parameters, string logFileLocation)
         {
             string command = string.Empty;
+            if (!CheckYesNoFile()) return command;
+            string yesNo = GetYesNoFromFile();
             string closingCommand = $" DIR > \"{logFileLocation}\" & echo A log file has been created here: {logFileLocation} ";
 
-            command = $"echo {yesChar} | CHKDSK {driveLetter}: {parameters} & {closingCommand}";
+            command = $"echo {yesNo[0]} | CHKDSK {driveLetter}: {parameters} & {closingCommand}";
 
             return ExecuteInternal(command);
         }
@@ -48,8 +59,10 @@ namespace GUIForDiskpart.cmd
         public static string CHKDSK(char driveLetter, string parameters)
         {
             string command = string.Empty;
+            if (!CheckYesNoFile()) return command;
+            string yesNo = GetYesNoFromFile();
 
-            command = $"echo {yesChar} | CHKDSK {driveLetter}: {parameters} ";
+            command = $"echo {yesNo[0]} | CHKDSK {driveLetter}: {parameters} ";
 
             return ExecuteInternal(command);
         }
