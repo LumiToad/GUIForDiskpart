@@ -96,26 +96,26 @@ namespace GUIForDiskpart.main
         {
             string output = string.Empty;
 
-            output += "\t\t___WSMPartition___" + "\n";
-            output += "\t\tDiskNumber: " + DiskNumber + "\n";
-            output += "\t\tPartitionNumber: " + PartitionNumber + "\n";
-            output += "\t\tDriveLetter: " + DriveLetter + "\n";
-            output += "\t\tOperationalStatus: " + OperationalStatus + "\n";
-            output += "\t\tTransitionState: " + TransitionState + "\n";
-            output += "\t\tSize: " + Size + " bytes" + "\n";
-            output += "\t\tMBR Type: " + GetPartitionType() + "\n";
-            output += "\t\tGPT Type: " + GetPartitionType() + "\n";
-            output += "\t\tGUID: " + GUID + "\n";
-            output += "\t\tIsReadOnly: " + IsReadOnly + "\n";
-            output += "\t\tIsOffline: " + IsOffline + "\n";
-            output += "\t\tIsSystem: " + IsSystem + "\n";
-            output += "\t\tIsBoot: " + IsBoot + "\n";
-            output += "\t\tIsActive: " + IsActive + "\n";
-            output += "\t\tIsHidden: " + IsHidden + "\n";
-            output += "\t\tIsShadowCopy: " + IsShadowCopy + "\n";
-            output += "\t\tNoDefaultDriveLetter: " + NoDefaultDriveLetter + "\n";
+            output += "___WSM-Partition___" + "\n\n";
+            output += "DiskNumber: " + "\t\t\t" + DiskNumber + "\n";
+            output += "PartitionNumber: " + "\t\t\t" + PartitionNumber + "\n";
+            output += "DriveLetter: " + "\t\t\t" + DriveLetter + "\n";
+            output += "OperationalStatus: " + "\t\t\t" + OperationalStatus + "\n";
+            output += "TransitionState: " + "\t\t\t" + TransitionState + "\n";
+            output += "Size: " + "\t\t\t" + Size + " bytes" + "\n";
+            output += "MBR Type: " + "\t\t\t" + GetPartitionType() + "\n";
+            output += "GPT Type: " + "\t\t\t" + GetPartitionType() + "\n";
+            output += "GUID: " + "\t\t\t" + GUID + "\n";
+            output += "IsReadOnly: " + "\t\t\t" + IsReadOnly + "\n";
+            output += "IsOffline: " + "\t\t\t" + IsOffline + "\n";
+            output += "IsSystem: " + "\t\t\t" + IsSystem + "\n";
+            output += "IsBoot: " + "\t\t\t" + IsBoot + "\n";
+            output += "IsActive: " + "\t\t\t" + IsActive + "\n";
+            output += "IsHidden: " + "\t\t\t" + IsHidden + "\n";
+            output += "IsShadowCopy: " + "\t\t\t" + IsShadowCopy + "\n";
+            output += "NoDefaultDriveLetter: " + "\t\t\t" + NoDefaultDriveLetter + "\n";
                          
-            output += "\t\t_________________" + "\n";
+            output += "_________________" + "\n\n";
 
             return output;
         }

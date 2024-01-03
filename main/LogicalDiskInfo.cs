@@ -42,26 +42,22 @@ namespace GUIForDiskpart.main
 
         public void PrintToConsole()
         {
-            Console.WriteLine("Name: {0}", DriveLetter);
-            Console.WriteLine("DriveType: {0}", DriveType);
-            Console.WriteLine("FileSystem: {0}", FileSystem);
-            Console.WriteLine("TotalSpace: {0}", TotalSpace);
-            Console.WriteLine("FreeSpace: {0}", FreeSpace);
-            Console.WriteLine("VolumeName: {0}", VolumeName);
-            Console.WriteLine("VolumeSerial: {0}", VolumeSerial);
-            Console.WriteLine(new string('-', 79));
+            Console.WriteLine(GetOutputAsString());
         }
 
         public string GetOutputAsString()
         {
             string output = string.Empty;
-            output += "\t\tVolumeName: " + VolumeName + "\n";
-            output += "\t\tDriveLetter: " + DriveLetter + "\\" + "\n";
-            output += "\t\tFileSystem: " + FileSystem + "\n";
-            output += "\t\tTotalSpace: " + TotalSpace + "\n";
-            output += "\t\tFreeSpace: " + FreeSpace + "\n";
-            output += "\t\tDriveType: " + DriveType + "\n";
-            output += "\t\tVolumeSerial: " + VolumeSerial + "\n";
+            output += "___Logical-Disk___" + "\n\n";
+            output += "VolumeName: " + "\t\t\t" + VolumeName + "\n";
+            output += "DriveLetter: " + "\t\t\t" + DriveLetter + "\\" + "\n";
+            output += "FileSystem: " + "\t\t\t" + FileSystem + "\n";
+            output += "TotalSpace: " + "\t\t\t" + TotalSpace + "\n";
+            output += "FreeSpace: " + "\t\t\t" + FreeSpace + "\n";
+            output += "DriveType: " + "\t\t\t" + DriveType + "\n";
+            output += "VolumeSerial: " + "\t\t\t" + VolumeSerial + "\n";
+
+            output += "_________________" + "\n\n";
 
             return output;
         }

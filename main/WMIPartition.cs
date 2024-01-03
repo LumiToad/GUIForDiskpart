@@ -116,33 +116,28 @@ namespace GUIForDiskpart.main
 
         public void PrintToConsole()
         {
-            Console.WriteLine("PartitionName: {0}", PartitionName);
-            Console.WriteLine("Bootable: {0}", Bootable);
-            Console.WriteLine("BootPartition: {0}", BootPartition);
-            Console.WriteLine("PrimaryPartition: {0}", PrimaryPartition);
-            Console.WriteLine("TotalSize: {0}", Size);
-            Console.WriteLine("MediaStatus: {0}", Status);
-            Console.WriteLine("MediaType: {0}", Type);
-            Console.WriteLine(new string('-', 79));
+            Console.WriteLine(GetOutputAsString());
         }
 
         public string GetOutputAsString()
         {
             string output = string.Empty;
-            output += "\tPartitionName: {0}" + PartitionName + "\n";
-            output += "\tBootable: {0}" + Bootable + "\n";
-            output += "\tBootPartition: " + BootPartition + "\n";
-            output += "\tPrimaryPartition: " + PrimaryPartition + "\n";
-            output += "\tTotalSize: " + Size + "\n";
-            output += "\tMediaStatus: " + Status + "\n";
-            output += "\tMediaType: " + Type + "\n";
+
+            output += "___WMI-Partition___" + "\n\n";
+            output += "PartitionName: " + "\t\t\t" + PartitionName + "\n";
+            output += "Bootable: " + "\t\t\t" + Bootable + "\n";
+            output += "BootPartition: " + "\t\t\t" + BootPartition + "\n";
+            output += "PrimaryPartition: " + "\t\t\t" + PrimaryPartition + "\n";
+            output += "TotalSize: " + "\t\t\t" + Size + "\n";
+            output += "MediaStatus: " + "\t\t\t" + Status + "\n";
+            output += "MediaType: " + "\t\t\t" + Type + "\n";
 
             if (logicalDiskInfo != null) 
             { 
                 output += logicalDiskInfo.GetOutputAsString();
             }
 
-            output += "\t_________________" + "\n";
+            output += "_________________" + "\n\n";
             
             return output;
         }
