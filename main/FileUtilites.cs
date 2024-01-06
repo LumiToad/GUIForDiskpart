@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.IO;
+using System.Text.Json;
 
 namespace GUIForDiskpart.main
 {
@@ -9,6 +10,7 @@ namespace GUIForDiskpart.main
         private static string AppDataPath => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         private static string ConfigFolder = "GUIFD";
         private static string FullConfigPath = $"{AppDataPath}\\{ConfigFolder}";
+        private static string JsonExtension = ".json";
 
         public static void SaveAsTextfile(string text, string filename)
         {
@@ -69,6 +71,25 @@ namespace GUIForDiskpart.main
         {
             Console.WriteLine($"{FullConfigPath}\\{filename}");
             return File.Exists($"{FullConfigPath}\\{filename}");
+        }
+
+        public static bool CheckFileExists(string filename, string extension)
+        {
+            return CheckFileExists(filename + extension);
+        }
+
+        public static void SaveConfigAsJSON<T>(T data, string filename)
+        {
+            var options = new JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
+            string dataAsJSON = JsonSerializer.Serialize(data, options);
+            SaveConfigFile(dataAsJSON, filename + JsonExtension);
+        }
+
+        public static T LoadConfigFromJSON<T>(string filename)
+        {
+            string loadedFile = LoadConfigFile(filename + JsonExtension);
+            var options = new JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
+            return JsonSerializer.Deserialize<T>(loadedFile, options);
         }
     }
 }

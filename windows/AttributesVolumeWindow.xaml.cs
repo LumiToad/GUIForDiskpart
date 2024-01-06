@@ -39,7 +39,7 @@ namespace GUIForDiskpart.windows
             Attributes.Items.Add(AttributesOptions.SHADOWCOPY);
         }
 
-        private void SetButton_Clear(object sender, RoutedEventArgs e)
+        private void SetButton_Click(object sender, RoutedEventArgs e)
         {
             string output = string.Empty;
 
@@ -49,7 +49,7 @@ namespace GUIForDiskpart.windows
             this.Close();
         }
 
-        private void ClearButton_Clear(object sender, RoutedEventArgs e)
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
             string output = string.Empty;
 

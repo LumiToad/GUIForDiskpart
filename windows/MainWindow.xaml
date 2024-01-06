@@ -72,6 +72,11 @@
                         <MenuItem Header="Create Child VDisk" Click="ChildVDisk_Click"/>
                         <MenuItem Header="Copy VDisk" Click="CopyVDisk_Click"/>
                     </MenuItem>
+                    <MenuItem Header="Attributes (Volume Index)" Click="AttributesVolume_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/resources/diskpart.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
 
                 <MenuItem x:Name="Help" Header="Help">

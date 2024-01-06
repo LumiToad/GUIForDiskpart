@@ -94,6 +94,7 @@ namespace GUIForDiskpart
         {
             CleanWindow cleanWindow = new CleanWindow(DiskInfo);
             cleanWindow.Owner = MainWindow;
+            cleanWindow.Focus();
 
             cleanWindow.Show();
         }

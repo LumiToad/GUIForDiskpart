@@ -24,6 +24,9 @@
     <Compile Update="windows\AssignLetterWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="windows\AttributesVolumeByIndexWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="windows\AttributesVolumeWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -104,6 +107,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="windows\AssignLetterWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="windows\AttributesVolumeByIndexWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="windows\AttributesVolumeWindow.xaml">

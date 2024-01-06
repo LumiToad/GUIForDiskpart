@@ -544,6 +544,24 @@ namespace GUIForDiskpart.diskpart
             return ExecuteInternal(commands);
         }
 
+        public static string AttributesVolume(int volumeIndex, bool isSet, string option, bool isNoErr)
+        {
+            string[] commands = new string[2];
+
+            commands[0] = "Select " + DPListType.VOLUME + " " + volumeIndex;
+            commands[1] = "ATTRIBUTES " + DPListType.VOLUME + " ";
+
+            commands[1] += (isSet ? AttributesOptions.SET : AttributesOptions.CLEAR) + " ";
+            commands[1] += option + " ";
+
+            if (isNoErr)
+            {
+                commands[1] += "NOERR ";
+            }
+
+            return ExecuteInternal(commands);
+        }
+
         public static string AttributesDisk(uint diskIndex, bool isSet, bool isNoErr)
         {
             string[] commands = new string[2];

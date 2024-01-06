@@ -116,6 +116,15 @@ namespace GUIForDiskpart
             //create vdisk window
         }
 
+        private void AttributesVolume_Click(object sender, RoutedEventArgs e)
+        {
+            AttributesVolumeByIndexWindow attributesVolumeByIndexWindow = new();
+            attributesVolumeByIndexWindow.Owner = this;
+            attributesVolumeByIndexWindow.Focus();
+
+            attributesVolumeByIndexWindow.Show();
+        }
+
         #endregion TopBarDiskPartMenu
 
         #region TopBarCommandsMenu

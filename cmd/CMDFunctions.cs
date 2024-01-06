@@ -7,11 +7,11 @@ namespace GUIForDiskpart.cmd
 {
     public static class CMDFunctions
     {
-        private static string YesNoFilename = "ynchoice.cfg";
+        private static string YesNoFilename = "ynchoice";
         
         private static bool CheckYesNoFile()
         {
-            if (FileUtilites.CheckFileExists(YesNoFilename)) return true;
+            if (FileUtilites.CheckFileExists(YesNoFilename, ".json")) return true;
 
             string message = "GUIFD will now try to detect the default Yes / No key for your system language.\n\nThis requires a certain workaround, which will cause error beeps from your Windows Command Shell. Click \"Ok\", when you are ready, TURNING OFF THE VOLUME IS SUGGESTED.";
             string title = "Warning!";
@@ -27,7 +27,8 @@ namespace GUIForDiskpart.cmd
 
         private static string GetYesNoFromFile()
         {
-            return FileUtilites.LoadConfigFile(YesNoFilename);
+            CMDConfigFile configFile = FileUtilites.LoadConfigFromJSON<CMDConfigFile>(YesNoFilename);
+            return configFile.yesNo;
         }
 
         private static void CreateYesNoFile()
@@ -41,7 +42,8 @@ namespace GUIForDiskpart.cmd
             }
             cmdOutput = cmdOutput.Trim();
 
-            FileUtilites.SaveConfigFile(cmdOutput, YesNoFilename);
+            CMDConfigFile cmdConfigFile = new () { yesNo = $"{cmdOutput[0]}{cmdOutput[1]}" };
+            FileUtilites.SaveConfigAsJSON(cmdConfigFile, YesNoFilename);
         }
 
         public static string CHKDSK(char driveLetter, string parameters, string logFileLocation)
