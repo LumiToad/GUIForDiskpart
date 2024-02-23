@@ -72,6 +72,9 @@
     <Compile Update="windows\ShrinkWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="windows\StartupLoadingWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
@@ -155,6 +158,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="windows\ShrinkWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="windows\StartupLoadingWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

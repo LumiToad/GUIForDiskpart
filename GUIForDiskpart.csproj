@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationManifest>main\app.manifest</ApplicationManifest>
 	<Deterministic>false</Deterministic>
-	<Version>1.0.1561</Version>
-	<AssemblyVersion>1.0.2402.1566</AssemblyVersion>
-	<FileVersion>1.0.2402.1566</FileVersion>
+	<Version>1.0.1585</Version>
+	<AssemblyVersion>1.0.2402.1590</AssemblyVersion>
+	<FileVersion>1.0.2402.1590</FileVersion>
 	<Copyright>MIT License</Copyright>
 	<ApplicationIcon>resources\guifdLogo.ico</ApplicationIcon>
 	<Platforms>AnyCPU;x64</Platforms>
@@ -60,6 +60,7 @@
     <None Remove="resources\guifd.png" />
     <None Remove="resources\guifdLogo.ico" />
     <None Remove="resources\guifdLogo.png" />
+    <None Remove="resources\startup.png" />
     <None Remove="resources\winLogo.ico" />
   </ItemGroup>
 
@@ -109,6 +110,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="resources\guifdLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\startup.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="resources\winLogo.ico">

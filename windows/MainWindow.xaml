@@ -7,8 +7,8 @@
         xmlns:userControls="clr-namespace:GUIForDiskpart.userControls" x:Class="GUIForDiskpart.MainWindow"
         mc:Ignorable="d"
         
-        Title="GUIFD - GUI for Diskpart" WindowState="Normal" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" MinWidth="800" MinHeight="600" Height="767" Width="786">
-
+        Title="GUIFD - GUI for Diskpart" WindowState="Normal" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" MinWidth="800" MinHeight="600" Height="767" Width="786"
+        Closing="Window_Closing">
     <Window.Resources>
         <DataTemplate x:Key="driveTemplate">
             <StackPanel>

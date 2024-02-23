@@ -4,9 +4,12 @@ using GUIForDiskpart.userControls;
 using GUIForDiskpart.windows;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace GUIForDiskpart
 {
@@ -19,10 +22,18 @@ namespace GUIForDiskpart
         private const string wikiURL = "https://github.com/LumiToad/GUIForDiskpart/wiki";
         private const string buildStage = "Alpha";
 
+        private StartupLoadingWindow startup;
+
         public MainWindow()
         {
             InitializeComponent();
+            ShowStartupScreen();
             Initialize();
+            if (startup != null)
+            {
+                StartupWindowClose();
+                Focus();
+            }
         }
 
         private void Initialize()
@@ -199,6 +210,11 @@ namespace GUIForDiskpart
             return null;
         }
 
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            StartupWindowClose();
+        }
+
         #endregion StackPanelLogic
 
         #region TopBarFileMenu
@@ -267,5 +283,36 @@ namespace GUIForDiskpart
         }
 
         #endregion RetrieveDisk
+
+        #region StartupWindow
+
+        private void ShowStartupScreen()
+        {
+            Thread startupWindowThread = new Thread(new ThreadStart(StartupWindowThreadEntryPoint));
+            startupWindowThread.SetApartmentState(ApartmentState.STA);
+            startupWindowThread.IsBackground = true;
+            startupWindowThread.Start();
+        }
+
+        private void StartupWindowClose()
+        {
+            if (startup.Dispatcher.CheckAccess())
+            {
+                startup.Close();
+            }
+            else
+            {
+                startup.Dispatcher.Invoke(DispatcherPriority.Normal, new ThreadStart(startup.Close));
+            }
+        }
+
+        public void StartupWindowThreadEntryPoint()
+        {
+            startup = new StartupLoadingWindow();
+            startup.Show();
+            Dispatcher.Run();
+        }
+
+        #endregion StartupWindow
     }
 }
