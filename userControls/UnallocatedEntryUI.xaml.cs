@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using GUIForDiskpart.main;
+using GUIForDiskpart.windows;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,6 +13,10 @@ namespace GUIForDiskpart.userControls
     public partial class UnallocatedEntryUI : UserControl
     {
         MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+
+        private long size;
+        private DiskInfo diskInfo;
+
         public Dictionary<string, object?> Entry
         {
             get 
@@ -24,10 +30,12 @@ namespace GUIForDiskpart.userControls
 
         public bool? IsSelected { get { return EntrySelected.IsChecked; } }
 
-        public UnallocatedEntryUI(string size)
+        public UnallocatedEntryUI(DiskInfo diskInfo)
         {
             InitializeComponent();
-            SetSize(size);
+            this.diskInfo = diskInfo;
+            size = diskInfo.UnallocatedSpace;
+            SetSize(ByteFormatter.FormatBytes(size));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -39,6 +47,24 @@ namespace GUIForDiskpart.userControls
         public void SelectEntryRadioButton()
         {
             EntrySelected.IsChecked = !EntrySelected.IsChecked;
+        }
+
+        private void CreatePart_Click(object sender, RoutedEventArgs e)
+        {
+            CreatePartitionWindow createPartitionWindow = new CreatePartitionWindow(diskInfo, size);
+            createPartitionWindow.Owner = MainWindow;
+            createPartitionWindow.Focus();
+
+            createPartitionWindow.Show();
+        }
+
+        private void CreateVolume_Click(object sender, RoutedEventArgs e)
+        {
+            CreateVolumeWindow createVolumeWindow = new CreateVolumeWindow(diskInfo, size);
+            createVolumeWindow.Owner = MainWindow;
+            createVolumeWindow.Focus();
+
+            createVolumeWindow.Show();
         }
 
         private void OpenContextMenu_Click(object sender, RoutedEventArgs e)

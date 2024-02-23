@@ -1,7 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using System.Reflection;
 
 namespace GUIForDiskpart.main

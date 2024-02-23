@@ -7,10 +7,12 @@
              mc:Ignorable="d" Width="220" Height="100">
     <UserControl.ContextMenu>
         <ContextMenu>
-            <MenuItem Header="DISKPART - ???">
+            <MenuItem Header="DISKPART - Create">
                 <MenuItem.Icon>
-                    <Image Source="/resources/DiskpartD.png" />
+                    <Image Source="/resources/diskpart.png" />
                 </MenuItem.Icon>
+                <MenuItem Header="Partition" Click="CreatePart_Click"/>
+                <MenuItem Header="Volume" Click="CreateVolume_Click"/>
             </MenuItem>
             <Separator />
         </ContextMenu>

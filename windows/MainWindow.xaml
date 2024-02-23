@@ -81,7 +81,7 @@
 
                 <MenuItem x:Name="Help" Header="Help">
                     <MenuItem Header="About" Click="About_Click"/>
-                    <MenuItem Header="To Wiki"/>
+                    <MenuItem Header="To Wiki" Click="Wiki_Click"/>
                     <MenuItem Header="To Website" Click="Website_Click"/>
                 </MenuItem>
             </Menu>

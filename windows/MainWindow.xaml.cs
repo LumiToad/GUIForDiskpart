@@ -16,6 +16,7 @@ namespace GUIForDiskpart
     public partial class MainWindow : Window
     {
         private const string websiteURL = "https://github.com/LumiToad/GUIForDiskpart";
+        private const string wikiURL = "https://github.com/LumiToad/GUIForDiskpart/wiki";
         private const string buildStage = "Alpha";
 
         public MainWindow()
@@ -53,7 +54,7 @@ namespace GUIForDiskpart
             AddEntrysToStackPanel(PartitionStackPanel, entry.DiskInfo.Partitions);
             if (entry.DiskInfo.UnallocatedSpace > 0) 
             {
-                UnallocatedEntryUI unallocatedEntryUI = new UnallocatedEntryUI(entry.DiskInfo.FormattedUnallocatedSpace);
+                UnallocatedEntryUI unallocatedEntryUI = new UnallocatedEntryUI(entry.DiskInfo);
                 PartitionStackPanel.Children.Add(unallocatedEntryUI);
             }
             EntryDataUI.AddDataToGrid(entry.DiskInfo.GetKeyValuePairs());
@@ -224,6 +225,11 @@ namespace GUIForDiskpart
         private void Website_Click(object sender, RoutedEventArgs e)
         {
             CommandExecuter.IssueCommand(ProcessType.CMD, "start " + websiteURL);
+        }
+
+        private void Wiki_Click(object sender, RoutedEventArgs e)
+        {
+            CommandExecuter.IssueCommand(ProcessType.CMD, "start " + wikiURL);
         }
 
         private void About_Click(object sender, RoutedEventArgs e)

@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
 
         <userControls:ConsoleReturnUI x:Name="ConsoleReturn" Grid.RowSpan="2"/>
-        <TextBox x:Name="SizeValue" HorizontalAlignment="Left" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="83,38,0,0" InputScope="Number"/>
+        <TextBox x:Name="SizeValue" HorizontalAlignment="Left" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="83,38,0,0" InputScope="Number" TextChanged="SizeValue_TextChanged"/>
         <Label Content="Size in MB:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="10,34,0,0"/>
         <Label Content="Options:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="10,8,0,0"/>
         <ComboBox x:Name="PartitionOptionValue" HorizontalAlignment="Left" Margin="83,11,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1">
