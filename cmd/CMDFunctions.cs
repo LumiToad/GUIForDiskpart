@@ -27,12 +27,6 @@ namespace GUIForDiskpart.cmd
         {
             string cmdOutput = CommandExecuter.GetChoiceYNString();
 
-            foreach (char c in new[] { '[', ']', ',', '?' })
-            {
-                cmdOutput = cmdOutput.Replace(c.ToString(), "");
-            }
-            cmdOutput = cmdOutput.Trim();
-
             CMDConfigFile cmdConfigFile = new() { yesNo = $"{cmdOutput[0]}{cmdOutput[1]}" };
             FileUtilites.SaveConfigAsJSON(cmdConfigFile, YesNoFilename);
         }

@@ -119,6 +119,7 @@ namespace GUIForDiskpart.main
             var info = new ProcessStartInfo("choice");
             info.UseShellExecute = false;
             info.RedirectStandardOutput = true;
+            info.RedirectStandardInput = true;
             info.CreateNoWindow = true;
 
             var proc = Process.Start(info);
@@ -128,8 +129,17 @@ namespace GUIForDiskpart.main
             {
                 result += (char)proc.StandardOutput.Read();
             }
+
+            foreach (char c in new[] { '[', ']', ',', '?' })
+            {
+                result = result.Replace(c.ToString(), "");
+            }
+            result = result.Trim();
+
+            proc.StandardInput.WriteLine(result[1]);
             proc.StandardOutput.Close();
             proc.Close();
+
 
             return result;
         }
