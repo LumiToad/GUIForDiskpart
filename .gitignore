@@ -1,4 +1,6 @@
 .vs/
 obj/
-build/
+builds/
+builds/Release/
+builds/Release/net6.0-windows/
 textfiles/

@@ -2,14 +2,17 @@
 using System;
 using System.IO;
 using System.Text.Json;
+using System.Windows;
+//using System.Windows.Forms;
 
 namespace GUIForDiskpart.main
 {
     public static class FileUtilites
     {
         private static string AppDataPath => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        private static string ConfigFolder = "GUIFD";
-        private static string FullConfigPath = $"{AppDataPath}\\{ConfigFolder}";
+        private static string FullGUIFDPath = $"{AppDataPath}\\GUIFD";
+        private static string FullCrashPath = $"{FullGUIFDPath}\\crash_logs";
+        private static string FullConfigPath = $"{FullGUIFDPath}\\config";
         private static string JsonExtension = ".json";
 
         public static void SaveAsTextfile(string text, string filename)
@@ -55,6 +58,7 @@ namespace GUIForDiskpart.main
         public static string LoadConfigFile(string filename) 
         {
             string output = File.ReadAllText($"{FullConfigPath}\\{filename}");
+            Console.WriteLine(output);
             return output;
         }
 
@@ -90,6 +94,32 @@ namespace GUIForDiskpart.main
             string loadedFile = LoadConfigFile(filename + JsonExtension);
             var options = new JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
             return JsonSerializer.Deserialize<T>(loadedFile, options);
+        }
+
+        public static void SaveExceptionCrashLog(Exception ex)
+        {
+            string? fullCrash = string.Empty;
+            fullCrash += "Exception thrown by method: " + ex.TargetSite + "\n";
+            fullCrash += ex.Message + "\n";
+            fullCrash += ex.Source + "\n";
+            fullCrash += ex.StackTrace + "\n";
+            fullCrash += ex.InnerException + "\n";
+            fullCrash += ex.Data + "\n";
+            fullCrash += "Handle result: " + ex.HResult + "\n";
+
+            string currentDateTime = GetFormattedDateTimeString();
+            string fileName = $"crashLog_{currentDateTime}.txt";
+
+            if (!Directory.Exists(FullCrashPath)) 
+            {
+                Directory.CreateDirectory(FullCrashPath);
+            }
+
+            File.WriteAllText($"{FullCrashPath}\\{fileName}", fullCrash);
+            MessageBoxResult result = MessageBox.Show
+                (
+                    $"GUIFD has crashed. A crash-log has been saved at {FullCrashPath}\\{fileName}", "ERROR!", MessageBoxButton.OK
+                );
         }
     }
 }

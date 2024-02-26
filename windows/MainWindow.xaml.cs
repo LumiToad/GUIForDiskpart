@@ -28,7 +28,9 @@ namespace GUIForDiskpart
         {
             InitializeComponent();
             ShowStartupScreen();
+
             Initialize();
+            
             if (startup != null)
             {
                 StartupWindowClose();
@@ -38,9 +40,16 @@ namespace GUIForDiskpart
 
         private void Initialize()
         {
-            RetrieveAndShowDiskData(true);
-            DiskRetriever.SetupDiskChangedWatcher();
-            DiskRetriever.OnDiskChanged += OnDiskChanged;
+            try
+            {
+                RetrieveAndShowDiskData(true);
+                DiskRetriever.SetupDiskChangedWatcher();
+                DiskRetriever.OnDiskChanged += OnDiskChanged;
+            }
+            catch (Exception ex)
+            {
+                FileUtilites.SaveExceptionCrashLog(ex);
+            }
         }
 
         private string GetBuildNumberString()

@@ -13,16 +13,8 @@ namespace GUIForDiskpart.cmd
         {
             if (FileUtilites.CheckFileExists(YesNoFilename, ".json")) return true;
 
-            string message = "GUIFD will now try to detect the default Yes / No key for your system language.\n\nThis requires a certain workaround, which will cause error beeps from your Windows Command Shell. Click \"Ok\", when you are ready, TURNING OFF THE VOLUME IS SUGGESTED.";
-            string title = "Warning!";
-            MessageBoxButtons buttons = MessageBoxButtons.OKCancel;
-            DialogResult result = MessageBox.Show(message, title, buttons, MessageBoxIcon.Warning);
-            if (result == DialogResult.OK)
-            {
-                CreateYesNoFile();
-                return true;
-            }
-            return false;
+            CreateYesNoFile();
+            return FileUtilites.CheckFileExists(YesNoFilename, ".json");
         }
 
         private static string GetYesNoFromFile()
@@ -33,8 +25,7 @@ namespace GUIForDiskpart.cmd
 
         private static void CreateYesNoFile()
         {
-            string command = "echo ABCDEFGHIJKLMNOPQRSTUVWXYZ | CHOICE";
-            string cmdOutput = CommandExecuter.IssueCommandNoWait(ProcessType.CMD, command);
+            string cmdOutput = CommandExecuter.GetChoiceYNString();
 
             foreach (char c in new[] { '[', ']', ',', '?' })
             {
@@ -42,7 +33,7 @@ namespace GUIForDiskpart.cmd
             }
             cmdOutput = cmdOutput.Trim();
 
-            CMDConfigFile cmdConfigFile = new () { yesNo = $"{cmdOutput[0]}{cmdOutput[1]}" };
+            CMDConfigFile cmdConfigFile = new() { yesNo = $"{cmdOutput[0]}{cmdOutput[1]}" };
             FileUtilites.SaveConfigAsJSON(cmdConfigFile, YesNoFilename);
         }
 

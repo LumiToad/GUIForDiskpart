@@ -114,20 +114,24 @@ namespace GUIForDiskpart.main
             return output;
         }
 
-        public static string IssueCommandNoWait(string processType, string command)
+        public static string GetChoiceYNString()
         {
-            var process = CreateProcess(processType);
-            process.StartInfo.Arguments = "/k";
-            
-            string? output = string.Empty;
-            
-            process.Start();
-            process.StandardInput.WriteLine($"echo ABCDEFGHIJKLMNOPQRSTUVWXYZ | {command}");
-            StreamReader streamReader = process.StandardOutput;
-            output = streamReader.ReadLine();
-            output = streamReader.ReadLine();
-            process.Close();
-            return output;
+            var info = new ProcessStartInfo("choice");
+            info.UseShellExecute = false;
+            info.RedirectStandardOutput = true;
+            info.CreateNoWindow = true;
+
+            var proc = Process.Start(info);
+
+            var result = "";
+            while (proc.StandardOutput.Peek() != -1)
+            {
+                result += (char)proc.StandardOutput.Read();
+            }
+            proc.StandardOutput.Close();
+            proc.Close();
+
+            return result;
         }
 
         public static string IssueCommandSeperateCMDWindow(string command)
