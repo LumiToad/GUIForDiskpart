@@ -20,7 +20,7 @@ namespace GUIForDiskpart
     {
         private const string websiteURL = "https://github.com/LumiToad/GUIForDiskpart";
         private const string wikiURL = "https://github.com/LumiToad/GUIForDiskpart/wiki";
-        private const string buildStage = "Alpha";
+        private const string buildStage = "Beta";
 
         private StartupLoadingWindow startup;
 
