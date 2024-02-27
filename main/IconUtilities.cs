@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
@@ -98,7 +99,9 @@ namespace GUIForDiskpart.main
                     icon = SystemIcons.Warning;
                     break;
                 case SystemIconType.WinLogo:
-                    icon = LoadIconFromFile("..\\..\\..\\resources\\winLogo.ico");
+                    var stream = FileUtilites.GetEmbeddedResourceStream("winLogo.ico");
+                    icon = new Icon(stream);
+                    stream.Close();
                     break;
             }
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.IO;
+using System.Reflection;
 using System.Text.Json;
 using System.Windows;
 //using System.Windows.Forms;
@@ -120,6 +121,14 @@ namespace GUIForDiskpart.main
                 (
                     $"GUIFD has crashed. A crash-log has been saved at {FullCrashPath}\\{fileName}", "ERROR!", MessageBoxButton.OK
                 );
+        }
+
+        public static Stream GetEmbeddedResourceStream(string fileName)
+        {
+            string fullFileName = $"GUIForDiskpart.embeddedResources.{fileName}";
+            var thisAssembly = Assembly.GetExecutingAssembly();
+            var stream = thisAssembly.GetManifestResourceStream(fullFileName);
+            return stream;
         }
     }
 }

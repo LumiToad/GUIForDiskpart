@@ -11,12 +11,12 @@
     <UseWPF>true</UseWPF>
     <ApplicationManifest>main\app.manifest</ApplicationManifest>
 	<Deterministic>false</Deterministic>
-	<Version>1.0.1635</Version>
+	<Version>1.0.1658</Version>
 	<AssemblyVersion>1.0.2402.0</AssemblyVersion>
 	<FileVersion>1.0.2402.0</FileVersion>
 	<Copyright>MIT License</Copyright>
 	<ApplicationIcon>resources\guifdLogo.ico</ApplicationIcon>
-	<Platforms>AnyCPU;x64</Platforms>
+	<Platforms>AnyCPU;x64;x86</Platforms>
 	<PlatformTarget>AnyCPU</PlatformTarget>
 	<BaseOutputPath>E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\builds</BaseOutputPath>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -52,20 +52,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="resources\cmd.ico" />
-    <None Remove="resources\cmd.png" />
-    <None Remove="resources\command.ico" />
-    <None Remove="resources\commandline.ico" />
-    <None Remove="resources\commandline.png" />
-    <None Remove="resources\diskpart.ico" />
-    <None Remove="resources\diskpart.png" />
-    <None Remove="resources\FroggoCorner.png" />
-    <None Remove="resources\guifd.ico" />
-    <None Remove="resources\guifd.png" />
-    <None Remove="resources\guifdLogo.ico" />
-    <None Remove="resources\guifdLogo.png" />
-    <None Remove="resources\startup.png" />
-    <None Remove="resources\winLogo.ico" />
+    <None Remove="embeddedResources\winLogo.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -122,6 +109,9 @@
     <Resource Include="resources\startup.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <EmbeddedResource Include="embeddedResources\winLogo.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Resource Include="resources\winLogo.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
