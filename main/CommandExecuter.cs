@@ -11,7 +11,7 @@ namespace GUIForDiskpart.main
 {
     public static class CommandExecuter
     {
-        private const string exeSuffix = ".exe";
+        private const string EXE_SUFFIX = ".exe";
 
         public static List<object> IssuePowershellCommand(string command, string psParam)
         {
@@ -149,12 +149,12 @@ namespace GUIForDiskpart.main
             string output = string.Empty;
 
             Process process = new Process();
-            process.StartInfo.FileName = ProcessType.CMD + exeSuffix;
+            process.StartInfo.FileName = ProcessType.CMD + EXE_SUFFIX;
             process.StartInfo.RedirectStandardInput = true;
             process.Start();
             process.StandardInput.WriteLine($"{command} & echo Please close this window & pause >nul");
 
-            output += $"{process.ProcessName.ToUpper()}{exeSuffix} started with parameters:\n";
+            output += $"{process.ProcessName.ToUpper()}{EXE_SUFFIX} started with parameters:\n";
             output += $"{command} & echo Please close this window & pause >nul";
 
             Console.WriteLine(output);
@@ -164,7 +164,7 @@ namespace GUIForDiskpart.main
         private static Process CreateProcess(string processType)
         {
             Process newProcess = new Process();
-            newProcess.StartInfo.FileName = processType + exeSuffix;
+            newProcess.StartInfo.FileName = processType + EXE_SUFFIX;
             newProcess.StartInfo.CreateNoWindow = true;
             newProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             newProcess.StartInfo.UseShellExecute = false;

@@ -8,9 +8,9 @@ namespace GUIForDiskpart.main
 {
     public class LogicalDiskInfo
     {
-        private const string ldInfoKey = "---WINDOWS MANAGEMENT INSTRUMENTATION Logical Disk---";
-        private const string ldInfoValue = "---Win32_LogicalDisk---";
-        private const string keyPrefix = "WMI-LD";
+        private const string LD_INFO_KEY = "---WINDOWS MANAGEMENT INSTRUMENTATION Logical Disk---";
+        private const string LD_INFO_VALUE = "---Win32_LogicalDisk---";
+        private const string KEY_PREFIX = "WMI-LD";
 
         private string driveLetter;
         public string DriveLetter { get; set; }
@@ -67,31 +67,31 @@ namespace GUIForDiskpart.main
             Dictionary<string, object?> data = new Dictionary<string, object?>();
             PropertyInfo[] wmiProperties = typeof(LogicalDiskInfo).GetProperties();
 
-            data.Add(ldInfoKey, ldInfoValue);
+            data.Add(LD_INFO_KEY, LD_INFO_VALUE);
 
             foreach (PropertyInfo property in wmiProperties)
             {
-                string key = $"{keyPrefix} {property.Name}";
+                string key = $"{KEY_PREFIX} {property.Name}";
                 object? value = property.GetValue(this);
 
                 if (data.ContainsKey(key)) continue;
-                if (key == $"{keyPrefix} TotalSpace") continue;
-                if (key == $"{keyPrefix} UsedSpace") continue;
-                if (key == $"{keyPrefix} FreeSpace") continue;
+                if (key == $"{KEY_PREFIX} TotalSpace") continue;
+                if (key == $"{KEY_PREFIX} UsedSpace") continue;
+                if (key == $"{KEY_PREFIX} FreeSpace") continue;
 
-                if (key == $"{keyPrefix} FormattedTotalSpace")
+                if (key == $"{KEY_PREFIX} FormattedTotalSpace")
                 {
-                    key = $"{keyPrefix} TotalSpace";
+                    key = $"{KEY_PREFIX} TotalSpace";
                 }
 
-                if (key == $"{keyPrefix} FormattedUsedSpace")
+                if (key == $"{KEY_PREFIX} FormattedUsedSpace")
                 {
-                    key = $"{keyPrefix} UsedSpace";
+                    key = $"{KEY_PREFIX} UsedSpace";
                 }
 
-                if (key == $"{keyPrefix} FormattedFreeSpace")
+                if (key == $"{KEY_PREFIX} FormattedFreeSpace")
                 {
-                    key = $"{keyPrefix} FreeSpace";
+                    key = $"{KEY_PREFIX} FreeSpace";
                 }
 
                 data.Add(key, value);

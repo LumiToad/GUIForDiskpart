@@ -18,9 +18,9 @@ namespace GUIForDiskpart
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string websiteURL = "https://github.com/LumiToad/GUIForDiskpart";
-        private const string wikiURL = "https://github.com/LumiToad/GUIForDiskpart/wiki";
-        private const string buildStage = "Beta";
+        private const string WEBSITE_URL = "https://github.com/LumiToad/GUIForDiskpart";
+        private const string WIKI_URL = "https://github.com/LumiToad/GUIForDiskpart/wiki";
+        private const string BUILD_STAGE = "Beta";
 
         private StartupLoadingWindow startup;
 
@@ -57,7 +57,7 @@ namespace GUIForDiskpart
             string build = "";
 
             build += Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            build += " - " + buildStage;
+            build += " - " + BUILD_STAGE;
 
             return build;
         }
@@ -249,12 +249,12 @@ namespace GUIForDiskpart
 
         private void Website_Click(object sender, RoutedEventArgs e)
         {
-            CommandExecuter.IssueCommand(ProcessType.CMD, "start " + websiteURL);
+            CommandExecuter.IssueCommand(ProcessType.CMD, "start " + WEBSITE_URL);
         }
 
         private void Wiki_Click(object sender, RoutedEventArgs e)
         {
-            CommandExecuter.IssueCommand(ProcessType.CMD, "start " + wikiURL);
+            CommandExecuter.IssueCommand(ProcessType.CMD, "start " + WIKI_URL);
         }
 
         private void About_Click(object sender, RoutedEventArgs e)

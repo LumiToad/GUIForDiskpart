@@ -4,17 +4,10 @@
     {
         #region CHKNTFS_Parameters
 
-        private const string defaultSettings = "/d";
-        public static string DefaultSettings => defaultSettings;
-
-        private const string setTimer = "/t:";
-        public static string SetTimer => setTimer;
-
-        private const string excludeVolumes = "/x";
-        public static string ExcludeVolumes => excludeVolumes;
-
-        private const string queueMultiVolume = "/c";
-        public static string QueueMultiVolume => queueMultiVolume;
+        public const string DEFAULTSETTINGS = "/d";
+        public const string SETTIMER = "/t:";
+        public const string EXCLUDEVOLUMES = "/x";
+        public const string QUEUEMULTIVOLUME = "/c";
 
         #endregion CHKNTFS_Parameters
     }

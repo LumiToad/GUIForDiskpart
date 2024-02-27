@@ -6,12 +6,12 @@ namespace GUIForDiskpart.main
 {
     public class DiskInfo
     {
-        private const string wmiInfoKey = "---WINDOWS MANAGEMENT INSTRUMENTATION INFO---";
-        private const string wmiInfoValue = "---Win32_DiskPartition---";
-        private const string wmiKeyPrefix = "WMI";
-        private const string msftInfoKey = "---WINDOWS STORAGE MANAGEMENT INFO---";
-        private const string msftInfoValue = "---WMI > MSFT_Disk / MSFT_PhysicalDisk---";
-        private const string msftKeyPrefix = "WSM-MSFT";
+        private const string WMI_INFO_KEY = "---WINDOWS MANAGEMENT INSTRUMENTATION INFO---";
+        private const string WMI_INFO_VALUE = "---Win32_DiskPartition---";
+        private const string WMI_KEY_PREFIX = "WMI";
+        private const string MSFT_INFO_KEY = "---WINDOWS STORAGE MANAGEMENT INFO---";
+        private const string MSFT_INFO_VALUE = "---WMI > MSFT_Disk / MSFT_PhysicalDisk---";
+        private const string MSFT_KEY_PREFIX = "WSM-MSFT";
 
         private string deviceID;
         private string physicalName;
@@ -216,16 +216,16 @@ namespace GUIForDiskpart.main
             Dictionary<string, object?> data = new Dictionary<string, object?>();
             PropertyInfo[] properties = typeof(DiskInfo).GetProperties();
 
-            data.Add(msftInfoKey, msftInfoValue);
-            data.Add($"{msftKeyPrefix} DeviceMediaType", DeviceMediaType);
-            data.Add($"{msftKeyPrefix} OperationalStatus", OperationalStatus);
-            data.Add($"{msftKeyPrefix} Online / Offline", (IsOnline) ? "Online" : "Offline");
+            data.Add(MSFT_INFO_KEY, MSFT_INFO_VALUE);
+            data.Add($"{MSFT_KEY_PREFIX} DeviceMediaType", DeviceMediaType);
+            data.Add($"{MSFT_KEY_PREFIX} OperationalStatus", OperationalStatus);
+            data.Add($"{MSFT_KEY_PREFIX} Online / Offline", (IsOnline) ? "Online" : "Offline");
 
-            data.Add(wmiInfoKey, wmiInfoValue);
+            data.Add(WMI_INFO_KEY, WMI_INFO_VALUE);
 
             foreach (PropertyInfo property in properties)
             {
-                string key = $"{wmiKeyPrefix} {property.Name}";
+                string key = $"{WMI_KEY_PREFIX} {property.Name}";
                 object? value = property.GetValue(this);
 
                 if (key.Contains("DeviceMediaType")) continue;

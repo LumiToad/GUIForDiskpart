@@ -40,37 +40,37 @@ namespace GUIForDiskpart.windows
 
         private void ParaF_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara((bool)ParaF.IsChecked, CHKDSKParameters.FixErrors);
+            WriteTextBoxPara((bool)ParaF.IsChecked, CHKDSKParameters.FIXERRORS);
         }
 
         private void ParaR_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaR.IsChecked, CHKDSKParameters.LocateBad);
+            WriteTextBoxPara(ParaR.IsChecked, CHKDSKParameters.LOCATEBAD);
         }
 
         private void ParaX_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaX.IsChecked, CHKDSKParameters.FixErrorsForceDismount);
+            WriteTextBoxPara(ParaX.IsChecked, CHKDSKParameters.FIXERRORSFORCEDISMOUNT);
         }
 
         private void ParaV_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaV.IsChecked, CHKDSKParameters.DisplayNameOfEachFile);
+            WriteTextBoxPara(ParaV.IsChecked, CHKDSKParameters.DISPLAYNAMEOFEACHFILE);
         }
 
         private void ParaOfflineScanAndFix_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaOfflineScanAndFix.IsChecked, CHKDSKParameters.OfflineScanAndFix);
+            WriteTextBoxPara(ParaOfflineScanAndFix.IsChecked, CHKDSKParameters.OFFLINESCANANDFIX);
         }
 
         private void ParaI_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaI.IsChecked, CHKDSKParameters.LessVigorousNTFS);
+            WriteTextBoxPara(ParaI.IsChecked, CHKDSKParameters.LESSVIGOROUS_NTFS);
         }
 
         private void ParaC_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaC.IsChecked, CHKDSKParameters.NoCycleCheckNTFS);
+            WriteTextBoxPara(ParaC.IsChecked, CHKDSKParameters.NOCYCLECHECKNTFS);
         }
 
         private void ParaL_Checked(object sender, RoutedEventArgs e)
@@ -83,7 +83,7 @@ namespace GUIForDiskpart.windows
                 }
             }
             
-            WriteTextBoxPara(ParaL.IsChecked, CHKDSKParameters.LogFileSizeNTFS);
+            WriteTextBoxPara(ParaL.IsChecked, CHKDSKParameters.LOGFILESIZE_NTFS);
             
             if (ParaL.IsChecked == true)
             {
@@ -104,7 +104,7 @@ namespace GUIForDiskpart.windows
             }
             else
             {
-                int index = TextBoxPara.Text.IndexOf(CHKDSKParameters.LogFileSizeNTFS);
+                int index = TextBoxPara.Text.IndexOf(CHKDSKParameters.LOGFILESIZE_NTFS);
                 if (index == -1) return;
                 TextBoxPara.Text = TextBoxPara.Text.Insert(index + 3, TextBoxL.Text);
             }
@@ -115,44 +115,44 @@ namespace GUIForDiskpart.windows
 
         private void ParaB_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaB.IsChecked, CHKDSKParameters.ClearBadSectorListNTFS);
+            WriteTextBoxPara(ParaB.IsChecked, CHKDSKParameters.CLEARBADSECTORLIST_NTFS);
         }
 
         private void ParaScan_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaScan.IsChecked, CHKDSKParameters.ScanNTFS);
+            WriteTextBoxPara(ParaScan.IsChecked, CHKDSKParameters.SCAN_NTFS);
             ParaForceOff.IsChecked = false;
-            WriteTextBoxPara(ParaForceOff.IsChecked, CHKDSKParameters.ForceOffLineFixNTFS);
+            WriteTextBoxPara(ParaForceOff.IsChecked, CHKDSKParameters.FORCEOFFLINEFIX_NTFS);
         }
 
         private void ParaForceOff_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaForceOff.IsChecked, CHKDSKParameters.ForceOffLineFixNTFS);
+            WriteTextBoxPara(ParaForceOff.IsChecked, CHKDSKParameters.FORCEOFFLINEFIX_NTFS);
         }
 
         private void ParaPerf_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaPerf.IsChecked, CHKDSKParameters.FullPerformance);
+            WriteTextBoxPara(ParaPerf.IsChecked, CHKDSKParameters.FULLPERFORMANCE);
         }
 
         private void ParaSpotfix_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaSpotfix.IsChecked, CHKDSKParameters.SpotFix);
+            WriteTextBoxPara(ParaSpotfix.IsChecked, CHKDSKParameters.SPOTFIX);
         }
 
         private void ParaSD_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaSD.IsChecked, CHKDSKParameters.SDCleanNTFS);
+            WriteTextBoxPara(ParaSD.IsChecked, CHKDSKParameters.SDCLEAN_NTFS);
         }
 
         private void ParaFree_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaFree.IsChecked, CHKDSKParameters.FreeOrphanedFATfamily);
+            WriteTextBoxPara(ParaFree.IsChecked, CHKDSKParameters.FREEORPHANED_FATFAMILY);
         }
 
         private void ParaMarkClean_Checked(object sender, RoutedEventArgs e)
         {
-            WriteTextBoxPara(ParaMarkClean.IsChecked, CHKDSKParameters.MarkCleanFATfamily);
+            WriteTextBoxPara(ParaMarkClean.IsChecked, CHKDSKParameters.MARKCLEAN_FATFAMILY);
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -187,14 +187,14 @@ namespace GUIForDiskpart.windows
             if (ParaShutdown.IsChecked == true)
             {
                 string item = (string)ParaShutdownSelection.SelectionBoxItem;
-                string shutdown = $" & shutdown {CMDBasicCommands.ShutdownForce} ";
+                string shutdown = $" & shutdown {CMDBasicCommands.SHUTDOWNFORCE} ";
                 switch (item)
                 {
                     case ("Shutdown"):
-                        shutdown += $"{CMDBasicCommands.ShutdownNoTimer} ";
+                        shutdown += $"{CMDBasicCommands.SHUTDOWNNOTIMER} ";
                         break;
                     case ("Restart"):
-                        shutdown += $"{CMDBasicCommands.ShutdownRestart} ";
+                        shutdown += $"{CMDBasicCommands.SHUTDOWNRESTART} ";
                         break;
                 }
                 result += shutdown;

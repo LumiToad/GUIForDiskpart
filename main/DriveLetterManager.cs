@@ -6,11 +6,11 @@ namespace GUIForDiskpart.main
 {
     public static class DriveLetterManager
     {
-        private const string viableDriveLetters = "CDEFGHIJKLMNOPQRSTUVWXYZ";
+        private const string VIABLE_DRIVE_LETTERS = "CDEFGHIJKLMNOPQRSTUVWXYZ";
 
         public static char[] GetAvailableDriveLetters()
         {
-            string availableLetters = viableDriveLetters;
+            string availableLetters = VIABLE_DRIVE_LETTERS;
 
             char[] usedLetters = GetUsedDriveLetters();
 

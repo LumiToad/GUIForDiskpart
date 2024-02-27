@@ -7,9 +7,9 @@ namespace GUIForDiskpart
 {
     public class DefragAnalysis
     {
-        private const string defragInfoKey = "---DEFRAG ANALYSIS---";
-        private const string defragInfoValue = "Win32_Volume > Win32_DefragAnalysis";
-        private const string keyPrefix = "DEFRAG";
+        private const string DEFRAG_INFO_KEY = "---DEFRAG ANALYSIS---";
+        private const string DEFRAG_INFO_VALUE = "Win32_Volume > Win32_DefragAnalysis";
+        private const string KEY_PREFIX = "DEFRAG";
 
         private UInt64 averageFileSize;
         public UInt64 AverageFileSize
@@ -154,11 +154,11 @@ namespace GUIForDiskpart
             Dictionary<string, object?> data = new Dictionary<string, object?>();
             PropertyInfo[] defragAnalysis = typeof(DefragAnalysis).GetProperties();
 
-            data.Add(defragInfoKey, defragInfoValue);
+            data.Add(DEFRAG_INFO_KEY, DEFRAG_INFO_VALUE);
 
             foreach (PropertyInfo property in defragAnalysis)
             {
-                string key = $"{keyPrefix} {property.Name}";
+                string key = $"{KEY_PREFIX} {property.Name}";
                 object? value = property.GetValue(this);
 
                 if (data.ContainsKey(key)) continue;

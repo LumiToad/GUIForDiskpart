@@ -6,9 +6,9 @@ namespace GUIForDiskpart.main
 {
     public class WSMPartition
     {
-        private const string wsmInfoKey = "---WINDOWS STORAGE MANAGEMENT INFO---";
-        private const string wsmInfoValue = "---MSFT_Storage, obtained via Powershell---";
-        private const string keyPrefix = "WSM";
+        private const string WSM_INFO_KEY = "---WINDOWS STORAGE MANAGEMENT INFO---";
+        private const string WSM_INFO_VALUE = "---MSFT_Storage, obtained via Powershell---";
+        private const string KEY_PREFIX = "WSM";
 
         private UInt32 diskNumber;
         public UInt32 DiskNumber { get { return diskNumber; } set { diskNumber = value; } }
@@ -142,19 +142,19 @@ namespace GUIForDiskpart.main
             Dictionary<string, object?> data = new Dictionary<string, object?>();
             PropertyInfo[] wsmProperties = typeof(WSMPartition).GetProperties();
 
-            data.Add(wsmInfoKey, wsmInfoValue);
+            data.Add(wsmInfoKey, WSM_INFO_VALUE);
 
             foreach (PropertyInfo property in wsmProperties)
             {
-                string key = $"{keyPrefix} {property.Name}";
+                string key = $"{KEY_PREFIX} {property.Name}";
                 object? value = property.GetValue(this);
 
                 if (data.ContainsKey(key)) continue;
-                if (key == $"{keyPrefix} Size") continue;
+                if (key == $"{KEY_PREFIX} Size") continue;
                 
-                if (key == $"{keyPrefix} FormattedSize")
+                if (key == $"{KEY_PREFIX} FormattedSize")
                 {
-                    key = $"{keyPrefix} TotalSpace";
+                    key = $"{KEY_PREFIX} TotalSpace";
                 }
 
                 data.Add(key, value);

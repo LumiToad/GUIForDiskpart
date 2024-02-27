@@ -26,11 +26,11 @@ namespace GUIForDiskpart
             }
         }
 
-        private const string partitionBorder = "#FF00C4B4";
-        private const string logicalBorder = "#FF0A70C5";
+        private const string PARTITIONBORDER = "#FF00C4B4";
+        private const string LOGICALBORDER = "#FF0A70C5";
 
-        private const string basicBackground = "#FFBBBBBB";
-        private const string selectBackground = "#FF308EBF";
+        private const string BASICBACKGROUND = "#FFBBBBBB";
+        private const string SELECTBACKGROUND = "#FF308EBF";
 
         public bool? IsSelected { get { return EntrySelected.IsChecked; } }
 

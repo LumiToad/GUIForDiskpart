@@ -6,7 +6,7 @@ namespace GUIForDiskpart.main
 {
     public static class ComfortFeatures
     {
-        private const string outputConsoleAppliationName = "GUIFD - ";
+        private const string OUTPUT_CONSOLE_APPLIATION_NAME = "GUIFD - ";
 
         public static string EasyDiskFormat(DiskInfo diskInfo, FileSystem fileSystem,
             string volumeName, char driveLetter, UInt64 sizeInMB, bool isQuickFormatting,
@@ -14,7 +14,7 @@ namespace GUIForDiskpart.main
         {
             string output = string.Empty;
 
-            output += outputConsoleAppliationName + "Easy disk format\n";
+            output += OUTPUT_CONSOLE_APPLIATION_NAME + "Easy disk format\n";
             if (!diskInfo.IsOnline)
             {
                 output += DPFunctions.OnOfflineDisk(diskInfo.DiskIndex, true, false);
@@ -36,7 +36,7 @@ namespace GUIForDiskpart.main
         {
             string output = string.Empty;
 
-            output += outputConsoleAppliationName + "Easy disk format\n";
+            output += OUTPUT_CONSOLE_APPLIATION_NAME + "Easy disk format\n";
             if (!diskInfo.IsOnline)
             {
                 output += DPFunctions.OnOfflineDisk(diskInfo.DiskIndex, true, false);
@@ -58,7 +58,7 @@ namespace GUIForDiskpart.main
         {
             string output = string.Empty;
 
-            output += outputConsoleAppliationName + "Easy disk format\n";
+            output += OUTPUT_CONSOLE_APPLIATION_NAME + "Easy disk format\n";
             if (!diskInfo.IsOnline)
             {
                 output += DPFunctions.OnOfflineDisk(diskInfo.DiskIndex, true, false);

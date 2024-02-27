@@ -4,53 +4,22 @@
     {
         #region CHKDSK_Parameters
 
-        private const string fixErrors = "/f";
-        public static string FixErrors => fixErrors;
-
-        private const string displayNameOfEachFile = "/v";
-        public static string DisplayNameOfEachFile => displayNameOfEachFile;
-
-        private const string locateBad = "/r";
-        public static string LocateBad => locateBad;
-
-        private const string fixErrorsForceDismount = "/x";
-        public static string FixErrorsForceDismount => fixErrorsForceDismount;
-
-        private const string lessVigorousNTFS = "/i";
-        public static string LessVigorousNTFS => lessVigorousNTFS;
-
-        private const string noCycleCheckNTFS = "/c";
-        public static string NoCycleCheckNTFS => noCycleCheckNTFS;
-
-        private const string logFileSizeNTFS = "/l:";
-        public static string LogFileSizeNTFS => logFileSizeNTFS;
-
-        private const string clearBadSectorListNTFS = "/b";
-        public static string ClearBadSectorListNTFS => clearBadSectorListNTFS;
-
-        private const string scanNTFS = "/scan";
-        public static string ScanNTFS => scanNTFS;
-
-        private const string forceOffLineFixNTFS = "/forceofflinefix";
-        public static string ForceOffLineFixNTFS => forceOffLineFixNTFS;
-
-        private const string fullPerformance = "/perf";
-        public static string FullPerformance => fullPerformance;
-
-        private const string spotFix = "/spotfix";
-        public static string SpotFix => spotFix;
-
-        private const string sdCleanNTFS = "/sdcleanup";
-        public static string SDCleanNTFS => sdCleanNTFS;
-
-        private const string offlineScanAndFix = "/offlinescanandfix";
-        public static string OfflineScanAndFix => offlineScanAndFix;
-
-        private const string freeOrphanedFATFamily = "/freeorphanedchains";
-        public static string FreeOrphanedFATfamily => freeOrphanedFATFamily;
-
-        private const string markCleanFATFamily = "/markclean";
-        public static string MarkCleanFATfamily => markCleanFATFamily;
+        public const string FIXERRORS = "/f";
+        public const string DISPLAYNAMEOFEACHFILE = "/v";
+        public const string LOCATEBAD = "/r";
+        public const string FIXERRORSFORCEDISMOUNT = "/x";
+        public const string LESSVIGOROUS_NTFS = "/i";
+        public const string NOCYCLECHECKNTFS = "/c";
+        public const string LOGFILESIZE_NTFS = "/l:";
+        public const string CLEARBADSECTORLIST_NTFS = "/b";
+        public const string SCAN_NTFS = "/scan";
+        public const string FORCEOFFLINEFIX_NTFS = "/forceofflinefix";
+        public const string FULLPERFORMANCE = "/perf";
+        public const string SPOTFIX = "/spotfix";
+        public const string SDCLEAN_NTFS = "/sdcleanup";
+        public const string OFFLINESCANANDFIX = "/offlinescanandfix";
+        public const string FREEORPHANED_FATFAMILY = "/freeorphanedchains";
+        public const string MARKCLEAN_FATFAMILY = "/markclean";
 
         #endregion CHKDSK_Parameters
     }

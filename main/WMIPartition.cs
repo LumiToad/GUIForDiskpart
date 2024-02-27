@@ -6,9 +6,9 @@ namespace GUIForDiskpart.main
 {
     public class WMIPartition
     {
-        private const string wmiInfoKey = "---WINDOWS MANAGEMENT INSTRUMENTATION INFO---";
-        private const string wmiInfoValue = "---Win32_DiskPartition---";
-        private const string keyPrefix = "WMI";
+        private const string WMI_INFO_KEY = "---WINDOWS MANAGEMENT INSTRUMENTATION INFO---";
+        private const string WMI_INFO_VALUE = "---Win32_DiskPartition---";
+        private const string KEY_PREFIX = "WMI";
 
         private UInt16 availability;
         public UInt16 Availability { get { return availability; } set { availability = value; } }
@@ -155,15 +155,15 @@ namespace GUIForDiskpart.main
             Dictionary<string, object?> data = new Dictionary<string, object?>();
             PropertyInfo[] wmiProperties = typeof(WMIPartition).GetProperties();
 
-            data.Add(wmiInfoKey, wmiInfoValue);
+            data.Add(WMI_INFO_KEY, WMI_INFO_VALUE);
 
             foreach (PropertyInfo property in wmiProperties)
             {
-                string key = $"{keyPrefix} {property.Name}";
+                string key = $"{KEY_PREFIX} {property.Name}";
                 object? value = property.GetValue(this);
 
                 if (data.ContainsKey(key)) continue;
-                if (key == $"{keyPrefix} Size") continue;
+                if (key == $"{KEY_PREFIX} Size") continue;
 
                 if (typeof(LogicalDiskInfo) == property.PropertyType) continue;
                 
