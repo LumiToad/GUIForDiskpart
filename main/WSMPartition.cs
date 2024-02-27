@@ -142,7 +142,7 @@ namespace GUIForDiskpart.main
             Dictionary<string, object?> data = new Dictionary<string, object?>();
             PropertyInfo[] wsmProperties = typeof(WSMPartition).GetProperties();
 
-            data.Add(wsmInfoKey, WSM_INFO_VALUE);
+            data.Add(WSM_INFO_KEY, WSM_INFO_VALUE);
 
             foreach (PropertyInfo property in wsmProperties)
             {
