@@ -45,27 +45,19 @@
     <li><img src="https://github.com/LumiToad/GUIForDiskpart/blob/main/resources/guifd.png" width="20" height="20" /> GUIFD commands</li>
     <li>Easy access to some hidden information of your drives<br /> (e.g. Windows Storage Management infos)</li>
   </ul>
+  
+  A more detailed walkthrough of the features can be found in the <a href="https://github.com/LumiToad/GUIForDiskpart/wiki">WIKI</a>!
 
   <hr />
   <h2>Example scripts</h2>
   Here are some scripts, I'd like to show:<br /><br />
   <ul>
-    <li><a href="https://github.com/LumiToad/ArcanumFortuna/tree/main/systems/ui/ui_base">UI base structure</a></li>
-    This one needs explanation. As I joined the team two weeks before release,<br />
-    there was a lot of prototype UI code still in the game.<br />
-    We tried to rip out most of it, but it wasn't possible.<br />
-    In order to work around that,<br />
-    I came up with this system to add new canvas layers above the game,<br />
-    so that mouse interactions won't cancel each other out.<br />
-    I wrote my own class structure diagramm for that and once my lead kind of approved it, (he had a lot todo!)<br />
-    we used it to build a lot of the UI screens, you can see in the final game. It was a huge time saver!
-    <li><a href="https://github.com/LumiToad/ArcanumFortuna/tree/main/systems/tutorial">The entire tutorial</a></li>
-    This was a lot of work. Besides the old Tutorial, everything here is my work.<br />
-    It builds upon the card battle phase system, which was already part of the game.<br />
-    <li><a href="https://github.com/LumiToad/ArcanumFortuna/blob/main/systems/ui/screen_fade_overlay.gd">Multi purpose screen fade it / out</a></li>
-    <li><a href="https://github.com/LumiToad/ArcanumFortuna/tree/main/systems/ui/new_deck_preview">Deck preview screen</a></li>
-    There is more, as some UI has been adjusted to the new structure...
+    <li><a href="https://github.com/LumiToad/GUIForDiskpart/blob/main/diskpart/DPFunctions.cs">Diskpart commands service class.</a></li>
+    <li><a href="https://github.com/LumiToad/GUIForDiskpart/blob/main/main/CommandExecuter.cs">Service class to execute commands.</a></li>
+    <li><a href="https://github.com/LumiToad/GUIForDiskpart/blob/main/main/WSM_GPT_PartitionTypes.cs">GUID types service class. prevents "magic strings" anywhere in code.<br /> There are a lot of classes like these.</a></li>
+    <li><a href="https://github.com/LumiToad/GUIForDiskpart/blob/main/main/DiskRetriever.cs">Service class for retrieving drive data.</a></li>
   </ul>
+  Feel free to explore the code. Keep in mind, that the whole thing is still in developement.
 
   <hr />
   <h2>Downloads and Website</h2>
