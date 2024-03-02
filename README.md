@@ -68,5 +68,8 @@
   <a href="#">
     <img src="https://github.com/LumiToad/LumiToad/blob/main/img/banner/github_gui_banner.png" alt="gui banner" />
   </a>
+
+  Main logo artwork by Lars Rocksch:
+  - https://www.linkedin.com/in/lars-rocksch-10828a234/
   
 </div>
