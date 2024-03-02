@@ -36,17 +36,16 @@
   Windows Presentation Foundation (.NET 6.0), WQL (Windows Query Language), C#, PowerShell, Batch, XAML
   
   <hr />
-  <h2>Responsiblities</h2>
-  - UI programming -<br /><br />
-    After getting introduced into the code by my lead programmer,<br />
-    we planned ahead, using a class structure diagramm. (UML)<br />
-    I wrote one before, but this was my first "serious" use, which helped me <b>A LOT</b>, when coding.<br />
-    Another responsibility: A lot of code had to be replaced, as a lot was still prototype code, not modular enough for further use.<br /><br />
-  - Assisting the team as a programmer -<br /><br />
-  Helping my team with implementation of assets and ideas was a daily given.<br />
-  Since the team was amazing, there was not much work here.<br />
-  I also took over some bug search / fixing, that my lead engineer simply had no time to attend to.<br />
-  This turned out to work out really well, we made a great team!<br /><br />
+  <h2>Features</h2>
+  Features are basically split in 5 Parts:
+  <ul>
+    <li><img src="https://github.com/LumiToad/GUIForDiskpart/blob/main/resources/diskpart.png" width="20" height="20" /> Diskpart commands</li>
+    <li><img src="https://github.com/LumiToad/GUIForDiskpart/blob/main/resources/cmd.png" width="20" height="20" /> MS CMD commands</li>
+    <li><img src="https://github.com/LumiToad/GUIForDiskpart/blob/main/resources/commandline.png" width="20" height="20" /> Powershell commands</li>
+    <li><img src="https://github.com/LumiToad/GUIForDiskpart/blob/main/resources/guifd.png" width="20" height="20" /> GUIFD commands</li>
+    <li>Easy access to some hidden information of your drives<br /> (e.g. Windows Storage Management infos)</li>
+  </ul>
+
   <hr />
   <h2>Example scripts</h2>
   Here are some scripts, I'd like to show:<br /><br />
@@ -71,7 +70,7 @@
   <hr />
   <h2>Downloads and Website</h2>
 
-  <h3>Itch</h3>
+  <h3>Website</h3>
   <a href="#">
     <img src="https://github.com/LumiToad/LumiToad/blob/main/img/banner/github_gui_banner.png" alt="gui banner" />
   </a>
