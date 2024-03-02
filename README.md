@@ -3,7 +3,18 @@
   <h1>GUI for Diskpart - GUIFD</h1>
 
   <p>
-    Building a GUI for Microsoft Diskpart and some Windows onboard features around disk space management. A learning project.<br />
+    Building a GUI for Microsoft Diskpart and some Windows onboard features around disk space management.<br />
+    A learning project.<br /><br />
+    A developement diary is online on <a href="https://www.linkedin.com/in/lukas-schmidt-93b532256/">my LinkedIn</a>:<br />
+    <ul>
+      <li><a href="https://www.linkedin.com/pulse/guifordiskpart-01-first-steps-lukas-schmidt/?trackingId=WVK4aIkqQZOT0Qj%2F7jFHBw%3D%3D">First Steps - #01</a></li>
+      <li><a href="https://www.linkedin.com/pulse/guifordiskpart-02-first-issues-lukas-schmidt/?trackingId=MQHtZADDSEm7DUZnMAyZxg%3D%3D">First Issues - #02</a></li>
+      <li><a href="https://www.linkedin.com/pulse/guifordiskpart-03-some-ui-lukas-schmidt/?trackingId=MQHtZADDSEm7DUZnMAyZxg%3D%3D">Some UI - #03</a></li>
+      <li><a href="https://www.linkedin.com/pulse/guifordiskpart-04-actually-useful-lukas-schmidt/?trackingId=MQHtZADDSEm7DUZnMAyZxg%3D%3D">Actually useful - #04</a></li>
+      <li><a href="https://www.linkedin.com/pulse/guifordiskpart-05-more-issues-lukas-schmidt-w56pe/?trackingId=MQHtZADDSEm7DUZnMAyZxg%3D%3D">More Issues - #05</a></li>
+      <li><a href="https://www.linkedin.com/pulse/guifordiskpart-06-overscoped-lukas-schmidt-cfzrf/?trackingId=MQHtZADDSEm7DUZnMAyZxg%3D%3D">Overscoped - #06</a></li>
+      <li><a href="#">Coming soon...</a></li>
+    </ul>
   </p>
 
   ![MainWindowUI](https://github.com/LumiToad/GUIForDiskpart/assets/129980440/03e801e7-2718-4f6a-a0d2-add00cd599e4)
@@ -11,11 +22,6 @@
   <hr />
   <h2>Engines / Languages</h2>
   Windows Presentation Foundation (.NET 6.0), WQL (Windows Query Language), C#, PowerShell, Batch, XAML
-
-  <hr />
-  <h2>Roles</h2>
-  - UI programmer -<br />
-  - Programming assistance -<br />
   
   <hr />
   <h2>Responsiblities</h2>
@@ -54,11 +60,8 @@
   <h2>Downloads and Website</h2>
 
   <h3>Itch</h3>
-  <a href="https://s4g.itch.io/arcanum-fortuna">
-    <img src="https://github.com/LumiToad/LumiToad/blob/main/img/banner/github_arcanum_banner.png" alt="arcanum banner" />
+  <a href="#">
+    <img src="https://github.com/LumiToad/LumiToad/blob/main/img/banner/github_gui_banner.png" alt="gui banner" />
   </a>
-
-  Artworks (CI) by Merit Faske (Member of the dev team)<br />
-  - https://www.linkedin.com/in/merit-faske-4624b2269/?originalSubdomain=de
   
 </div>
