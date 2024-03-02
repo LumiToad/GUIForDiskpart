@@ -5,7 +5,9 @@
   <p>
     Building a GUI for Microsoft Diskpart and some Windows onboard features around disk space management.<br />
     A learning project.<br /><br />
-    <img src="https://github.com/LumiToad/GUIForDiskpart/assets/129980440/03e801e7-2718-4f6a-a0d2-add00cd599e4" alt="diskpart image" width="400" height="400"/><br /><br />
+    <div align="center">
+      <img src="https://github.com/LumiToad/GUIForDiskpart/assets/129980440/03e801e7-2718-4f6a-a0d2-add00cd599e4" alt="diskpart image" width="400" height="400"/><br /><br />
+    </div>
     Developement started during the 3 weeks of summer break 2023 in the <a href="https://www.school4games.net">School For Games</a>.<br />
     It was just one of these days, were you help a friends friend for 10h, halfway across the globe, fixing their virus infected Laptop,<br />
     when I was so annoyed with Windows on-board disk management tools, that I decided to try something.<br /><br />
