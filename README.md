@@ -5,6 +5,20 @@
   <p>
     Building a GUI for Microsoft Diskpart and some Windows onboard features around disk space management.<br />
     A learning project.<br /><br />
+    <img src="https://github.com/LumiToad/GUIForDiskpart/assets/129980440/03e801e7-2718-4f6a-a0d2-add00cd599e4" alt="diskpart image" width="400" height="400"/><br /><br />
+    Developement started during the 3 weeks of summer break 2023 in the <a href="https://www.school4games.net">School For Games</a>.<br />
+    It was just one of these days, were you help a friends friend for 10h, halfway across the globe, fixing their virus infected Laptop,<br />
+    when I was so annoyed with Windows on-board disk management tools, that I decided to try something.<br /><br />
+    The initial idea was to build a tool, which can format any flash drive, no matter what filesystem is on it.<br />
+    In this case, it was a Linux boot stick. Windows can delete it, using Diskpart.<br />
+    But explaining the commands via Discord was not that easy and Diskpart syntax is also... lacking.<br />
+    So I tried coding a small prototype and tested it on an old PlayStation 4 HDD, which had 15 propietary ext4 partitions on it.<br />
+    I was able to delete them with one click, which gave me the idea of making a whole software out of it!<br /><br />
+    Also, while developing games sure is a dream, one reason why I picked programming was,<br />
+    because I always wanted to be able to develop apps as well!<br /><br />
+    This project taught me a lot! I worked on it a few hours a week during school.<br />
+    Initialy a summer break project, I am still working on it, when I have free time.<br />
+    A lot of the code from earlier stages of developement will probably be replaced at some point.<br /><br />
     A developement diary is online on <a href="https://www.linkedin.com/in/lukas-schmidt-93b532256/">my LinkedIn</a>:<br />
     <ul>
       <li><a href="https://www.linkedin.com/pulse/guifordiskpart-01-first-steps-lukas-schmidt/?trackingId=WVK4aIkqQZOT0Qj%2F7jFHBw%3D%3D">First Steps - #01</a></li>
@@ -16,8 +30,6 @@
       <li><a href="#">Coming soon...</a></li>
     </ul>
   </p>
-
-  ![MainWindowUI](https://github.com/LumiToad/GUIForDiskpart/assets/129980440/03e801e7-2718-4f6a-a0d2-add00cd599e4)
 
   <hr />
   <h2>Engines / Languages</h2>
