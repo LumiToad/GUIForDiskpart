@@ -69,6 +69,10 @@
     <img src="https://github.com/LumiToad/LumiToad/blob/main/img/banner/github_gui_banner.png" alt="gui banner" />
   </a>
 
+  <a href="https://drive.google.com/file/d/1ztzVAGwbFWlIPmalTah8BCYWZPJBA2YK/view?usp=sharing">Download x64</a>
+  <a href="https://drive.google.com/file/d/1RAhkcu7WOxz9CXCyY2SWVb07iWAeS6Cd/view?usp=sharing">Download x86</a>
+  
+
   Main logo artwork by Lars Rocksch:
   - https://www.linkedin.com/in/lars-rocksch-10828a234/
   
