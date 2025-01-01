@@ -30,6 +30,7 @@
       <li><a href="https://www.linkedin.com/pulse/guifordiskpart-04-actually-useful-lukas-schmidt/?trackingId=MQHtZADDSEm7DUZnMAyZxg%3D%3D">Actually useful - #04</a></li>
       <li><a href="https://www.linkedin.com/pulse/guifordiskpart-05-more-issues-lukas-schmidt-w56pe/?trackingId=MQHtZADDSEm7DUZnMAyZxg%3D%3D">More Issues - #05</a></li>
       <li><a href="https://www.linkedin.com/pulse/guifordiskpart-06-overscoped-lukas-schmidt-cfzrf/?trackingId=MQHtZADDSEm7DUZnMAyZxg%3D%3D">Overscoped - #06</a></li>
+      <li><a href="https://www.linkedin.com/pulse/guifordiskpart-07-finished-program-beta-lukas-schmidt-j2gdf/?trackingId=dfzLrGWKOs2nXPPXoTqAhA%3D%3D">A finished program (beta) - #07</a></li>
       <li><a href="#">Coming soon...</a></li>
     </ul>
   </p>
