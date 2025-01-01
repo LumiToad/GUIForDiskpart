@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="SecurityCheckWindow" Height="200" Width="400"
         ResizeMode="NoResize">
-    <Grid x:Name="MainGrid" Background="#FF525252">
+    <Grid x:Name="MainGrid" Background="#FF8C8C8C">
         <Border HorizontalAlignment="Center" Height="151" Margin="0,10,0,0" VerticalAlignment="Top" Width="380">
             <Grid>
                 <Label Content="You are about to:" HorizontalAlignment="Left" VerticalAlignment="Top"/>

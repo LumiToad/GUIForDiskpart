@@ -7,7 +7,7 @@
         xmlns:userControls="clr-namespace:GUIForDiskpart.userControls"
         mc:Ignorable="d"
         Title="AssignLetterWindow" Height="280" Width="575">
-    <Grid x:Name="MainGrid" Background="#FF525252">
+    <Grid x:Name="MainGrid" Background="#FF8C8C8C">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="*"/>
@@ -23,5 +23,6 @@
         <ComboBox x:Name="DriveLetterBox" Grid.Column="1" HorizontalAlignment="Left" Margin="15,36,0,0" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="ConfirmButton" Content="Confirm" Click="ConfirmButton_Click" Grid.Column="1" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,74,0,0"/>
         <Button x:Name="CancelButton" Content="Cancel" IsCancel="True"  Click="CancelButton_Click" HorizontalContentAlignment="Right" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="86,74,0,0"/>
+        <Button x:Name="RemoveButton" Content="Remove" IsCancel="True"  Click="RemoveButton_Click" HorizontalContentAlignment="Right" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="157,74,0,0" Background="#FFC3C3C3"/>
     </Grid>
 </Window>

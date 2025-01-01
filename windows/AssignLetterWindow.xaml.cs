@@ -1,6 +1,9 @@
 ﻿using GUIForDiskpart.diskpart;
 using GUIForDiskpart.main;
+using Markdig.Helpers;
+using System.Drawing;
 using System.Windows;
+using System.Windows.Media;
 
 namespace GUIForDiskpart.windows
 {
@@ -19,6 +22,11 @@ namespace GUIForDiskpart.windows
             {
                 wsmPartition = value;
                 AddTextToConsole(wsmPartition.GetOutputAsString());
+                if (wsmPartition != null && wsmPartition.DriveLetter == '\0')
+                {
+                    RemoveButton.IsEnabled = false;
+                    RemoveButton.Foreground = System.Windows.Media.Brushes.DarkGray;
+                }
             }
         }
 
@@ -60,9 +68,26 @@ namespace GUIForDiskpart.windows
             MainWindow.RetrieveAndShowDiskData(false);
         }
 
+        private void ExecuteRemove()
+        {
+            string output = string.Empty;
+            char letter = wsmPartition.DriveLetter;
+
+            output += DPFunctions.Remove(letter, false, true);
+
+            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.RetrieveAndShowDiskData(false);
+        }
+
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             ExecuteAssign();
+            this.Close();
+        }
+
+        private void RemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            ExecuteRemove();
             this.Close();
         }
 

@@ -11,7 +11,7 @@
     <Window.Resources>
         <AlternationConverter x:Key="AlternationConverter"/>
     </Window.Resources>
-    <Grid x:Name="MainGrid" Background="#FF525252" Margin="0,0,0,-16">
+    <Grid x:Name="MainGrid" Background="#FF8C8C8C" Margin="0,0,0,-16">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="420"/>

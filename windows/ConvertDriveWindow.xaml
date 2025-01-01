@@ -7,7 +7,7 @@
         xmlns:userControls="clr-namespace:GUIForDiskpart.userControls" x:Class="GUIForDiskpart.windows.ConvertDriveWindow"
         mc:Ignorable="d"
         Title="ConvertDriveWindow" Height="236" Width="447">
-    <Grid Background="#FF525252" Margin="0,0,0,-6">
+    <Grid Background="#FF8C8C8C" Margin="0,0,0,-6">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="*"/>

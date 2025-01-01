@@ -22,7 +22,7 @@
                     <Image Source="/resources/diskpart.png" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="DISKPART - Assign" Click="Assign_Click">
+            <MenuItem Header="DISKPART - Assign / Remove" Click="Assign_Click">
                 <MenuItem.Icon>
                     <Image Source="/resources/diskpart.png" />
                 </MenuItem.Icon>

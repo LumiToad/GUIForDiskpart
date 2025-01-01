@@ -7,7 +7,7 @@
         xmlns:userControls="clr-namespace:GUIForDiskpart.userControls"
         mc:Ignorable="d"
         Title="CreateVolumeWindow" Height="270" Width="530">
-    <Grid x:Name="MainGrid" Background="#FF525252">
+    <Grid x:Name="MainGrid" Background="#FF8C8C8C">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="*"/>

@@ -18,7 +18,7 @@
             </StackPanel>
         </DataTemplate>
     </Window.Resources>
-    <Grid x:Name="MainGrid" Background="#FF525252">
+    <Grid x:Name="MainGrid" Background="#FF8C8C8C">
         <Grid.RowDefinitions>
             <RowDefinition Height="35*"/>
             <RowDefinition Height="197*"/>
