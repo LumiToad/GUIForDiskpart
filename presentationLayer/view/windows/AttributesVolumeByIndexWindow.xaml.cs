@@ -11,7 +11,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class AttributesVolumeByIndexWindow : Window
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
 
         int selectedVolume = -1;
 
@@ -20,7 +20,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             InitializeComponent();
             PopulateAttributesCombobox();
             MBRLabel.Text = "Will effect EVERY Volume on MBR drives!, will effect just THIS Volume on GPT drives";
-            ConsoleReturn.AddTextToOutputConsole(DPFunctions.List(DPListType.VOLUME));
+            ConsoleReturn.AddTextToOutputConsole(DPFunctions.List(DPList.VOLUME));
         }
 
         private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
@@ -48,10 +48,10 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         private void PopulateAttributesCombobox()
         {
-            Attributes.Items.Add(AttributesOptions.HIDDEN);
-            Attributes.Items.Add(AttributesOptions.READONLY);
-            Attributes.Items.Add(AttributesOptions.NODEFAULTDRIVELETTER);
-            Attributes.Items.Add(AttributesOptions.SHADOWCOPY);
+            Attributes.Items.Add(DPAttributes.HIDDEN);
+            Attributes.Items.Add(DPAttributes.READONLY);
+            Attributes.Items.Add(DPAttributes.NODEFAULTDRIVELETTER);
+            Attributes.Items.Add(DPAttributes.SHADOWCOPY);
         }
 
         private void SetButton_Click(object sender, RoutedEventArgs e)

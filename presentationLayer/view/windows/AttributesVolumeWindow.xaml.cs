@@ -10,7 +10,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class AttributesVolumeWindow : Window
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
 
         private WSMPartition wsmPartition;
         public WSMPartition WSMPartition
@@ -34,10 +34,10 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         private void PopulateAttributesCombobox()
         {
-            Attributes.Items.Add(AttributesOptions.HIDDEN);
-            Attributes.Items.Add(AttributesOptions.READONLY);
-            Attributes.Items.Add(AttributesOptions.NODEFAULTDRIVELETTER);
-            Attributes.Items.Add(AttributesOptions.SHADOWCOPY);
+            Attributes.Items.Add(DPAttributes.HIDDEN);
+            Attributes.Items.Add(DPAttributes.READONLY);
+            Attributes.Items.Add(DPAttributes.NODEFAULTDRIVELETTER);
+            Attributes.Items.Add(DPAttributes.SHADOWCOPY);
         }
 
         private void SetButton_Click(object sender, RoutedEventArgs e)

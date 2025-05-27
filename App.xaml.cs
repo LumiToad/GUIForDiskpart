@@ -10,6 +10,9 @@ global using DAService = GUIForDiskpart.Service.DefragAnalysis;
 global using PartitionModel = GUIForDiskpart.Model.Data.Partition;
 global using PartitionService = GUIForDiskpart.Service.Partition;
 
+global using FSType = GUIForDiskpart.Database.Data.Types.FileSystemType;
+global using CMDBasic = GUIForDiskpart.Database.Data.CMD.Basic;
+
 
 using System;
 using System.Reflection;
@@ -31,14 +34,24 @@ namespace GUIForDiskpart
     {
         /* --- Inherited from Application ---
         public Window MainWindow { get; set; } 
-           ---------------------------------- */ 
-        private StartupLoadingWindow? startup;
+           ---------------------------------- */
+        public static Window? MainWindowInstance;
 
+        public static App? AppInstance
+        {
+            get {return appInstance; }
+            set { return; }
+        }
+        private static App? appInstance;
+
+        private StartupLoadingWindow? startup;
 
         // Entry point of the whole application!
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            MainWindowInstance = (MainWindow)MainWindow;
+            appInstance = this;
 
             ShowStartupScreen();
             Initialize();
@@ -55,8 +68,8 @@ namespace GUIForDiskpart
             try
             {
                 RetrieveAndShowDiskData(true);
-                Service.Disk.SetupDiskChangedWatcher();
-                Service.Disk.OnDiskChanged += OnDiskChanged;
+                DiskService.SetupDiskChangedWatcher();
+                DiskService.OnDiskChanged += OnDiskChanged;
             }
             catch (Exception ex)
             {
@@ -77,7 +90,7 @@ namespace GUIForDiskpart
         public void AddTextToOutputConsole(string text)
         {
             //Todo -> View!
-            MainWindow.ConsoleReturn.AddTextToOutputConsole(text);
+            MainWindowInstance.ConsoleReturn.AddTextToOutputConsole(text);
         }
 
         #region RetrieveDisk
@@ -88,19 +101,19 @@ namespace GUIForDiskpart
 
         public void RetrieveAndShowDiskData(bool outputText)
         {
-            Application.Current.Dispatcher.Invoke(RetrieveAndShowDiskData_Internal, outputText);
+            Current.Dispatcher.Invoke(RetrieveAndShowDiskData_Internal, outputText);
         }
 
         private void RetrieveAndShowDiskData_Internal(bool outputText)
         {
-            Service.Disk.ReloadDiskInformation();
+            DiskService.ReLoadDisks();
 
             //Todo -> View!
-            AddEntrysToStackPanel<DiskInfo>(DiskStackPanel, Database.Retrievers.Disk.PhysicalDrives);
+            AddEntrysToStackPanel<DiskModel>(DiskStackPanel, DiskService.PhysicalDrives);
 
             if (outputText)
             {
-                AddTextToOutputConsole(Database.Retrievers.Disk.GetDiskOutput());
+                AddTextToOutputConsole(DiskService.GetDiskOutput());
             }
 
             //Todo -> View!

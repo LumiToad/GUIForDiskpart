@@ -16,7 +16,7 @@ namespace GUIForDiskpart.Model.Data
 
         private string deviceID;
         private string physicalName;
-        private string diskModel;
+        private string diskModelText;
         private string mediaStatus;
         private ushort[] operationalStatusValues;
         private bool mediaLoaded;
@@ -69,7 +69,7 @@ namespace GUIForDiskpart.Model.Data
         public bool IsOnline => OperationalStatus.Contains("Online");
         public string DeviceID { get => deviceID; set => deviceID = value; }
         public string PhysicalName { get => physicalName; set => physicalName = value; }
-        public string DiskModel { get => diskModel; set => diskModel = value; }
+        public string DiskModelText { get => diskModelText; set => diskModelText = value; }
         public string MediaStatus { get => mediaStatus; set => mediaStatus = value; }
         public ushort[] OperationalStatusValues { get => operationalStatusValues; set => operationalStatusValues = value; }
         public bool MediaLoaded { get => mediaLoaded; set => mediaLoaded = value; }
@@ -215,7 +215,7 @@ namespace GUIForDiskpart.Model.Data
         public Dictionary<string, object?> GetKeyValuePairs()
         {
             Dictionary<string, object?> data = new Dictionary<string, object?>();
-            PropertyInfo[] properties = typeof(DiskInfo).GetProperties();
+            PropertyInfo[] properties = typeof(DiskModel).GetProperties();
 
             data.Add(MSFT_INFO_KEY, MSFT_INFO_VALUE);
             data.Add($"{MSFT_KEY_PREFIX} DeviceMediaType", DeviceMediaType);
@@ -261,7 +261,7 @@ namespace GUIForDiskpart.Model.Data
             {
                 if (partition.HasWMIPartition && partition.IsLogicalDisk)
                 {
-                    freeSpaceResult += partition.LogicalDiskInfo.FreeSpace;
+                    freeSpaceResult += partition.LDModel.FreeSpace;
                 }
             }
 

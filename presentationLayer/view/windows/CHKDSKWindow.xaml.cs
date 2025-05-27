@@ -1,4 +1,5 @@
 ﻿using GUIForDiskpart.Database.Data;
+using GUIForDiskpart.Database.Data.CMD;
 using GUIForDiskpart.Model.Data;
 using GUIForDiskpart.Model.Logic.CMD;
 using GUIForDiskpart.Utils;
@@ -11,7 +12,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class CHKDSKWindow : Window
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
 
         private Partition partition;
         public Partition Partition
@@ -21,7 +22,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             {
                 partition = value;
                 AddTextToConsole(Partition.GetOutputAsString());
-                DriveLetterTop.Content = Partition.LogicalDiskInfo.VolumeName + " " + Partition.WSMPartition.DriveLetter + ":\\";
+                DriveLetterTop.Content = Partition.LDModel.VolumeName + " " + Partition.WSMPartition.DriveLetter + ":\\";
                 DriveLetterBottom.Content = Partition.WSMPartition.DriveLetter + ":\\";
             }
         }
@@ -189,14 +190,14 @@ namespace GUIForDiskpart.Presentation.View.Windows
             if (ParaShutdown.IsChecked == true)
             {
                 string item = (string)ParaShutdownSelection.SelectionBoxItem;
-                string shutdown = $" & shutdown {CMDBasicCommands.SHUTDOWNFORCE} ";
+                string shutdown = $" & {CMDBasic.CMD_SHUTDOWN} {CMDBasic.SHUTDOWN_FORCE} ";
                 switch (item)
                 {
                     case ("Shutdown"):
-                        shutdown += $"{CMDBasicCommands.SHUTDOWNNOTIMER} ";
+                        shutdown += $"{CMDBasic.SHUTDOWN_NO_TIMER} ";
                         break;
                     case ("Restart"):
-                        shutdown += $"{CMDBasicCommands.SHUTDOWNRESTART} ";
+                        shutdown += $"{CMDBasic.SHUTDOWN_RESTART} ";
                         break;
                 }
                 result += shutdown;

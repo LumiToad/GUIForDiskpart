@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 using GUIForDiskpart.Database.Data.Diskpart;
-using FSType = GUIForDiskpart.Database.Data.Types.FileSystemType;
+
 
 
 namespace GUIForDiskpart.Model.Logic.Diskpart

@@ -14,7 +14,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class AssignLetterWindow : Window
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
 
         WSMPartition wsmPartition;
         WSMPartition WSMPartition

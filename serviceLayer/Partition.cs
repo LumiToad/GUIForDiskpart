@@ -12,17 +12,17 @@ namespace GUIForDiskpart.Service
     {
         private static PartitionRetriever partitionRetriever = new();
 
-        public static List<PartitionModel> GetAllPartitions(ManagementObject disk, DiskModel diskInfo)
+        public static List<PartitionModel> GetAllPartitions(ManagementObject disk, DiskModel diskModel)
         {
             List<PartitionModel> partitions = new List<PartitionModel>();
-            List<WSMPartition> wsmPartitions = GetAllWSMPartitions(diskInfo);
-            List<WMIPartition> wmiPartitions = GetAllWMIPartitions(disk, diskInfo);
+            List<WSMPartition> wsmPartitions = GetAllWSMPartitions(diskModel);
+            List<WMIPartition> wmiPartitions = GetAllWMIPartitions(disk, diskModel);
 
             foreach (WSMPartition wsmPart in wsmPartitions)
             {
                 PartitionModel partition = new PartitionModel();
                 partition.WSMPartition = wsmPart;
-                partition.AssignedDiskInfo = diskInfo;
+                partition.AssignedDiskModel = diskModel;
 
                 foreach (WMIPartition wmiPart in wmiPartitions)
                 {
@@ -37,11 +37,11 @@ namespace GUIForDiskpart.Service
         }
 
         // Service
-        private static List<WSMPartition> GetAllWSMPartitions(DiskModel diskInfo)
+        private static List<WSMPartition> GetAllWSMPartitions(DiskModel diskModel)
         {
             List<WSMPartition> wsmPartitions = new List<WSMPartition>();
 
-            foreach (PSObject psObject in partitionRetriever.WSMPartitionQuery(diskInfo))
+            foreach (PSObject psObject in partitionRetriever.WSMPartitionQuery(diskModel))
             {
                 wsmPartitions.Add(GetWSMPartition(psObject));
             }
@@ -50,11 +50,11 @@ namespace GUIForDiskpart.Service
         }
 
         // Service
-        private static List<WMIPartition> GetAllWMIPartitions(ManagementObject disk, DiskModel diskInfo)
+        private static List<WMIPartition> GetAllWMIPartitions(ManagementObject disk, DiskModel diskModel)
         {
             List<WMIPartition> wmiPartitions = new List<WMIPartition>();
 
-            partitionRetriever.WMIPartitionQuery(disk, diskInfo, ref wmiPartitions);
+            partitionRetriever.WMIPartitionQuery(disk, diskModel, ref wmiPartitions);
 
             return wmiPartitions;
         }

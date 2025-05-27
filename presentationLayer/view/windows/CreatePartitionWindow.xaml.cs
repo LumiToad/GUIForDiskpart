@@ -1,10 +1,10 @@
-﻿using GUIForDiskpart.Database.Data.Diskpart;
-using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.ModelLayer;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
+
+using GUIForDiskpart.Database.Data.Diskpart;
+using GUIForDiskpart.Model.Logic.Diskpart;
+
 
 namespace GUIForDiskpart.Presentation.View.Windows
 {
@@ -13,36 +13,36 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class CreatePartitionWindow : Window
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
 
         long sizeInMB;
 
-        private DiskInfo diskInfo;
-        public DiskInfo DiskInfo
+        private DiskModel diskModel;
+        public DiskModel DiskModel
         {
-            get { return diskInfo; }
+            get { return DiskModel; }
             set
             {
-                diskInfo = value;
+                diskModel = value;
                 AddTextToConsole();
             }
         }
 
-        public CreatePartitionWindow(DiskInfo disk)
+        public CreatePartitionWindow(DiskModel disk)
         {
             InitializeComponent();
 
-            DiskInfo = disk;
+            diskModel = disk;
         }
 
-        public CreatePartitionWindow(DiskInfo disk, long size)
+        public CreatePartitionWindow(DiskModel disk, long size)
         {
             InitializeComponent();
 
             size /= 1024;
             size /= 1024;
             this.sizeInMB = size;
-            DiskInfo = disk;
+            diskModel = disk;
             SizeValue.Text = size.ToString();
         }
 
@@ -53,31 +53,31 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            string option = CreatePartitionOptions.EFI;
+            string option = DPCreatePartition.EFI;
 
             switch (SelectedOptionAsString())
             {
                 case ("EFI"):
-                    option = CreatePartitionOptions.EFI;
+                    option = DPCreatePartition.EFI;
                     break;
                 case ("EXTENDED"):
-                    option = CreatePartitionOptions.EXTENDED;
+                    option = DPCreatePartition.EXTENDED;
                     break;
                 case ("LOGICAL"):
-                    option = CreatePartitionOptions.LOGICAL;
+                    option = DPCreatePartition.LOGICAL;
                     break;
                 case ("MSR"):
-                    option = CreatePartitionOptions.MSR;
+                    option = DPCreatePartition.MSR;
                     break;
                 case ("PRIMARY"):
-                    option = CreatePartitionOptions.PRIMARY;
+                    option = DPCreatePartition.PRIMARY;
                     break;
             }
 
 
             string output = string.Empty;
             
-            output += DPFunctions.CreatePartition(diskInfo.DiskIndex, option, GetSizeValue(), false);
+            output += DPFunctions.CreatePartition(DiskModel.DiskIndex, option, GetSizeValue(), false);
 
             MainWindow.AddTextToOutputConsole(output);
             MainWindow.RetrieveAndShowDiskData(false);
@@ -104,7 +104,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         public void AddTextToConsole()
         {
-            ConsoleReturn.AddTextToOutputConsole(DiskInfo.GetOutputAsString());
+            ConsoleReturn.AddTextToOutputConsole(DiskModel.GetOutputAsString());
         }
 
         private void SizeValue_TextChanged(object sender, TextChangedEventArgs e)

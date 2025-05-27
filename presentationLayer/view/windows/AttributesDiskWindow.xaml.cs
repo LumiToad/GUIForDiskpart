@@ -1,5 +1,4 @@
 ﻿using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.ModelLayer;
 using System.Windows;
 
 namespace GUIForDiskpart.Presentation.View.Windows
@@ -9,30 +8,30 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class AttributesDiskWindow : Window
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
 
-        private DiskInfo diskInfo;
-        public DiskInfo DiskInfo
+        private DiskModel diskModel;
+        public DiskModel DiskModel
         {
-            get { return diskInfo; }
+            get { return DiskModel; }
             set
             {
-                diskInfo = value;
-                AddTextToConsole(diskInfo.GetOutputAsString());
+                diskModel = value;
+                AddTextToConsole(DiskModel.GetOutputAsString());
             }
         }
 
-        public AttributesDiskWindow(DiskInfo diskInfo)
+        public AttributesDiskWindow(DiskModel diskModel)
         {
             InitializeComponent();
-            DiskInfo = diskInfo;
+            diskModel = DiskModel;
         }
 
         private void SetButton_Clear(object sender, RoutedEventArgs e)
         {
             string output = string.Empty;
 
-            output += DPFunctions.AttributesDisk(DiskInfo.DiskIndex, true, false);
+            output += DPFunctions.AttributesDisk(DiskModel.DiskIndex, true, false);
 
             MainWindow.AddTextToOutputConsole(output);
             this.Close();
@@ -42,7 +41,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
         {
             string output = string.Empty;
 
-            output += DPFunctions.AttributesDisk(DiskInfo.DiskIndex, false, false);
+            output += DPFunctions.AttributesDisk(DiskModel.DiskIndex, false, false);
 
             MainWindow.AddTextToOutputConsole(output);
             this.Close();

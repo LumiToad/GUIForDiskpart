@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUIForDiskpart"
-        xmlns:userControls="clr-namespace:GUIForDiskpart.userControls" x:Class="GUIForDiskpart.FormatDriveWindow"
+        xmlns:userControls="clr-namespace:GUIForDiskpart.Presentation.View.UserControls" x:Class="GUIForDiskpart.FormatDriveWindow"
         mc:Ignorable="d"
         Title="Format selected drive" Height="279" Width="575" ResizeMode="NoResize">
     <Grid x:Name="MainGrid" Background="#FF8C8C8C" Margin="0,0,0,-6">

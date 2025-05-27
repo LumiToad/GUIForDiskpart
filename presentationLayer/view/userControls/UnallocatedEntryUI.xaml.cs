@@ -4,7 +4,7 @@ using GUIForDiskpart.Windows;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
+
 
 namespace GUIForDiskpart.Presentation.View.UserControls
 {
@@ -13,10 +13,10 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     /// </summary>
     public partial class UnallocatedEntryUI : UserControl
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
 
         private long size;
-        private DiskInfo diskInfo;
+        private DiskModel diskModel;
 
         public Dictionary<string, object?> Entry
         {
@@ -31,11 +31,11 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         public bool? IsSelected { get { return EntrySelected.IsChecked; } }
 
-        public UnallocatedEntryUI(DiskInfo diskInfo)
+        public UnallocatedEntryUI(DiskModel diskModel)
         {
             InitializeComponent();
-            this.diskInfo = diskInfo;
-            size = diskInfo.UnallocatedSpace;
+            this.diskModel = diskModel;
+            size = diskModel.UnallocatedSpace;
             SetSize(ByteFormatter.FormatBytes(size));
         }
 
@@ -52,7 +52,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         private void CreatePart_Click(object sender, RoutedEventArgs e)
         {
-            CreatePartitionWindow createPartitionWindow = new CreatePartitionWindow(diskInfo, size);
+            CreatePartitionWindow createPartitionWindow = new CreatePartitionWindow(diskModel, size);
             createPartitionWindow.Owner = MainWindow;
             createPartitionWindow.Focus();
 
@@ -61,7 +61,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         private void CreateVolume_Click(object sender, RoutedEventArgs e)
         {
-            CreateVolumeWindow createVolumeWindow = new CreateVolumeWindow(diskInfo, size);
+            Presentation.View.Windows.CreateVolumeWindow createVolumeWindow = new Presentation.View.Windows.CreateVolumeWindow(diskModel, size);
             createVolumeWindow.Owner = MainWindow;
             createVolumeWindow.Focus();
 

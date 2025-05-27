@@ -13,15 +13,15 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     /// </summary>
     public partial class PhysicalDiskEntryUI : UserControl
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
 
-        private DiskInfo diskInfo;
-        public DiskInfo DiskInfo
+        private DiskModel diskModel;
+        public DiskModel DiskModel
         { 
-            get { return diskInfo; } 
+            get { return DiskModel; } 
             set 
             { 
-                diskInfo = value; 
+                diskModel = value; 
                 DriveDataToThisUI();
                 PopulateContextMenu();
             }
@@ -29,19 +29,19 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         public bool? IsSelected { get { return EntrySelected.IsChecked; } }
 
-        public PhysicalDiskEntryUI(DiskInfo diskInfo)
+        public PhysicalDiskEntryUI(DiskModel diskModel)
         {
             InitializeComponent();
-            DiskInfo = diskInfo;
+            diskModel = DiskModel;
         }
 
         private void DriveDataToThisUI()
         {
-            DiskIndex.Content = $"#{diskInfo.DiskIndex}";
-            DiskModel.Content = diskInfo.DiskModel;
-            TotalSpace.Content = diskInfo.FormattedTotalSpace;
-            WSMPartitionCount.Content = $"{diskInfo.PartitionCount} partitions";
-            SetValueInProgressBar(diskInfo.TotalSpace, diskInfo.UsedSpace);
+            DiskIndex.Content = $"#{DiskModel.DiskIndex}";
+            DiskModel.Content = diskModel.DiskModelText;
+            TotalSpace.Content = DiskModel.FormattedTotalSpace;
+            WSMPartitionCount.Content = $"{DiskModel.PartitionCount} partitions";
+            SetValueInProgressBar(DiskModel.TotalSpace, DiskModel.UsedSpace);
 
             DiskIcon.Source = GetDiskIcon();
             MediaTypeIcon.Source = GetMediaTypeIcon();
@@ -55,12 +55,12 @@ namespace GUIForDiskpart.Presentation.View.UserControls
             header = "DISKPART - Online";
             name = "DPOnline";
 
-            if (DiskInfo.IsOnline) 
+            if (DiskModel.IsOnline) 
             {
                 header = "DISKPART - Offline";
                 name = "DPOffline";
             }
-            MenuItem menuItem = WPFUtilites.CreateContextMenuItem(IconUtilities.Diskpart, name, header, true, OnOffline_Click);
+            MenuItem menuItem = WPFUtils.CreateContextMenuItem(IconUtils.Diskpart, name, header, true, OnOffline_Click);
             ContextMenu.Items.Add(menuItem);
         }
 
@@ -68,13 +68,13 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         {
             string output = string.Empty;
 
-            if (DiskInfo.IsOnline) 
+            if (DiskModel.IsOnline) 
             {
-                output += DPFunctions.OnOfflineDisk(DiskInfo.DiskIndex, false, false);
+                output += DPFunctions.OnOfflineDisk(DiskModel.DiskIndex, false, false);
             }
             else 
             {
-                output += DPFunctions.OnOfflineDisk(DiskInfo.DiskIndex, true, false);
+                output += DPFunctions.OnOfflineDisk(DiskModel.DiskIndex, true, false);
             }
 
             MainWindow.AddTextToOutputConsole(output);
@@ -83,17 +83,17 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         private void Detail_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.AddTextToOutputConsole(DPFunctions.DetailDisk(diskInfo.DiskIndex));
+            MainWindow.AddTextToOutputConsole(DPFunctions.DetailDisk(DiskModel.DiskIndex));
         }
 
         private void ListPart_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.AddTextToOutputConsole(DPFunctions.ListPart(diskInfo.DiskIndex));
+            MainWindow.AddTextToOutputConsole(DPFunctions.ListPart(DiskModel.DiskIndex));
         }
 
         private void Clean_Click(object sender, RoutedEventArgs e)
         {
-            CleanWindow cleanWindow = new CleanWindow(DiskInfo);
+            CleanWindow cleanWindow = new CleanWindow(diskModel);
             cleanWindow.Owner = MainWindow;
             cleanWindow.Focus();
 
@@ -102,7 +102,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         private void Convert_Click(object sender, RoutedEventArgs e)
         {
-            ConvertDriveWindow convertDriveWindow = new ConvertDriveWindow(diskInfo);
+            ConvertDriveWindow convertDriveWindow = new ConvertDriveWindow(diskModel);
             convertDriveWindow.Owner = MainWindow;
             convertDriveWindow.Focus();
             
@@ -111,7 +111,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         private void CreatePart_Click(object sender, RoutedEventArgs e)
         {
-            CreatePartitionWindow createPartitionWindow = new CreatePartitionWindow(diskInfo);
+            CreatePartitionWindow createPartitionWindow = new CreatePartitionWindow(diskModel);
             createPartitionWindow.Owner = MainWindow;
             createPartitionWindow.Focus();
 
@@ -120,7 +120,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         private void CreateVolume_Click(object sender, RoutedEventArgs e)
         {
-            CreateVolumeWindow createVolumeWindow = new CreateVolumeWindow(diskInfo);
+            CreateVolumeWindow createVolumeWindow = new CreateVolumeWindow(diskModel);
             createVolumeWindow.Owner = MainWindow;
             createVolumeWindow.Focus();
 
@@ -129,7 +129,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         private void EasyFormat_Click(object sender, RoutedEventArgs e)
         {
-            FormatDriveWindow formatWindow = new FormatDriveWindow(diskInfo);
+            FormatDriveWindow formatWindow = new FormatDriveWindow(diskModel);
             formatWindow.Owner = MainWindow;
             formatWindow.Focus();
 
@@ -149,11 +149,11 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         private ImageSource? GetDiskIcon()
         {
-            ImageSource? result = IconUtilities.GetShellIconByType(Shell32IconType.Drive, true);
+            ImageSource? result = IconUtils.GetShellIconByType(Shell32IconType.Drive, true);
 
-            if (diskInfo.InterfaceType == "USB")
+            if (DiskModel.InterfaceType == "USB")
             {
-                result = IconUtilities.GetShellIconByType(Shell32IconType.USB, true);
+                result = IconUtils.GetShellIconByType(Shell32IconType.USB, true);
             }
 
             return result;
@@ -161,21 +161,21 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         private ImageSource? GetMediaTypeIcon()
         {
-            ImageSource? result = IconUtilities.GetShellIconByType(Shell32IconType.QuestionMark, true);
+            ImageSource? result = IconUtils.GetShellIconByType(Shell32IconType.QuestionMark, true);
 
-            switch (diskInfo.MediaType)
+            switch (DiskModel.MediaType)
             {
                 case ("External hard disk media"):
-                    result = IconUtilities.GetShellIconByType(Shell32IconType.UpArrow, true);
+                    result = IconUtils.GetShellIconByType(Shell32IconType.UpArrow, true);
                     break;
                 case ("Removable Media"):
-                    result = IconUtilities.GetShellIconByType(Shell32IconType.UpArrow, true);
+                    result = IconUtils.GetShellIconByType(Shell32IconType.UpArrow, true);
                     break;
                 case ("Fixed hard disk media"):
-                    result = IconUtilities.GetShellIconByType(Shell32IconType.Fixed, true);
+                    result = IconUtils.GetShellIconByType(Shell32IconType.Fixed, true);
                     break;
                 case ("Unknown"):
-                    result = IconUtilities.GetShellIconByType(Shell32IconType.QuestionMark, true);
+                    result = IconUtils.GetShellIconByType(Shell32IconType.QuestionMark, true);
                     break;
             }
 

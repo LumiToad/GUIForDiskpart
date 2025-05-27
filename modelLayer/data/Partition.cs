@@ -5,11 +5,11 @@ namespace GUIForDiskpart.Model.Data
 {
     public class Partition
     {
-        private DiskModel assignedDiskInfo;
-        public DiskModel AssignedDiskInfo
+        private DiskModel assignedDiskModel;
+        public DiskModel AssignedDiskModel
         {
-            get => assignedDiskInfo;
-            set => assignedDiskInfo = value;
+            get => assignedDiskModel;
+            set => assignedDiskModel = value;
         }
 
         private WSMPartition wsmPartition;
@@ -26,7 +26,7 @@ namespace GUIForDiskpart.Model.Data
             set => wmiPartition = value;
         }
 
-        public LDModel LogicalDiskInfo => WMIPartition.LogicalDiskInfo;
+        public LDModel LDModel => WMIPartition.LDModel;
 
         private DAModel defragAnalysis;
         public DAModel DefragAnalysis
@@ -46,7 +46,7 @@ namespace GUIForDiskpart.Model.Data
             get
             {
                 if (!HasWMIPartition) return false;
-                return LogicalDiskInfo == null ? false : true;
+                return LDModel == null ? false : true;
             }
         }
 
@@ -83,7 +83,7 @@ namespace GUIForDiskpart.Model.Data
 
             if (IsLogicalDisk)
             {
-                fullOutput += LogicalDiskInfo.GetOutputAsString();
+                fullOutput += LDModel.GetOutputAsString();
             }
 
             if (HasDefragAnalysis)
@@ -111,7 +111,7 @@ namespace GUIForDiskpart.Model.Data
 
             if (IsLogicalDisk)
             {
-                AppendDataToDict(data, LogicalDiskInfo.GetKeyValuePairs());
+                AppendDataToDict(data, LDModel.GetKeyValuePairs());
             }
 
             if (HasDefragAnalysis)

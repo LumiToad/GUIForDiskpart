@@ -16,7 +16,7 @@ namespace GUIForDiskpart.Service
             Dictionary<string, string> data = LinesToDictionary(lines);
 
             Model.Data.DefragAnalysis result = DictionaryToClass(data);
-            result.AvailableForExtend = Convert.ToUInt64(partition.AssignedDiskInfo.UnallocatedSpace);
+            result.AvailableForExtend = Convert.ToUInt64(partition.AssignedDiskModel.UnallocatedSpace);
             return result;
         }
 

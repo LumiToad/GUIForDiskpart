@@ -12,7 +12,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class FormatPartitionWindow : Window
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
 
         private WSMPartition wsmPartition;
         public WSMPartition WSMPartition
@@ -67,20 +67,20 @@ namespace GUIForDiskpart.Presentation.View.Windows
         {
             if (!value) return;
 
-            FileSystem fileSystem = FileSystem.NTFS;
+            FSType fileSystem = FSType.NTFS;
 
             Console.WriteLine(SelectedFileSystemAsString());
 
             switch (SelectedFileSystemAsString())
             {
                 case ("NTFS"):
-                    fileSystem = FileSystem.NTFS;
+                    fileSystem = FSType.NTFS;
                     break;
                 case ("FAT32"):
-                    fileSystem = FileSystem.FAT32;
+                    fileSystem = FSType.FAT32;
                     break;
                 case ("exFAT"):
-                    fileSystem = FileSystem.exFAT;
+                    fileSystem = FSType.exFAT;
                     break;
             }
 

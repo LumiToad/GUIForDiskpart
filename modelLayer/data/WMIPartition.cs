@@ -111,8 +111,8 @@ namespace GUIForDiskpart.Model.Data
 
         public bool IsLogicalPartition => GetLogicalPartition();
 
-        public LDModel logicalDiskInfo;
-        public LDModel LogicalDiskInfo { get { return logicalDiskInfo; } }
+        public LDModel logicalDiskModel;
+        public LDModel LDModel { get { return logicalDiskModel; } }
 
         public void PrintToConsole()
         {
@@ -132,9 +132,9 @@ namespace GUIForDiskpart.Model.Data
             output += "MediaStatus: " + "\t\t\t" + Status + "\n";
             output += "MediaType: " + "\t\t\t" + Type + "\n";
 
-            if (logicalDiskInfo != null)
+            if (logicalDiskModel != null)
             {
-                output += logicalDiskInfo.GetOutputAsString();
+                output += logicalDiskModel.GetOutputAsString();
             }
 
             output += "_________________" + "\n\n";
@@ -144,11 +144,11 @@ namespace GUIForDiskpart.Model.Data
 
         public void AddLogicalDisk(Model.Data.LogicalDisk disk)
         {
-            logicalDiskInfo = disk;
+            logicaldiskModel = disk;
         }
 
         private bool GetLogicalPartition()
-        { return logicalDiskInfo != null; }
+        { return logicalDiskModel != null; }
 
         public Dictionary<string, object?> GetKeyValuePairs()
         {

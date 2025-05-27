@@ -13,16 +13,16 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class ShrinkWindow : Window
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
 
-        private Model.Data.Partition partition;
-        public Model.Data.Partition Partition
+        private PartitionModel partition;
+        public PartitionModel Partition
         {
             get { return partition; }
             set
             {
                 partition = value;
-                Partition.DefragAnalysis = DefragAnalysisRetriever.AnalyzeVolumeDefrag(Partition);
+                Partition.DefragAnalysis = DAService.AnalyzeVolumeDefrag(Partition);
                 availableForShrinkInMB = (Partition.DefragAnalysis.AvailableForShrink / 1024) / 1024;
                 AddTextToConsole();
                 SetSliderMinMax(MinimumSlider, 0.0d, Convert.ToDouble(availableForShrinkInMB));
@@ -33,7 +33,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         private UInt64 availableForShrinkInMB;
 
-        public ShrinkWindow(Model.Data.Partition partition)
+        public ShrinkWindow(PartitionModel partition)
         {
             InitializeComponent();
             Partition = partition;

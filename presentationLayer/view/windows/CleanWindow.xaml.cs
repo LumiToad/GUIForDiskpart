@@ -1,5 +1,5 @@
 ﻿using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.ModelLayer;
+
 using System.Windows;
 
 namespace GUIForDiskpart.Presentation.View.Windows
@@ -9,24 +9,24 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class CleanWindow : Window
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
 
-        private DiskInfo diskInfo;
-        public DiskInfo DiskInfo
+        private DiskModel diskModel;
+        public DiskModel DiskModel
         {
-            get { return diskInfo; }
+            get { return DiskModel; }
             set
             {
-                diskInfo = value;
-                AddTextToConsole(diskInfo.GetOutputAsString());
+                diskModel = value;
+                AddTextToConsole(DiskModel.GetOutputAsString());
             }
         }
 
-        public CleanWindow(DiskInfo diskInfo)
+        public CleanWindow(DiskModel diskModel)
         {
             InitializeComponent();
 
-            DiskInfo = diskInfo;
+            diskModel = DiskModel;
         }
 
         private void ExecuteClean(bool value)
@@ -35,7 +35,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
             string output = string.Empty;
 
-            output += DPFunctions.Clean(DiskInfo.DiskIndex, (bool)CleanAll.IsChecked);
+            output += DPFunctions.Clean(DiskModel.DiskIndex, (bool)CleanAll.IsChecked);
 
             MainWindow.AddTextToOutputConsole(output);
             MainWindow.RetrieveAndShowDiskData(false);
@@ -50,7 +50,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             {
                 todo = "Clean and override the whole drive! MAKES DATA RESCUE CLOSE TO IMPOSSIBLE!";
             }
-            string confirmKey = DiskInfo.PhysicalName;
+            string confirmKey = DiskModel.PhysicalName;
 
             SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(ExecuteClean,todo, confirmKey);
             securityCheckWindow.Owner = this;

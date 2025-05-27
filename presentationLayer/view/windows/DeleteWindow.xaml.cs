@@ -9,7 +9,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class DeleteWindow : Window
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
 
         private WSMPartition wsmPartition;
         public WSMPartition WSMPartition

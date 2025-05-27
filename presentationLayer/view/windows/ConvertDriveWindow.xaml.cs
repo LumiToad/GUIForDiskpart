@@ -1,6 +1,5 @@
 ﻿using GUIForDiskpart.Database.Data.Diskpart;
 using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.ModelLayer;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,29 +10,29 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class ConvertDriveWindow : Window
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
 
-        private DiskInfo diskInfo;
-        public DiskInfo DiskInfo
+        private DiskModel diskModel;
+        public DiskModel DiskModel
         {
-            get { return diskInfo; } 
+            get { return DiskModel; } 
             set 
             {
-                diskInfo = value;
+                diskModel = value;
                 AddTextToConsole();
             }
         }
 
-        public ConvertDriveWindow(DiskInfo disk)
+        public ConvertDriveWindow(DiskModel disk)
         {
             InitializeComponent();
 
-            DiskInfo = disk;
+            diskModel = disk;
         }
 
         public void AddTextToConsole()
         {
-            ConsoleReturn.AddTextToOutputConsole(diskInfo.GetOutputAsString());
+            ConsoleReturn.AddTextToOutputConsole(DiskModel.GetOutputAsString());
         }
 
         private string SelectedOptionAsString()
@@ -43,26 +42,26 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            string option = ConvertOptions.GPT;
+            string option = DPConvert.GPT;
 
             switch (SelectedOptionAsString())
             {
                 case ("GPT"):
-                    option = ConvertOptions.GPT;
+                    option = DPConvert.GPT;
                     break;
                 case ("MBR"):
-                    option = ConvertOptions.MBR;
+                    option = DPConvert.MBR;
                     break;
                 case ("BASIC"):
-                    option = ConvertOptions.BASIC;
+                    option = DPConvert.BASIC;
                     break;
                 case ("DYNAMIC"):
-                    option = ConvertOptions.DYNAMIC;
+                    option = DPConvert.DYNAMIC;
                     break;
             }
 
             string output = string.Empty;
-            output = DPFunctions.Convert(diskInfo.DiskIndex, option);
+            output = DPFunctions.Convert(DiskModel.DiskIndex, option);
 
             MainWindow.AddTextToOutputConsole(output);
 

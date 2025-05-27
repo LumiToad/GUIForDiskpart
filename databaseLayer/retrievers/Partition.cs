@@ -10,14 +10,14 @@ namespace GUIForDiskpart.Database.Retrievers
 {
     public class Partition
     {
-        public void WMIPartitionQuery(ManagementObject disk, DiskModel diskInfo, ref List<WMIPartition> list)
+        public void WMIPartitionQuery(ManagementObject disk, DiskModel diskModel, ref List<WMIPartition> list)
         {
             var partitionQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_DiskDriveToDiskPartition", disk.Path.RelativePath);
             var partitionQuery = new ManagementObjectSearcher(partitionQueryText);
 
             foreach (ManagementObject partitionManagementObject in partitionQuery.Get())
             {
-                WMIPartition wmiPartition = PartitionService.GetWMIPartition(partitionManagementObject, diskInfo.DiskIndex);
+                WMIPartition wmiPartition = PartitionService.GetWMIPartition(partitionManagementObject, diskModel.DiskIndex);
                 LDModel ld = LDService.GetLogicalDisk(partitionManagementObject);
                 wmiPartition.AddLogicalDisk(ld);
 
@@ -25,9 +25,9 @@ namespace GUIForDiskpart.Database.Retrievers
             }
         }
 
-        public List<object> WSMPartitionQuery(DiskModel diskInfo)
+        public List<object> WSMPartitionQuery(DiskModel diskModel)
         {
-            string diskIndex = Convert.ToString(diskInfo.DiskIndex);
+            string diskIndex = Convert.ToString(diskModel.DiskIndex);
 
             return CommandExecuter.IssuePowershellCommand("Get-Partition", diskIndex);
         }

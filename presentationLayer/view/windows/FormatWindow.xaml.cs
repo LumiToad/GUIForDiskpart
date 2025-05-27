@@ -1,6 +1,6 @@
 ﻿using GUIForDiskpart.Database.Data;
 using GUIForDiskpart.Model.Logic;
-using GUIForDiskpart.ModelLayer;
+
 using GUIForDiskpart.Presentation.View.Windows;
 using System;
 using System.DirectoryServices;
@@ -14,29 +14,29 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class FormatDriveWindow : Window
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
 
-        private DiskInfo diskInfo;
-        public DiskInfo DiskInfo
+        private DiskModel diskModel;
+        public DiskModel DiskModel
         {
-            get { return diskInfo; }
+            get { return DiskModel; }
             set
             {
-                diskInfo = value;
+                diskModel = value;
                 AddTextToConsole();
             }
         }
 
-        public FormatDriveWindow(DiskInfo disk)
+        public FormatDriveWindow(DiskModel disk)
         {
             InitializeComponent();
 
-            DiskInfo = disk;
+            diskModel = disk;
         }
 
         public void AddTextToConsole()
         {
-            ConsoleReturn.AddTextToOutputConsole(diskInfo.GetOutputAsString());
+            ConsoleReturn.AddTextToOutputConsole(DiskModel.GetOutputAsString());
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -59,7 +59,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             string todo = "Format the whole drive! ALL DATA WILL BE LOST!";
-            string confirmKey = DiskInfo.PhysicalName;
+            string confirmKey = DiskModel.PhysicalName;
 
             SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(ExecuteFormat, todo, confirmKey);
             securityCheckWindow.Owner = this;
@@ -70,26 +70,26 @@ namespace GUIForDiskpart.Presentation.View.Windows
         {
             if (!value) return;
 
-            FileSystem fileSystem = FileSystem.NTFS;
+            FSType fileSystem = FSType.NTFS;
 
             Console.WriteLine(SelectedFileSystemAsString());
 
             switch (SelectedFileSystemAsString())
             {
                 case ("NTFS"):
-                    fileSystem = FileSystem.NTFS;
+                    fileSystem = FSType.NTFS;
                     break;
                 case ("FAT32"):
-                    fileSystem = FileSystem.FAT32;
+                    fileSystem = FSType.FAT32;
                     break;
                 case ("exFAT"):
-                    fileSystem = FileSystem.exFAT;
+                    fileSystem = FSType.exFAT;
                     break;
             }
 
             UInt64 size = GetSizeValue();
 
-            if (size == 0 && fileSystem == FileSystem.FAT32)
+            if (size == 0 && fileSystem == FSType.FAT32)
             {
                 size = 32768;
             }
@@ -99,14 +99,14 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
             if (DriveLetterValue.Text == "")
             {
-                output = ComfortFeatures.EasyDiskFormat(diskInfo, fileSystem, VolumeValue.Text,
+                output = ComfortFeatures.EasyDiskFormat(diskModel, fileSystem, VolumeValue.Text,
                     size, (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, true, false);
             }
             else
             {
                 char driveLetter = DriveLetterValue.Text.ToCharArray()[0];
 
-                output = ComfortFeatures.EasyDiskFormat(diskInfo, fileSystem, VolumeValue.Text,
+                output = ComfortFeatures.EasyDiskFormat(diskModel, fileSystem, VolumeValue.Text,
                     driveLetter, size, (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, true, false);
             }
 

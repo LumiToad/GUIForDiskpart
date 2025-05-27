@@ -6,14 +6,14 @@
         {
             string letters = string.Empty;
 
-            foreach (DiskModel diskInfo in DiskService.PhysicalDrives)
+            foreach (DiskModel diskModel in DiskService.PhysicalDrives)
             {
-                foreach (PartitionModel partition in diskInfo.Partitions)
+                foreach (PartitionModel partition in diskModel.Partitions)
                 {
                     if (!partition.IsLogicalDisk) continue;
-                    if (!string.IsNullOrEmpty(partition.LogicalDiskInfo.DriveLetter))
+                    if (!string.IsNullOrEmpty(partition.LDModel.DriveLetter))
                     {
-                        letters += partition.LogicalDiskInfo.DriveLetter[0];
+                        letters += partition.LDModel.DriveLetter[0];
                     }
                 }
             }

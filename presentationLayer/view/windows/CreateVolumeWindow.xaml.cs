@@ -1,6 +1,6 @@
 ﻿using GUIForDiskpart.Database.Data.Diskpart;
 using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.ModelLayer;
+
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,35 +12,35 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class CreateVolumeWindow : Window
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
 
         private long sizeInMB;
 
-        private DiskInfo diskInfo;
-        public DiskInfo DiskInfo
+        private DiskModel diskModel;
+        public DiskModel DiskModel
         {
-            get { return diskInfo; }
+            get { return DiskModel; }
             set
             {
-                diskInfo = value;
+                diskModel = value;
                 AddTextToConsole();
             }
         }
 
-        public CreateVolumeWindow(DiskInfo disk)
+        public CreateVolumeWindow(DiskModel disk)
         {
             InitializeComponent();
-            DiskInfo = disk;
+            diskModel = disk;
         }
 
-        public CreateVolumeWindow(DiskInfo disk, long size)
+        public CreateVolumeWindow(DiskModel disk, long size)
         {
             InitializeComponent();
 
             size /= 1024;
             size /= 1024;
             this.sizeInMB = size;
-            DiskInfo = disk;
+            diskModel = disk;
             SizeValue.Text = size.ToString();
         }
 
@@ -48,7 +48,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
         {
             string output = string.Empty;
 
-            output += DPFunctions.CreateVolume(diskInfo.DiskIndex, CreateVolumeOptions.SIMPLE, GetSizeValue(), false);
+            output += DPFunctions.CreateVolume(DiskModel.DiskIndex, DPVolume.SIMPLE, GetSizeValue(), false);
 
             MainWindow.AddTextToOutputConsole(output);
             MainWindow.RetrieveAndShowDiskData(false);
@@ -75,7 +75,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         public void AddTextToConsole()
         {
-            ConsoleReturn.AddTextToOutputConsole(DiskInfo.GetOutputAsString());
+            ConsoleReturn.AddTextToOutputConsole(DiskModel.GetOutputAsString());
         }
 
         private void SizeValue_TextChanged(object sender, TextChangedEventArgs e)

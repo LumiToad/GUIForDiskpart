@@ -1,6 +1,4 @@
-﻿using GUIForDiskpart.main;
-using System;
-using System.Windows;
+﻿using System.Windows;
 
 namespace GUIForDiskpart.Presentation.View.Windows
 {

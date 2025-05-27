@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GUIForDiskpart.Windows"
-        xmlns:userControls="clr-namespace:GUIForDiskpart.userControls"
+        xmlns:local="clr-namespace:GUIForDiskpart.Presentation.View.Windows"
+        xmlns:userControls="clr-namespace:GUIForDiskpart.Presentation.View.UserControls"
         mc:Ignorable="d"
         Title="FormatPartitionWindow" Height="280" Width="575">
     <Grid x:Name="MainGrid" Background="#FF8C8C8C" Margin="0,0,0,-6">

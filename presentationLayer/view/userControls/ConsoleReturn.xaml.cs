@@ -1,7 +1,10 @@
-﻿using GUIForDiskpart.Utils;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+
+using GUIForDiskpart;
+using GUIForDiskpart.Utils;
+
 
 namespace GUIForDiskpart.Presentation.View.UserControls
 {
@@ -10,7 +13,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     /// </summary>
     public partial class ConsoleReturnUI : UserControl
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
 
         public ConsoleReturnUI()
         {

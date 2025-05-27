@@ -1,5 +1,5 @@
 ﻿using GUIForDiskpart.Model.Data;
-using GUIForDiskpart.userControls;
+using GUIForDiskpart.Presentation.View.UserControls;
 using GUIForDiskpart.Presentation.View.Windows;
 using System;
 using System.Collections.Generic;
@@ -9,12 +9,12 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Model.Logic;
 using GUIForDiskpart.Service;
-using GUIForDiskpart.Database.Data;
-using GUIForDiskpart.Utils;
 using GUIForDiskpart.Database.Data.Diskpart;
+
 
 namespace GUIForDiskpart
 {
@@ -76,13 +76,13 @@ namespace GUIForDiskpart
 
         public void DiskEntry_Click(PhysicalDiskEntryUI entry)
         {
-            AddEntrysToStackPanel(PartitionStackPanel, entry.DiskInfo.Partitions);
-            if (entry.DiskInfo.UnallocatedSpace > 0) 
+            AddEntrysToStackPanel(PartitionStackPanel, entry.DiskModel.Partitions);
+            if (entry.DiskModel.UnallocatedSpace > 0) 
             {
-                UnallocatedEntryUI unallocatedEntryUI = new UnallocatedEntryUI(entry.DiskInfo);
+                UnallocatedEntryUI unallocatedEntryUI = new UnallocatedEntryUI(entry.diskModel);
                 PartitionStackPanel.Children.Add(unallocatedEntryUI);
             }
-            EntryDataUI.AddDataToGrid(entry.DiskInfo.GetKeyValuePairs());
+            EntryDataUI.AddDataToGrid(entry.DiskModel.GetKeyValuePairs());
         }
 
         public void PartitionEntry_Click(PartitionEntryUI entry)
@@ -108,18 +108,18 @@ namespace GUIForDiskpart
 
         private void ListVolume_Click(object sender, RoutedEventArgs e)
         {
-            AddTextToOutputConsole(DPFunctions.List(DPListType.VOLUME));
+            AddTextToOutputConsole(DPFunctions.List(DPList.VOLUME));
         }
 
         private void ListDisk_Click(object sender, RoutedEventArgs e)
         {
-            AddTextToOutputConsole(DPFunctions.List(DPListType.DISK));
+            AddTextToOutputConsole(DPFunctions.List(DPList.DISK));
 
         }
 
         private void ListVdisk_Click(object sender, RoutedEventArgs e)
         {
-            AddTextToOutputConsole(DPFunctions.List(DPListType.VDISK));
+            AddTextToOutputConsole(DPFunctions.List(DPList.VDISK));
         }
 
         private void CreateVDisk_Click(object sender, RoutedEventArgs e)
@@ -186,7 +186,7 @@ namespace GUIForDiskpart
 
                 switch (thing) 
                 {
-                    case DiskInfo disk:
+                    case DiskModel disk:
                         PhysicalDiskEntryUI diskEntry = new PhysicalDiskEntryUI(disk);
                         userControl = diskEntry;
                         break;
@@ -210,7 +210,7 @@ namespace GUIForDiskpart
                 {
                     diskEntry = (PhysicalDiskEntryUI)entry;
                     if (diskEntry != null && diskEntry.IsSelected == true) 
-                        return diskEntry.DiskInfo.DiskIndex;
+                        return diskEntry.DiskModel.DiskIndex;
                 }
 
                 if (entry.GetType() == typeof(PartitionEntryUI))
@@ -284,9 +284,9 @@ namespace GUIForDiskpart
 
         private void RetrieveAndShowDiskData_Internal(bool outputText)
         {
-            DiskRetriever.ReloadDiskInformation();
+            DiskRetriever.ReloadDiskModelrmation();
 
-            AddEntrysToStackPanel<DiskInfo>(DiskStackPanel, DiskRetriever.PhysicalDrives);
+            AddEntrysToStackPanel<DiskModel>(DiskStackPanel, DiskRetriever.PhysicalDrives);
 
             if (outputText)
             {

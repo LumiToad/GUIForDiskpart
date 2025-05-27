@@ -1,11 +1,11 @@
-﻿using GUIForDiskpart.Model.Data;
+﻿using System.Windows;
+using System.Windows.Controls;
+
+using GUIForDiskpart.Model.Data;
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Service;
 using GUIForDiskpart.Utils;
-using GUIForDiskpart.Windows;
-using System;
-using System.Windows;
-using System.Windows.Controls;
+
 
 namespace GUIForDiskpart.Presentation.View.UserControls
 {
@@ -14,10 +14,10 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     /// </summary>
     public partial class PartitionEntryUI : UserControl
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
+        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
 
-        private Model.Data.Partition partition;
-        public Model.Data.Partition Partition
+        private PartitionModel partition;
+        public PartitionModel Partition
         {
             get { return partition; }
             set
@@ -36,7 +36,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         public bool? IsSelected { get { return EntrySelected.IsChecked; } }
 
-        public PartitionEntryUI(Model.Data.Partition partition)
+        public PartitionEntryUI(PartitionModel partition)
         {
             InitializeComponent();
 
@@ -53,43 +53,43 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
             if (Partition.HasWSMPartition && Partition.IsLogicalDisk)
             {
-                SetValueInProgressBar(Partition.WSMPartition.Size, Partition.LogicalDiskInfo.UsedSpace);
+                SetValueInProgressBar(Partition.WSMPartition.Size, Partition.LDModel.UsedSpace);
             }
 
             if (Partition.WSMPartition.IsBoot)
             {
-                WinVolumeIcon.Source = IconUtilities.GetSystemIconByType(SystemIconType.WinLogo);
+                WinVolumeIcon.Source = IconUtils.GetSystemIconByType(SystemIconType.WinLogo);
             }
         }
 
         private void PopulateContextMenu()
         {
-            MenuItem offline = WPFUtilites.CreateContextMenuItem(IconUtilities.Diskpart, "DPOffline", "DISKPART - Offline", true, OnOffline_Click);
-            MenuItem online = WPFUtilites.CreateContextMenuItem(IconUtilities.Diskpart, "DPOnline", "DISKPART - Online", true, OnOffline_Click);
+            MenuItem offline = WPFUtils.CreateContextMenuItem(IconUtils.Diskpart, "DPOffline", "DISKPART - Offline", true, OnOffline_Click);
+            MenuItem online = WPFUtils.CreateContextMenuItem(IconUtils.Diskpart, "DPOnline", "DISKPART - Online", true, OnOffline_Click);
 
             if (Partition.WSMPartition.PartitionTable == "MBR")
             {
                 string header = "DISKPART - " + (Partition.WSMPartition.IsActive ? "Inactive" : "Active");
                 string name = "DPInActive";
-                MenuItem menuItem = WPFUtilites.CreateContextMenuItem(IconUtilities.Diskpart, name, header, true, Active_Click);
+                MenuItem menuItem = WPFUtils.CreateContextMenuItem(IconUtils.Diskpart, name, header, true, Active_Click);
                 ContextMenu.Items.Add(menuItem);
             }
 
-            if (Partition.IsLogicalDisk && Partition.LogicalDiskInfo.DriveLetter != null)
+            if (Partition.IsLogicalDisk && Partition.LDModel.DriveLetter != null)
             {
                 string header = "DISKPART - Attributes";
                 string name = "DPAttributes";
-                MenuItem menuItem = WPFUtilites.CreateContextMenuItem(IconUtilities.Diskpart, name, header, true, Attributes_Click);
+                MenuItem menuItem = WPFUtils.CreateContextMenuItem(IconUtils.Diskpart, name, header, true, Attributes_Click);
                 ContextMenu.Items.Add(menuItem);
 
                 header = "DISKPART - Shrink";
                 name = "DPShrink";
-                menuItem = WPFUtilites.CreateContextMenuItem(IconUtilities.Diskpart, name, header, true, Shrink_Click);
+                menuItem = WPFUtils.CreateContextMenuItem(IconUtils.Diskpart, name, header, true, Shrink_Click);
                 ContextMenu.Items.Add(menuItem);
 
                 header = "DISKPART - Extend";
                 name = "DPExtend";
-                menuItem = WPFUtilites.CreateContextMenuItem(IconUtilities.Diskpart, name, header, true, Extend_Click);
+                menuItem = WPFUtils.CreateContextMenuItem(IconUtils.Diskpart, name, header, true, Extend_Click);
                 ContextMenu.Items.Add(menuItem);
 
                 ContextMenu.Items.Add(offline);
@@ -102,7 +102,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
             {
                 string header = "CMD - CHKDSK";
                 string name = "CMDCHDSK";
-                MenuItem menuItem = WPFUtilites.CreateContextMenuItem(IconUtilities.CMD, name, header, true, ScanVolume_Click);
+                MenuItem menuItem = WPFUtils.CreateContextMenuItem(IconUtils.CMD, name, header, true, ScanVolume_Click);
                 ContextMenu.Items.Add(new Separator());
                 ContextMenu.Items.Add(menuItem);
             }
@@ -111,7 +111,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
             {
                 string header = "Powershell - DefragAnalysis";
                 string name = "PSAnalyzeDefrag";
-                MenuItem menuItem = WPFUtilites.CreateContextMenuItem(IconUtilities.Commandline, name, header, true, AnalyzeDefrag_Click);
+                MenuItem menuItem = WPFUtils.CreateContextMenuItem(IconUtils.Commandline, name, header, true, AnalyzeDefrag_Click);
                 menuItem.ToolTip = 
                     (
                     new ToolTip().Content = 
@@ -155,7 +155,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         private void Shrink_Click(object sender, RoutedEventArgs e)
         {
-            ShrinkWindow window = new ShrinkWindow(Partition);
+            GUIForDiskpart.Presentation.View.Windows.ShrinkWindow window = new GUIForDiskpart.Presentation.View.Windows.ShrinkWindow(Partition);
             window.Owner = MainWindow;
             window.Show();
         }
@@ -248,7 +248,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         public void OpenScanVolumeWindow()
         {
-            if (Partition.IsLogicalDisk && Partition.LogicalDiskInfo.DriveLetter == null) return;
+            if (Partition.IsLogicalDisk && Partition.LDModel.DriveLetter == null) return;
             CHKDSKWindow window = new CHKDSKWindow(Partition);
             window.Owner = MainWindow;
             window.Show();
@@ -258,9 +258,9 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         {
             string driveNameText = string.Empty;
             
-            if (Partition.IsLogicalDisk && (!string.IsNullOrEmpty(Partition.LogicalDiskInfo.VolumeName)))
+            if (Partition.IsLogicalDisk && (!string.IsNullOrEmpty(Partition.LDModel.VolumeName)))
             {
-                driveNameText += $"{Partition.LogicalDiskInfo.VolumeName} ";
+                driveNameText += $"{Partition.LDModel.VolumeName} ";
             }
 
             if (Partition.WSMPartition.DriveLetter > 65)
@@ -278,12 +278,12 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         private string GetFileSystemText()
         {
-            if (Partition.IsLogicalDisk && !string.IsNullOrWhiteSpace(Partition.LogicalDiskInfo.FileSystem))
+            if (Partition.IsLogicalDisk && !string.IsNullOrWhiteSpace(Partition.LDModel.FileSystem))
             {
-                return Partition.LogicalDiskInfo.FileSystem;
+                return Partition.LDModel.FileSystem;
             }
             
-            if (Partition.IsLogicalDisk && string.IsNullOrWhiteSpace(Partition.LogicalDiskInfo.FileSystem))
+            if (Partition.IsLogicalDisk && string.IsNullOrWhiteSpace(Partition.LDModel.FileSystem))
             {
                 return "No filesystem";
             }
