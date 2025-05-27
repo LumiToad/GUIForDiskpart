@@ -1,4 +1,4 @@
-﻿using GUIForDiskpart.service;
+﻿using GUIForDiskpart.Service;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace GUIForDiskpart.Model.Data
 {
-    public class LogicalDiskInfo
+    public class LogicalDisk
     {
         private const string LD_INFO_KEY = "---WINDOWS MANAGEMENT INSTRUMENTATION Logical Disk---";
         private const string LD_INFO_VALUE = "---Win32_LogicalDisk---";
@@ -66,7 +66,7 @@ namespace GUIForDiskpart.Model.Data
         public Dictionary<string, object?> GetKeyValuePairs()
         {
             Dictionary<string, object?> data = new Dictionary<string, object?>();
-            PropertyInfo[] wmiProperties = typeof(LogicalDiskInfo).GetProperties();
+            PropertyInfo[] wmiProperties = typeof(LogicalDisk).GetProperties();
 
             data.Add(LD_INFO_KEY, LD_INFO_VALUE);
 

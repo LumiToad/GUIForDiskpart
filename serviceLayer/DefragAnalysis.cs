@@ -1,39 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using GUIForDiskpart.Model.Data;
-using GUIForDiskpart.Model.Logic;
 
-namespace GUIForDiskpart.service
+using DARetriever = GUIForDiskpart.Database.Retrievers.DefragAnalysis;
+
+namespace GUIForDiskpart.Service
 {
     public static class DefragAnalysis
     {
-        public static Model.Data.DefragAnalysis AnalyzeVolumeDefrag(Model.Data.Partition partition)
+        private static DARetriever daRetriever = new();
+
+        public static DAModel AnalyzeVolumeDefrag(PartitionModel partition)
         {
-            string[] lines = GetOptimizeVolumeData(partition.WSMPartition.DriveLetter);
+            string[] lines = daRetriever.OptimizeVolumeDataQuery(partition.WSMPartition.DriveLetter);
             Dictionary<string, string> data = LinesToDictionary(lines);
 
             Model.Data.DefragAnalysis result = DictionaryToClass(data);
             result.AvailableForExtend = Convert.ToUInt64(partition.AssignedDiskInfo.UnallocatedSpace);
             return result;
-        }
-
-        private static string[] GetOptimizeVolumeData(char driveLetter)
-        {
-            string[] commands = new string[3];
-            commands[0] = $"$Defrag = (Invoke-CimMethod -Query \"SELECT * FROM Win32_Volume WHERE driveletter='{driveLetter}:'\" -MethodName DefragAnalysis)";
-            commands[1] = $"$DefragAnalysis = $Defrag.DefragAnalysis";
-            commands[2] = $"$DefragAnalysis | Out-String";
-
-            string[]? lines = null;
-
-            foreach (var item in CommandExecuter.IssuePowershellCommand(commands))
-            {
-                string fullOutput = item.ToString();
-                lines = fullOutput.Split(new char[] { '\r', '\n' });
-            }
-
-            return lines;
         }
 
         private static Dictionary<string, string> LinesToDictionary(string[]? lines)
@@ -60,13 +44,13 @@ namespace GUIForDiskpart.service
             return result;
         }
 
-        private static Model.Data.DefragAnalysis DictionaryToClass(Dictionary<string, string> dict)
+        private static DAModel DictionaryToClass(Dictionary<string, string> dict)
         {
-            Model.Data.DefragAnalysis defragAnalysis = new Model.Data.DefragAnalysis();
+            DAModel defragAnalysis = new();
 
             //defragAnalysis.AverageFileSize = Convert.ToUInt64(dict["AverageFileSize"]);
 
-            PropertyInfo[] defragAnalysisProperties = typeof(Model.Data.DefragAnalysis).GetProperties();
+            PropertyInfo[] defragAnalysisProperties = typeof(DAModel).GetProperties();
             foreach (PropertyInfo property in defragAnalysisProperties)
             {
                 if (!dict.ContainsKey(property.Name)) continue;

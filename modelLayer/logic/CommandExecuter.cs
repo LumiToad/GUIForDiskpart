@@ -150,7 +150,7 @@ namespace GUIForDiskpart.Model.Logic
             string output = string.Empty;
 
             Process process = new Process();
-            process.StartInfo.FileName = ProcessType.CMD + EXE_SUFFIX;
+            process.StartInfo.FileName = Database.Data.Types.ProcessType.CMD + EXE_SUFFIX;
             process.StartInfo.RedirectStandardInput = true;
             process.Start();
             process.StandardInput.WriteLine($"{command} & echo Please close this window & pause >nul");

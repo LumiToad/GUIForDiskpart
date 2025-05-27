@@ -100,7 +100,7 @@ namespace GUIForDiskpart.Utils
                     icon = SystemIcons.Warning;
                     break;
                 case SystemIconType.WinLogo:
-                    var stream = FileUtilites.GetEmbeddedResourceStream("winLogo.ico");
+                    var stream = FileUtils.GetEmbeddedResourceStream("winLogo.ico");
                     icon = new Icon(stream);
                     stream.Close();
                     break;
@@ -111,7 +111,7 @@ namespace GUIForDiskpart.Utils
 
         public static Icon LoadIconFromFile(string filePath)
         {
-            FileStream fileStream = FileUtilites.LoadFromFile(filePath);
+            FileStream fileStream = FileUtils.LoadFromFile(filePath);
             Icon icon = new Icon(fileStream);
             fileStream.Close();
             return icon;

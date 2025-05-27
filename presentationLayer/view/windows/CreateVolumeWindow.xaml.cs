@@ -1,4 +1,4 @@
-﻿using GUIForDiskpart.Database.Data.diskpart;
+﻿using GUIForDiskpart.Database.Data.Diskpart;
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.ModelLayer;
 using System;

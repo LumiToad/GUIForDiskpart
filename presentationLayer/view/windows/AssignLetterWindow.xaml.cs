@@ -1,7 +1,7 @@
-﻿using GUIForDiskpart.Database.Repository;
+﻿using GUIForDiskpart.Database.Retrievers;
 using GUIForDiskpart.Model.Data;
 using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.service;
+using GUIForDiskpart.Service;
 using Markdig.Helpers;
 using System.Drawing;
 using System.Windows;

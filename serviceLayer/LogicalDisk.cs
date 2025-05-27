@@ -1,24 +1,19 @@
 ﻿using System;
 using System.Management;
-using GUIForDiskpart.Model.Data;
 
-namespace GUIForDiskpart.service
+using LDRetriever = GUIForDiskpart.Database.Retrievers.LogicalDisk;
+
+namespace GUIForDiskpart.Service
 {
     public static class LogicalDisk
     {
-        public static void GetAndAddLogicalDisks(ManagementObject partition, WMIPartition partitionInfo)
-        {
-            var logicalDriveQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_LogicalDiskToPartition", partition.Path.RelativePath);
-            var logicalDriveQuery = new ManagementObjectSearcher(logicalDriveQueryText);
-            foreach (ManagementObject logicalDisk in logicalDriveQuery.Get())
-            {
-                partitionInfo.AddLogicalDisk(RetrieveLogicalDisks(logicalDisk));
-            }
-        }
+        private static LDRetriever ldRetriever = new();
 
-        private static LogicalDiskInfo RetrieveLogicalDisks(ManagementObject logicalDisk)
+        public static LDModel GetLogicalDisk(ManagementObject partition)
         {
-            LogicalDiskInfo newLogicalDisk = new LogicalDiskInfo();
+            ManagementObject? logicalDisk = ldRetriever.LDQuery(partition);
+
+            LDModel newLogicalDisk = new LDModel();
 
             newLogicalDisk.DriveType = Convert.ToUInt32(logicalDisk.Properties["DriveType"].Value); // C: - 3
             newLogicalDisk.FileSystem = Convert.ToString(logicalDisk.Properties["FileSystem"].Value); // NTFS

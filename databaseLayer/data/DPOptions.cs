@@ -1,6 +1,6 @@
-﻿namespace GUIForDiskpart.Database.Data.diskpart
+﻿namespace GUIForDiskpart.Database.Data.Diskpart
 {
-    public class Attributes
+    public class DPAttributes
     {
         public const string SET = "SET";
         public const string CLEAR = "CLEAR";
@@ -10,7 +10,7 @@
         public const string SHADOWCOPY = "SHADOWCOPY";
     }
 
-    public static class Convert
+    public static class DPConvert
     {
         public static string BASIC { get { return "BASIC"; } }
         public static string DYNAMIC { get { return "DYNAMIC"; } }
@@ -18,7 +18,7 @@
         public static string MBR { get { return "MBR"; } }
     }
 
-    public static class Partition
+    public static class DPCreatePartition
     {
         public static string EFI { get { return "EFI"; } }
         public static string EXTENDED { get { return "EXTENDED"; } }
@@ -27,7 +27,7 @@
         public static string PRIMARY { get { return "PRIMARY"; } }
     }
 
-    public static class Volume
+    public static class DPVolume
     {
         public static string RAID { get { return "RAID"; } }
         public static string SIMPLE { get { return "SIMPLE"; } }
@@ -35,7 +35,7 @@
         public static string MIRROR { get { return "MIRROR"; } }
     }
 
-    public static class List
+    public static class DPList
     {
         public static string DISK { get { return "DISK"; } }
         public static string PARTITION { get { return "PARTITION"; } }
@@ -43,7 +43,7 @@
         public static string VDISK { get { return "VDISK"; } }
     }
 
-    public static class SetIDO
+    public static class DPSetIDO
     {
         public static string EFI { get => "c12a7328-f81f-11d2-ba4b-00a0c93ec93b"; }
         public static string BASIC { get => "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7"; }

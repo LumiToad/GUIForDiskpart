@@ -1,12 +1,26 @@
-﻿using System;
+﻿global using LDModel = GUIForDiskpart.Model.Data.LogicalDisk;
+global using LDService = GUIForDiskpart.Service.LogicalDisk;
+
+global using DiskModel = GUIForDiskpart.Model.Data.Disk;
+global using DiskService = GUIForDiskpart.Service.Disk;
+
+global using DAModel = GUIForDiskpart.Model.Data.DefragAnalysis;
+global using DAService = GUIForDiskpart.Service.DefragAnalysis;
+
+global using PartitionModel = GUIForDiskpart.Model.Data.Partition;
+global using PartitionService = GUIForDiskpart.Service.Partition;
+
+
+using System;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
-
 using GUIForDiskpart.Windows;
-using GUIForDiskpart.Database.Data;
+using GUIForDiskpart.Database;
 using GUIForDiskpart.Utils;
+
+
 
 namespace GUIForDiskpart
 {
@@ -41,8 +55,8 @@ namespace GUIForDiskpart
             try
             {
                 RetrieveAndShowDiskData(true);
-                service.Disk.SetupDiskChangedWatcher();
-                Disk.OnDiskChanged += OnDiskChanged;
+                Service.Disk.SetupDiskChangedWatcher();
+                Service.Disk.OnDiskChanged += OnDiskChanged;
             }
             catch (Exception ex)
             {
@@ -55,7 +69,7 @@ namespace GUIForDiskpart
             string build = "";
 
             build += Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            build += " - " + AppInfo.BUILD_STAGE;
+            build += " - " + Database.Data.AppInfo.BUILD_STAGE;
 
             return build;
         }
@@ -79,14 +93,14 @@ namespace GUIForDiskpart
 
         private void RetrieveAndShowDiskData_Internal(bool outputText)
         {
-            DiskRetriever.ReloadDiskInformation();
+            Service.Disk.ReloadDiskInformation();
 
             //Todo -> View!
-            AddEntrysToStackPanel<DiskInfo>(DiskStackPanel, DiskRetriever.PhysicalDrives);
+            AddEntrysToStackPanel<DiskInfo>(DiskStackPanel, Database.Retrievers.Disk.PhysicalDrives);
 
             if (outputText)
             {
-                AddTextToOutputConsole(DiskRetriever.GetDiskOutput());
+                AddTextToOutputConsole(Database.Retrievers.Disk.GetDiskOutput());
             }
 
             //Todo -> View!

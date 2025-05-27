@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using GUIForDiskpart.Model.Data;
 using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.service;
+using GUIForDiskpart.Service;
 
 namespace GUIForDiskpart.Presentation.View.Windows
 {

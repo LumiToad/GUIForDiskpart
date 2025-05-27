@@ -11,10 +11,10 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Model.Logic;
-using GUIForDiskpart.service;
+using GUIForDiskpart.Service;
 using GUIForDiskpart.Database.Data;
 using GUIForDiskpart.Utils;
-using GUIForDiskpart.Database.Data.diskpart;
+using GUIForDiskpart.Database.Data.Diskpart;
 
 namespace GUIForDiskpart
 {

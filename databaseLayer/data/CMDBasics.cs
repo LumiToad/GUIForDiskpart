@@ -1,4 +1,4 @@
-﻿namespace GUIForDiskpart.Database.Data.cmd
+﻿namespace GUIForDiskpart.Database.Data.CMD
 {
     public class Basic
     {

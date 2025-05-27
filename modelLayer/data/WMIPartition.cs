@@ -111,8 +111,8 @@ namespace GUIForDiskpart.Model.Data
 
         public bool IsLogicalPartition => GetLogicalPartition();
 
-        public LogicalDiskInfo logicalDiskInfo;
-        public LogicalDiskInfo LogicalDiskInfo { get { return logicalDiskInfo; } }
+        public LDModel logicalDiskInfo;
+        public LDModel LogicalDiskInfo { get { return logicalDiskInfo; } }
 
         public void PrintToConsole()
         {
@@ -142,7 +142,7 @@ namespace GUIForDiskpart.Model.Data
             return output;
         }
 
-        public void AddLogicalDisk(LogicalDiskInfo disk)
+        public void AddLogicalDisk(Model.Data.LogicalDisk disk)
         {
             logicalDiskInfo = disk;
         }
@@ -165,7 +165,7 @@ namespace GUIForDiskpart.Model.Data
                 if (data.ContainsKey(key)) continue;
                 if (key == $"{KEY_PREFIX} Size") continue;
 
-                if (typeof(LogicalDiskInfo) == property.PropertyType) continue;
+                if (typeof(LDModel) == property.PropertyType) continue;
 
                 data.Add(key, value);
             }

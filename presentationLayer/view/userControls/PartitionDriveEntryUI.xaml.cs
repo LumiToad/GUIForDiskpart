@@ -1,6 +1,6 @@
 ﻿using GUIForDiskpart.Model.Data;
 using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.service;
+using GUIForDiskpart.Service;
 using GUIForDiskpart.Utils;
 using GUIForDiskpart.Windows;
 using System;

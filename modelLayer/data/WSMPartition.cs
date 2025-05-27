@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using GUIForDiskpart.Database.Data;
-using GUIForDiskpart.service;
+
+using GUIForDiskpart.Service;
+using MBRTypes = GUIForDiskpart.Database.Data.Types.WSM_MBR_PartitionTypes;
+using GPTTypes = GUIForDiskpart.Database.Data.Types.WSM_GPT_PartitionTypes;
+
 
 namespace GUIForDiskpart.Model.Data
 {
@@ -79,11 +82,11 @@ namespace GUIForDiskpart.Model.Data
 
             if (PartitionTable == "MBR")
             {
-                result = WSM_MBR_PartitionTypes.GetTypeByUInt16(MBRType);
+                result = MBRTypes.GetTypeByUInt16(MBRType);
             }
             else if (PartitionTable == "GPT")
             {
-                result = WSM_GPT_PartitionTypes.GetTypeByGUID(GPTType);
+                result = GPTTypes.GetTypeByGUID(GPTType);
             }
 
             return result;

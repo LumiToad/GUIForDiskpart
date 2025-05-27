@@ -1,8 +1,10 @@
-﻿using GUIForDiskpart.Database.Data;
-using GUIForDiskpart.Database.Data.diskpart;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+
+using GUIForDiskpart.Database.Data.Diskpart;
+using FSType = GUIForDiskpart.Database.Data.Types.FileSystemType;
+
 
 namespace GUIForDiskpart.Model.Logic.Diskpart
 {
@@ -31,7 +33,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
             string[] commands = new string[2];
 
             commands[0] = "Select DISK " + index;
-            commands[1] = "List " + DPListType.PARTITION;
+            commands[1] = "List " + DPList.PARTITION;
 
             return ExecuteInternal(commands);
         }
@@ -65,7 +67,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
+            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
             commands[1] = "Create PARTITION " + option + " ";
 
             if (sizeInMB > 0)
@@ -342,13 +344,13 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
 
         #region Various
 
-        public static string Format(uint diskIndex, uint partitionIndex, FileSystem fileSystem,
+        public static string Format(uint diskIndex, uint partitionIndex, FSType fileSystem,
             string volumeName, bool isQuickFormatting, bool isCompressed, bool isOverride, bool isNoWait, bool isNoErr)
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
-            commands[1] = "Select " + DPListType.PARTITION + " " + partitionIndex;
+            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
+            commands[1] = "Select " + DPList.PARTITION + " " + partitionIndex;
             commands[2] = "FORMAT " + "FS=" + fileSystem + " ";
 
             if (volumeName != "")
@@ -361,7 +363,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
                 commands[2] += "QUICK ";
             }
 
-            if (isCompressed && fileSystem == FileSystem.NTFS)
+            if (isCompressed && fileSystem == FSType.NTFS)
             {
                 commands[2] += "COMPRESS ";
             }
@@ -388,8 +390,8 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
-            commands[1] = "Select " + DPListType.PARTITION + " " + partitionIndex;
+            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
+            commands[1] = "Select " + DPList.PARTITION + " " + partitionIndex;
             commands[2] = "DELETE " + "PART ";
 
             if (isNoErr)
@@ -409,8 +411,8 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
-            commands[1] = "Select " + DPListType.PARTITION + " " + partitionIndex;
+            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
+            commands[1] = "Select " + DPList.PARTITION + " " + partitionIndex;
             commands[2] = "ASSIGN ";
 
             if (diskLetter != null)
@@ -435,7 +437,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPListType.VOLUME + " " + driveLetter;
+            commands[0] = "Select " + DPList.VOLUME + " " + driveLetter;
             commands[1] = "REMOVE LETTER=" + driveLetter + " ";
 
             if (isDismount)
@@ -455,7 +457,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPListType.VOLUME + " " + driveLetter;
+            commands[0] = "Select " + DPList.VOLUME + " " + driveLetter;
             commands[1] = "REMOVE MOUNT=" + mountPath + " ";
 
             if (isDismount)
@@ -475,7 +477,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPListType.PARTITION + " " + partitionIndex;
+            commands[0] = "Select " + DPList.PARTITION + " " + partitionIndex;
             commands[1] = "REMOVE ALL ";
 
             if (isDismount)
@@ -495,7 +497,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
+            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
             commands[1] = "CLEAN ";
 
             if (isCleanAll)
@@ -510,7 +512,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
+            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
             commands[1] = "CONVERT " + options;
 
             return ExecuteInternal(commands);
@@ -520,8 +522,8 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
-            commands[1] = "Select " + DPListType.PARTITION + " " + partitionIndex;
+            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
+            commands[1] = "Select " + DPList.PARTITION + " " + partitionIndex;
             commands[2] = isSetActive ? "ACTIVE " : "INACTIVE";
 
             return ExecuteInternal(commands);
@@ -531,10 +533,10 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPListType.VOLUME + " " + driveLetter;
-            commands[1] = "ATTRIBUTES " + DPListType.VOLUME + " ";
+            commands[0] = "Select " + DPList.VOLUME + " " + driveLetter;
+            commands[1] = "ATTRIBUTES " + DPList.VOLUME + " ";
 
-            commands[1] += (isSet ? AttributesOptions.SET : AttributesOptions.CLEAR) + " ";
+            commands[1] += (isSet ? DPAttributes.SET : DPAttributes.CLEAR) + " ";
             commands[1] += option + " ";
 
             if (isNoErr)
@@ -549,10 +551,10 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPListType.VOLUME + " " + volumeIndex;
-            commands[1] = "ATTRIBUTES " + DPListType.VOLUME + " ";
+            commands[0] = "Select " + DPList.VOLUME + " " + volumeIndex;
+            commands[1] = "ATTRIBUTES " + DPList.VOLUME + " ";
 
-            commands[1] += (isSet ? AttributesOptions.SET : AttributesOptions.CLEAR) + " ";
+            commands[1] += (isSet ? DPAttributes.SET : DPAttributes.CLEAR) + " ";
             commands[1] += option + " ";
 
             if (isNoErr)
@@ -567,10 +569,10 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
-            commands[1] = "ATTRIBUTES " + DPListType.DISK + " ";
-            commands[1] += (isSet ? AttributesOptions.SET : AttributesOptions.CLEAR) + " ";
-            commands[1] += AttributesOptions.READONLY + " ";
+            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
+            commands[1] = "ATTRIBUTES " + DPList.DISK + " ";
+            commands[1] += (isSet ? DPAttributes.SET : DPAttributes.CLEAR) + " ";
+            commands[1] += DPAttributes.READONLY + " ";
 
             if (isNoErr)
             {
@@ -584,8 +586,8 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
-            commands[1] = "Select " + DPListType.VOLUME + " " + driveLetter;
+            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
+            commands[1] = "Select " + DPList.VOLUME + " " + driveLetter;
             commands[2] = "EXTEND ";
 
             if (sizeInMB > 0)
@@ -605,8 +607,8 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
-            commands[1] = "Select " + DPListType.PARTITION + " " + partitionIndex;
+            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
+            commands[1] = "Select " + DPList.PARTITION + " " + partitionIndex;
             commands[2] = "EXTEND ";
 
             if (sizeInMB > 0)
@@ -626,7 +628,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPListType.VOLUME + " " + driveLetter;
+            commands[0] = "Select " + DPList.VOLUME + " " + driveLetter;
             commands[1] = "SHRINK ";
 
             if (desiredInMB > 0)
@@ -656,9 +658,9 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPListType.VOLUME + " " + driveLetter;
+            commands[0] = "Select " + DPList.VOLUME + " " + driveLetter;
             commands[1] = "REMOVE " + "LETTER=" + driveLetter;
-            commands[2] = "OFFLINE " + DPListType.VOLUME + " ";
+            commands[2] = "OFFLINE " + DPList.VOLUME + " ";
 
             if (isNoErr)
             {
@@ -672,9 +674,9 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
-            commands[1] = "Select " + DPListType.PARTITION + " " + partitionIndex;
-            commands[2] = "OFFLINE " + DPListType.VOLUME + " ";
+            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
+            commands[1] = "Select " + DPList.PARTITION + " " + partitionIndex;
+            commands[2] = "OFFLINE " + DPList.VOLUME + " ";
 
             if (isNoErr)
             {
@@ -688,9 +690,9 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
-            commands[1] = "Select " + DPListType.PARTITION + " " + partitionIndex;
-            commands[2] = "ONLINE " + DPListType.VOLUME + " ";
+            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
+            commands[1] = "Select " + DPList.PARTITION + " " + partitionIndex;
+            commands[2] = "ONLINE " + DPList.VOLUME + " ";
 
             if (isNoErr)
             {
@@ -704,7 +706,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPListType.DISK + " " + diskIndex;
+            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
             commands[1] = "OFFLINE ";
 
             if (isSetOnline)
@@ -712,7 +714,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
                 commands[1] = "ONLINE ";
             }
 
-            commands[1] += DPListType.DISK + " ";
+            commands[1] += DPList.DISK + " ";
 
             if (isNoErr)
             {
@@ -726,7 +728,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPListType.PARTITION + " " + partitionIndex;
+            commands[0] = "Select " + DPList.PARTITION + " " + partitionIndex;
             commands[1] = "SET ID= " + option + " ";
 
             if (isOverride)
@@ -767,7 +769,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
 
         private static void GetDPInfoExcludeStrings()
         {
-            string output = CommandExecuter.IssueCommand(ProcessType.DISKPART, "");
+            string output = CommandExecuter.IssueCommand(Database.Data.Types.ProcessType.DISKPART, "");
 
             foreach (string line in output.Split('\r', StringSplitOptions.TrimEntries))
             {
@@ -779,7 +781,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
 
         private static string ExecuteInternal(string[] commands)
         {
-            string fullOutput = CommandExecuter.IssueCommand(ProcessType.DISKPART, commands);
+            string fullOutput = CommandExecuter.IssueCommand(Database.Data.Types.ProcessType.DISKPART, commands);
             string output = RemoveDPInfo(fullOutput);
 
             return output;

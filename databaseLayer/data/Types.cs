@@ -1,4 +1,4 @@
-﻿namespace GUIForDiskpart.Database.Data.types
+﻿namespace GUIForDiskpart.Database.Data.Types
 {
     public enum FileSystemType
     {

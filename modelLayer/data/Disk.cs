@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using GUIForDiskpart.service;
+using GUIForDiskpart.Service;
 
 namespace GUIForDiskpart.Model.Data
 {
-    public class DiskInfo
+    public class Disk
     {
         private const string WMI_INFO_KEY = "---WINDOWS MANAGEMENT INSTRUMENTATION INFO---";
         private const string WMI_INFO_VALUE = "---Win32_DiskPartition---";

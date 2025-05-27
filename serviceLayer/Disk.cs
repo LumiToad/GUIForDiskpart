@@ -3,55 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management;
 using System.Management.Automation;
-using GUIForDiskpart.Model.Logic;
 
-namespace GUIForDiskpart.service
+using GUIForDiskpart.Model.Logic;
+using DiskRetriever = GUIForDiskpart.Database.Retrievers.Disk;
+
+namespace GUIForDiskpart.Service
 {
     public static class Disk
     {
         public delegate void DiskChanged();
         public static event DiskChanged OnDiskChanged;
 
-        private static List<DiskInfo> physicalDisks = new List<DiskInfo>();
-        public static List<DiskInfo> PhysicalDrives { get { return physicalDisks; } }
-
+        private static List<DiskModel> physicalDisks = new List<DiskModel>();
+        public static List<DiskModel> PhysicalDrives { get { return physicalDisks; } }
         private static List<ManagementObject> managementObjectDisks = new List<ManagementObject>();
 
-        public static void RetrieveDisks()
+        private static DiskRetriever diskRetriever = new();
+        
+        public static void ExecuteOnDiskChanged(object sender, EventArrivedEventArgs e) => OnDiskChanged();
+
+        public static void ReLoadDisks()
         {
-            RetrieveWMIObjectsToList();
-            RetrieveDisksToList();
+            DeleteDiskLists();
+            StoreDisksInList();
         }
 
         public static void SetupDiskChangedWatcher()
         {
-            try
-            {
-                WqlEventQuery query = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2 or EventType = 3");
-                ManagementEventWatcher watcher = new ManagementEventWatcher();
-                watcher.Query = query;
-                watcher.EventArrived += OnDiskChangedInternal;
-                watcher.Options.Timeout = TimeSpan.FromSeconds(3);
-                watcher.Start();
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show(ex.Message);
-            }
+            diskRetriever.SetupDiskChangedWatcher();
         }
 
-        private static void OnDiskChangedInternal(object sender, EventArrivedEventArgs e)
-        {
-            OnDiskChanged();
-        }
-
-        public static void ReloadDiskInformation()
-        {
-            DeleteDiskInformation();
-            RetrieveDisks();
-        }
-
-        private static void DeleteDiskInformation()
+        private static void DeleteDiskLists()
         {
             physicalDisks.Clear();
             managementObjectDisks.Clear();
@@ -61,7 +43,7 @@ namespace GUIForDiskpart.service
         {
             string output = string.Empty;
 
-            foreach (DiskInfo physicalDisk in physicalDisks)
+            foreach (DiskModel physicalDisk in physicalDisks)
             {
                 output += physicalDisk.GetOutputAsString();
             }
@@ -69,21 +51,13 @@ namespace GUIForDiskpart.service
             return output;
         }
 
-        private static void RetrieveWMIObjectsToList()
+        private static void StoreDisksInList()
         {
-            ManagementObjectSearcher diskDriveQuery = new ManagementObjectSearcher("select * from Win32_DiskDrive");
+            managementObjectDisks = diskRetriever.GetAllWMIObjects();
 
-            foreach (ManagementObject disk in diskDriveQuery.Get())
-            {
-                managementObjectDisks.Add(disk);
-            }
-        }
-
-        private static void RetrieveDisksToList()
-        {
             foreach (ManagementObject disk in managementObjectDisks)
             {
-                DiskInfo physicalDisk = new DiskInfo();
+                DiskModel physicalDisk = new DiskModel();
 
                 physicalDisk.DiskIndex = Convert.ToUInt32(disk.Properties["Index"].Value);
 
@@ -92,12 +66,12 @@ namespace GUIForDiskpart.service
                 physicalDisk.Caption = Convert.ToString(disk.Properties["Caption"].Value);
                 physicalDisk.DiskModel = Convert.ToString(disk.Properties["Model"].Value);
                 physicalDisk.MediaStatus = Convert.ToString(disk.Properties["Status"].Value);
-                physicalDisk.OperationalStatusValues = GetOperationalStatus(physicalDisk.DiskIndex);
+                physicalDisk.OperationalStatusValues = diskRetriever.GetOperationalStatus(physicalDisk.DiskIndex);
                 physicalDisk.MediaLoaded = Convert.ToBoolean(disk.Properties["MediaLoaded"].Value);
                 physicalDisk.TotalSpace = Convert.ToUInt64(disk.Properties["Size"].Value);
                 physicalDisk.InterfaceType = Convert.ToString(disk.Properties["InterfaceType"].Value);
                 physicalDisk.MediaType = Convert.ToString(disk.Properties["MediaType"].Value);
-                physicalDisk.MSFTMediaType = GetMediaTypeValue(physicalDisk.Caption);
+                physicalDisk.MSFTMediaType = diskRetriever.GetMediaTypeValue(physicalDisk.Caption);
                 physicalDisk.MediaSignature = Convert.ToUInt32(disk.Properties["Signature"].Value);
                 physicalDisk.MediaStatus = Convert.ToString(disk.Properties["Status"].Value);
                 physicalDisk.Availability = Convert.ToUInt16(disk.Properties["Availability"].Value);
@@ -137,9 +111,10 @@ namespace GUIForDiskpart.service
                 physicalDisk.TotalTracks = Convert.ToUInt64(disk.Properties["TotalTracks"].Value);
                 physicalDisk.TracksPerCylinder = Convert.ToUInt32(disk.Properties["TracksPerCylinder"].Value);
 
-
-
-                PartitionRetriever.GetPartitionsAndAddToDisk(disk, physicalDisk);
+                foreach (PartitionModel item in PartitionService.GetAllPartitions(disk, physicalDisk))
+                {
+                    physicalDisk.Partitions.Add(item);
+                }
 
                 physicalDisks.Add(physicalDisk);
             }
@@ -147,41 +122,9 @@ namespace GUIForDiskpart.service
             physicalDisks = SortPhysicalDrivesByDeviceID(physicalDisks);
         }
 
-        private static ushort? GetMediaTypeValue(string friendlyName)
+        private static List<DiskModel> SortPhysicalDrivesByDeviceID(List<DiskModel> list)
         {
-            if (string.IsNullOrEmpty(friendlyName)) return null;
-
-            ushort? result = null;
-
-            foreach (var name in friendlyName.Split(new[] { ' ', '-', '_', ':' }))
-            {
-                string[] commands = new string[2];
-                commands[0] += $"$Query = Get-CimInstance -Query \"select * from MSFT_PhysicalDisk WHERE FriendlyName Like '%{name}%'\" -Namespace root\\Microsoft\\Windows\\Storage";
-                commands[1] += $"$Query.MediaType";
-                List<PSObject> psObjects = CommandExecuter.IssuePowershellCommand(commands);
-                PSObject? data = psObjects[0];
-
-                if (data == null) continue;
-                result = (ushort)data.BaseObject;
-            }
-            return result;
-        }
-
-        private static ushort[] GetOperationalStatus(uint diskIndex)
-        {
-            ManagementScope scope = new ManagementScope(@"root\Microsoft\Windows\Storage");
-            SelectQuery query = new SelectQuery($"select * from MSFT_Disk WHERE Number={diskIndex}");
-            ManagementObjectSearcher msftDiskQuery = new ManagementObjectSearcher(scope, query);
-            foreach (ManagementObject msftDisk in msftDiskQuery.Get())
-            {
-                return (ushort[])msftDisk.Properties["OperationalStatus"].Value;
-            }
-            return new ushort[1] { 0 };
-        }
-
-        private static List<DiskInfo> SortPhysicalDrivesByDeviceID(List<DiskInfo> list)
-        {
-            List<DiskInfo> sortedList = list.OrderBy(o => o.DiskIndex).ToList();
+            List<DiskModel> sortedList = list.OrderBy(o => o.DiskIndex).ToList();
             return sortedList;
         }
     }

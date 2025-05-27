@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using GUIForDiskpart.Database.Data.diskpart;
+using GUIForDiskpart.Database.Data.Diskpart;
 using GUIForDiskpart.Model.Data;
 using GUIForDiskpart.Model.Logic.Diskpart;
 

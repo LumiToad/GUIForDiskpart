@@ -1,5 +1,5 @@
 ﻿using GUIForDiskpart.Model;
-using GUIForDiskpart.service;
+using GUIForDiskpart.Service;
 using GUIForDiskpart.Windows;
 using System.Collections.Generic;
 using System.Windows;

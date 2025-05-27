@@ -5,8 +5,8 @@ namespace GUIForDiskpart.Model.Data
 {
     public class Partition
     {
-        private DiskInfo assignedDiskInfo;
-        public DiskInfo AssignedDiskInfo
+        private DiskModel assignedDiskInfo;
+        public DiskModel AssignedDiskInfo
         {
             get => assignedDiskInfo;
             set => assignedDiskInfo = value;
@@ -26,10 +26,10 @@ namespace GUIForDiskpart.Model.Data
             set => wmiPartition = value;
         }
 
-        public LogicalDiskInfo LogicalDiskInfo => WMIPartition.LogicalDiskInfo;
+        public LDModel LogicalDiskInfo => WMIPartition.LogicalDiskInfo;
 
-        private DefragAnalysis defragAnalysis;
-        public DefragAnalysis DefragAnalysis
+        private DAModel defragAnalysis;
+        public DAModel DefragAnalysis
         {
             get => defragAnalysis;
             set => defragAnalysis = value;

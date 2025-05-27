@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GUIForDiskpart.service
+namespace GUIForDiskpart.Service
 {
     public static class ByteFormatter
     {

@@ -2,22 +2,25 @@
 using System.Collections.Generic;
 using System.Management;
 using System.Management.Automation;
-using GUIForDiskpart.Model.Data;
-using GUIForDiskpart.Model.Logic;
 
-namespace GUIForDiskpart.service
+using GUIForDiskpart.Model.Data;
+using PartitionRetriever = GUIForDiskpart.Database.Retrievers.Partition;
+
+namespace GUIForDiskpart.Service
 {
     public static class Partition
     {
-        public static void GetPartitionsAndAddToDisk(ManagementObject disk, DiskInfo diskInfo)
+        private static PartitionRetriever partitionRetriever = new();
+
+        public static List<PartitionModel> GetAllPartitions(ManagementObject disk, DiskModel diskInfo)
         {
-            List<Model.Data.Partition> partitions = new List<Model.Data.Partition>();
-            List<WSMPartition> wsmPartitions = GetWSMPartitions(diskInfo);
-            List<WMIPartition> wmiPartitions = GetWMIPartitions(disk, diskInfo);
+            List<PartitionModel> partitions = new List<PartitionModel>();
+            List<WSMPartition> wsmPartitions = GetAllWSMPartitions(diskInfo);
+            List<WMIPartition> wmiPartitions = GetAllWMIPartitions(disk, diskInfo);
 
             foreach (WSMPartition wsmPart in wsmPartitions)
             {
-                Model.Data.Partition partition = new Model.Data.Partition();
+                PartitionModel partition = new PartitionModel();
                 partition.WSMPartition = wsmPart;
                 partition.AssignedDiskInfo = diskInfo;
 
@@ -28,42 +31,36 @@ namespace GUIForDiskpart.service
                         partition.WMIPartition = wmiPart;
                     }
                 }
-                diskInfo.Partitions.Add(partition);
             }
+
+            return partitions;
         }
 
-        private static List<WSMPartition> GetWSMPartitions(DiskInfo diskInfo)
+        // Service
+        private static List<WSMPartition> GetAllWSMPartitions(DiskModel diskInfo)
         {
             List<WSMPartition> wsmPartitions = new List<WSMPartition>();
 
-            foreach (PSObject psObject in GetWSMPartitionsByDisk(diskInfo))
+            foreach (PSObject psObject in partitionRetriever.WSMPartitionQuery(diskInfo))
             {
-                wsmPartitions.Add(RetrieveWSMPartition(psObject));
+                wsmPartitions.Add(GetWSMPartition(psObject));
             }
 
             return wsmPartitions;
         }
 
-        private static List<WMIPartition> GetWMIPartitions(ManagementObject disk, DiskInfo diskInfo)
+        // Service
+        private static List<WMIPartition> GetAllWMIPartitions(ManagementObject disk, DiskModel diskInfo)
         {
             List<WMIPartition> wmiPartitions = new List<WMIPartition>();
 
-            var partitionQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_DiskDriveToDiskPartition", disk.Path.RelativePath);
-            var partitionQuery = new ManagementObjectSearcher(partitionQueryText);
-
-            foreach (ManagementObject partitionManagementObject in partitionQuery.Get())
-            {
-                WMIPartition wmiPartition = RetrieveWMIPartitions(partitionManagementObject, diskInfo.DiskIndex);
-
-                LogicalDiskRetriever.GetAndAddLogicalDisks(partitionManagementObject, wmiPartition);
-
-                wmiPartitions.Add(wmiPartition);
-            }
+            partitionRetriever.WMIPartitionQuery(disk, diskInfo, ref wmiPartitions);
 
             return wmiPartitions;
         }
 
-        private static WSMPartition RetrieveWSMPartition(PSObject psObject)
+        // Service
+        private static WSMPartition GetWSMPartition(PSObject psObject)
         {
             WSMPartition wsmPartition = new WSMPartition();
 
@@ -90,7 +87,8 @@ namespace GUIForDiskpart.service
             return wsmPartition;
         }
 
-        private static WMIPartition RetrieveWMIPartitions(ManagementObject partition, uint diskIndex)
+        // Service
+        public static WMIPartition GetWMIPartition(ManagementObject partition, uint diskIndex)
         {
             WMIPartition newPartition = new WMIPartition();
 
@@ -133,13 +131,6 @@ namespace GUIForDiskpart.service
             newPartition.Type = Convert.ToString(partition.Properties["Type"].Value);
 
             return newPartition;
-        }
-
-        private static List<object> GetWSMPartitionsByDisk(DiskInfo diskInfo)
-        {
-            string diskIndex = Convert.ToString(diskInfo.DiskIndex);
-
-            return CommandExecuter.IssuePowershellCommand("Get-Partition", diskIndex);
         }
     }
 }
