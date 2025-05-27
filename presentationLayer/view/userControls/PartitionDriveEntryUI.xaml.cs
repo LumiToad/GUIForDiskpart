@@ -14,7 +14,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     /// </summary>
     public partial class PartitionEntryUI : UserControl
     {
-        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
+        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
         private PartitionModel partition;
         public PartitionModel Partition
@@ -162,7 +162,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         private void AnalyzeDefrag_Click(object sender, RoutedEventArgs e)
         {
-            Partition.DefragAnalysis = DefragAnalysisRetriever.AnalyzeVolumeDefrag(Partition);
+            Partition.DefragAnalysis = DAService.AnalyzeVolumeDefrag(Partition);
             MainWindow.AddTextToOutputConsole(Partition.DefragAnalysis.GetOutputAsString());
             MainWindow.EntryDataUI.AddDataToGrid(Partition.GetKeyValuePairs());
         }

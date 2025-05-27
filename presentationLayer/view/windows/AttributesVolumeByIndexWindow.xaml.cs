@@ -11,7 +11,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class AttributesVolumeByIndexWindow : Window
     {
-        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
+        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
         int selectedVolume = -1;
 

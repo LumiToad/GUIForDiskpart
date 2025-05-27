@@ -1,8 +1,8 @@
-﻿<Application x:Class="GUIForDiskpart.App"
+﻿<Application x:Class="GUIForDiskpart.Presentation.View.UserControls.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:GUIForDiskpart"
-             StartupUri="windows/MainWindow.xaml">
+             xmlns:local="clr-namespace:GUIForDiskpart.Presentation.View.UserControls"
+             StartupUri="presentationLayer/view/windows/MainWindow.xaml">
     <Application.Resources>
         <!--<ResourceDictionary x:Name="MSSample" Source="/MSSample.xaml"/>-->
         <ResourceDictionary x:Name="Win95Button" Source="/Win95Button.xaml"/>

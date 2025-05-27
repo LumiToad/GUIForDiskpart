@@ -1,9 +1,9 @@
-﻿<UserControl x:Name="userControl" x:Class="GUIForDiskpart.PhysicalDiskEntryUI"
+﻿<UserControl x:Name="userControl" x:Class="GUIForDiskpart.Presentation.View.UserControls.PhysicalDiskEntryUI"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GUIForDiskpart"
+             xmlns:local="clr-namespace:GUIForDiskpart.Presentation.View.UserControls"
              mc:Ignorable="d" Width="220" Height="100" Focusable="True">
     <UserControl.ContextMenu>
         <ContextMenu>
@@ -60,7 +60,7 @@
 
             <StackPanel MinWidth="120" Margin="0,0,0,4" Grid.Column="2">
                 <Label x:Name="DiskIndex" Content="00" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="16" ToolTip="{Binding Content, ElementName=DiskIndex}"/>
-                <Label x:Name="DiskModel" Content="Model" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" Width="NaN" Height="23.28" ToolTip="{Binding Content, ElementName=DiskModel}"/>
+                <Label x:Name="DiskModelText" Content="Model" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" Width="NaN" Height="23.28" ToolTip="{Binding Content, ElementName=DiskModel}"/>
                 <Label x:Name="TotalSpace" Content="1000" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="16" Width="NaN" ToolTip="{Binding Content, ElementName=TotalSpace}"/>
                 <Label x:Name="WSMPartitionCount" Content="99" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="16" Width="NaN" ToolTip="{Binding Content, ElementName=WSMPartitionCount}"/>
                 <StackPanel Height="100"/>

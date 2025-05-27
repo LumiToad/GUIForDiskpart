@@ -141,7 +141,7 @@ namespace GUIForDiskpart.Model.Data
             fullOutput += "___Physical-Info___" + "\n\n";
             fullOutput += "HardwareDeviceID: " + "\t\t\t" + DeviceID + '\n';
             fullOutput += "PhysicalName: " + "\t\t\t" + PhysicalName + '\n';
-            fullOutput += "DiskModel: " + "\t\t\t" + DiskModel + '\n';
+            fullOutput += "DiskModel: " + "\t\t\t" + DiskModelText + '\n';
             fullOutput += "MediaStatus: " + "\t\t\t" + MediaStatus + '\n';
             fullOutput += "MediaLoaded: " + "\t\t\t" + MediaLoaded + '\n';
             fullOutput += $"TotalSpace: {"\t\t\t"}{ByteFormatter.FormatBytes(TotalSpace)} {ByteFormatter.GetBytesAsStringAndUnit(TotalSpace)}\n";

@@ -1,7 +1,4 @@
-﻿using GUIForDiskpart.Model.Data;
-using GUIForDiskpart.Presentation.View.UserControls;
-using GUIForDiskpart.Presentation.View.Windows;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
@@ -10,6 +7,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
+using GUIForDiskpart.Model.Data;
+using GUIForDiskpart.Presentation.View.UserControls;
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Model.Logic;
 using GUIForDiskpart.Service;
@@ -48,12 +47,12 @@ namespace GUIForDiskpart
             try
             {
                 RetrieveAndShowDiskData(true);
-                DiskRetriever.SetupDiskChangedWatcher();
-                DiskRetriever.OnDiskChanged += OnDiskChanged;
+                DiskService.SetupDiskChangedWatcher();
+                DiskService.OnDiskChanged += OnDiskChanged;
             }
             catch (Exception ex)
             {
-                FileUtilites.SaveExceptionCrashLog(ex);
+                Utils.FileUtils.SaveExceptionCrashLog(ex);
             }
         }
 
@@ -79,7 +78,7 @@ namespace GUIForDiskpart
             AddEntrysToStackPanel(PartitionStackPanel, entry.DiskModel.Partitions);
             if (entry.DiskModel.UnallocatedSpace > 0) 
             {
-                UnallocatedEntryUI unallocatedEntryUI = new UnallocatedEntryUI(entry.diskModel);
+                UnallocatedEntryUI unallocatedEntryUI = new UnallocatedEntryUI(entry.DiskModel);
                 PartitionStackPanel.Children.Add(unallocatedEntryUI);
             }
             EntryDataUI.AddDataToGrid(entry.DiskModel.GetKeyValuePairs());
@@ -190,7 +189,7 @@ namespace GUIForDiskpart
                         PhysicalDiskEntryUI diskEntry = new PhysicalDiskEntryUI(disk);
                         userControl = diskEntry;
                         break;
-                    case Partition partition:
+                    case PartitionModel partition:
                         PartitionEntryUI partitionEntry = new PartitionEntryUI(partition);
                         userControl = partitionEntry;
                         break;
@@ -254,12 +253,12 @@ namespace GUIForDiskpart
 
         private void Website_Click(object sender, RoutedEventArgs e)
         {
-            CommandExecuter.IssueCommand(ProcessType.CMD, "start " + WEBSITE_URL);
+            CommandExecuter.IssueCommand(Database.Data.Types.ProcessType.CMD, "start " + WEBSITE_URL);
         }
 
         private void Wiki_Click(object sender, RoutedEventArgs e)
         {
-            CommandExecuter.IssueCommand(ProcessType.CMD, "start " + WIKI_URL);
+            CommandExecuter.IssueCommand(Database.Data.Types.ProcessType.CMD, "start " + WIKI_URL);
         }
 
         private void About_Click(object sender, RoutedEventArgs e)
@@ -284,13 +283,13 @@ namespace GUIForDiskpart
 
         private void RetrieveAndShowDiskData_Internal(bool outputText)
         {
-            DiskRetriever.ReloadDiskModelrmation();
+            DiskService.ReLoadDisks();
 
-            AddEntrysToStackPanel<DiskModel>(DiskStackPanel, DiskRetriever.PhysicalDrives);
+            AddEntrysToStackPanel<DiskModel>(DiskStackPanel, DiskService.PhysicalDrives);
 
             if (outputText)
             {
-                AddTextToOutputConsole(DiskRetriever.GetDiskOutput());
+                AddTextToOutputConsole(DiskService.GetDiskOutput());
             }
 
             DiskEntry_Click((PhysicalDiskEntryUI)DiskStackPanel.Children[0]);

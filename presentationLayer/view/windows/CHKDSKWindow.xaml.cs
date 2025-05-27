@@ -12,7 +12,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class CHKDSKWindow : Window
     {
-        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
+        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
         private Partition partition;
         public Partition Partition
@@ -208,7 +208,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         private void Browse_Click(object sender, RoutedEventArgs e)
         {
-            TextBoxDir.Text = FileUtilites.GetSaveAsTextFilePath("CHKDSK");
+            TextBoxDir.Text = FileUtils.GetSaveAsTextFilePath("CHKDSK");
         }
 
         private void WriteTextBoxPara(bool? value, string parameter)

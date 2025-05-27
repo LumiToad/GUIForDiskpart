@@ -13,7 +13,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     /// </summary>
     public partial class ConsoleReturnUI : UserControl
     {
-        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
+        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
         public ConsoleReturnUI()
         {
@@ -41,7 +41,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         {
             string log = TextBox.Text;
 
-            FileUtilites.SaveAsTextfile(log, "log");
+            FileUtils.SaveAsTextfile(log, "log");
         }
     }
 }

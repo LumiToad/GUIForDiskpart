@@ -147,6 +147,10 @@
   <ItemGroup>
     <Folder Include="presentationLayer\presenter\" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="presentationLayer\view\" />
+  </ItemGroup>
 
   <ItemGroup>
     <Page Include="App.xaml" />

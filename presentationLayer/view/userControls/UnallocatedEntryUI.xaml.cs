@@ -1,6 +1,4 @@
-﻿using GUIForDiskpart.Model;
-using GUIForDiskpart.Service;
-using GUIForDiskpart.Windows;
+﻿using GUIForDiskpart.Service;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,7 +11,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     /// </summary>
     public partial class UnallocatedEntryUI : UserControl
     {
-        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
+        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
         private long size;
         private DiskModel diskModel;
@@ -61,7 +59,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         private void CreateVolume_Click(object sender, RoutedEventArgs e)
         {
-            Presentation.View.Windows.CreateVolumeWindow createVolumeWindow = new Presentation.View.Windows.CreateVolumeWindow(diskModel, size);
+            CreateVolumeWindow createVolumeWindow = new CreateVolumeWindow(diskModel, size);
             createVolumeWindow.Owner = MainWindow;
             createVolumeWindow.Focus();
 

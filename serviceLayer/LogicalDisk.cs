@@ -15,6 +15,8 @@ namespace GUIForDiskpart.Service
 
             LDModel newLogicalDisk = new LDModel();
 
+            if (logicalDisk == null) return newLogicalDisk;
+
             newLogicalDisk.DriveType = Convert.ToUInt32(logicalDisk.Properties["DriveType"].Value); // C: - 3
             newLogicalDisk.FileSystem = Convert.ToString(logicalDisk.Properties["FileSystem"].Value); // NTFS
             newLogicalDisk.FreeSpace = Convert.ToUInt64(logicalDisk.Properties["FreeSpace"].Value); // in bytes

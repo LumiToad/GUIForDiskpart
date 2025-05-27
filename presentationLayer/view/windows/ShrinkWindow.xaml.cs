@@ -13,7 +13,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class ShrinkWindow : Window
     {
-        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
+        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
         private PartitionModel partition;
         public PartitionModel Partition

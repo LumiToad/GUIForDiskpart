@@ -64,7 +64,7 @@ namespace GUIForDiskpart.Service
                 physicalDisk.DeviceID = Convert.ToString(disk.Properties["DeviceId"].Value);
                 physicalDisk.PhysicalName = Convert.ToString(disk.Properties["Name"].Value);
                 physicalDisk.Caption = Convert.ToString(disk.Properties["Caption"].Value);
-                physicalDisk.DiskModel = Convert.ToString(disk.Properties["Model"].Value);
+                physicalDisk.DiskModelText = Convert.ToString(disk.Properties["Model"].Value);
                 physicalDisk.MediaStatus = Convert.ToString(disk.Properties["Status"].Value);
                 physicalDisk.OperationalStatusValues = diskRetriever.GetOperationalStatus(physicalDisk.DiskIndex);
                 physicalDisk.MediaLoaded = Convert.ToBoolean(disk.Properties["MediaLoaded"].Value);

@@ -13,14 +13,14 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class CreatePartitionWindow : Window
     {
-        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
+        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
         long sizeInMB;
 
         private DiskModel diskModel;
         public DiskModel DiskModel
         {
-            get { return DiskModel; }
+            get { return diskModel; }
             set
             {
                 diskModel = value;

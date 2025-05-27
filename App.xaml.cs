@@ -10,19 +10,22 @@ global using DAService = GUIForDiskpart.Service.DefragAnalysis;
 global using PartitionModel = GUIForDiskpart.Model.Data.Partition;
 global using PartitionService = GUIForDiskpart.Service.Partition;
 
+global using DriveLetterService = GUIForDiskpart.Service.DriveLetter;
+
 global using FSType = GUIForDiskpart.Database.Data.Types.FileSystemType;
 global using CMDBasic = GUIForDiskpart.Database.Data.CMD.Basic;
 
+
+global using GUIForDiskpart.Presentation.View.Windows;
 
 using System;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
-using GUIForDiskpart.Windows;
-using GUIForDiskpart.Database;
-using GUIForDiskpart.Utils;
 
+using GUIForDiskpart.Utils;
+using GUIForDiskpart.Presentation.View.UserControls;
 
 
 namespace GUIForDiskpart
@@ -35,7 +38,7 @@ namespace GUIForDiskpart
         /* --- Inherited from Application ---
         public Window MainWindow { get; set; } 
            ---------------------------------- */
-        public static Window? MainWindowInstance;
+        public static MainWindow? MainWindowInstance;
 
         public static App? AppInstance
         {
@@ -109,7 +112,7 @@ namespace GUIForDiskpart
             DiskService.ReLoadDisks();
 
             //Todo -> View!
-            AddEntrysToStackPanel<DiskModel>(DiskStackPanel, DiskService.PhysicalDrives);
+            //AddEntrysToStackPanel<DiskModel>(DiskStackPanel, DiskService.PhysicalDrives);
 
             if (outputText)
             {
@@ -117,7 +120,7 @@ namespace GUIForDiskpart
             }
 
             //Todo -> View!
-            DiskEntry_Click((PhysicalDiskEntryUI)DiskStackPanel.Children[0]);
+            //DiskEntry_Click((PhysicalDiskEntryUI)DiskStackPanel.Children[0]);
         }
 
         #endregion RetrieveDisk

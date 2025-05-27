@@ -142,9 +142,9 @@ namespace GUIForDiskpart.Model.Data
             return output;
         }
 
-        public void AddLogicalDisk(Model.Data.LogicalDisk disk)
+        public void AddLogicalDisk(LDModel disk)
         {
-            logicaldiskModel = disk;
+            logicalDiskModel = disk;
         }
 
         private bool GetLogicalPartition()

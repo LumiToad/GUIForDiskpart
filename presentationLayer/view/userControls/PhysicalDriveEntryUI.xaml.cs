@@ -1,7 +1,5 @@
-﻿using GUIForDiskpart.Model;
-using GUIForDiskpart.Model.Logic.Diskpart;
+﻿using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Utils;
-using GUIForDiskpart.Windows;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -13,12 +11,12 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     /// </summary>
     public partial class PhysicalDiskEntryUI : UserControl
     {
-        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
+        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
         private DiskModel diskModel;
         public DiskModel DiskModel
         { 
-            get { return DiskModel; } 
+            get { return diskModel; } 
             set 
             { 
                 diskModel = value; 
@@ -38,7 +36,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         private void DriveDataToThisUI()
         {
             DiskIndex.Content = $"#{DiskModel.DiskIndex}";
-            DiskModel.Content = diskModel.DiskModelText;
+            DiskModelText.Content = diskModel.DiskModelText;
             TotalSpace.Content = DiskModel.FormattedTotalSpace;
             WSMPartitionCount.Content = $"{DiskModel.PartitionCount} partitions";
             SetValueInProgressBar(DiskModel.TotalSpace, DiskModel.UsedSpace);

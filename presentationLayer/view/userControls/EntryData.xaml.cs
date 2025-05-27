@@ -77,7 +77,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
                 EntryDataGrid.UnselectAllCells();
             }
 
-            FileUtilites.SaveAsTextfile(entrieString, "data");
+            FileUtils.SaveAsTextfile(entrieString, "data");
         }
 
         public void AddDataToGrid(Dictionary<string, object?> data)

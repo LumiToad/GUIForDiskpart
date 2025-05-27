@@ -12,7 +12,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class FormatPartitionWindow : Window
     {
-        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
+        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
         private WSMPartition wsmPartition;
         public WSMPartition WSMPartition

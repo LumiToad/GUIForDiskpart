@@ -1,12 +1,12 @@
 ﻿using GUIForDiskpart.Database.Retrievers;
-using GUIForDiskpart.Model.Data;
-using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.Service;
 using Markdig.Helpers;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Media;
 
+using GUIForDiskpart.Model.Data;
+using GUIForDiskpart.Model.Logic.Diskpart;
+using GUIForDiskpart.Service;
 namespace GUIForDiskpart.Presentation.View.Windows
 {
     /// <summary>
@@ -14,7 +14,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class AssignLetterWindow : Window
     {
-        Window? MainWindow = GUIForDiskpart.App.AppInstance.MainWindow;
+        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
         WSMPartition wsmPartition;
         WSMPartition WSMPartition
@@ -37,7 +37,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             InitializeComponent();
 
             PopulateDriveLetterBox();
-            DiskRetriever.OnDiskChanged += PopulateDriveLetterBox;
+            DiskService.OnDiskChanged += PopulateDriveLetterBox;
             
             WSMPartition = wsmPartition;
         }
