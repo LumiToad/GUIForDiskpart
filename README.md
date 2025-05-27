@@ -1,7 +1,13 @@
 <div align="left">
-  
+
   <h1>GUI for Diskpart - GUIFD</h1>
 
+  <p>
+  <h3>Currently refactoring to MVP View-Model (as of the end of May 2025)</h3>
+  Yes, the project is still alive! I intend to add more features and some UI adjustments, before this is considered "done".<br />
+  But MVP refactor comes first!
+  </p>
+  <br />
   <p>
     <b>DOWNLOAD BELOW!</b><br/><br/>
     Building a GUI for Microsoft Diskpart and some Windows onboard features around disk space management.<br />
