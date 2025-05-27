@@ -1,0 +1,38 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUIForDiskpart.Windows"
+        xmlns:userControls="clr-namespace:GUIForDiskpart.userControls" x:Class="GUIForDiskpart.Windows.CreatePartitionWindow"
+        mc:Ignorable="d"
+        Title="Create Partition" Height="270" Width="530">
+    <Grid x:Name="MainGrid" Background="#FF8C8C8C">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <userControls:ConsoleReturnUI x:Name="ConsoleReturn" Grid.RowSpan="2"/>
+        <TextBox x:Name="SizeValue" HorizontalAlignment="Left" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="83,38,0,0" InputScope="Number" TextChanged="SizeValue_TextChanged"/>
+        <Label Content="Size in MB:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="10,34,0,0"/>
+        <Label Content="Options:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="10,8,0,0"/>
+        <ComboBox x:Name="PartitionOptionValue" HorizontalAlignment="Left" Margin="83,11,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1">
+            <ComboBoxItem Content="EFI" IsSelected="True"/>
+            <ComboBoxItem Content="EXTENDED"/>
+            <ComboBoxItem Content="LOGICAL"/>
+            <ComboBoxItem Content="MSR"/>
+            <ComboBoxItem Content="PRIMARY"/>
+        </ComboBox>
+        <StackPanel Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Top" Margin="10,90,0,0">
+            <Button x:Name="ConfirmButton" Content="Create" Click="ConfirmButton_Click"/>
+            <Button x:Name="CancelButton" Content="Cancel" IsCancel="True"  Click="CancelButton_Click" Margin="20,0,0,0"/>
+
+        </StackPanel>
+
+    </Grid>
+</Window>

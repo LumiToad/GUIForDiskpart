@@ -9,70 +9,70 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="userControls\ConsoleReturn.xaml.cs">
+    <Compile Update="presentationLayer\view\userControls\ConsoleReturn.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="userControls\EntryData.xaml.cs">
+    <Compile Update="presentationLayer\view\userControls\EntryData.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="userControls\UnallocatedEntryUI.xaml.cs">
+    <Compile Update="presentationLayer\view\userControls\UnallocatedEntryUI.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\AboutWindow.xaml.cs">
+    <Compile Update="presentationLayer\view\windows\AboutWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\AssignLetterWindow.xaml.cs">
+    <Compile Update="presentationLayer\view\windows\AssignLetterWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\AttributesVolumeByIndexWindow.xaml.cs">
+    <Compile Update="presentationLayer\view\windows\AttributesVolumeByIndexWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\AttributesVolumeWindow.xaml.cs">
+    <Compile Update="presentationLayer\view\windows\AttributesVolumeWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\AttributesDiskWindow.xaml.cs">
+    <Compile Update="presentationLayer\view\windows\AttributesDiskWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\CHKDSKWindow.xaml.cs">
+    <Compile Update="presentationLayer\view\windows\CHKDSKWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\CleanWindow.xaml.cs">
+    <Compile Update="presentationLayer\view\windows\CleanWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\ConvertDriveWindow.xaml.cs">
+    <Compile Update="presentationLayer\view\windows\ConvertDriveWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\CreatePartitionWindow.xaml.cs">
+    <Compile Update="presentationLayer\view\windows\CreatePartitionWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\CreateVolumeWindow.xaml.cs">
+    <Compile Update="presentationLayer\view\windows\CreateVolumeWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\DeleteWindow.xaml.cs">
+    <Compile Update="presentationLayer\view\windows\DeleteWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\ExtendWindow.xaml.cs">
+    <Compile Update="presentationLayer\view\windows\ExtendWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\FormatPartitionWindow.xaml.cs">
+    <Compile Update="presentationLayer\view\windows\FormatPartitionWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\FormatWindow.xaml.cs">
+    <Compile Update="presentationLayer\view\windows\FormatWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="userControls\PartitionDriveEntryUI.xaml.cs">
+    <Compile Update="presentationLayer\view\userControls\PartitionDriveEntryUI.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="userControls\PhysicalDriveEntryUI.xaml.cs">
+    <Compile Update="presentationLayer\view\userControls\PhysicalDriveEntryUI.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\SecurityCheckWindow.xaml.cs">
+    <Compile Update="presentationLayer\view\windows\SecurityCheckWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\ShrinkWindow.xaml.cs">
+    <Compile Update="presentationLayer\view\windows\ShrinkWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\StartupLoadingWindow.xaml.cs">
+    <Compile Update="presentationLayer\view\windows\StartupLoadingWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -94,73 +94,73 @@
     <Page Update="Themes\MSSample.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="userControls\ConsoleReturn.xaml">
+    <Page Update="presentationLayer\view\userControls\ConsoleReturn.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="userControls\EntryData.xaml">
+    <Page Update="presentationLayer\view\userControls\EntryData.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="userControls\UnallocatedEntryUI.xaml">
+    <Page Update="presentationLayer\view\userControls\UnallocatedEntryUI.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Win95Button.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\AboutWindow.xaml">
+    <Page Update="presentationLayer\view\windows\AboutWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\AssignLetterWindow.xaml">
+    <Page Update="presentationLayer\view\windows\AssignLetterWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\AttributesVolumeByIndexWindow.xaml">
+    <Page Update="presentationLayer\view\windows\AttributesVolumeByIndexWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\AttributesVolumeWindow.xaml">
+    <Page Update="presentationLayer\view\windows\AttributesVolumeWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\AttributesDiskWindow.xaml">
+    <Page Update="presentationLayer\view\windows\AttributesDiskWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\CHKDSKWindow.xaml">
+    <Page Update="presentationLayer\view\windows\CHKDSKWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\CleanWindow.xaml">
+    <Page Update="presentationLayer\view\windows\CleanWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\ConvertDriveWindow.xaml">
+    <Page Update="presentationLayer\view\windows\ConvertDriveWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\CreatePartitionWindow.xaml">
+    <Page Update="presentationLayer\view\windows\CreatePartitionWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\CreateVolumeWindow.xaml">
+    <Page Update="presentationLayer\view\windows\CreateVolumeWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\DeleteWindow.xaml">
+    <Page Update="presentationLayer\view\windows\DeleteWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\ExtendWindow.xaml">
+    <Page Update="presentationLayer\view\windows\ExtendWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\FormatPartitionWindow.xaml">
+    <Page Update="presentationLayer\view\windows\FormatPartitionWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\FormatWindow.xaml">
+    <Page Update="presentationLayer\view\windows\FormatWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="userControls\PartitionDriveEntryUI.xaml">
+    <Page Update="presentationLayer\view\userControls\PartitionDriveEntryUI.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="userControls\PhysicalDriveEntryUI.xaml">
+    <Page Update="presentationLayer\view\userControls\PhysicalDriveEntryUI.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\SecurityCheckWindow.xaml">
+    <Page Update="presentationLayer\view\windows\SecurityCheckWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\ShrinkWindow.xaml">
+    <Page Update="presentationLayer\view\windows\ShrinkWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\StartupLoadingWindow.xaml">
+    <Page Update="presentationLayer\view\windows\StartupLoadingWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

@@ -1,17 +1,12 @@
-﻿using GUIForDiskpart.main;
-using GUIForDiskpart.userControls;
-using GUIForDiskpart.windows;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
+﻿using System;
 using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
+using GUIForDiskpart.Windows;
+using GUIForDiskpart.Database.Data;
+using GUIForDiskpart.Utils;
 
 namespace GUIForDiskpart
 {
@@ -20,11 +15,11 @@ namespace GUIForDiskpart
     /// </summary>
     public partial class App : Application
     {
-        private const string WEBSITE_URL = "https://github.com/LumiToad/GUIForDiskpart";
-        private const string WIKI_URL = "https://github.com/LumiToad/GUIForDiskpart/wiki";
-        private const string BUILD_STAGE = "Beta";
+        /* --- Inherited from Application ---
+        public Window MainWindow { get; set; } 
+           ---------------------------------- */ 
+        private StartupLoadingWindow? startup;
 
-        private StartupLoadingWindow startup;
 
         // Entry point of the whole application!
         protected override void OnStartup(StartupEventArgs e)
@@ -32,7 +27,6 @@ namespace GUIForDiskpart
             base.OnStartup(e);
 
             ShowStartupScreen();
-
             Initialize();
 
             if (startup != null)
@@ -47,12 +41,12 @@ namespace GUIForDiskpart
             try
             {
                 RetrieveAndShowDiskData(true);
-                DiskRetriever.SetupDiskChangedWatcher();
-                DiskRetriever.OnDiskChanged += OnDiskChanged;
+                service.Disk.SetupDiskChangedWatcher();
+                Disk.OnDiskChanged += OnDiskChanged;
             }
             catch (Exception ex)
             {
-                FileUtilites.SaveExceptionCrashLog(ex);
+                FileUtils.SaveExceptionCrashLog(ex);
             }
         }
 
@@ -61,7 +55,7 @@ namespace GUIForDiskpart
             string build = "";
 
             build += Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            build += " - " + BUILD_STAGE;
+            build += " - " + AppInfo.BUILD_STAGE;
 
             return build;
         }
