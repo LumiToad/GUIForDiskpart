@@ -6,6 +6,7 @@ using System.Windows.Threading;
 
 using GUIForDiskpart.Utils;
 using GUIForDiskpart.Model.Logic;
+using System.Windows.Controls;
 
 
 namespace GUIForDiskpart
@@ -40,7 +41,6 @@ namespace GUIForDiskpart
             {
                 RetrieveAndShowDiskData(true);
                 DiskService.SetupDiskChangedWatcher();
-                DiskService.OnDiskChanged += OnDiskChanged;
             }
             catch (Exception ex)
             {
@@ -51,8 +51,12 @@ namespace GUIForDiskpart
         public void OnMainWindowLoaded()
         {
             StartupWindowClose();
+            DiskService.OnDiskChanged += (GUIFDMainWin.Instance.GetWindowPresenter() as GUIForDiskpart.Presentation.Presenter.MainWindow).OnDiskChanged;
+
             WIM.GetWindow<GUIFDMainWin>().Log.Print("Success!");
             WIM[typeof(GUIFDMainWin)].Log.Print("Kekse");
+
+            Current.Dispatcher.Invoke(RetrieveAndShowDiskData_Internal, true);
         }
 
         // View
@@ -72,7 +76,7 @@ namespace GUIForDiskpart
         // Retriever
         public void RetrieveAndShowDiskData(bool outputText)
         {
-            Current.Dispatcher.Invoke(RetrieveAndShowDiskData_Internal, outputText);
+            
         }
 
         // Retriever
@@ -80,13 +84,15 @@ namespace GUIForDiskpart
         {
             DiskService.ReLoadDisks();
 
+            GUIFDMainWin.Instance.RetrieveAndShowDiskData(outputText);
+
             //Todo -> View!
             //AddEntrysToStackPanel<DiskModel>(DiskStackPanel, DiskService.PhysicalDrives);
 
-            if (outputText)
-            {
-                AddTextToOutputConsole(DiskService.GetDiskOutput());
-            }
+            //if (outputText)
+            //{
+            //    AddTextToOutputConsole(DiskService.GetDiskOutput());
+            //}
 
             //Todo -> View!
             //DiskEntry_Click((PhysicalDiskEntryUI)DiskStackPanel.Children[0]);

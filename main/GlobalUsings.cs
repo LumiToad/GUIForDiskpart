@@ -16,4 +16,5 @@ global using FSType = GUIForDiskpart.Database.Data.Types.FileSystemType;
 global using CMDBasic = GUIForDiskpart.Database.Data.CMD.Basic;
 global using GUIFDMainWin = GUIForDiskpart.Presentation.View.Windows.MainWindow;
 
+global using GUIForDiskpart.Database.Data.Diskpart;
 global using GUIForDiskpart.Presentation.View.Windows;

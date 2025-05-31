@@ -4,6 +4,6 @@
     {
         public static IPresenter? New(params object[] args) { return default; }
 
-        public void RegisterEvents();
+        public abstract void RegisterEvents();
     }
 }

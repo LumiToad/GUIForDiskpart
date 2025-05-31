@@ -21,8 +21,6 @@ namespace GUIForDiskpart.Model.Logic
             }
         }
 
-        
-
         public Window? CreateWindow(IGUIFDWindow guifdWindow)
         {
             Window window = (Window)guifdWindow;
@@ -39,6 +37,7 @@ namespace GUIForDiskpart.Model.Logic
         {
             if (managedWindows.ContainsKey(GUIFDMainWin.Instance.GetType())) return;
             SetupGUIFDWindow(GUIFDMainWin.Instance, GUIFDMainWin.Instance);
+            OnWindowContentRendered(GUIFDMainWin.Instance, null);
         }
 
         private void SetupGUIFDWindow(IGUIFDWindow guifdWindow, Window window)

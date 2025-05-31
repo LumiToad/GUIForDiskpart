@@ -43,7 +43,6 @@ namespace GUIForDiskpart.Utils
         private static void GetChildrenControlsInternal(DependencyObject obj, ref List<UserControl> retVal)
         {
             int childCount = VisualTreeHelper.GetChildrenCount(obj);
-            Console.WriteLine(childCount);
             if (childCount == 0) return;
 
             for (int i = 0; i < childCount; i++)
@@ -51,7 +50,7 @@ namespace GUIForDiskpart.Utils
                 DependencyObject child = VisualTreeHelper.GetChild(obj, i);
                 var userControl = child as UserControl;
 
-                if (userControl != null)
+                if (userControl != null && !retVal.Contains(userControl))
                 {
                     retVal.Add(userControl);
                 }
@@ -60,7 +59,7 @@ namespace GUIForDiskpart.Utils
             }
         }
 
-        public static IGUIFDWindow AsGUIFDWindow(this System.Windows.Window window)
+        public static IGUIFDWindow AsGUIFDWindow(this Window window)
         {
             return (IGUIFDWindow)window;
         }

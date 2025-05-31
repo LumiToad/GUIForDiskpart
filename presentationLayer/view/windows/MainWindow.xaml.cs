@@ -11,6 +11,7 @@ using GUIForDiskpart.Presentation.View.Windows;
 using GUIForDiskpart.Presentation.View.UserControls;
 using GUIForDiskpart.Utils;
 using GUIForDiskpart.Presentation.Presenter;
+using System.Management.Automation.Remoting;
 
 
 
@@ -24,10 +25,13 @@ namespace GUIForDiskpart.Presentation.View.Windows
         public static GUIFDMainWin Instance { get; private set; }
         public Presenter.LogUI Log => GetLogPresenter();
 
+        private Presenter.MainWindow windowPresenter;
+
         public MainWindow()
         {
             InitializeComponent();
             Instance = this;
+            windowPresenter = new(this);
         }
 
         protected override void OnContentRendered(EventArgs e)
@@ -42,74 +46,68 @@ namespace GUIForDiskpart.Presentation.View.Windows
             return (Presenter.LogUI)this.AsGUIFDWindow().ChildPresenters[MainLog][0];
         }
 
-        public void RetrieveAndShowDiskData(bool value) => DummyClick();
+        // JUST FOR TESTING!!!
+        public void RetrieveAndShowDiskData(bool value)
+        {
+            Presenter.MainWindow presenter = (Presenter.MainWindow)GetWindowPresenter();
+            presenter.RetrieveAndShowDiskData(value);
+        }
 
-        public void LogPrint(string text) => DummyClick();
-            //MainLog.Print(text);
-
-        private void Window_Closing(object sender, CancelEventArgs e) => DummyClick();
-        // StartupWindowClose();
+        public void LogPrint(string text) => Log.Print(text);
 
         #region EntriesClick
-        public void DiskEntry_Click(PhysicalDiskEntryUI entry) => DummyClick();
 
-        public void PartitionEntry_Click(PartitionEntryUI entry) => DummyClick();
+        public void DiskEntry_Click(PhysicalDiskEntryUI entry) => windowPresenter.OnDiskEntry_Click(entry);
+        public void PartitionEntry_Click(PartitionEntryUI entry) => windowPresenter.OnPartitionEntry_Click(entry);
+        public void UnallocatedEntry_Click(UnallocatedEntryUI entry) => windowPresenter.OnUnallocatedEntry_Click(entry);
 
-        public void UnallocatedEntry_Click(UnallocatedEntryUI entry) => DummyClick();
-
-        private void ListPart_Click(object sender, RoutedEventArgs e) => DummyClick();
+        public void ListPart_Click(object sender, RoutedEventArgs e) => windowPresenter.OnListPart_Click(sender, e);
 
         #endregion EntriesClick
 
         #region TopBarDiskPartMenu
 
-        private void ListVolume_Click(object sender, RoutedEventArgs e) => DummyClick();
-
-        private void ListDisk_Click(object sender, RoutedEventArgs e) => DummyClick();
-
-        private void ListVDisk_Click(object sender, RoutedEventArgs e) => DummyClick();
-
-        private void CreateVDisk_Click(object sender, RoutedEventArgs e) => DummyClick();
-
-        private void AttachVDisk_Click(object sender, RoutedEventArgs e) => DummyClick();
-
-        private void ChildVDisk_Click(object sender, RoutedEventArgs e) => DummyClick();
-
-        private void CopyVDisk_Click(object sender, RoutedEventArgs e) => DummyClick();
-
-        private void AttributesVolume_Click(object sender, RoutedEventArgs e) => DummyClick();
+        public void ListVolume_Click(object sender, RoutedEventArgs e) => windowPresenter.OnListVolume_Click(sender, e);
+        public void ListDisk_Click(object sender, RoutedEventArgs e) => windowPresenter.OnListDisk_Click(sender, e);
+        public void ListVDisk_Click(object sender, RoutedEventArgs e) => windowPresenter.OnListVDisk_Click(sender, e);
+        public void CreateVDisk_Click(object sender, RoutedEventArgs e) => windowPresenter.OnCreateVDisk_Click(sender, e);
+        public void AttachVDisk_Click(object sender, RoutedEventArgs e) => windowPresenter.OnAttachVDisk_Click(sender, e);
+        public void ChildVDisk_Click(object sender, RoutedEventArgs e) => windowPresenter.OnChildVDisk_Click(sender, e);
+        public void CopyVDisk_Click(object sender, RoutedEventArgs e) => windowPresenter.OnCopyVDisk_Click(sender, e);
+        public void AttributesVolume_Click(object sender, RoutedEventArgs e) => windowPresenter.OnAttributesVolume_Click(sender, e);
 
         #endregion TopBarDiskPartMenu
 
         #region TopBarCommandsMenu
 
-        private void RetrieveDiskData_Click(object sender, RoutedEventArgs e) => DummyClick();
-
-        private void ScanVolume_Click(object sender, RoutedEventArgs e) => DummyClick();
+        public void RetrieveDiskData_Click(object sender, RoutedEventArgs e) => windowPresenter.OnRetrieveDiskData_Click(sender, e);
+        public void ScanVolume_Click(object sender, RoutedEventArgs e) => windowPresenter.OnScanVolume_Click(sender, e);
 
         #endregion TopBarCommandsMenu
 
         #region TopBarFileMenu
 
-        private void SaveLog_Click(object sender, RoutedEventArgs e) => DummyClick();
+        public void SaveLog_Click(object sender, RoutedEventArgs e) => DummyClick(); //windowPresenter.OnSaveLog_Click(sender, e);
+        public void SaveEntryData_Click(object sender, RoutedEventArgs e) => windowPresenter.OnSaveEntryData_Click(sender, e);
+        public void Quit_Click(object sender, RoutedEventArgs e) => windowPresenter.OnQuit_Click(sender, e);
 
-        private void SaveEntryData_Click(object sender, RoutedEventArgs e) => DummyClick();
-
-        private void Quit_Click(object sender, RoutedEventArgs e) => DummyClick();
         //System.Windows.Application.Current.Shutdown();
-        
+
         #endregion TopBarFileMenu
 
         #region TopBarHelpMenu
 
-        private void Website_Click(object sender, RoutedEventArgs e) => DummyClick();
-
-        private void Wiki_Click(object sender, RoutedEventArgs e) => DummyClick();
-
-        private void About_Click(object sender, RoutedEventArgs e) => DummyClick();
+        public void Website_Click(object sender, RoutedEventArgs e) => windowPresenter.OnWebsite_Click(sender, e);
+        public void Wiki_Click(object sender, RoutedEventArgs e) => windowPresenter.OnWiki_Click(sender, e);
+        public void About_Click(object sender, RoutedEventArgs e) => windowPresenter.OnAbout_Click(sender, e);
 
         #endregion TopBarHelpMenu
 
         private void DummyClick() { }
+
+        public IPresenter GetWindowPresenter()
+        {
+            return windowPresenter;
+        }
     }
 }

@@ -21,12 +21,12 @@ namespace GUIForDiskpart.Presentation.Presenter
             Log.TextBox.Text += $"[{DateTime.Now}]\n{text}\n\n";
         }
 
-        private void SaveLog(object sender, RoutedEventArgs e)
+        private void OnSaveLog_Click(object sender, RoutedEventArgs e)
         {
             FileUtils.SaveAsTextfile(Log.TextBox.Text, "log");
         }
 
-        private void LogUI_TextChanged(object sender, TextChangedEventArgs e)
+        private void OnLogUI_TextChanged(object sender, TextChangedEventArgs e)
         {
             Log.TextBox.ScrollToEnd();
         }
@@ -46,8 +46,8 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         public void RegisterEvents()
         {
-            Log.SaveLog_Click += SaveLog;
-            Log.LogUI_TextChanged += LogUI_TextChanged;
+            Log.SaveLog_Click += OnSaveLog_Click;
+            Log.LogUI_TextChanged += OnLogUI_TextChanged;
         }
 
         #endregion IPresenter

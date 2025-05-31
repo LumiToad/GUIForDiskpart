@@ -12,8 +12,6 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     /// </summary>
     public partial class UnallocatedEntryUI : UserControl, IGUIFDUserControl
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
-
         private long size;
         private DiskModel diskModel;
 
@@ -41,7 +39,8 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SelectEntryRadioButton();
-            MainWindow.UnallocatedEntry_Click(this);
+            var presenter = (Presenter.MainWindow)GUIFDMainWin.Instance.GetWindowPresenter();
+            presenter.OnUnallocatedEntry_Click(this);
         }
 
         public void SelectEntryRadioButton()
@@ -52,7 +51,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         private void CreatePart_Click(object sender, RoutedEventArgs e)
         {
             CreatePartitionWindow createPartitionWindow = new CreatePartitionWindow(diskModel, size);
-            createPartitionWindow.Owner = MainWindow;
+            createPartitionWindow.Owner = GUIFDMainWin.Instance;
             createPartitionWindow.Focus();
 
             createPartitionWindow.Show();
@@ -61,7 +60,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         private void CreateVolume_Click(object sender, RoutedEventArgs e)
         {
             CreateVolumeWindow createVolumeWindow = new CreateVolumeWindow(diskModel, size);
-            createVolumeWindow.Owner = MainWindow;
+            createVolumeWindow.Owner = GUIFDMainWin.Instance;
             createVolumeWindow.Focus();
 
             createVolumeWindow.Show();

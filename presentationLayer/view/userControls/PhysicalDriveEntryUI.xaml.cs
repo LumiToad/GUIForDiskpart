@@ -13,8 +13,6 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     /// </summary>
     public partial class PhysicalDiskEntryUI : UserControl, IGUIFDUserControl
     {
-        MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
-
         private DiskModel diskModel;
         public DiskModel DiskModel
         { 
@@ -32,7 +30,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         public PhysicalDiskEntryUI(DiskModel diskModel)
         {
             InitializeComponent();
-            diskModel = DiskModel;
+            DiskModel = diskModel;
         }
 
         private void DriveDataToThisUI()
@@ -77,24 +75,24 @@ namespace GUIForDiskpart.Presentation.View.UserControls
                 output += DPFunctions.OnOfflineDisk(DiskModel.DiskIndex, true, false);
             }
 
-            MainWindow.LogPrint(output);
-            MainWindow.RetrieveAndShowDiskData(false);
+            GUIFDMainWin.Instance.LogPrint(output);
+            GUIFDMainWin.Instance.RetrieveAndShowDiskData(false);
         }
 
         private void Detail_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.LogPrint(DPFunctions.DetailDisk(DiskModel.DiskIndex));
+            GUIFDMainWin.Instance.LogPrint(DPFunctions.DetailDisk(DiskModel.DiskIndex));
         }
 
         private void ListPart_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.LogPrint(DPFunctions.ListPart(DiskModel.DiskIndex));
+            GUIFDMainWin.Instance.LogPrint(DPFunctions.ListPart(DiskModel.DiskIndex));
         }
 
         private void Clean_Click(object sender, RoutedEventArgs e)
         {
             CleanWindow cleanWindow = new CleanWindow(diskModel);
-            cleanWindow.Owner = MainWindow;
+            cleanWindow.Owner = GUIFDMainWin.Instance;
             cleanWindow.Focus();
 
             cleanWindow.Show();
@@ -103,7 +101,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         private void Convert_Click(object sender, RoutedEventArgs e)
         {
             ConvertDriveWindow convertDriveWindow = new ConvertDriveWindow(diskModel);
-            convertDriveWindow.Owner = MainWindow;
+            convertDriveWindow.Owner = GUIFDMainWin.Instance;
             convertDriveWindow.Focus();
             
             convertDriveWindow.Show();
@@ -112,7 +110,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         private void CreatePart_Click(object sender, RoutedEventArgs e)
         {
             CreatePartitionWindow createPartitionWindow = new CreatePartitionWindow(diskModel);
-            createPartitionWindow.Owner = MainWindow;
+            createPartitionWindow.Owner = GUIFDMainWin.Instance;
             createPartitionWindow.Focus();
 
             createPartitionWindow.Show();
@@ -121,7 +119,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         private void CreateVolume_Click(object sender, RoutedEventArgs e)
         {
             CreateVolumeWindow createVolumeWindow = new CreateVolumeWindow(diskModel);
-            createVolumeWindow.Owner = MainWindow;
+            createVolumeWindow.Owner = GUIFDMainWin.Instance;
             createVolumeWindow.Focus();
 
             createVolumeWindow.Show();
@@ -130,7 +128,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         private void EasyFormat_Click(object sender, RoutedEventArgs e)
         {
             FormatDriveWindow formatWindow = new FormatDriveWindow(diskModel);
-            formatWindow.Owner = MainWindow;
+            formatWindow.Owner = GUIFDMainWin.Instance;
             formatWindow.Focus();
 
             formatWindow.Show();
@@ -140,7 +138,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SelectEntryRadioButton();
-            MainWindow.DiskEntry_Click(this);
+            (GUIFDMainWin.Instance.GetWindowPresenter() as Presenter.MainWindow).OnDiskEntry_Click(this);
         }
 
         public void SelectEntryRadioButton()
