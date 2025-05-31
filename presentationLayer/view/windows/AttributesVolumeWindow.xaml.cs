@@ -46,7 +46,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
             output += DPFunctions.AttributesVolume(WSMPartition.DriveLetter, true, (string)Attributes.SelectedItem, true);
 
-            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.LogPrint(output);
             this.Close();
         }
 
@@ -56,7 +56,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
             output += DPFunctions.AttributesVolume(WSMPartition.DriveLetter, false, (string)Attributes.SelectedItem, true);
 
-            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.LogPrint(output);
             this.Close();
         }
 
@@ -67,7 +67,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         private void AddTextToConsole(string text)
         {
-            ConsoleReturn.AddTextToOutputConsole(text);
+            ConsoleReturn.Print(text);
         }
     }
 }

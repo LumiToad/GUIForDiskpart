@@ -1,8 +1,10 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 
 using GUIForDiskpart.Model.Data;
 using GUIForDiskpart.Model.Logic.Diskpart;
+using GUIForDiskpart.Presentation.Presenter;
 using GUIForDiskpart.Service;
 using GUIForDiskpart.Utils;
 
@@ -12,7 +14,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     /// <summary>
     /// Interaktionslogik für PartitionDriveEntryUI.xaml
     /// </summary>
-    public partial class PartitionEntryUI : UserControl
+    public partial class PartitionEntryUI : UserControl, IGUIFDUserControl
     {
         MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
@@ -142,7 +144,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
                 DPFunctions.OfflineVolume(diskIndex, partitionIndex, false) :
                 DPFunctions.OfflineVolume(driveLetter, false);
             }
-            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.LogPrint(output);
             MainWindow.RetrieveAndShowDiskData(false);
         }
 
@@ -163,7 +165,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         private void AnalyzeDefrag_Click(object sender, RoutedEventArgs e)
         {
             Partition.DefragAnalysis = DAService.AnalyzeVolumeDefrag(Partition);
-            MainWindow.AddTextToOutputConsole(Partition.DefragAnalysis.GetOutputAsString());
+            MainWindow.LogPrint(Partition.DefragAnalysis.GetOutputAsString());
             MainWindow.EntryDataUI.AddDataToGrid(Partition.GetKeyValuePairs());
         }
 
@@ -185,7 +187,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
             switch (result)
             {
                 case MessageBoxResult.OK:
-                    MainWindow.AddTextToOutputConsole(DPFunctions.Active(Partition.WSMPartition.DiskNumber, Partition.WSMPartition.PartitionNumber, !Partition.WSMPartition.IsActive));
+                    MainWindow.LogPrint(DPFunctions.Active(Partition.WSMPartition.DiskNumber, Partition.WSMPartition.PartitionNumber, !Partition.WSMPartition.IsActive));
                     MainWindow.RetrieveAndShowDiskData(false);
                     break;
                 case MessageBoxResult.Cancel:
@@ -206,7 +208,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         private void Detail_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.AddTextToOutputConsole(DPFunctions.DetailPart(partition.WSMPartition.DiskNumber, partition.WSMPartition.PartitionNumber));
+            MainWindow.LogPrint(DPFunctions.DetailPart(partition.WSMPartition.DiskNumber, partition.WSMPartition.PartitionNumber));
         }
 
         private void Format_Click(object sender, RoutedEventArgs e)
@@ -229,7 +231,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
             output += DPFunctions.Delete(Partition.WSMPartition.DiskNumber, Partition.WSMPartition.PartitionNumber, false, true);
 
-            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.LogPrint(output);
             MainWindow.RetrieveAndShowDiskData(false);
         }
 
@@ -302,5 +304,15 @@ namespace GUIForDiskpart.Presentation.View.UserControls
             SizeBar.Minimum = 0;
             SizeBar.Value = usedSpace;
         }
+
+        #region IGUIFDUserControl
+
+        List<IPresenter> IGUIFDUserControl.GetPresenters()
+        {
+            List<IPresenter> presenters = new();
+            return presenters;
+        }
+
+        #endregion IGUIFDUserControl
     }
 }

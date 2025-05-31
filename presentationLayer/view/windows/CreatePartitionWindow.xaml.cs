@@ -79,7 +79,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             
             output += DPFunctions.CreatePartition(DiskModel.DiskIndex, option, GetSizeValue(), false);
 
-            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.LogPrint(output);
             MainWindow.RetrieveAndShowDiskData(false);
 
             this.Close();
@@ -104,7 +104,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         public void AddTextToConsole()
         {
-            ConsoleReturn.AddTextToOutputConsole(DiskModel.GetOutputAsString());
+            ConsoleReturn.Print(DiskModel.GetOutputAsString());
         }
 
         private void SizeValue_TextChanged(object sender, TextChangedEventArgs e)

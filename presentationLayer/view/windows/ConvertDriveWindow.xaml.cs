@@ -32,7 +32,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         public void AddTextToConsole()
         {
-            ConsoleReturn.AddTextToOutputConsole(DiskModel.GetOutputAsString());
+            ConsoleReturn.Print(DiskModel.GetOutputAsString());
         }
 
         private string SelectedOptionAsString()
@@ -63,7 +63,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             string output = string.Empty;
             output = DPFunctions.Convert(DiskModel.DiskIndex, option);
 
-            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.LogPrint(output);
 
             this.Close();
         }

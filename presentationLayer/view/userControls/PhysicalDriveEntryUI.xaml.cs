@@ -1,5 +1,7 @@
 ﻿using GUIForDiskpart.Model.Logic.Diskpart;
+using GUIForDiskpart.Presentation.Presenter;
 using GUIForDiskpart.Utils;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -9,7 +11,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     /// <summary>
     /// Interaktionslogik für PhysicalDriveEntryUI.xaml
     /// </summary>
-    public partial class PhysicalDiskEntryUI : UserControl
+    public partial class PhysicalDiskEntryUI : UserControl, IGUIFDUserControl
     {
         MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
@@ -75,18 +77,18 @@ namespace GUIForDiskpart.Presentation.View.UserControls
                 output += DPFunctions.OnOfflineDisk(DiskModel.DiskIndex, true, false);
             }
 
-            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.LogPrint(output);
             MainWindow.RetrieveAndShowDiskData(false);
         }
 
         private void Detail_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.AddTextToOutputConsole(DPFunctions.DetailDisk(DiskModel.DiskIndex));
+            MainWindow.LogPrint(DPFunctions.DetailDisk(DiskModel.DiskIndex));
         }
 
         private void ListPart_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.AddTextToOutputConsole(DPFunctions.ListPart(DiskModel.DiskIndex));
+            MainWindow.LogPrint(DPFunctions.ListPart(DiskModel.DiskIndex));
         }
 
         private void Clean_Click(object sender, RoutedEventArgs e)
@@ -134,6 +136,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
             formatWindow.Show();
         }
 
+        // Presenter
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SelectEntryRadioButton();
@@ -191,5 +194,15 @@ namespace GUIForDiskpart.Presentation.View.UserControls
             SizeBar.Minimum = 0;
             SizeBar.Value = usedSpace;
         }
+
+        #region IGUIFDUserControl
+
+        List<IPresenter> IGUIFDUserControl.GetPresenters()
+        {
+            List<IPresenter> presenters = new();
+            return presenters;
+        }
+
+        #endregion IGUIFDUserControl
     }
 }

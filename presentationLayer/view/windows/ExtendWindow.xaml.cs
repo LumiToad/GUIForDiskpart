@@ -56,7 +56,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
                 output += DPFunctions.Extend(diskIndex, driveLetter, desiredMB, false);
             }
 
-            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.LogPrint(output);
             MainWindow.RetrieveAndShowDiskData(false);
 
             this.Close();
@@ -115,7 +115,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
             output += Partition.WSMPartition.GetOutputAsString();
             output += Partition.DefragAnalysis.GetOutputAsString();
-            ConsoleReturn.AddTextToOutputConsole(output);
+            ConsoleReturn.Print(output);
         }
 
         private void SetSliderMinMax(Slider slider, double min, double max)

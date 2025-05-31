@@ -1,5 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+
 
 namespace GUIForDiskpart.Utils
 {
@@ -20,6 +24,45 @@ namespace GUIForDiskpart.Utils
         public static MenuItem CreateContextMenuItem(string name, string header, bool isEnabled, RoutedEventHandler handler)
         {
             return CreateContextMenuItem(null, name, header, isEnabled, handler);
+        }
+
+        public static List<UserControl> GetChildrenUserControls(this System.Windows.Window window)
+        {
+            List<UserControl> retVal = new();
+
+            DependencyObject obj = window;
+            if (obj != null)
+            {
+                GetChildrenControlsInternal(obj, ref retVal);
+            }
+
+            return retVal;
+        }
+
+        // https://pvq.app/questions/874380/wpf-how-do-i-loop-through-the-all-controls-in-a-window - ask mixtral
+        private static void GetChildrenControlsInternal(DependencyObject obj, ref List<UserControl> retVal)
+        {
+            int childCount = VisualTreeHelper.GetChildrenCount(obj);
+            Console.WriteLine(childCount);
+            if (childCount == 0) return;
+
+            for (int i = 0; i < childCount; i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                var userControl = child as UserControl;
+
+                if (userControl != null)
+                {
+                    retVal.Add(userControl);
+                }
+
+                GetChildrenControlsInternal(child, ref retVal);
+            }
+        }
+
+        public static IGUIFDWindow AsGUIFDWindow(this System.Windows.Window window)
+        {
+            return (IGUIFDWindow)window;
         }
     }
 }

@@ -33,7 +33,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
             output += DPFunctions.AttributesDisk(DiskModel.DiskIndex, true, false);
 
-            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.LogPrint(output);
             this.Close();
         }
 
@@ -43,7 +43,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
             output += DPFunctions.AttributesDisk(DiskModel.DiskIndex, false, false);
 
-            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.LogPrint(output);
             this.Close();
         }
 
@@ -54,7 +54,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         private void AddTextToConsole(string text)
         {
-            ConsoleReturn.AddTextToOutputConsole(text);
+            ConsoleReturn.Print(text);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         public void AddTextToConsole()
         {
-            ConsoleReturn.AddTextToOutputConsole(DiskModel.GetOutputAsString());
+            ConsoleReturn.Print(DiskModel.GetOutputAsString());
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -110,7 +110,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
                     driveLetter, size, (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, true, false);
             }
 
-            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.LogPrint(output);
 
             this.Close();
         }

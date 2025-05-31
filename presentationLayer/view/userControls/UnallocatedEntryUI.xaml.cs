@@ -1,4 +1,5 @@
-﻿using GUIForDiskpart.Service;
+﻿using GUIForDiskpart.Presentation.Presenter;
+using GUIForDiskpart.Service;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,7 +10,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     /// <summary>
     /// Interaction logic for UnallocatedEntryUI.xaml
     /// </summary>
-    public partial class UnallocatedEntryUI : UserControl
+    public partial class UnallocatedEntryUI : UserControl, IGUIFDUserControl
     {
         MainWindow MainWindow => (MainWindow)Application.Current.MainWindow;
 
@@ -75,5 +76,15 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         {
             Size.Content = size;
         }
+
+        #region IGUIFDUserControl
+
+        List<IPresenter> IGUIFDUserControl.GetPresenters()
+        {
+            List<IPresenter> presenters = new();
+            return presenters;
+        }
+
+        #endregion IGUIFDUserControl
     }
 }

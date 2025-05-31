@@ -38,7 +38,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         private void AddTextToConsole(string text)
         {
-            ConsoleReturn.AddTextToOutputConsole(text);
+            ConsoleReturn.Print(text);
         }
 
         private void ParaF_Checked(object sender, RoutedEventArgs e)
@@ -178,7 +178,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
                 output += CMDFunctions.CHKDSK(Partition.WSMPartition.DriveLetter, TextBoxPara.Text, TextBoxDir.Text);
             }
 
-            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.LogPrint(output);
 
             this.Close();
         }

@@ -66,7 +66,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
             output += DPFunctions.Assign(WSMPartition.DiskNumber, WSMPartition.PartitionNumber, letter, true);
 
-            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.LogPrint(output);
             MainWindow.RetrieveAndShowDiskData(false);
         }
 
@@ -77,7 +77,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
             output += DPFunctions.Remove(letter, false, true);
 
-            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.LogPrint(output);
             MainWindow.RetrieveAndShowDiskData(false);
         }
 
@@ -100,7 +100,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         private void AddTextToConsole(string text)
         {
-            ConsoleReturn.AddTextToOutputConsole(text);
+            ConsoleReturn.Print(text);
         }
     }
 }

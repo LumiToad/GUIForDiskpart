@@ -20,7 +20,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             InitializeComponent();
             PopulateAttributesCombobox();
             MBRLabel.Text = "Will effect EVERY Volume on MBR drives!, will effect just THIS Volume on GPT drives";
-            ConsoleReturn.AddTextToOutputConsole(DPFunctions.List(DPList.VOLUME));
+            ConsoleReturn.Print(DPFunctions.List(DPList.VOLUME));
         }
 
         private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
@@ -61,7 +61,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
             output += DPFunctions.AttributesVolume(selectedVolume, true, (string)Attributes.SelectedItem, true);
 
-            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.LogPrint(output);
             this.Close();
         }
 
@@ -73,7 +73,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
             output += DPFunctions.AttributesVolume(selectedVolume, false, (string)Attributes.SelectedItem, true);
 
-            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.LogPrint(output);
             this.Close();
         }
 
@@ -84,7 +84,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         private void AddTextToConsole(string text)
         {
-            ConsoleReturn.AddTextToOutputConsole(text);
+            ConsoleReturn.Print(text);
         }
     }
 }

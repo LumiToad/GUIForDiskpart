@@ -1,31 +1,11 @@
-﻿global using LDModel = GUIForDiskpart.Model.Data.LogicalDisk;
-global using LDService = GUIForDiskpart.Service.LogicalDisk;
-
-global using DiskModel = GUIForDiskpart.Model.Data.Disk;
-global using DiskService = GUIForDiskpart.Service.Disk;
-
-global using DAModel = GUIForDiskpart.Model.Data.DefragAnalysis;
-global using DAService = GUIForDiskpart.Service.DefragAnalysis;
-
-global using PartitionModel = GUIForDiskpart.Model.Data.Partition;
-global using PartitionService = GUIForDiskpart.Service.Partition;
-
-global using DriveLetterService = GUIForDiskpart.Service.DriveLetter;
-
-global using FSType = GUIForDiskpart.Database.Data.Types.FileSystemType;
-global using CMDBasic = GUIForDiskpart.Database.Data.CMD.Basic;
-
-
-global using GUIForDiskpart.Presentation.View.Windows;
-
-using System;
+﻿using System;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 
 using GUIForDiskpart.Utils;
-using GUIForDiskpart.Presentation.View.UserControls;
+using GUIForDiskpart.Model.Logic;
 
 
 namespace GUIForDiskpart
@@ -38,14 +18,9 @@ namespace GUIForDiskpart
         /* --- Inherited from Application ---
         public Window MainWindow { get; set; } 
            ---------------------------------- */
-        public static MainWindow? MainWindowInstance;
 
-        public static App? AppInstance
-        {
-            get {return appInstance; }
-            set { return; }
-        }
-        private static App? appInstance;
+        public static App Instance { get; private set; }
+        public WindowInstanceManager WIM { get; private set; } = new();
 
         private StartupLoadingWindow? startup;
 
@@ -53,17 +28,10 @@ namespace GUIForDiskpart
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            MainWindowInstance = (MainWindow)MainWindow;
-            appInstance = this;
+            Instance = this;
 
             ShowStartupScreen();
             Initialize();
-
-            if (startup != null)
-            {
-                StartupWindowClose();
-                MainWindow.Focus();
-            }
         }
 
         private void Initialize()
@@ -80,33 +48,34 @@ namespace GUIForDiskpart
             }
         }
 
-        private string GetBuildNumberString()
+        public void OnMainWindowLoaded()
         {
-            string build = "";
-
-            build += Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            build += " - " + Database.Data.AppInfo.BUILD_STAGE;
-
-            return build;
+            StartupWindowClose();
+            WIM.GetWindow<GUIFDMainWin>().Log.Print("Success!");
+            WIM[typeof(GUIFDMainWin)].Log.Print("Kekse");
         }
 
+        // View
         public void AddTextToOutputConsole(string text)
         {
-            //Todo -> View!
-            MainWindowInstance.ConsoleReturn.AddTextToOutputConsole(text);
+
+// GUIFDMainWin.Instance.Log.Print(text);
         }
 
+        // Retriever
         #region RetrieveDisk
         private void OnDiskChanged()
         {
             RetrieveAndShowDiskData(false);
         }
 
+        // Retriever
         public void RetrieveAndShowDiskData(bool outputText)
         {
             Current.Dispatcher.Invoke(RetrieveAndShowDiskData_Internal, outputText);
         }
 
+        // Retriever
         private void RetrieveAndShowDiskData_Internal(bool outputText)
         {
             DiskService.ReLoadDisks();
@@ -125,6 +94,7 @@ namespace GUIForDiskpart
 
         #endregion RetrieveDisk
 
+        // Fürs Erste Main
         #region StartupWindow
 
         private void ShowStartupScreen()

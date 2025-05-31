@@ -7,325 +7,109 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
-using GUIForDiskpart.Model.Data;
+using GUIForDiskpart.Presentation.View.Windows;
 using GUIForDiskpart.Presentation.View.UserControls;
-using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.Model.Logic;
-using GUIForDiskpart.Service;
-using GUIForDiskpart.Database.Data.Diskpart;
+using GUIForDiskpart.Utils;
+using GUIForDiskpart.Presentation.Presenter;
 
 
-namespace GUIForDiskpart
+
+namespace GUIForDiskpart.Presentation.View.Windows
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IGUIFDWindow
     {
-        private const string WEBSITE_URL = "https://github.com/LumiToad/GUIForDiskpart";
-        private const string WIKI_URL = "https://github.com/LumiToad/GUIForDiskpart/wiki";
-        private const string BUILD_STAGE = "Beta";
-
-        private StartupLoadingWindow startup;
+        public static GUIFDMainWin Instance { get; private set; }
+        public Presenter.LogUI Log => GetLogPresenter();
 
         public MainWindow()
         {
             InitializeComponent();
-            ShowStartupScreen();
-
-            Initialize();
-            
-            if (startup != null)
-            {
-                StartupWindowClose();
-                Focus();
-            }
+            Instance = this;
         }
 
-        private void Initialize()
+        protected override void OnContentRendered(EventArgs e)
         {
-            try
-            {
-                RetrieveAndShowDiskData(true);
-                DiskService.SetupDiskChangedWatcher();
-                DiskService.OnDiskChanged += OnDiskChanged;
-            }
-            catch (Exception ex)
-            {
-                Utils.FileUtils.SaveExceptionCrashLog(ex);
-            }
+            base.OnContentRendered(e);
+            App.Instance.WIM.RegisterGUIFDMainWin();
+            App.Instance.OnMainWindowLoaded();
         }
 
-        private string GetBuildNumberString()
+        private Presenter.LogUI GetLogPresenter()
         {
-            string build = "";
-
-            build += Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            build += " - " + BUILD_STAGE;
-
-            return build;
+            return (Presenter.LogUI)this.AsGUIFDWindow().ChildPresenters[MainLog][0];
         }
 
-        public void AddTextToOutputConsole(string text)
-        {
-            ConsoleReturn.AddTextToOutputConsole(text);
-        }
+        public void RetrieveAndShowDiskData(bool value) => DummyClick();
+
+        public void LogPrint(string text) => DummyClick();
+            //MainLog.Print(text);
+
+        private void Window_Closing(object sender, CancelEventArgs e) => DummyClick();
+        // StartupWindowClose();
 
         #region EntriesClick
+        public void DiskEntry_Click(PhysicalDiskEntryUI entry) => DummyClick();
 
-        public void DiskEntry_Click(PhysicalDiskEntryUI entry)
-        {
-            AddEntrysToStackPanel(PartitionStackPanel, entry.DiskModel.Partitions);
-            if (entry.DiskModel.UnallocatedSpace > 0) 
-            {
-                UnallocatedEntryUI unallocatedEntryUI = new UnallocatedEntryUI(entry.DiskModel);
-                PartitionStackPanel.Children.Add(unallocatedEntryUI);
-            }
-            EntryDataUI.AddDataToGrid(entry.DiskModel.GetKeyValuePairs());
-        }
+        public void PartitionEntry_Click(PartitionEntryUI entry) => DummyClick();
 
-        public void PartitionEntry_Click(PartitionEntryUI entry)
-        {
-            EntryDataUI.AddDataToGrid(entry.Partition.GetKeyValuePairs());
-        }
+        public void UnallocatedEntry_Click(UnallocatedEntryUI entry) => DummyClick();
 
-        public void UnallocatedEntry_Click(UnallocatedEntryUI entry)
-        {
-            EntryDataUI.AddDataToGrid(entry.Entry);
-        }
-
-        private void ListPart_Click(object sender, RoutedEventArgs e)
-        {
-            UInt32? index = GetDataIndexOfSelected(DiskStackPanel);
-            if (index == null) return;
-            AddTextToOutputConsole(DPFunctions.ListPart(index));
-        }
+        private void ListPart_Click(object sender, RoutedEventArgs e) => DummyClick();
 
         #endregion EntriesClick
 
         #region TopBarDiskPartMenu
 
-        private void ListVolume_Click(object sender, RoutedEventArgs e)
-        {
-            AddTextToOutputConsole(DPFunctions.List(DPList.VOLUME));
-        }
+        private void ListVolume_Click(object sender, RoutedEventArgs e) => DummyClick();
 
-        private void ListDisk_Click(object sender, RoutedEventArgs e)
-        {
-            AddTextToOutputConsole(DPFunctions.List(DPList.DISK));
+        private void ListDisk_Click(object sender, RoutedEventArgs e) => DummyClick();
 
-        }
+        private void ListVDisk_Click(object sender, RoutedEventArgs e) => DummyClick();
 
-        private void ListVdisk_Click(object sender, RoutedEventArgs e)
-        {
-            AddTextToOutputConsole(DPFunctions.List(DPList.VDISK));
-        }
+        private void CreateVDisk_Click(object sender, RoutedEventArgs e) => DummyClick();
 
-        private void CreateVDisk_Click(object sender, RoutedEventArgs e)
-        {
-            //create vdisk window
-        }
+        private void AttachVDisk_Click(object sender, RoutedEventArgs e) => DummyClick();
 
-        private void AttachVDisk_Click(object sender, RoutedEventArgs e)
-        {
-            //create vdisk window
-        }
+        private void ChildVDisk_Click(object sender, RoutedEventArgs e) => DummyClick();
 
-        private void ChildVDisk_Click(object sender, RoutedEventArgs e)
-        {
-            //create vdisk window
-        }
+        private void CopyVDisk_Click(object sender, RoutedEventArgs e) => DummyClick();
 
-        private void CopyVDisk_Click(object sender, RoutedEventArgs e)
-        {
-            //create vdisk window
-        }
-
-        private void AttributesVolume_Click(object sender, RoutedEventArgs e)
-        {
-            AttributesVolumeByIndexWindow attributesVolumeByIndexWindow = new();
-            attributesVolumeByIndexWindow.Owner = this;
-            attributesVolumeByIndexWindow.Focus();
-
-            attributesVolumeByIndexWindow.Show();
-        }
+        private void AttributesVolume_Click(object sender, RoutedEventArgs e) => DummyClick();
 
         #endregion TopBarDiskPartMenu
 
         #region TopBarCommandsMenu
 
-        private void RetrieveDiskData_Click(object sender, RoutedEventArgs e)
-        {
-            RetrieveAndShowDiskData(true);
-        }
+        private void RetrieveDiskData_Click(object sender, RoutedEventArgs e) => DummyClick();
 
-        private void ScanVolume_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (object entry in PartitionStackPanel.Children) 
-            {
-                if (entry is not PartitionEntryUI) return;
-                if (((PartitionEntryUI)entry).IsSelected == true)
-                {
-                    ((PartitionEntryUI)entry).OpenScanVolumeWindow();
-                }
-            }
-        }
+        private void ScanVolume_Click(object sender, RoutedEventArgs e) => DummyClick();
 
         #endregion TopBarCommandsMenu
 
-        #region StackPanelLogic
-
-        private void AddEntrysToStackPanel<T>(StackPanel stackPanel, List<T> collection)
-        {
-            stackPanel.Children.Clear();
-
-            foreach (T thing in collection)
-            {
-                UserControl userControl = new UserControl();
-
-                switch (thing) 
-                {
-                    case DiskModel disk:
-                        PhysicalDiskEntryUI diskEntry = new PhysicalDiskEntryUI(disk);
-                        userControl = diskEntry;
-                        break;
-                    case PartitionModel partition:
-                        PartitionEntryUI partitionEntry = new PartitionEntryUI(partition);
-                        userControl = partitionEntry;
-                        break;
-                }
-                stackPanel.Children.Add(userControl);
-            }
-        }
-
-        private UInt32? GetDataIndexOfSelected(StackPanel stackPanel)
-        {
-            PhysicalDiskEntryUI diskEntry;
-            PartitionEntryUI partitionEntry;
-
-            foreach (object? entry in stackPanel.Children)
-            {
-                if (entry.GetType() == typeof(PhysicalDiskEntryUI)) 
-                {
-                    diskEntry = (PhysicalDiskEntryUI)entry;
-                    if (diskEntry != null && diskEntry.IsSelected == true) 
-                        return diskEntry.DiskModel.DiskIndex;
-                }
-
-                if (entry.GetType() == typeof(PartitionEntryUI))
-                {
-                    partitionEntry = (PartitionEntryUI)entry;
-                    if (partitionEntry != null && partitionEntry.IsSelected == true)
-                        return partitionEntry.Partition.WSMPartition.PartitionNumber;
-                }
-            }
-
-            return null;
-        }
-
-        private void Window_Closing(object sender, CancelEventArgs e)
-        {
-            StartupWindowClose();
-        }
-
-        #endregion StackPanelLogic
-
         #region TopBarFileMenu
 
-        private void SaveLog_Click(object sender, RoutedEventArgs e)
-        {
-            ConsoleReturn.SaveLog();
-        }
+        private void SaveLog_Click(object sender, RoutedEventArgs e) => DummyClick();
 
-        private void SaveEntryData_Click(object sender, RoutedEventArgs e)
-        {
-            EntryDataUI.SaveEntryData_Click(sender, e);
-        }
+        private void SaveEntryData_Click(object sender, RoutedEventArgs e) => DummyClick();
 
-        private void Quit_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Application.Current.Shutdown();
-        }
-
+        private void Quit_Click(object sender, RoutedEventArgs e) => DummyClick();
+        //System.Windows.Application.Current.Shutdown();
+        
         #endregion TopBarFileMenu
 
         #region TopBarHelpMenu
 
-        private void Website_Click(object sender, RoutedEventArgs e)
-        {
-            CommandExecuter.IssueCommand(Database.Data.Types.ProcessType.CMD, "start " + WEBSITE_URL);
-        }
+        private void Website_Click(object sender, RoutedEventArgs e) => DummyClick();
 
-        private void Wiki_Click(object sender, RoutedEventArgs e)
-        {
-            CommandExecuter.IssueCommand(Database.Data.Types.ProcessType.CMD, "start " + WIKI_URL);
-        }
+        private void Wiki_Click(object sender, RoutedEventArgs e) => DummyClick();
 
-        private void About_Click(object sender, RoutedEventArgs e)
-        {
-            AboutWindow aboutWindow = new AboutWindow(GetBuildNumberString());
-            aboutWindow.Owner = this;
-            aboutWindow.Show();
-        }
+        private void About_Click(object sender, RoutedEventArgs e) => DummyClick();
 
         #endregion TopBarHelpMenu
 
-        #region RetrieveDisk
-        private void OnDiskChanged()
-        {
-            RetrieveAndShowDiskData(false);
-        }
-
-        public void RetrieveAndShowDiskData(bool outputText)
-        {
-            Application.Current.Dispatcher.Invoke(RetrieveAndShowDiskData_Internal, outputText);
-        }
-
-        private void RetrieveAndShowDiskData_Internal(bool outputText)
-        {
-            DiskService.ReLoadDisks();
-
-            AddEntrysToStackPanel<DiskModel>(DiskStackPanel, DiskService.PhysicalDrives);
-
-            if (outputText)
-            {
-                AddTextToOutputConsole(DiskService.GetDiskOutput());
-            }
-
-            DiskEntry_Click((PhysicalDiskEntryUI)DiskStackPanel.Children[0]);
-        }
-
-        #endregion RetrieveDisk
-
-        #region StartupWindow
-
-        private void ShowStartupScreen()
-        {
-            Thread startupWindowThread = new Thread(new ThreadStart(StartupWindowThreadEntryPoint));
-            startupWindowThread.SetApartmentState(ApartmentState.STA);
-            startupWindowThread.IsBackground = true;
-            startupWindowThread.Start();
-        }
-
-        private void StartupWindowClose()
-        {
-            if (startup.Dispatcher.CheckAccess())
-            {
-                startup.Close();
-            }
-            else
-            {
-                startup.Dispatcher.Invoke(DispatcherPriority.Normal, new ThreadStart(startup.Close));
-            }
-        }
-
-        public void StartupWindowThreadEntryPoint()
-        {
-            startup = new StartupLoadingWindow();
-            startup.Show();
-            Dispatcher.Run();
-        }
-
-        #endregion StartupWindow
+        private void DummyClick() { }
     }
 }

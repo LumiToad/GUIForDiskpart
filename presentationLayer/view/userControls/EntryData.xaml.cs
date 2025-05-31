@@ -2,11 +2,12 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using GUIForDiskpart.Presentation.Presenter;
 using GUIForDiskpart.Utils;
 
 namespace GUIForDiskpart.Presentation.View.UserControls
 {
-    public partial class EntryDataUI : UserControl
+    public partial class EntryDataUI : UserControl, IGUIFDUserControl
     {
         public EntryDataUI()
         {
@@ -98,5 +99,15 @@ namespace GUIForDiskpart.Presentation.View.UserControls
                 selectedCell = EntryDataGrid.SelectedCells[0];
             }
         }
+
+        #region IGUIFDUserControl
+
+        List<IPresenter> IGUIFDUserControl.GetPresenters()
+        {
+            List<IPresenter> presenters = new();
+            return presenters;
+        }
+
+        #endregion IGUIFDUserControl
     }
 }

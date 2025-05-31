@@ -9,7 +9,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="presentationLayer\view\userControls\ConsoleReturn.xaml.cs">
+    <Compile Update="presentationLayer\view\userControls\LogUI.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="presentationLayer\view\userControls\EntryData.xaml.cs">
@@ -94,7 +94,7 @@
     <Page Update="Themes\MSSample.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="presentationLayer\view\userControls\ConsoleReturn.xaml">
+    <Page Update="presentationLayer\view\userControls\LogUI.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="presentationLayer\view\userControls\EntryData.xaml">

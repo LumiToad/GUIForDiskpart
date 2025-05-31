@@ -33,7 +33,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         public void AddTextToConsole()
         {
-            ConsoleReturn.AddTextToOutputConsole(wsmPartition.GetOutputAsString());
+            ConsoleReturn.Print(wsmPartition.GetOutputAsString());
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -89,7 +89,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             output = DPFunctions.Format(WSMPartition.DiskNumber, wsmPartition.PartitionNumber, fileSystem,
                     VolumeValue.Text, (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, false, false);
 
-            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.LogPrint(output);
 
             this.Close();
         }

@@ -37,7 +37,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
             output += DPFunctions.Clean(DiskModel.DiskIndex, (bool)CleanAll.IsChecked);
 
-            MainWindow.AddTextToOutputConsole(output);
+            MainWindow.LogPrint(output);
             MainWindow.RetrieveAndShowDiskData(false);
 
             this.Close();
@@ -64,7 +64,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         private void AddTextToConsole(string text)
         {
-            ConsoleReturn.AddTextToOutputConsole(text);
+            ConsoleReturn.Print(text);
         }
     }
 }

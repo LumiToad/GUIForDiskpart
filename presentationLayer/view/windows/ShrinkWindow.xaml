@@ -43,7 +43,7 @@
             <TextBlock TextWrapping="Wrap" Text="NTFS Volume or unformatted Partition required. Set 0 will use all available space." Width="280" HorizontalAlignment="Left"/>
             <TextBlock TextWrapping="Wrap" Text="Diskpart will try to shrink the Volume or Partition to the desired size. If it fails, it will try anything in between desired and minimum size. If even that is impossible, the operation will fail." Width="280" HorizontalAlignment="Left" Margin="0,10,0,0"/>
         </StackPanel>
-        <userControls:ConsoleReturnUI x:Name="ConsoleReturn" Grid.RowSpan="2"/>
+        <userControls:LogUI x:Name="ConsoleReturn" Grid.RowSpan="2"/>
 
     </Grid>
 </Window>
