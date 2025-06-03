@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 
 using GUIForDiskpart.Utils;
 using GUIForDiskpart.Model.Logic;
-using System.Windows.Controls;
+using GUIForDiskpart.Presentation.Presenter;
 
 
 namespace GUIForDiskpart
@@ -30,9 +29,9 @@ namespace GUIForDiskpart
         {
             base.OnStartup(e);
             Instance = this;
-
-            ShowStartupScreen();
+            
             Initialize();
+            ShowStartupScreen();
         }
 
         private void Initialize()
@@ -50,13 +49,12 @@ namespace GUIForDiskpart
 
         public void OnMainWindowLoaded()
         {
-            StartupWindowClose();
-            DiskService.OnDiskChanged += (GUIFDMainWin.Instance.GetWindowPresenter() as GUIForDiskpart.Presentation.Presenter.MainWindow).OnDiskChanged;
+            //DiskService.OnDiskChanged += (GUIFDMainWin.Instance.GetWindowPresenter() as GUIForDiskpart.Presentation.Presenter.MainWindow).OnDiskChanged;
 
-            WIM.GetWindow<GUIFDMainWin>().Log.Print("Success!");
-            WIM[typeof(GUIFDMainWin)].Log.Print("Kekse");
-
+            WIM.GetPresenter<MainWindow<GUIFDMainWin>>().Log.Print("Success!");
             Current.Dispatcher.Invoke(RetrieveAndShowDiskData_Internal, true);
+            StartupWindowClose();
+            
         }
 
         // View
@@ -84,7 +82,7 @@ namespace GUIForDiskpart
         {
             DiskService.ReLoadDisks();
 
-            GUIFDMainWin.Instance.RetrieveAndShowDiskData(outputText);
+            WIM.GetPresenter<MainWindow<GUIFDMainWin>>().RetrieveAndShowDiskData(outputText);
 
             //Todo -> View!
             //AddEntrysToStackPanel<DiskModel>(DiskStackPanel, DiskService.PhysicalDrives);
@@ -116,10 +114,12 @@ namespace GUIForDiskpart
             if (startup.Dispatcher.CheckAccess())
             {
                 startup.Close();
+                MainWindow.Focus();
             }
             else
             {
                 startup.Dispatcher.Invoke(DispatcherPriority.Normal, new ThreadStart(startup.Close));
+                MainWindow.Focus();
             }
         }
 
@@ -127,6 +127,7 @@ namespace GUIForDiskpart
         {
             startup = new StartupLoadingWindow();
             startup.Show();
+            startup.Focus();
             Dispatcher.Run();
         }
 

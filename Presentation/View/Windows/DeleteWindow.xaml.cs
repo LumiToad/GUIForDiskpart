@@ -1,0 +1,71 @@
+﻿using GUIForDiskpart.Model.Data;
+using GUIForDiskpart.Model.Logic.Diskpart;
+using GUIForDiskpart.Presentation.Presenter;
+using System.Windows;
+
+namespace GUIForDiskpart.Presentation.View.Windows
+{
+    /// <summary>
+    /// Interaction logic for DeleteWindow.xaml
+    /// </summary>
+    public partial class DeleteWindow : Window
+    {
+        MainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<MainWindow<GUIFDMainWin>>();
+
+        private WSMPartition wsmPartition;
+        public WSMPartition WSMPartition
+        {
+            get { return wsmPartition; }
+            set
+            {
+                wsmPartition = value;
+                AddTextToConsole(wsmPartition.GetOutputAsString());
+            }
+        }
+
+        public DeleteWindow(WSMPartition wsmPartition)
+        {
+            InitializeComponent();
+
+            WSMPartition = wsmPartition;
+        }
+
+        private void ExecuteDelete(bool value)
+        {
+            if (!value) return;
+
+            string output = string.Empty;
+
+            output += DPFunctions.Delete(WSMPartition.DiskNumber, WSMPartition.PartitionNumber, true, (bool)CleanAll.IsChecked);
+
+            MainWindow.Log.Print(output);
+            MainWindow.RetrieveAndShowDiskData(false);
+
+            this.Close();
+        }
+
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        {
+            string todo = "Delete the whole partition! ALL DATA WILL BE LOST!";
+            if ((bool)CleanAll.IsChecked)
+            {
+                todo = "Delete and override the whole partition! MAKES DATA RESCUE CLOSE TO IMPOSSIBLE!";
+            }
+            string confirmKey = $"Drive: {WSMPartition.DiskNumber} Partition: {WSMPartition.PartitionNumber}";
+
+            SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(ExecuteDelete, todo, confirmKey);
+            securityCheckWindow.Owner = this;
+            securityCheckWindow.Show();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void AddTextToConsole(string text)
+        {
+            ConsoleReturn.Print(text);
+        }
+    }
+}

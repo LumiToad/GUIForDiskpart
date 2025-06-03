@@ -125,7 +125,7 @@ namespace GUIForDiskpart.Utils
 
         public static Stream GetEmbeddedResourceStream(string fileName)
         {
-            string fullFileName = $"GUIForDiskpart.embeddedResources.{fileName}";
+            string fullFileName = $"GUIForDiskpart.EmbeddedResources.{fileName}";
             var thisAssembly = Assembly.GetExecutingAssembly();
             var stream = thisAssembly.GetManifestResourceStream(fullFileName);
             return stream;

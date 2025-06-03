@@ -58,10 +58,5 @@ namespace GUIForDiskpart.Utils
                 GetChildrenControlsInternal(child, ref retVal);
             }
         }
-
-        public static IGUIFDWindow AsGUIFDWindow(this Window window)
-        {
-            return (IGUIFDWindow)window;
-        }
     }
 }

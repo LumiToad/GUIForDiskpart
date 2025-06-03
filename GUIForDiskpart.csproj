@@ -48,11 +48,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="main\ProcessHandler.cs" />
+    <Compile Remove="Main\ProcessHandler.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="embeddedResources\winLogo.ico" />
+    <None Remove="EmbeddedResources\winLogo.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -70,49 +70,49 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="resources\cmd.ico">
+    <Resource Include="Resources\cmd.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\cmd.png">
+    <Resource Include="Resources\cmd.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\command.ico">
+    <Resource Include="Resources\command.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\commandline.ico">
+    <Resource Include="Resources\commandline.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\commandline.png">
+    <Resource Include="Resources\commandline.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\diskpart.ico">
+    <Resource Include="Resources\diskpart.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\diskpart.png">
+    <Resource Include="Resources\diskpart.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\FroggoCorner.png">
+    <Resource Include="Resources\FroggoCorner.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\guifd.ico">
+    <Resource Include="Resources\guifd.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\guifd.png">
+    <Resource Include="Resources\guifd.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\guifdLogo.ico">
+    <Resource Include="Resources\guifdLogo.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\guifdLogo.png">
+    <Resource Include="Resources\guifdLogo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="resources\startup.png">
+    <Resource Include="Resources\startup.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <EmbeddedResource Include="embeddedResources\winLogo.ico">
+    <EmbeddedResource Include="EmbeddedResources\winLogo.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <Resource Include="resources\winLogo.ico">
+    <Resource Include="Resources\winLogo.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
