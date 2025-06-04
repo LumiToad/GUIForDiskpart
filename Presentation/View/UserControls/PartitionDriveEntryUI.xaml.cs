@@ -16,7 +16,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     /// </summary>
     public partial class PartitionEntryUI : UserControl
     {
-        MainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<MainWindow<GUIFDMainWin>>();
+        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
         private PartitionModel partition;
         public PartitionModel Partition
@@ -145,7 +145,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
                 DPFunctions.OfflineVolume(driveLetter, false);
             }
             MainWindow.Log.Print(output);
-            MainWindow.RetrieveAndShowDiskData(false);
+            MainWindow.DisplayDiskData(false);
         }
 
         private void Extend_Click(object sender, RoutedEventArgs e)
@@ -188,7 +188,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
             {
                 case MessageBoxResult.OK:
                     MainWindow.Log.Print(DPFunctions.Active(Partition.WSMPartition.DiskNumber, Partition.WSMPartition.PartitionNumber, !Partition.WSMPartition.IsActive));
-                    MainWindow.RetrieveAndShowDiskData(false);
+                    MainWindow.DisplayDiskData(false);
                     break;
                 case MessageBoxResult.Cancel:
                     break;
@@ -232,7 +232,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
             output += DPFunctions.Delete(Partition.WSMPartition.DiskNumber, Partition.WSMPartition.PartitionNumber, false, true);
 
             MainWindow.Log.Print(output);
-            MainWindow.RetrieveAndShowDiskData(false);
+            MainWindow.DisplayDiskData(false);
         }
 
         private void Assign_Click(object sender, RoutedEventArgs e)

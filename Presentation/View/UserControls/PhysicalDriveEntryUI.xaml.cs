@@ -13,7 +13,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     /// </summary>
     public partial class PhysicalDiskEntryUI : UserControl
     {
-        MainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<MainWindow<GUIFDMainWin>>();
+        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
         private DiskModel diskModel;
         public DiskModel DiskModel
@@ -78,7 +78,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
             }
 
             MainWindow.Log.Print(output);
-            MainWindow.RetrieveAndShowDiskData(false);
+            MainWindow.DisplayDiskData(false);
         }
 
         private void Detail_Click(object sender, RoutedEventArgs e)

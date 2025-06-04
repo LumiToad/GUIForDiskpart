@@ -11,7 +11,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class AttributesVolumeWindow : Window
     {
-        MainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<MainWindow<GUIFDMainWin>>();
+        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
         private WSMPartition wsmPartition;
         public WSMPartition WSMPartition

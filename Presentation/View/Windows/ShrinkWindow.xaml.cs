@@ -14,7 +14,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class ShrinkWindow : Window
     {
-        MainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<MainWindow<GUIFDMainWin>>();
+        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
         private PartitionModel partition;
         public PartitionModel Partition
@@ -51,7 +51,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             output += DPFunctions.Shrink(driveLetter, desiredMB, minimumMB, false, false);
 
             MainWindow.Log.Print(output);
-            MainWindow.RetrieveAndShowDiskData(false);
+            MainWindow.DisplayDiskData(false);
 
             this.Close();
         }

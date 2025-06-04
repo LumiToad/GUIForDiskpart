@@ -10,7 +10,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class DeleteWindow : Window
     {
-        MainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<MainWindow<GUIFDMainWin>>();
+        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
         private WSMPartition wsmPartition;
         public WSMPartition WSMPartition
@@ -39,7 +39,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             output += DPFunctions.Delete(WSMPartition.DiskNumber, WSMPartition.PartitionNumber, true, (bool)CleanAll.IsChecked);
 
             MainWindow.Log.Print(output);
-            MainWindow.RetrieveAndShowDiskData(false);
+            MainWindow.DisplayDiskData(false);
 
             this.Close();
         }

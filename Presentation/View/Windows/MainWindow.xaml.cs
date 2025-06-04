@@ -12,7 +12,6 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-
         public delegate void DDiskEntryOnClick(PhysicalDiskEntryUI entry);
         public event DDiskEntryOnClick EDiskEntry_Click;
 
@@ -49,7 +48,6 @@ namespace GUIForDiskpart.Presentation.View.Windows
         protected override void OnContentRendered(EventArgs e)
         {
             base.OnContentRendered(e);
-            App.Instance.WIM.RegisterGUIFDMainWin(this);
             App.Instance.OnMainWindowLoaded();
         }
 

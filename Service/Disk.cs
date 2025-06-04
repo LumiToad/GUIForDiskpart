@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
-using System.Management.Automation;
-
-using GUIForDiskpart.Model.Logic;
+using System.Threading.Tasks;
 using DiskRetriever = GUIForDiskpart.Database.Retrievers.Disk;
+
 
 namespace GUIForDiskpart.Service
 {

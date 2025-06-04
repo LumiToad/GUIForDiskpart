@@ -11,7 +11,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class ConvertDriveWindow : Window
     {
-        MainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<MainWindow<GUIFDMainWin>>();
+        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
         private DiskModel diskModel;
         public DiskModel DiskModel

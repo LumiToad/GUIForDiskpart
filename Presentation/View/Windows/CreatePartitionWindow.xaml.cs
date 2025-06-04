@@ -14,7 +14,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class CreatePartitionWindow : Window
     {
-        MainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<MainWindow<GUIFDMainWin>>();
+        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
         long sizeInMB;
 
@@ -81,7 +81,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             output += DPFunctions.CreatePartition(DiskModel.DiskIndex, option, GetSizeValue(), false);
 
             MainWindow.Log.Print(output);
-            MainWindow.RetrieveAndShowDiskData(false);
+            MainWindow.DisplayDiskData(false);
 
             this.Close();
         }

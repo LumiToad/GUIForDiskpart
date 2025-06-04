@@ -13,41 +13,27 @@ using GUIForDiskpart.Database.Data;
 
 namespace GUIForDiskpart.Presentation.Presenter
 {
-    public class MainWindow<T> : WPresenter<T> where T : GUIFDMainWin
+    public class PMainWindow<T> : WPresenter<T> where T : GUIFDMainWin
     {
-        public readonly PLogUI<UCLogUI> Log;
-        
-        public MainWindow(T window) : base(window) 
-        {
-            Log = CreateUCPresenter<PLogUI<UCLogUI>>(Window.MainLog);
-        }
+        public PLogUI<UCLogUI> Log {get; private set;}
 
         // Retriever
         #region RetrieveDisk
         public void OnDiskChanged()
         {
-            RetrieveAndShowDiskData(false);
+            DisplayDiskData(false);
         }
 
         // Retriever
-        public void RetrieveAndShowDiskData(bool outputText)
+        public void DisplayDiskData(bool outputText)
         {
-            App.Instance.Dispatcher.Invoke(RetrieveAndShowDiskData_Internal, outputText);
-        }
-
-        // Retriever
-        private void RetrieveAndShowDiskData_Internal(bool outputText)
-        {
-            DiskService.ReLoadDisks();
-
             AddEntrysToStackPanel<DiskModel>(Window.DiskStackPanel, DiskService.PhysicalDrives);
-
             if (outputText)
             {
                 Log.Print(DiskService.GetDiskOutput());
             }
+            OnDiskEntry_Click((PhysicalDiskEntryUI)Window.DiskStackPanel.Children[0]);
 
-            //OnDiskEntry_Click((PhysicalDiskEntryUI)Window.DiskStackPanel.Children[0]);
         }
 
             #region StackPanelLogic_TESTING!!!
@@ -127,6 +113,8 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         public void OnDiskEntry_Click(PhysicalDiskEntryUI entry)
         {
+            DiskService.ReLoadDisks();
+
             AddEntrysToStackPanel(Window.PartitionStackPanel, entry.DiskModel.Partitions);
             if (entry.DiskModel.UnallocatedSpace > 0)
             {
@@ -134,8 +122,6 @@ namespace GUIForDiskpart.Presentation.Presenter
                 Window.PartitionStackPanel.Children.Add(unallocatedEntryUI);
             }
             Window.EntryDataUI.AddDataToGrid(entry.DiskModel.GetKeyValuePairs());
-
-            Console.WriteLine("SOMETHING!");
         }
 
         public void OnPartitionEntry_Click(PartitionEntryUI entry)
@@ -209,7 +195,7 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         public void OnRetrieveDiskData_Click(object sender, RoutedEventArgs e)
         {
-            RetrieveAndShowDiskData(true);
+            DisplayDiskData(true);
         }
 
         public void OnScanVolume_Click(object sender, RoutedEventArgs e)
@@ -277,7 +263,12 @@ namespace GUIForDiskpart.Presentation.Presenter
             Window.EWiki_Click += OnWiki_Click;
             Window.EAbout_Click += OnAbout_Click;
         }
-        
+
+        public override void InitPresenters()
+        {
+            Log = CreateUCPresenter<PLogUI<UCLogUI>>(Window.MainLog);
+        }
+
         #endregion WPresenterOverrides
     }
 }

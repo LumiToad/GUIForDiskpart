@@ -27,22 +27,31 @@ namespace GUIForDiskpart.Model.Logic
             }
         }
 
-        public void CreateWindow(WPresenter<Window> wPresenter)
+        public PresenterClass CreateWPresenter<PresenterClass>(params object?[] args) where PresenterClass : new()
+        {
+            var method = GetType().GetMethod("CreateWPresenterInternal", BindingFlags.NonPublic | BindingFlags.Instance);
+            Type wType = typeof(PresenterClass).GenericTypeArguments[0];
+
+            method = method.MakeGenericMethod(typeof(PresenterClass), wType);
+            
+            var retVal = method.Invoke(this, new object?[] { args });
+            return (PresenterClass)retVal;
+        }
+
+        protected PType CreateWPresenterInternal<PType, WType>(object?[] packedArgs)
+            where PType : WPresenter<WType>, new()
+            where WType : Window, new()
+        {
+            PType wPresenter = WPresenter<WType>.New<PType>((packedArgs.Length > 0) ? packedArgs[0] : null);
+            SetupWindow<WType>(wPresenter);
+
+            return wPresenter;
+        }
+
+        private void SetupWindow<T>(WPresenter<T> wPresenter, bool isFocus = true) where T : Window, new()
         {
             wPresenter.Window = new();
-            SetupGUIFDWindow(wPresenter);
-        }
-
-        public void RegisterGUIFDMainWin(GUIFDMainWin mainWin)
-        {
-            if (presenters.ContainsKey(typeof(MainWindow<GUIFDMainWin>))) return;
-            MainWindow<GUIFDMainWin> MainWinPresenter = new MainWindow<GUIFDMainWin>(mainWin);
-            SetupGUIFDWindow(MainWinPresenter, false);
-            OnWindowContentRendered(mainWin, null);
-        }
-
-        private void SetupGUIFDWindow<T>(WPresenter<T> wPresenter, bool isFocus = true) where T : Window
-        {
+            wPresenter.InitPresenters();
             wPresenter.Window.Show();
             if (isFocus) 
             {
@@ -65,17 +74,15 @@ namespace GUIForDiskpart.Model.Logic
             return (T)presenters[typeof(T)];
         }
 
-        private void ShowStartupScreen()
+        public void ShowStartupScreen()
         {
-            
             Thread startupWindowThread = new Thread(new ThreadStart(StartupWindowThreadEntryPoint));
             startupWindowThread.SetApartmentState(ApartmentState.STA);
             startupWindowThread.IsBackground = true;
             startupWindowThread.Start();
-            
         }
         
-        private void StartupWindowClose()
+        public void StartupWindowClose()
         {
             if (startup.Dispatcher.CheckAccess())
             {

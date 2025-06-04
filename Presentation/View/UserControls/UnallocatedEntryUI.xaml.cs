@@ -12,7 +12,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     /// </summary>
     public partial class UnallocatedEntryUI : UserControl
     {
-        MainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<MainWindow<GUIFDMainWin>>();
+        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
         private long size;
         private DiskModel diskModel;

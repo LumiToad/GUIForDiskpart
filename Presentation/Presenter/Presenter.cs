@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Reflection;
 
 using GUIForDiskpart.Utils;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 
 namespace GUIForDiskpart.Presentation.Presenter
@@ -37,7 +38,15 @@ namespace GUIForDiskpart.Presentation.Presenter
         public T Window;
         private Dictionary<Type, object> key_UC_Value_P = new();
 
-        public WPresenter(T window) => Window = window;
+        public static dynamic New<PType>(params object?[] args) where PType : WPresenter<T>, new()
+        {
+            var wPresenter = new PType();
+            wPresenter.AddCustomArgs(args);
+            return wPresenter;
+        }
+
+        protected virtual void AddCustomArgs(params object?[] args) { }
+        public virtual void InitPresenters() { }
 
         public dynamic GetUCPresenter<UCType>() where UCType : UserControl
         {

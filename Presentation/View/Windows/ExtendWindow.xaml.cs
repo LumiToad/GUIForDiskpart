@@ -14,7 +14,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class ExtendWindow : Window
     {
-        MainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<MainWindow<GUIFDMainWin>>();
+        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
         private PartitionModel partition;
         public PartitionModel Partition
@@ -58,7 +58,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             }
 
             MainWindow.Log.Print(output);
-            MainWindow.RetrieveAndShowDiskData(false);
+            MainWindow.DisplayDiskData(false);
 
             this.Close();
         }

@@ -13,7 +13,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class CreateVolumeWindow : Window
     {
-        MainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<MainWindow<GUIFDMainWin>>();
+        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
         private long sizeInMB;
 
@@ -52,7 +52,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             output += DPFunctions.CreateVolume(DiskModel.DiskIndex, DPVolume.SIMPLE, GetSizeValue(), false);
 
             MainWindow.Log.Print(output);
-            MainWindow.RetrieveAndShowDiskData(false);
+            MainWindow.DisplayDiskData(false);
 
             this.Close();
         }

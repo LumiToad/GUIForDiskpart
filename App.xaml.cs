@@ -31,11 +31,12 @@ namespace GUIForDiskpart
             Instance = this;
             
             Initialize();
-            ShowStartupScreen();
         }
 
         private void Initialize()
         {
+            WIM.ShowStartupScreen();
+
             try
             {
                 RetrieveAndShowDiskData(true);
@@ -45,36 +46,30 @@ namespace GUIForDiskpart
             {
                 FileUtils.SaveExceptionCrashLog(ex);
             }
+
+            WIM.CreateWPresenter<PMainWindow<GUIFDMainWin>>();
         }
 
         public void OnMainWindowLoaded()
         {
-            //DiskService.OnDiskChanged += (GUIFDMainWin.Instance.GetWindowPresenter() as GUIForDiskpart.Presentation.Presenter.MainWindow).OnDiskChanged;
+            var pMainWin = WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
+            DiskService.OnDiskChanged += pMainWin.OnDiskChanged;
+            pMainWin.DisplayDiskData(true);
 
-            WIM.GetPresenter<MainWindow<GUIFDMainWin>>().Log.Print("Success!");
-            Current.Dispatcher.Invoke(RetrieveAndShowDiskData_Internal, true);
-            StartupWindowClose();
-            
-        }
-
-        // View
-        public void AddTextToOutputConsole(string text)
-        {
-
-// GUIFDMainWin.Instance.Log.Print(text);
+            WIM.StartupWindowClose();
         }
 
         // Retriever
         #region RetrieveDisk
-        private void OnDiskChanged()
-        {
-            RetrieveAndShowDiskData(false);
-        }
+        //private void OnDiskChanged()
+        //{
+        //    RetrieveAndShowDiskData(false);
+        //}
 
         // Retriever
         public void RetrieveAndShowDiskData(bool outputText)
         {
-            
+            RetrieveAndShowDiskData_Internal(outputText);
         }
 
         // Retriever
@@ -82,7 +77,7 @@ namespace GUIForDiskpart
         {
             DiskService.ReLoadDisks();
 
-            WIM.GetPresenter<MainWindow<GUIFDMainWin>>().RetrieveAndShowDiskData(outputText);
+            //WIM.GetPresenter<MainWindow<GUIFDMainWin>>().RetrieveAndShowDiskData(outputText);
 
             //Todo -> View!
             //AddEntrysToStackPanel<DiskModel>(DiskStackPanel, DiskService.PhysicalDrives);
@@ -97,40 +92,5 @@ namespace GUIForDiskpart
         }
 
         #endregion RetrieveDisk
-
-        // Fürs Erste Main
-        #region StartupWindow
-
-        private void ShowStartupScreen()
-        {
-            Thread startupWindowThread = new Thread(new ThreadStart(StartupWindowThreadEntryPoint));
-            startupWindowThread.SetApartmentState(ApartmentState.STA);
-            startupWindowThread.IsBackground = true;
-            startupWindowThread.Start();
-        }
-
-        private void StartupWindowClose()
-        {
-            if (startup.Dispatcher.CheckAccess())
-            {
-                startup.Close();
-                MainWindow.Focus();
-            }
-            else
-            {
-                startup.Dispatcher.Invoke(DispatcherPriority.Normal, new ThreadStart(startup.Close));
-                MainWindow.Focus();
-            }
-        }
-
-        public void StartupWindowThreadEntryPoint()
-        {
-            startup = new StartupLoadingWindow();
-            startup.Show();
-            startup.Focus();
-            Dispatcher.Run();
-        }
-
-        #endregion StartupWindow
     }
 }

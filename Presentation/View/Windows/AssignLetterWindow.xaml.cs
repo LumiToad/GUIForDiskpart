@@ -15,7 +15,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class AssignLetterWindow : Window
     {
-        MainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<MainWindow<GUIFDMainWin>>();
+        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
         WSMPartition wsmPartition;
         WSMPartition WSMPartition
@@ -68,7 +68,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             output += DPFunctions.Assign(WSMPartition.DiskNumber, WSMPartition.PartitionNumber, letter, true);
 
             MainWindow.Log.Print(output);
-            MainWindow.RetrieveAndShowDiskData(false);
+            MainWindow.DisplayDiskData(false);
         }
 
         private void ExecuteRemove()
@@ -79,7 +79,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             output += DPFunctions.Remove(letter, false, true);
 
             MainWindow.Log.Print(output);
-            MainWindow.RetrieveAndShowDiskData(false);
+            MainWindow.DisplayDiskData(false);
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
