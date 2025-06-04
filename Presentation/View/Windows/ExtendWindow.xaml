@@ -35,7 +35,7 @@
             </StackPanel>
             <TextBlock TextWrapping="Wrap" Text="NTFS Volume or unformatted Partition required. Set 0 will use all available space. Operation fails, if space on this drive isn't contiguous." Width="280" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         </StackPanel>
-        <userControls:LogUI x:Name="ConsoleReturn" Grid.RowSpan="2"/>
+        <userControls:UCLogUI x:Name="ConsoleReturn" Grid.RowSpan="2"/>
 
     </Grid>
 </Window>

@@ -9,7 +9,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     /// <summary>
     /// Interaction logic for ConsoleReturn.xaml
     /// </summary>
-    public partial class LogUI : UserControl
+    public partial class UCLogUI : UserControl
     {
         public delegate void DOnClick(object sender, RoutedEventArgs e);
         public event DOnClick ESaveLog;
@@ -18,7 +18,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         public event DOnTextChanged ELogUI;
 
 
-        public LogUI()
+        public UCLogUI()
         {
             InitializeComponent();
         }

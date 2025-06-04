@@ -39,6 +39,6 @@
             </Grid>
         </Border>
         <Label x:Name="ErrorMessageValue" Width="267" Foreground="Red" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.RowSpan="2" Grid.Row="1"/>
-        <userControls:LogUI x:Name="ConsoleReturn" Grid.RowSpan="2"/>
+        <userControls:UCLogUI x:Name="ConsoleReturn" Grid.RowSpan="2"/>
     </Grid>
 </Window>

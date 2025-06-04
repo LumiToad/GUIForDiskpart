@@ -30,7 +30,7 @@
 
         </StackPanel>
 
-        <userControls:LogUI x:Name="ConsoleReturn" Grid.RowSpan="2"/>
+        <userControls:UCLogUI x:Name="ConsoleReturn" Grid.RowSpan="2"/>
 
     </Grid>
 </Window>

@@ -18,7 +18,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <userControls:LogUI x:Name="ConsoleReturn" Grid.RowSpan="2"/>
+        <userControls:UCLogUI x:Name="ConsoleReturn" Grid.RowSpan="2"/>
         <StackPanel Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Top" Margin="10,90,0,0"/>
         <Label Grid.Column="1" Content="Available Drive Letters:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="DriveLetterBox" Grid.Column="1" HorizontalAlignment="Left" Margin="15,36,0,0" VerticalAlignment="Top" Width="120"/>

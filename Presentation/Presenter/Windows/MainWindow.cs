@@ -10,15 +10,16 @@ using GUIForDiskpart.Presentation.View.UserControls;
 using GUIForDiskpart.Database.Data;
 
 
+
 namespace GUIForDiskpart.Presentation.Presenter
 {
     public class MainWindow<T> : WPresenter<T> where T : GUIFDMainWin
     {
-        public readonly Presentation.Presenter.LogUI<View.UserControls.LogUI> Log;
+        public readonly PLogUI<UCLogUI> Log;
         
-        public MainWindow(T window, View.UserControls.LogUI log) : base(window) 
+        public MainWindow(T window) : base(window) 
         {
-            Log = new(log);
+            Log = CreateUCPresenter<PLogUI<UCLogUI>>(Window.MainLog);
         }
 
         // Retriever
@@ -246,10 +247,12 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         #endregion TopBarHelpMenu
 
-        #region IPresenter
-
+        #region WPresenterOverrides
+        
         protected override void RegisterEventsInternal()
         {
+            base.RegisterEventsInternal();
+
             //Window.EDiskEntry_Click += OnDiskEntryClick;
             Window.EPartitionEntry_Click += OnPartitionEntry_Click;
             Window.EUnallocatedEntry_Click += OnUnallocatedEntry_Click;
@@ -273,10 +276,9 @@ namespace GUIForDiskpart.Presentation.Presenter
             Window.EWebsite_Click += OnWebsite_Click;
             Window.EWiki_Click += OnWiki_Click;
             Window.EAbout_Click += OnAbout_Click;
-            
         }
         
-        #endregion IPresenter
+        #endregion WPresenterOverrides
     }
 }
 

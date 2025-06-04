@@ -7,10 +7,8 @@ using GUIForDiskpart.Utils;
 
 namespace GUIForDiskpart.Presentation.Presenter
 {
-    public class LogUI<T> : UCPresenter<T> where T : View.UserControls.LogUI
+    public class PLogUI<T> : UCPresenter<T> where T : View.UserControls.UCLogUI
     {
-        public LogUI(T userControl) : base(userControl) { }
-
         public void Print(string text)
         {
             UserControl.TextBox.Text += $"[{DateTime.Now}]\n{text}\n\n";

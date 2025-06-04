@@ -36,7 +36,7 @@ namespace GUIForDiskpart.Model.Logic
         public void RegisterGUIFDMainWin(GUIFDMainWin mainWin)
         {
             if (presenters.ContainsKey(typeof(MainWindow<GUIFDMainWin>))) return;
-            MainWindow<GUIFDMainWin> MainWinPresenter = new MainWindow<GUIFDMainWin>(mainWin, mainWin.MainLog);
+            MainWindow<GUIFDMainWin> MainWinPresenter = new MainWindow<GUIFDMainWin>(mainWin);
             SetupGUIFDWindow(MainWinPresenter, false);
             OnWindowContentRendered(mainWin, null);
         }
