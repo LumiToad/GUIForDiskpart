@@ -107,7 +107,7 @@
                 <userControls:EntryDataUI x:Name="EntryDataUI" HorizontalAlignment="Center" Grid.Row="2" Height="NaN"/>
 
                 <GridSplitter Grid.Row="3" Height="3" Width="auto" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"/>
-                <userControls:UCLogUI x:Name="MainLog" HorizontalAlignment="Center" Grid.Row="4" Height="NaN" Width="{Binding ActualWidth, ElementName=grid, Mode=OneWay}"/>
+                <userControls:UCLog x:Name="MainLog" HorizontalAlignment="Center" Grid.Row="4" Height="NaN" Width="{Binding ActualWidth, ElementName=grid, Mode=OneWay}"/>
             </Grid>
         </DockPanel>
 

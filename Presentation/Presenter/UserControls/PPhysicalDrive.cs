@@ -1,0 +1,190 @@
+﻿using GUIForDiskpart.Model.Logic.Diskpart;
+using GUIForDiskpart.Presentation.View.UserControls;
+using GUIForDiskpart.Utils;
+using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+
+namespace GUIForDiskpart.Presentation.Presenter.UserControls
+{
+    public class PPhysicalDrive<T> : UCPresenter<T> where T : UCPhysicalDrive
+    {
+        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM[typeof(PMainWindow<GUIFDMainWin>)];
+
+        public DiskModel DiskModel { get; private set; }
+
+        private void DriveDataToThisUI()
+        {
+            UserControl.DiskIndex.Content = $"#{DiskModel.DiskIndex}";
+            UserControl.DiskModelText.Content = DiskModel.DiskModelText;
+            UserControl.TotalSpace.Content = DiskModel.FormattedTotalSpace;
+            UserControl.WSMPartitionCount.Content = $"{DiskModel.PartitionCount} partitions";
+            UserControl.SetValueInProgressBar(DiskModel.TotalSpace, DiskModel.UsedSpace);
+
+            UserControl.DiskIcon.Source = GetDiskIcon();
+            UserControl.MediaTypeIcon.Source = GetMediaTypeIcon();
+        }
+
+        private void PopulateContextMenu()
+        {
+            string header = string.Empty;
+            string name = string.Empty;
+
+            header = "DISKPART - Online";
+            name = "DPOnline";
+
+            if (DiskModel.IsOnline)
+            {
+                header = "DISKPART - Offline";
+                name = "DPOffline";
+            }
+            MenuItem menuItem = WPFUtils.CreateContextMenuItem(IconUtils.Diskpart, name, header, true, UserControl.OnOffline_Click);
+            UserControl.ContextMenu.Items.Add(menuItem);
+        }
+
+        private ImageSource? GetDiskIcon()
+        {
+            ImageSource? result = IconUtils.GetShellIconByType(Shell32IconType.Drive, true);
+
+            if (DiskModel.InterfaceType == "USB")
+            {
+                result = IconUtils.GetShellIconByType(Shell32IconType.USB, true);
+            }
+
+            return result;
+        }
+
+        private ImageSource? GetMediaTypeIcon()
+        {
+            ImageSource? result = IconUtils.GetShellIconByType(Shell32IconType.QuestionMark, true);
+
+            switch (DiskModel.MediaType)
+            {
+                case ("External hard disk media"):
+                    result = IconUtils.GetShellIconByType(Shell32IconType.UpArrow, true);
+                    break;
+                case ("Removable Media"):
+                    result = IconUtils.GetShellIconByType(Shell32IconType.UpArrow, true);
+                    break;
+                case ("Fixed hard disk media"):
+                    result = IconUtils.GetShellIconByType(Shell32IconType.Fixed, true);
+                    break;
+                case ("Unknown"):
+                    result = IconUtils.GetShellIconByType(Shell32IconType.QuestionMark, true);
+                    break;
+            }
+
+            return result;
+        }
+
+        #region OnClick
+
+        public void OnOnOffline_Click(object sender, RoutedEventArgs e)
+        {
+            string output = string.Empty;
+            output += DPFunctions.OnOfflineDisk(DiskModel.DiskIndex, !DiskModel.IsOnline, false);
+
+            MainWindow.Log.Print(output);
+            MainWindow.DisplayDiskData(false);
+        }
+
+        private void OnDetail_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Log.Print(DPFunctions.DetailDisk(DiskModel.DiskIndex));
+        }
+
+        private void OnListPart_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Log.Print(DPFunctions.ListPart(DiskModel.DiskIndex));
+        }
+
+        private void OnClean_Click(object sender, RoutedEventArgs e)
+        {
+            CleanWindow cleanWindow = new CleanWindow(DiskModel);
+            cleanWindow.Owner = MainWindow.Window;
+            cleanWindow.Focus();
+
+            cleanWindow.Show();
+        }
+
+        private void OnConvert_Click(object sender, RoutedEventArgs e)
+        {
+            ConvertDriveWindow convertDriveWindow = new ConvertDriveWindow(DiskModel);
+            convertDriveWindow.Owner = MainWindow.Window;
+            convertDriveWindow.Focus();
+
+            convertDriveWindow.Show();
+        }
+
+        private void OnCreatePart_Click(object sender, RoutedEventArgs e)
+        {
+            CreatePartitionWindow createPartitionWindow = new CreatePartitionWindow(DiskModel);
+            createPartitionWindow.Owner = MainWindow.Window;
+            createPartitionWindow.Focus();
+
+            createPartitionWindow.Show();
+        }
+
+        private void OnCreateVolume_Click(object sender, RoutedEventArgs e)
+        {
+            CreateVolumeWindow createVolumeWindow = new CreateVolumeWindow(DiskModel);
+            createVolumeWindow.Owner = MainWindow.Window;
+            createVolumeWindow.Focus();
+
+            createVolumeWindow.Show();
+        }
+
+        private void OnEasyFormat_Click(object sender, RoutedEventArgs e)
+        {
+            FormatDriveWindow formatWindow = new FormatDriveWindow(DiskModel);
+            formatWindow.Owner = MainWindow.Window;
+            formatWindow.Focus();
+
+            formatWindow.Show();
+        }
+
+        // Presenter
+        private void OnButton_Click(object sender, RoutedEventArgs e)
+        {
+            UserControl.SelectEntryRadioButton();
+            MainWindow.OnDiskEntry_Click(this);
+        }
+
+        private void OnOpenContextMenu_Click(object sender, RoutedEventArgs e)
+        {
+            UserControl.ContextMenu.IsOpen = !UserControl.ContextMenu.IsOpen;
+        }
+
+        #endregion OnClick
+
+        #region UCPresenter
+
+        public override void Setup()
+        {
+            DriveDataToThisUI();
+            PopulateContextMenu();
+        }
+
+        protected override void RegisterEventsInternal()
+        {
+            UserControl.EOnOffline_Click += OnOnOffline_Click;
+            UserControl.EDetail_Click += OnDetail_Click;
+            UserControl.EListPart_Click += OnListPart_Click;
+            UserControl.EClean_Click += OnClean_Click;
+            UserControl.EConvert_Click += OnConvert_Click;
+            UserControl.ECreatePart_Click += OnCreatePart_Click;
+            UserControl.ECreateVolume_Click += OnCreateVolume_Click;
+            UserControl.EEasyFormat_Click += OnEasyFormat_Click;
+            UserControl.EButton_Click += OnButton_Click;
+            UserControl.EOpenContextMenu_Click += OnOpenContextMenu_Click;
+        }
+
+        public override void AddCustomArgs(params object?[] args)
+        {
+            DiskModel = (DiskModel)args[0];
+        }
+
+        #endregion UCPresenter
+    }
+}

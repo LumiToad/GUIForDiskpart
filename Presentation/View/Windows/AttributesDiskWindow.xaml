@@ -18,7 +18,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <userControls:UCLogUI x:Name="ConsoleReturn" Grid.RowSpan="2"/>
+        <userControls:UCLog x:Name="ConsoleReturn" Grid.RowSpan="2"/>
         <StackPanel Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Top" Margin="10,10,0,0">
             <Label Content="Option" Padding="0,2.5,0,0"/>
             <ComboBox x:Name="Attributes" Width="120" Margin="10,0,0,0" SelectedIndex="0">

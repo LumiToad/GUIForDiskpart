@@ -38,37 +38,69 @@ namespace GUIForDiskpart.Presentation.Presenter
         public T Window;
         private Dictionary<Type, object> key_UC_Value_P = new();
 
-        public static dynamic New<PType>(params object?[] args) where PType : WPresenter<T>, new()
+        public static dynamic New<WPresenterClass>(params object?[] args) where WPresenterClass : WPresenter<T>, new()
         {
-            var wPresenter = new PType();
+            var wPresenter = new WPresenterClass();
             wPresenter.AddCustomArgs(args);
+            wPresenter.Setup();
             return wPresenter;
         }
+
+        public virtual void Setup() { }
 
         protected virtual void AddCustomArgs(params object?[] args) { }
         public virtual void InitPresenters() { }
 
-        public dynamic GetUCPresenter<UCType>() where UCType : UserControl
+        /// <summary>
+        /// Returns either the specified generic UserControlClass OR a List of those!
+        /// Out parameter isList will tell you.
+        /// </summary>
+        /// <typeparam name="UserControlClass"></typeparam>
+        /// <returns></returns>
+        public dynamic GetUCPresenter<UserControlClass>(out bool isList) where UserControlClass : UserControl
         {
-            return key_UC_Value_P[typeof(UCType)];
+            isList = (key_UC_Value_P[typeof(UserControlClass)] is List<UserControlClass>);
+            return key_UC_Value_P[typeof(UserControlClass)];
         }
 
-        protected PType CreateUCPresenter<PType>(UserControl userControl) where PType : new()
+        protected UCPresenterClass CreateUCPresenter<UCPresenterClass>(UserControl userControl, params object?[] args) where UCPresenterClass : new()
         {
             var method = GetType().GetMethod("CreateUCPresenterInternal", BindingFlags.NonPublic | BindingFlags.Instance);
-            method = method.MakeGenericMethod(userControl.GetType(), typeof(PType));
+            method = method.MakeGenericMethod(userControl.GetType(), typeof(UCPresenterClass));
 
-            var retVal = method.Invoke(this, new object[] { userControl });
-            return (PType)retVal;
+            var retVal = method.Invoke(this, new object?[] { userControl, args} );
+            return (UCPresenterClass)retVal;
         }
 
-        protected PType CreateUCPresenterInternal<UCType, PType>(UserControl userControl)
+        protected PType CreateUCPresenterInternal<UCType, PType>(UserControl userControl, params object?[] args)
             where UCType : UserControl
             where PType : UCPresenter<UCType>, new()
         {
             var ucPresenter = new PType();
             ucPresenter.AddUserControl(userControl);
-            key_UC_Value_P.Add(typeof(UCType), ucPresenter);
+            ucPresenter.AddCustomArgs(args);
+            ucPresenter.Setup();
+
+            if (key_UC_Value_P.ContainsKey(typeof(UCType)))
+            {
+                var foundValue = key_UC_Value_P[typeof(UCType)];
+                if (foundValue is List<UCType>)
+                {
+                    ((List<PType>)foundValue).Add(ucPresenter);
+                }
+                else
+                {
+                    List<PType> collection = new();
+                    collection.Add(key_UC_Value_P[typeof(UCType)] as PType);
+
+                    key_UC_Value_P.Remove(typeof(UCType));
+                    key_UC_Value_P.Add(typeof(UCType), collection);
+                }
+            }
+            else
+            {
+                key_UC_Value_P.Add(typeof(UCType), ucPresenter);
+            }
 
             return ucPresenter;
         }
@@ -77,6 +109,10 @@ namespace GUIForDiskpart.Presentation.Presenter
     public class UCPresenter<T> : Presenter where T : UserControl
     {
         public T UserControl { get; private set; }
+
+        public virtual void Setup() { }
+
+        public virtual void AddCustomArgs(params object?[] args) { }
 
         public void AddUserControl(UserControl userControl)
         {

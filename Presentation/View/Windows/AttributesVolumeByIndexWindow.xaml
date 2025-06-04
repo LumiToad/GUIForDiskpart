@@ -17,7 +17,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <UserControls:UCLogUI x:Name="ConsoleReturn" Grid.RowSpan="2"/>
+        <UserControls:UCLog x:Name="ConsoleReturn" Grid.RowSpan="2"/>
         <StackPanel Grid.Column="1">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Volume:"/>

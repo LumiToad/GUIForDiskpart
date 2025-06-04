@@ -8,6 +8,8 @@ using GUIForDiskpart.Model.Logic;
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Presentation.View.UserControls;
 using GUIForDiskpart.Database.Data;
+using GUIForDiskpart.Presentation.Presenter.UserControls;
+using System.Linq;
 
 
 
@@ -15,7 +17,10 @@ namespace GUIForDiskpart.Presentation.Presenter
 {
     public class PMainWindow<T> : WPresenter<T> where T : GUIFDMainWin
     {
-        public PLogUI<UCLogUI> Log {get; private set;}
+        public PLog<UCLog> Log {get; private set;}
+
+        private Dictionary<UCPhysicalDrive, PPhysicalDrive<UCPhysicalDrive>> K_ucPhysicalDrives_V_pPhysicalDrives = new();
+
 
         // Retriever
         #region RetrieveDisk
@@ -32,15 +37,17 @@ namespace GUIForDiskpart.Presentation.Presenter
             {
                 Log.Print(DiskService.GetDiskOutput());
             }
-            OnDiskEntry_Click((PhysicalDiskEntryUI)Window.DiskStackPanel.Children[0]);
-
+            var ucPhysicalDrive = Window.DiskStackPanel.Children[0] as UCPhysicalDrive;
+            var pPhysicalDrive = K_ucPhysicalDrives_V_pPhysicalDrives[ucPhysicalDrive];
+            OnDiskEntry_Click(pPhysicalDrive);
         }
 
-            #region StackPanelLogic_TESTING!!!
+        #region StackPanelLogic_TESTING!!!
 
         private void AddEntrysToStackPanel<T>(StackPanel stackPanel, List<T> collection)
         {
             stackPanel.Children.Clear();
+            K_ucPhysicalDrives_V_pPhysicalDrives.Clear();
 
             foreach (T thing in collection)
             {
@@ -48,9 +55,11 @@ namespace GUIForDiskpart.Presentation.Presenter
 
                 switch (thing)
                 {
-                    case DiskModel disk:
-                        PhysicalDiskEntryUI diskEntry = new PhysicalDiskEntryUI(disk);
-                        userControl = diskEntry;
+                    case DiskModel diskModel:
+                        var ucPhysicalDrive = new UCPhysicalDrive();
+                        var pPhysicalDrive = CreateUCPresenter<PPhysicalDrive<UCPhysicalDrive>>(ucPhysicalDrive, diskModel);
+                        K_ucPhysicalDrives_V_pPhysicalDrives.Add(ucPhysicalDrive, pPhysicalDrive);
+                        userControl = ucPhysicalDrive;
                         break;
                     case PartitionModel partition:
                         PartitionEntryUI partitionEntry = new PartitionEntryUI(partition);
@@ -63,16 +72,17 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         private UInt32? GetDataIndexOfSelected(StackPanel stackPanel)
         {
-            PhysicalDiskEntryUI diskEntry;
+            UCPhysicalDrive ucPhysicalDrive;
             PartitionEntryUI partitionEntry;
 
             foreach (object? entry in stackPanel.Children)
             {
-                if (entry.GetType() == typeof(PhysicalDiskEntryUI))
+                if (entry.GetType() == typeof(UCPhysicalDrive))
                 {
-                    diskEntry = (PhysicalDiskEntryUI)entry;
-                    if (diskEntry != null && diskEntry.IsSelected == true)
-                        return diskEntry.DiskModel.DiskIndex;
+                    ucPhysicalDrive = (UCPhysicalDrive)entry;
+                    var pPhysicalDrive = K_ucPhysicalDrives_V_pPhysicalDrives[ucPhysicalDrive];
+                    if (ucPhysicalDrive != null && ucPhysicalDrive.IsSelected == true)
+                        return pPhysicalDrive.DiskModel.DiskIndex;
                 }
 
                 if (entry.GetType() == typeof(PartitionEntryUI))
@@ -92,11 +102,6 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         #region TopBarFileMenu
 
-        //private void SaveLog_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Window.Log.SaveLog();
-        //}
-
         public void OnSaveEntryData_Click(object sender, RoutedEventArgs e)
         {
             Window.EntryDataUI.SaveEntryData_Click(sender, e);
@@ -111,17 +116,15 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         #region EntriesClick
 
-        public void OnDiskEntry_Click(PhysicalDiskEntryUI entry)
+        public void OnDiskEntry_Click<UCType>(PPhysicalDrive<UCType> pPhysicalDrive) where UCType : UCPhysicalDrive
         {
-            DiskService.ReLoadDisks();
-
-            AddEntrysToStackPanel(Window.PartitionStackPanel, entry.DiskModel.Partitions);
-            if (entry.DiskModel.UnallocatedSpace > 0)
+            AddEntrysToStackPanel(Window.PartitionStackPanel, pPhysicalDrive.DiskModel.Partitions);
+            if (pPhysicalDrive.DiskModel.UnallocatedSpace > 0)
             {
-                UnallocatedEntryUI unallocatedEntryUI = new UnallocatedEntryUI(entry.DiskModel);
+                UnallocatedEntryUI unallocatedEntryUI = new UnallocatedEntryUI(pPhysicalDrive.DiskModel);
                 Window.PartitionStackPanel.Children.Add(unallocatedEntryUI);
             }
-            Window.EntryDataUI.AddDataToGrid(entry.DiskModel.GetKeyValuePairs());
+            Window.EntryDataUI.AddDataToGrid(pPhysicalDrive.DiskModel.GetKeyValuePairs());
         }
 
         public void OnPartitionEntry_Click(PartitionEntryUI entry)
@@ -195,6 +198,7 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         public void OnRetrieveDiskData_Click(object sender, RoutedEventArgs e)
         {
+            DiskService.ReLoadDisks();
             DisplayDiskData(true);
         }
 
@@ -246,7 +250,7 @@ namespace GUIForDiskpart.Presentation.Presenter
                    
             Window.EListVolume_Click += OnListVolume_Click;
             Window.EListDisk_Click += OnListDisk_Click;
-            //Window.EListVDisk_Click += OnListVdisk_Click;
+            Window.EListVDisk_Click += OnListVDisk_Click;
             Window.ECreateVDisk_Click += OnCreateVDisk_Click;
             Window.EAttachVDisk_Click += OnAttachVDisk_Click;
             Window.EChildVDisk_Click += OnChildVDisk_Click;
@@ -266,7 +270,7 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         public override void InitPresenters()
         {
-            Log = CreateUCPresenter<PLogUI<UCLogUI>>(Window.MainLog);
+            Log = CreateUCPresenter<PLog<UCLog>>(Window.MainLog);
         }
 
         #endregion WPresenterOverrides

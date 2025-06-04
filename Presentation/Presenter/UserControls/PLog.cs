@@ -7,7 +7,7 @@ using GUIForDiskpart.Utils;
 
 namespace GUIForDiskpart.Presentation.Presenter
 {
-    public class PLogUI<T> : UCPresenter<T> where T : View.UserControls.UCLogUI
+    public class PLog<T> : UCPresenter<T> where T : View.UserControls.UCLog
     {
         public void Print(string text)
         {
@@ -24,7 +24,7 @@ namespace GUIForDiskpart.Presentation.Presenter
             UserControl.TextBox.ScrollToEnd();
         }
 
-        #region IPresenter
+        #region UCPresenter
 
         protected override void RegisterEventsInternal()
         {
@@ -32,6 +32,6 @@ namespace GUIForDiskpart.Presentation.Presenter
             UserControl.ELogUI += OnLogUI_TextChanged;
         }
 
-        #endregion IPresenter
+        #endregion UCPresenter
     }
 }

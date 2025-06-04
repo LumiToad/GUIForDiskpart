@@ -9,7 +9,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Presentation\View\UserControls\LogUI.xaml.cs">
+    <Compile Update="Presentation\View\UserControls\Log.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Presentation\View\UserControls\EntryData.xaml.cs">
@@ -63,7 +63,7 @@
     <Compile Update="Presentation\View\UserControls\PartitionDriveEntryUI.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Presentation\View\UserControls\PhysicalDriveEntryUI.xaml.cs">
+    <Compile Update="Presentation\View\UserControls\PhysicalDrive.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Presentation\View\Windows\SecurityCheckWindow.xaml.cs">
@@ -94,7 +94,7 @@
     <Page Update="Themes\MSSample.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Presentation\View\UserControls\LogUI.xaml">
+    <Page Update="Presentation\View\UserControls\Log.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Presentation\View\UserControls\EntryData.xaml">
@@ -151,7 +151,7 @@
     <Page Update="Presentation\View\UserControls\PartitionDriveEntryUI.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Presentation\View\UserControls\PhysicalDriveEntryUI.xaml">
+    <Page Update="Presentation\View\UserControls\PhysicalDrive.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Presentation\View\Windows\SecurityCheckWindow.xaml">
