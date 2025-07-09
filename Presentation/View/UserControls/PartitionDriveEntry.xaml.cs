@@ -166,7 +166,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         {
             Partition.DefragAnalysis = DAService.AnalyzeVolumeDefrag(Partition);
             MainWindow.Log.Print(Partition.DefragAnalysis.GetOutputAsString());
-            MainWindow.Window.EntryDataUI.AddDataToGrid(Partition.GetKeyValuePairs());
+            MainWindow.EntryData.AddDataToGrid(Partition.GetKeyValuePairs());
         }
 
         private void Attributes_Click(object sender, RoutedEventArgs e) 

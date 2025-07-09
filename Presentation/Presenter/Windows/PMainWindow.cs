@@ -18,6 +18,7 @@ namespace GUIForDiskpart.Presentation.Presenter
     public class PMainWindow<T> : WPresenter<T> where T : GUIFDMainWin
     {
         public PLog<UCLog> Log {get; private set;}
+        public PEntryData<UCEntryData> EntryData { get; private set;}
 
         private Dictionary<UCPhysicalDrive, PPhysicalDrive<UCPhysicalDrive>> K_ucPhysicalDrives_V_pPhysicalDrives = new();
 
@@ -121,17 +122,17 @@ namespace GUIForDiskpart.Presentation.Presenter
                 UCUnallocatedEntry unallocatedEntryUI = new UCUnallocatedEntry(pPhysicalDrive.DiskModel);
                 Window.PartitionStackPanel.Children.Add(unallocatedEntryUI);
             }
-            Window.EntryDataUI.AddDataToGrid(pPhysicalDrive.DiskModel.GetKeyValuePairs());
+            EntryData.AddDataToGrid(pPhysicalDrive.DiskModel.GetKeyValuePairs());
         }
 
         public void OnPartitionEntry_Click(UCPartitionEntry entry)
         {
-            Window.EntryDataUI.AddDataToGrid(entry.Partition.GetKeyValuePairs());
+            EntryData.AddDataToGrid(entry.Partition.GetKeyValuePairs());
         }
 
         public void OnUnallocatedEntry_Click(UCUnallocatedEntry entry)
         {
-            Window.EntryDataUI.AddDataToGrid(entry.Entry);
+            EntryData.AddDataToGrid(entry.Entry);
         }
 
         public void OnListPart_Click(object sender, RoutedEventArgs e)
@@ -268,6 +269,7 @@ namespace GUIForDiskpart.Presentation.Presenter
         public override void InitPresenters()
         {
             Log = CreateUCPresenter<PLog<UCLog>>(Window.MainLog);
+            EntryData = CreateUCPresenter<PEntryData<UCEntryData>>(Window.EntryDataUI);
         }
 
         #endregion WPresenterOverrides

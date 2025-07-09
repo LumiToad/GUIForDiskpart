@@ -10,7 +10,7 @@
             <RowDefinition/>
             <RowDefinition Height="18"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="EntryDataGrid" MouseLeftButtonUp="EntryDataGrid_MouseLeftButtonUp_1" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" GridLinesVisibility="Vertical" AlternationCount="1" AlternatingRowBackground="#FFF3F5E0" RowBackground="#FFC7C7C7" IsReadOnly="True" SelectionUnit="Cell" CanUserDeleteRows="False" CanUserAddRows="False" CanUserResizeRows="False" ForceCursor="True" MinHeight="200">
+        <DataGrid x:Name="EntryDataGrid" MouseLeftButtonUp="EntryDataGrid_LMBUp" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" GridLinesVisibility="Vertical" AlternationCount="1" AlternatingRowBackground="#FFF3F5E0" RowBackground="#FFC7C7C7" IsReadOnly="True" SelectionUnit="Cell" CanUserDeleteRows="False" CanUserAddRows="False" CanUserResizeRows="False" ForceCursor="True" MinHeight="200">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="CornflowerBlue"/>
             </DataGrid.Resources>
