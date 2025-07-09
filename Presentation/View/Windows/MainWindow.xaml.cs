@@ -15,10 +15,10 @@ namespace GUIForDiskpart.Presentation.View.Windows
         public delegate void DDiskEntryOnClick(UCPhysicalDrive entry);
         public event DDiskEntryOnClick EDiskEntry_Click;
 
-        public delegate void DPartitionEntryOnClick(PartitionEntryUI entry);
+        public delegate void DPartitionEntryOnClick(UCPartitionEntry entry);
         public event DPartitionEntryOnClick EPartitionEntry_Click;
 
-        public delegate void DUnallocatedEntryOnClick(UnallocatedEntryUI entry);
+        public delegate void DUnallocatedEntryOnClick(UCUnallocatedEntry entry);
         public event DUnallocatedEntryOnClick EUnallocatedEntry_Click;
 
         public delegate void DOnClick(object sender, RoutedEventArgs e);
@@ -54,8 +54,8 @@ namespace GUIForDiskpart.Presentation.View.Windows
         #region EntriesClick
 
         public void DiskEntry_Click(UCPhysicalDrive entry) => EDiskEntry_Click(entry);
-        public void PartitionEntry_Click(PartitionEntryUI entry) => EPartitionEntry_Click(entry);
-        public void UnallocatedEntry_Click(UnallocatedEntryUI entry) => EUnallocatedEntry_Click(entry);
+        public void PartitionEntry_Click(UCPartitionEntry entry) => EPartitionEntry_Click(entry);
+        public void UnallocatedEntry_Click(UCUnallocatedEntry entry) => EUnallocatedEntry_Click(entry);
 
         public void ListPart_Click(object sender, RoutedEventArgs e) => EListPart_Click(sender, e);
 

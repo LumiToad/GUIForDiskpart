@@ -62,7 +62,7 @@ namespace GUIForDiskpart.Presentation.Presenter
                         userControl = ucPhysicalDrive;
                         break;
                     case PartitionModel partition:
-                        PartitionEntryUI partitionEntry = new PartitionEntryUI(partition);
+                        UCPartitionEntry partitionEntry = new UCPartitionEntry(partition);
                         userControl = partitionEntry;
                         break;
                 }
@@ -72,22 +72,19 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         private UInt32? GetDataIndexOfSelected(StackPanel stackPanel)
         {
-            UCPhysicalDrive ucPhysicalDrive;
-            PartitionEntryUI partitionEntry;
-
             foreach (object? entry in stackPanel.Children)
             {
                 if (entry.GetType() == typeof(UCPhysicalDrive))
                 {
-                    ucPhysicalDrive = (UCPhysicalDrive)entry;
+                    UCPhysicalDrive ucPhysicalDrive = (UCPhysicalDrive)entry;
                     var pPhysicalDrive = K_ucPhysicalDrives_V_pPhysicalDrives[ucPhysicalDrive];
                     if (ucPhysicalDrive != null && ucPhysicalDrive.IsSelected == true)
                         return pPhysicalDrive.DiskModel.DiskIndex;
                 }
 
-                if (entry.GetType() == typeof(PartitionEntryUI))
+                if (entry.GetType() == typeof(UCPartitionEntry))
                 {
-                    partitionEntry = (PartitionEntryUI)entry;
+                    UCPartitionEntry partitionEntry = (UCPartitionEntry)entry;
                     if (partitionEntry != null && partitionEntry.IsSelected == true)
                         return partitionEntry.Partition.WSMPartition.PartitionNumber;
                 }
@@ -121,18 +118,18 @@ namespace GUIForDiskpart.Presentation.Presenter
             AddEntrysToStackPanel(Window.PartitionStackPanel, pPhysicalDrive.DiskModel.Partitions);
             if (pPhysicalDrive.DiskModel.UnallocatedSpace > 0)
             {
-                UnallocatedEntryUI unallocatedEntryUI = new UnallocatedEntryUI(pPhysicalDrive.DiskModel);
+                UCUnallocatedEntry unallocatedEntryUI = new UCUnallocatedEntry(pPhysicalDrive.DiskModel);
                 Window.PartitionStackPanel.Children.Add(unallocatedEntryUI);
             }
             Window.EntryDataUI.AddDataToGrid(pPhysicalDrive.DiskModel.GetKeyValuePairs());
         }
 
-        public void OnPartitionEntry_Click(PartitionEntryUI entry)
+        public void OnPartitionEntry_Click(UCPartitionEntry entry)
         {
             Window.EntryDataUI.AddDataToGrid(entry.Partition.GetKeyValuePairs());
         }
 
-        public void OnUnallocatedEntry_Click(UnallocatedEntryUI entry)
+        public void OnUnallocatedEntry_Click(UCUnallocatedEntry entry)
         {
             Window.EntryDataUI.AddDataToGrid(entry.Entry);
         }
@@ -206,10 +203,10 @@ namespace GUIForDiskpart.Presentation.Presenter
         {
             foreach (object entry in Window.PartitionStackPanel.Children)
             {
-                if (entry is not PartitionEntryUI) return;
-                if (((PartitionEntryUI)entry).IsSelected == true)
+                if (entry is not UCPartitionEntry) return;
+                if (((UCPartitionEntry)entry).IsSelected == true)
                 {
-                    ((PartitionEntryUI)entry).OpenScanVolumeWindow();
+                    ((UCPartitionEntry)entry).OpenScanVolumeWindow();
                 }
             }
         }

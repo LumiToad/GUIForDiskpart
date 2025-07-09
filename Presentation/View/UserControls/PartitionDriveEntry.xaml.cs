@@ -14,7 +14,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     /// <summary>
     /// Interaktionslogik für PartitionDriveEntryUI.xaml
     /// </summary>
-    public partial class PartitionEntryUI : UserControl
+    public partial class UCPartitionEntry : UserControl
     {
         PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
@@ -38,7 +38,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         public bool? IsSelected { get { return EntrySelected.IsChecked; } }
 
-        public PartitionEntryUI(PartitionModel partition)
+        public UCPartitionEntry(PartitionModel partition)
         {
             InitializeComponent();
 

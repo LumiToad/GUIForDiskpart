@@ -15,7 +15,7 @@
     <Compile Update="Presentation\View\UserControls\EntryData.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Presentation\View\UserControls\UnallocatedEntryUI.xaml.cs">
+    <Compile Update="Presentation\View\UserControls\UnallocatedEntry.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Presentation\View\Windows\AboutWindow.xaml.cs">
@@ -60,7 +60,7 @@
     <Compile Update="Presentation\View\Windows\FormatWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Presentation\View\UserControls\PartitionDriveEntryUI.xaml.cs">
+    <Compile Update="Presentation\View\UserControls\PartitionDriveEntry.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Presentation\View\UserControls\PhysicalDrive.xaml.cs">
@@ -100,7 +100,7 @@
     <Page Update="Presentation\View\UserControls\EntryData.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Presentation\View\UserControls\UnallocatedEntryUI.xaml">
+    <Page Update="Presentation\View\UserControls\UnallocatedEntry.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Win95Button.xaml">
@@ -148,7 +148,7 @@
     <Page Update="Presentation\View\Windows\FormatWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Presentation\View\UserControls\PartitionDriveEntryUI.xaml">
+    <Page Update="Presentation\View\UserControls\PartitionDriveEntry.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Presentation\View\UserControls\PhysicalDrive.xaml">

@@ -104,7 +104,7 @@
                 <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" Width="{Binding ActualWidth, ElementName=grid, Mode=OneWay}" Grid.Row="1">
                     <StackPanel x:Name="PartitionStackPanel" Orientation="Horizontal" CanHorizontallyScroll="True" HorizontalAlignment="Center"/>
                 </ScrollViewer>
-                <userControls:EntryDataUI x:Name="EntryDataUI" HorizontalAlignment="Center" Grid.Row="2" Height="NaN"/>
+                <userControls:UCEntryData x:Name="EntryDataUI" HorizontalAlignment="Center" Grid.Row="2" Height="NaN"/>
 
                 <GridSplitter Grid.Row="3" Height="3" Width="auto" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"/>
                 <userControls:UCLog x:Name="MainLog" HorizontalAlignment="Center" Grid.Row="4" Height="NaN" Width="{Binding ActualWidth, ElementName=grid, Mode=OneWay}"/>

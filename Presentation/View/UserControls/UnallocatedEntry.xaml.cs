@@ -8,9 +8,9 @@ using System.Windows.Controls;
 namespace GUIForDiskpart.Presentation.View.UserControls
 {
     /// <summary>
-    /// Interaction logic for UnallocatedEntryUI.xaml
+    /// Interaction logic for UCUnallocatedEntry.xaml
     /// </summary>
-    public partial class UnallocatedEntryUI : UserControl
+    public partial class UCUnallocatedEntry : UserControl
     {
         PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
@@ -30,7 +30,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         public bool? IsSelected { get { return EntrySelected.IsChecked; } }
 
-        public UnallocatedEntryUI(DiskModel diskModel)
+        public UCUnallocatedEntry(DiskModel diskModel)
         {
             InitializeComponent();
             this.diskModel = diskModel;

@@ -7,9 +7,9 @@ using GUIForDiskpart.Utils;
 
 namespace GUIForDiskpart.Presentation.View.UserControls
 {
-    public partial class EntryDataUI : UserControl
+    public partial class UCEntryData : UserControl
     {
-        public EntryDataUI()
+        public UCEntryData()
         {
             InitializeComponent();
         }
