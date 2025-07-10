@@ -53,5 +53,52 @@ namespace GUIForDiskpart.Presentation.View.UserControls
             SizeBar.Minimum = 0;
             SizeBar.Value = usedSpace;
         }
+
+        public void UpdateUI(DiskModel diskModel)
+        {
+            DiskIndex.Content = $"#{diskModel.DiskIndex}";
+            DiskModelText.Content = diskModel.DiskModelText;
+            TotalSpace.Content = diskModel.FormattedTotalSpace;
+            WSMPartitionCount.Content = $"{diskModel.PartitionCount} partitions";
+            SetValueInProgressBar(diskModel.TotalSpace, diskModel.UsedSpace);
+
+            DiskIcon.Source = GetDiskIcon(diskModel);
+            MediaTypeIcon.Source = GetMediaTypeIcon(diskModel);
+        }
+
+        private ImageSource? GetDiskIcon(DiskModel diskModel)
+        {
+            ImageSource? result = IconUtils.GetShellIconByType(Shell32IconType.Drive, true);
+
+            if (diskModel.InterfaceType == "USB")
+            {
+                result = IconUtils.GetShellIconByType(Shell32IconType.USB, true);
+            }
+
+            return result;
+        }
+
+        private ImageSource? GetMediaTypeIcon(DiskModel diskModel)
+        {
+            ImageSource? result = IconUtils.GetShellIconByType(Shell32IconType.QuestionMark, true);
+
+            switch (diskModel.MediaType)
+            {
+                case ("External hard disk media"):
+                    result = IconUtils.GetShellIconByType(Shell32IconType.UpArrow, true);
+                    break;
+                case ("Removable Media"):
+                    result = IconUtils.GetShellIconByType(Shell32IconType.UpArrow, true);
+                    break;
+                case ("Fixed hard disk media"):
+                    result = IconUtils.GetShellIconByType(Shell32IconType.Fixed, true);
+                    break;
+                case ("Unknown"):
+                    result = IconUtils.GetShellIconByType(Shell32IconType.QuestionMark, true);
+                    break;
+            }
+
+            return result;
+        }
     }
 }

@@ -10,21 +10,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 {
     public class PPhysicalDrive<T> : UCPresenter<T> where T : UCPhysicalDrive
     {
-        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM[typeof(PMainWindow<GUIFDMainWin>)];
-
         public DiskModel DiskModel { get; private set; }
-
-        private void DriveDataToThisUI()
-        {
-            UserControl.DiskIndex.Content = $"#{DiskModel.DiskIndex}";
-            UserControl.DiskModelText.Content = DiskModel.DiskModelText;
-            UserControl.TotalSpace.Content = DiskModel.FormattedTotalSpace;
-            UserControl.WSMPartitionCount.Content = $"{DiskModel.PartitionCount} partitions";
-            UserControl.SetValueInProgressBar(DiskModel.TotalSpace, DiskModel.UsedSpace);
-
-            UserControl.DiskIcon.Source = GetDiskIcon();
-            UserControl.MediaTypeIcon.Source = GetMediaTypeIcon();
-        }
 
         private void PopulateContextMenu()
         {
@@ -41,41 +27,6 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
             }
             MenuItem menuItem = WPFUtils.CreateContextMenuItem(IconUtils.Diskpart, name, header, true, UserControl.OnOffline_Click);
             UserControl.ContextMenu.Items.Add(menuItem);
-        }
-
-        private ImageSource? GetDiskIcon()
-        {
-            ImageSource? result = IconUtils.GetShellIconByType(Shell32IconType.Drive, true);
-
-            if (DiskModel.InterfaceType == "USB")
-            {
-                result = IconUtils.GetShellIconByType(Shell32IconType.USB, true);
-            }
-
-            return result;
-        }
-
-        private ImageSource? GetMediaTypeIcon()
-        {
-            ImageSource? result = IconUtils.GetShellIconByType(Shell32IconType.QuestionMark, true);
-
-            switch (DiskModel.MediaType)
-            {
-                case ("External hard disk media"):
-                    result = IconUtils.GetShellIconByType(Shell32IconType.UpArrow, true);
-                    break;
-                case ("Removable Media"):
-                    result = IconUtils.GetShellIconByType(Shell32IconType.UpArrow, true);
-                    break;
-                case ("Fixed hard disk media"):
-                    result = IconUtils.GetShellIconByType(Shell32IconType.Fixed, true);
-                    break;
-                case ("Unknown"):
-                    result = IconUtils.GetShellIconByType(Shell32IconType.QuestionMark, true);
-                    break;
-            }
-
-            return result;
         }
 
         #region OnClick
@@ -144,7 +95,6 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
             formatWindow.Show();
         }
 
-        // Presenter
         private void OnButton_Click(object sender, RoutedEventArgs e)
         {
             UserControl.SelectEntryRadioButton();
@@ -162,7 +112,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         public override void Setup()
         {
-            DriveDataToThisUI();
+            UserControl.UpdateUI(DiskModel);
             PopulateContextMenu();
         }
 

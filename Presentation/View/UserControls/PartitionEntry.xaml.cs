@@ -1,0 +1,144 @@
+﻿using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
+
+using GUIForDiskpart.Model.Data;
+using GUIForDiskpart.Model.Logic.Diskpart;
+using GUIForDiskpart.Presentation.Presenter;
+using GUIForDiskpart.Service;
+using GUIForDiskpart.Utils;
+
+
+namespace GUIForDiskpart.Presentation.View.UserControls
+{
+    /// <summary>
+    /// Interaktionslogik für PartitionEntry.xaml
+    /// </summary>
+    public partial class UCPartitionEntry : UserControl
+    {
+        public delegate void DOnClick(object sender, RoutedEventArgs e);
+        public event DOnClick EOnOffline;
+        public event DOnClick EExtend;
+        public event DOnClick EShrink;
+        public event DOnClick EAnalyzeDefrag;
+        public event DOnClick EAttributes;
+        public event DOnClick EActive;
+        public event DOnClick EButton;
+        public event DOnClick EDetail;
+        public event DOnClick EFormat;
+        public event DOnClick EDelete;
+        public event DOnClick EAssign;
+        public event DOnClick EScanVolume;
+        public event DOnClick EOpenContextMenu;
+
+        // To Presenter
+        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
+
+        // To Presenter
+        private PartitionModel partition;
+        public PartitionModel Partition
+        {
+            get { return partition; }
+            set
+            {
+                partition = value;
+                UpdateUI(value);
+            }
+        }
+
+        private const string PARTITIONBORDER = "#FF00C4B4";
+        private const string LOGICALBORDER = "#FF0A70C5";
+
+        private const string BASICBACKGROUND = "#FFBBBBBB";
+        private const string SELECTBACKGROUND = "#FF308EBF";
+
+        public bool? IsSelected { get { return EntrySelected.IsChecked; } }
+
+        public UCPartitionEntry()
+        {
+            InitializeComponent();
+        }
+
+        public void UpdateUI(PartitionModel partition)
+        {
+            PartitionNumber.Content = $"#{partition.WSMPartition.PartitionNumber}";
+            DriveNameAndLetter.Content = GetDriveNameText(partition);
+            TotalSpace.Content = partition.WSMPartition.FormattedSize;
+            FileSystemText.Content = GetFileSystemText(partition);
+            PartitionType.Content = $"{partition.WSMPartition.PartitionTable}: {partition.WSMPartition.PartitionType}";
+
+            if (partition.HasWSMPartition && partition.IsLogicalDisk)
+            {
+                SetValueInProgressBar(partition.WSMPartition.Size, partition.LDModel.UsedSpace);
+            }
+
+            if (partition.WSMPartition.IsBoot)
+            {
+                WinVolumeIcon.Source = IconUtils.GetSystemIconByType(SystemIconType.WinLogo);
+            }
+        }
+
+        public void SelectEntryRadioButton()
+        {
+            EntrySelected.IsChecked = !EntrySelected.IsChecked;
+        }
+
+        private string GetDriveNameText(PartitionModel partition)
+        {
+            string driveNameText = string.Empty;
+
+            if (partition.IsLogicalDisk && (!string.IsNullOrEmpty(partition.LDModel.VolumeName)))
+            {
+                driveNameText += $"{partition.LDModel.VolumeName} ";
+            }
+
+            if (partition.WSMPartition.DriveLetter > 65)
+            {
+                driveNameText += $"[{partition.WSMPartition.DriveLetter}:\\]";
+            }
+
+            if (driveNameText == string.Empty)
+            {
+                driveNameText = "No letter";
+            }
+
+            return driveNameText;
+        }
+
+        private string GetFileSystemText(PartitionModel partition)
+        {
+            if (partition.IsLogicalDisk && !string.IsNullOrWhiteSpace(partition.LDModel.FileSystem))
+            {
+                return partition.LDModel.FileSystem;
+            }
+
+            if (partition.IsLogicalDisk && string.IsNullOrWhiteSpace(partition.LDModel.FileSystem))
+            {
+                return "No filesystem";
+            }
+
+            return "No Windows Volume";
+        }
+
+        private void SetValueInProgressBar(ulong totalSize, ulong usedSpace)
+        {
+            SizeBar.Maximum = totalSize;
+            SizeBar.Minimum = 0;
+            SizeBar.Value = usedSpace;
+        }
+
+        private void OnOffline_Click(object sender, RoutedEventArgs e) => EOnOffline?.Invoke(sender, e);
+        private void Extend_Click(object sender, RoutedEventArgs e) => EExtend?.Invoke(sender, e);
+        private void Shrink_Click(object sender, RoutedEventArgs e) => EShrink?.Invoke(sender, e);
+        private void AnalyzeDefrag_Click(object sender, RoutedEventArgs e) => EAnalyzeDefrag?.Invoke(sender, e);
+        private void Attributes_Click(object sender, RoutedEventArgs e) => EAttributes?.Invoke(sender, e);
+        private void Active_Click(object sender, RoutedEventArgs e) => EActive?.Invoke(sender, e);
+        private void Button_Click(object sender, RoutedEventArgs e) => EButton?.Invoke(sender, e);
+        private void Detail_Click(object sender, RoutedEventArgs e) => EDetail?.Invoke(sender, e);
+        private void Format_Click(object sender, RoutedEventArgs e) => EFormat?.Invoke(sender, e);
+        private void Delete_Click(object sender, RoutedEventArgs e) => EDelete?.Invoke(sender, e);
+        private void Assign_Click(object sender, RoutedEventArgs e) => EAssign?.Invoke(sender, e);
+        private void ScanVolume_Click(object sender, RoutedEventArgs e) => EScanVolume?.Invoke(sender, e);
+        private void OpenContextMenu_Click(object sender, RoutedEventArgs e) => EOpenContextMenu?.Invoke(sender, e);
+    }
+}

@@ -31,12 +31,13 @@ namespace GUIForDiskpart.Service
                         partition.WMIPartition = wmiPart;
                     }
                 }
+
+                partitions.Add(partition);
             }
 
             return partitions;
         }
 
-        // Service
         private static List<WSMPartition> GetAllWSMPartitions(DiskModel diskModel)
         {
             List<WSMPartition> wsmPartitions = new List<WSMPartition>();
@@ -49,7 +50,6 @@ namespace GUIForDiskpart.Service
             return wsmPartitions;
         }
 
-        // Service
         private static List<WMIPartition> GetAllWMIPartitions(ManagementObject disk, DiskModel diskModel)
         {
             List<WMIPartition> wmiPartitions = new List<WMIPartition>();
@@ -59,7 +59,6 @@ namespace GUIForDiskpart.Service
             return wmiPartitions;
         }
 
-        // Service
         private static WSMPartition GetWSMPartition(PSObject psObject)
         {
             WSMPartition wsmPartition = new WSMPartition();
@@ -87,7 +86,6 @@ namespace GUIForDiskpart.Service
             return wsmPartition;
         }
 
-        // Service
         public static WMIPartition GetWMIPartition(ManagementObject partition, uint diskIndex)
         {
             WMIPartition newPartition = new WMIPartition();

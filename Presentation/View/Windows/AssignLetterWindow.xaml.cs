@@ -1,12 +1,7 @@
-﻿using GUIForDiskpart.Database.Retrievers;
-using Markdig.Helpers;
-using System.Drawing;
-using System.Windows;
-using System.Windows.Media;
+﻿using System.Windows;
 
 using GUIForDiskpart.Model.Data;
 using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.Service;
 using GUIForDiskpart.Presentation.Presenter;
 namespace GUIForDiskpart.Presentation.View.Windows
 {

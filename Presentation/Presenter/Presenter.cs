@@ -13,6 +13,8 @@ namespace GUIForDiskpart.Presentation.Presenter
 {
     public class Presenter
     {
+        public PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
+
         protected bool hasRegistered = false;
 
         public void RegisterEvents()

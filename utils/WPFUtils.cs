@@ -9,7 +9,7 @@ namespace GUIForDiskpart.Utils
 {
     public static class WPFUtils
     {
-        public static MenuItem CreateContextMenuItem(Image image, string name, string header, bool isEnabled, RoutedEventHandler handler)
+        public static MenuItem CreateContextMenuItem(Image image, string name, string header, bool isEnabled, RoutedEventHandler handler, string tooltip = "")
         {
             MenuItem menuItem = new MenuItem();
             menuItem.Name = name;
@@ -17,6 +17,10 @@ namespace GUIForDiskpart.Utils
             menuItem.Icon = image;
             menuItem.Click += handler;
             menuItem.IsEnabled = isEnabled;
+            if (tooltip != string.Empty)
+            {
+                menuItem.ToolTip = new ToolTip().Content = tooltip;
+            }
 
             return menuItem;
         }

@@ -21,6 +21,7 @@ namespace GUIForDiskpart.Presentation.Presenter
         public PEntryData<UCEntryData> EntryData { get; private set;}
 
         private Dictionary<UCPhysicalDrive, PPhysicalDrive<UCPhysicalDrive>> K_ucPhysicalDrives_V_pPhysicalDrives = new();
+        private Dictionary<UCPartitionEntry, PPartitionEntry<UCPartitionEntry>> K_ucPartitionEntry_V_pPartitionEntry = new();
 
 
         // Retriever
@@ -49,6 +50,7 @@ namespace GUIForDiskpart.Presentation.Presenter
         {
             stackPanel.Children.Clear();
             K_ucPhysicalDrives_V_pPhysicalDrives.Clear();
+            K_ucPartitionEntry_V_pPartitionEntry.Clear();
 
             foreach (T thing in collection)
             {
@@ -63,8 +65,10 @@ namespace GUIForDiskpart.Presentation.Presenter
                         userControl = ucPhysicalDrive;
                         break;
                     case PartitionModel partition:
-                        UCPartitionEntry partitionEntry = new UCPartitionEntry(partition);
-                        userControl = partitionEntry;
+                        var ucPartitionEntry = new UCPartitionEntry();
+                        var pPartitionEntry = CreateUCPresenter<PPartitionEntry<UCPartitionEntry>>(ucPartitionEntry, partition);
+                        K_ucPartitionEntry_V_pPartitionEntry.Add(ucPartitionEntry, pPartitionEntry);
+                        userControl = ucPartitionEntry;
                         break;
                 }
                 stackPanel.Children.Add(userControl);
@@ -85,9 +89,10 @@ namespace GUIForDiskpart.Presentation.Presenter
 
                 if (entry.GetType() == typeof(UCPartitionEntry))
                 {
-                    UCPartitionEntry partitionEntry = (UCPartitionEntry)entry;
-                    if (partitionEntry != null && partitionEntry.IsSelected == true)
-                        return partitionEntry.Partition.WSMPartition.PartitionNumber;
+                    UCPartitionEntry ucPartitionEntry = (UCPartitionEntry)entry;
+                    var pPartitionEntry = K_ucPartitionEntry_V_pPartitionEntry[ucPartitionEntry];
+                    if (ucPartitionEntry != null && ucPartitionEntry.IsSelected == true)
+                        return pPartitionEntry.Partition.WSMPartition.PartitionNumber;
                 }
             }
 
@@ -127,7 +132,8 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         public void OnPartitionEntry_Click(UCPartitionEntry entry)
         {
-            EntryData.AddDataToGrid(entry.Partition.GetKeyValuePairs());
+            var pPartitionEntry = K_ucPartitionEntry_V_pPartitionEntry[entry];
+            EntryData.AddDataToGrid(pPartitionEntry.Partition.GetKeyValuePairs());
         }
 
         public void OnUnallocatedEntry_Click(UCUnallocatedEntry entry)
@@ -207,7 +213,8 @@ namespace GUIForDiskpart.Presentation.Presenter
                 if (entry is not UCPartitionEntry) return;
                 if (((UCPartitionEntry)entry).IsSelected == true)
                 {
-                    ((UCPartitionEntry)entry).OpenScanVolumeWindow();
+                    var pPartitionEntry = K_ucPartitionEntry_V_pPartitionEntry[(UCPartitionEntry)entry];
+                    pPartitionEntry.OpenScanVolumeWindow();
                 }
             }
         }

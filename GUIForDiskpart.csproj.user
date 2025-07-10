@@ -60,7 +60,7 @@
     <Compile Update="Presentation\View\Windows\FormatWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Presentation\View\UserControls\PartitionDriveEntry.xaml.cs">
+    <Compile Update="Presentation\View\UserControls\PartitionEntry.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Presentation\View\UserControls\PhysicalDrive.xaml.cs">
@@ -148,7 +148,7 @@
     <Page Update="Presentation\View\Windows\FormatWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Presentation\View\UserControls\PartitionDriveEntry.xaml">
+    <Page Update="Presentation\View\UserControls\PartitionEntry.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Presentation\View\UserControls\PhysicalDrive.xaml">
