@@ -138,13 +138,9 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         private void OnActive_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show
-                (
-                "Setting an MBR partition active or inactive can result in the computer no longer booting correctly!",
-                "Diskpart - Active / Inactive",
-                MessageBoxButton.OKCancel
-                );
-            switch (result)
+            string title = "Diskpart - Active / Inactive";
+
+            switch (ErrorUtils.ShowMSGBoxWarning(title, ErrorUtils.MBR_ACTIVE_STATUS_WARNING))
             {
                 case MessageBoxResult.OK:
                     MainWindow.Log.Print(DPFunctions.Active(Partition.WSMPartition.DiskNumber, Partition.WSMPartition.PartitionNumber, !Partition.WSMPartition.IsActive));

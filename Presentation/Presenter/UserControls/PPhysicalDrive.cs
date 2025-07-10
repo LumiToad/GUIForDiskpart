@@ -12,21 +12,22 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
     {
         public DiskModel DiskModel { get; private set; }
 
+        #region MenuItems
+
+        MenuItem OnOffline =>
+            WPFUtils.CreateContextMenuItem(
+                IconUtils.Diskpart,
+                DiskModel.IsOnline ? "DPOnline" : "DPOffline",
+                DiskModel.IsOnline ? "DISKPART - Online" : "DISKPART - Offline",
+                true,
+                OnOnOffline_Click
+                );
+        
+        #endregion MenuItems
+
         private void PopulateContextMenu()
         {
-            string header = string.Empty;
-            string name = string.Empty;
-
-            header = "DISKPART - Online";
-            name = "DPOnline";
-
-            if (DiskModel.IsOnline)
-            {
-                header = "DISKPART - Offline";
-                name = "DPOffline";
-            }
-            MenuItem menuItem = WPFUtils.CreateContextMenuItem(IconUtils.Diskpart, name, header, true, UserControl.OnOffline_Click);
-            UserControl.ContextMenu.Items.Add(menuItem);
+            UserControl.ContextMenu.Items.Add(OnOffline);
         }
 
         #region OnClick
