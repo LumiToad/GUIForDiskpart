@@ -55,7 +55,6 @@ namespace GUIForDiskpart.Presentation.Presenter
         {
             var wPresenter = new WPresenterClass();
             wPresenter.AddCustomArgs(args);
-            wPresenter.Setup();
             return wPresenter;
         }
 
@@ -116,6 +115,14 @@ namespace GUIForDiskpart.Presentation.Presenter
             }
 
             return ucPresenter;
+        }
+
+        /// <summary>
+        /// Closes the Window and terminates its presenter.
+        /// </summary>
+        public void Close()
+        {
+            App.Instance.WIM.TerminateWindowAndPresenter(this);
         }
     }
 

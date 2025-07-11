@@ -21,7 +21,7 @@
     <Compile Update="Presentation\View\Windows\AboutWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Presentation\View\Windows\AssignLetterWindow.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WAssignLetter.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Presentation\View\Windows\AttributesVolumeByIndexWindow.xaml.cs">
@@ -109,7 +109,7 @@
     <Page Update="Presentation\View\Windows\AboutWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Presentation\View\Windows\AssignLetterWindow.xaml">
+    <Page Update="Presentation\View\Windows\WAssignLetter.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Presentation\View\Windows\AttributesVolumeByIndexWindow.xaml">

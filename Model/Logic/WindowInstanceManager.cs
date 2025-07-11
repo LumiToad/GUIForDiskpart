@@ -29,23 +29,23 @@ namespace GUIForDiskpart.Model.Logic
             }
         }
 
-        public PresenterClass CreateWPresenter<PresenterClass>(params object?[] args) where PresenterClass : new()
+        public PresenterClass CreateWPresenter<PresenterClass>(bool isFocus = true, params object?[] args) where PresenterClass : new()
         {
             var method = GetType().GetMethod("CreateWPresenterInternal", BindingFlags.NonPublic | BindingFlags.Instance);
             Type wType = typeof(PresenterClass).GenericTypeArguments[0];
 
             method = method.MakeGenericMethod(typeof(PresenterClass), wType);
             
-            var retVal = method.Invoke(this, new object?[] { args });
+            var retVal = method.Invoke(this, new object?[2] { isFocus, args });
             return (PresenterClass)retVal;
         }
 
-        protected PType CreateWPresenterInternal<PType, WType>(object?[] packedArgs)
+        protected PType CreateWPresenterInternal<PType, WType>(bool isFocus, object?[] packedArgs)
             where PType : WPresenter<WType>, new()
             where WType : Window, new()
         {
             PType wPresenter = WPresenter<WType>.New<PType>((packedArgs.Length > 0) ? packedArgs[0] : null);
-            SetupWindow<WType>(wPresenter);
+            SetupWindow<WType>(wPresenter, isFocus);
 
             return wPresenter;
         }
@@ -55,6 +55,10 @@ namespace GUIForDiskpart.Model.Logic
             wPresenter.Window = new();
             wPresenter.InitPresenters();
             wPresenter.Window.Show();
+            if (wPresenter.Window != App.Instance.MainWindow)
+            {
+                wPresenter.Window.Owner = App.Instance.MainWindow;
+            }
             if (isFocus) 
             {
                 wPresenter.Window.Focus();        
@@ -62,6 +66,7 @@ namespace GUIForDiskpart.Model.Logic
             wPresenter.Window.ContentRendered += OnWindowContentRendered;
 
             wPresenter.RegisterEvents();
+            wPresenter.Setup();
             presenters.Add(wPresenter.GetType(), wPresenter);
         }
 
@@ -101,6 +106,12 @@ namespace GUIForDiskpart.Model.Logic
             startup = new StartupLoadingWindow();
             startup.Show();
             Dispatcher.Run();
+        }
+
+        public void TerminateWindowAndPresenter<T>(WPresenter<T> wPresenter) where T : Window
+        {
+            presenters.Remove(wPresenter.GetType());
+            wPresenter.Window.Close();
         }
     }
 }

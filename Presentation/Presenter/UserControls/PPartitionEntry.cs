@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 
 using GUIForDiskpart.Model.Logic.Diskpart;
+using GUIForDiskpart.Presentation.Presenter.Windows;
 using GUIForDiskpart.Presentation.View.UserControls;
 using GUIForDiskpart.Utils;
 
@@ -178,10 +179,7 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         private void OnAssign_Click(object sender, RoutedEventArgs e)
         {
-            AssignLetterWindow assignLetterWindow = new AssignLetterWindow(Partition.WSMPartition);
-            assignLetterWindow.Owner = MainWindow.Window;
-
-            assignLetterWindow.Show();
+            App.Instance.WIM.CreateWPresenter<PAssignLetter<WAssignLetter>>(true, Partition.WSMPartition);
         }
 
         private void OnScanVolume_Click(object sender, RoutedEventArgs e)

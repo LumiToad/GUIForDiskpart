@@ -9,9 +9,13 @@ namespace GUIForDiskpart.Presentation.Presenter
 {
     public class PLog<T> : UCPresenter<T> where T : View.UserControls.UCLog
     {
-        public void Print(string text)
+        public void Print(string text, bool scrollTop = false)
         {
             UserControl.TextBox.Text += $"[{DateTime.Now}]\n{text}\n\n";
+            if (scrollTop) 
+            {
+                UserControl.TextBox.ScrollToVerticalOffset(0.0d);
+            }
         }
 
         private void OnSaveLog_Click(object sender, RoutedEventArgs e)
