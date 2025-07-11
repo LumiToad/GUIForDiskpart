@@ -20,8 +20,9 @@ namespace GUIForDiskpart.Presentation.Presenter
         public PLog<UCLog> Log {get; private set;}
         public PEntryData<UCEntryData> EntryData { get; private set;}
 
-        private Dictionary<UCPhysicalDrive, PPhysicalDrive<UCPhysicalDrive>> K_ucPhysicalDrives_V_pPhysicalDrives = new();
+        private Dictionary<UCPhysicalDriveEntry, PPhysicalDrive<UCPhysicalDriveEntry>> K_ucPhysicalDrives_V_pPhysicalDrives = new();
         private Dictionary<UCPartitionEntry, PPartitionEntry<UCPartitionEntry>> K_ucPartitionEntry_V_pPartitionEntry = new();
+        private Dictionary<UCUnallocatedEntry, PUnallocatedEntry<UCUnallocatedEntry>> K_ucUnallocatedEntry_V_pUnallocatedEntry = new();
 
 
         // Retriever
@@ -39,7 +40,7 @@ namespace GUIForDiskpart.Presentation.Presenter
             {
                 Log.Print(DiskService.GetDiskOutput());
             }
-            var ucPhysicalDrive = Window.DiskStackPanel.Children[0] as UCPhysicalDrive;
+            var ucPhysicalDrive = Window.DiskStackPanel.Children[0] as UCPhysicalDriveEntry;
             var pPhysicalDrive = K_ucPhysicalDrives_V_pPhysicalDrives[ucPhysicalDrive];
             OnDiskEntry_Click(pPhysicalDrive);
         }
@@ -59,8 +60,8 @@ namespace GUIForDiskpart.Presentation.Presenter
                 switch (thing)
                 {
                     case DiskModel diskModel:
-                        var ucPhysicalDrive = new UCPhysicalDrive();
-                        var pPhysicalDrive = CreateUCPresenter<PPhysicalDrive<UCPhysicalDrive>>(ucPhysicalDrive, diskModel);
+                        var ucPhysicalDrive = new UCPhysicalDriveEntry();
+                        var pPhysicalDrive = CreateUCPresenter<PPhysicalDrive<UCPhysicalDriveEntry>>(ucPhysicalDrive, diskModel);
                         K_ucPhysicalDrives_V_pPhysicalDrives.Add(ucPhysicalDrive, pPhysicalDrive);
                         userControl = ucPhysicalDrive;
                         break;
@@ -79,11 +80,11 @@ namespace GUIForDiskpart.Presentation.Presenter
         {
             foreach (object? entry in stackPanel.Children)
             {
-                if (entry.GetType() == typeof(UCPhysicalDrive))
+                if (entry.GetType() == typeof(UCPhysicalDriveEntry))
                 {
-                    UCPhysicalDrive ucPhysicalDrive = (UCPhysicalDrive)entry;
+                    UCPhysicalDriveEntry ucPhysicalDrive = (UCPhysicalDriveEntry)entry;
                     var pPhysicalDrive = K_ucPhysicalDrives_V_pPhysicalDrives[ucPhysicalDrive];
-                    if (ucPhysicalDrive != null && ucPhysicalDrive.IsSelected == true)
+                    if (pPhysicalDrive != null && pPhysicalDrive.IsSelected == true)
                         return pPhysicalDrive.DiskModel.DiskIndex;
                 }
 
@@ -119,13 +120,15 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         #region EntriesClick
 
-        public void OnDiskEntry_Click<UCType>(PPhysicalDrive<UCType> pPhysicalDrive) where UCType : UCPhysicalDrive
+        public void OnDiskEntry_Click<UCType>(PPhysicalDrive<UCType> pPhysicalDrive) where UCType : UCPhysicalDriveEntry
         {
             AddEntrysToStackPanel(Window.PartitionStackPanel, pPhysicalDrive.DiskModel.Partitions);
             if (pPhysicalDrive.DiskModel.UnallocatedSpace > 0)
             {
-                UCUnallocatedEntry unallocatedEntryUI = new UCUnallocatedEntry(pPhysicalDrive.DiskModel);
-                Window.PartitionStackPanel.Children.Add(unallocatedEntryUI);
+                var ucUnallocatedEntry = new UCUnallocatedEntry();
+                var pUnallocatedEntry = CreateUCPresenter<PUnallocatedEntry<UCUnallocatedEntry>>(ucUnallocatedEntry, pPhysicalDrive.DiskModel);
+                Window.PartitionStackPanel.Children.Add(ucUnallocatedEntry);
+                K_ucUnallocatedEntry_V_pUnallocatedEntry.Add(ucUnallocatedEntry, pUnallocatedEntry);
             }
             EntryData.AddDataToGrid(pPhysicalDrive.DiskModel.GetKeyValuePairs());
         }
@@ -138,7 +141,8 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         public void OnUnallocatedEntry_Click(UCUnallocatedEntry entry)
         {
-            EntryData.AddDataToGrid(entry.Entry);
+            var pUnallocatedEntry = K_ucUnallocatedEntry_V_pUnallocatedEntry[entry];
+            EntryData.AddDataToGrid(pUnallocatedEntry.EntryData);
         }
 
         public void OnListPart_Click(object sender, RoutedEventArgs e)

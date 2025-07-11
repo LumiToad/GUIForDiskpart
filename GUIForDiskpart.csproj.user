@@ -63,7 +63,7 @@
     <Compile Update="Presentation\View\UserControls\PartitionEntry.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Presentation\View\UserControls\PhysicalDrive.xaml.cs">
+    <Compile Update="Presentation\View\UserControls\PhysicalDriveEntry.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Presentation\View\Windows\SecurityCheckWindow.xaml.cs">
@@ -151,7 +151,7 @@
     <Page Update="Presentation\View\UserControls\PartitionEntry.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Presentation\View\UserControls\PhysicalDrive.xaml">
+    <Page Update="Presentation\View\UserControls\PhysicalDriveEntry.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Presentation\View\Windows\SecurityCheckWindow.xaml">

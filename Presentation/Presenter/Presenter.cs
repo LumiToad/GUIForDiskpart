@@ -13,7 +13,17 @@ namespace GUIForDiskpart.Presentation.Presenter
 {
     public class Presenter
     {
-        public PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
+        public PMainWindow<GUIFDMainWin>? MainWindow
+        {
+            get 
+            {
+                if (App.Instance.WIM.HasGUIFDMainWinLoaded)
+                {
+                    return App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
+                }
+                else return null;
+            }
+        }
 
         protected bool hasRegistered = false;
 
@@ -23,6 +33,7 @@ namespace GUIForDiskpart.Presentation.Presenter
             hasRegistered = true;
 
             RegisterEventsInternal();
+            
         }
 
         protected virtual void RegisterEventsInternal()

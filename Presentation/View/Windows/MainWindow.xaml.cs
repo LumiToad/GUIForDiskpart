@@ -12,7 +12,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-        public delegate void DDiskEntryOnClick(UCPhysicalDrive entry);
+        public delegate void DDiskEntryOnClick(UCPhysicalDriveEntry entry);
         public event DDiskEntryOnClick EDiskEntry_Click;
 
         public delegate void DPartitionEntryOnClick(UCPartitionEntry entry);
@@ -53,7 +53,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         #region EntriesClick
 
-        public void DiskEntry_Click(UCPhysicalDrive entry) => EDiskEntry_Click(entry);
+        public void DiskEntry_Click(UCPhysicalDriveEntry entry) => EDiskEntry_Click(entry);
         public void PartitionEntry_Click(UCPartitionEntry entry) => EPartitionEntry_Click(entry);
         public void UnallocatedEntry_Click(UCUnallocatedEntry entry) => EUnallocatedEntry_Click(entry);
 

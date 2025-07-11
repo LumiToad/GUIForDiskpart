@@ -2,15 +2,17 @@
 using GUIForDiskpart.Presentation.View.UserControls;
 using GUIForDiskpart.Utils;
 using System;
+using System.Management.Automation;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace GUIForDiskpart.Presentation.Presenter.UserControls
 {
-    public class PPhysicalDrive<T> : UCPresenter<T> where T : UCPhysicalDrive
+    public class PPhysicalDrive<T> : UCPresenter<T> where T : UCPhysicalDriveEntry
     {
         public DiskModel DiskModel { get; private set; }
+        public bool? IsSelected { get { return UserControl.EntrySelected.IsChecked; } }
 
         #region MenuItems
 
