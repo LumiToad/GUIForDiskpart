@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 
-using GUIForDiskpart.Database.Data.Diskpart;
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Presentation.Presenter;
 
@@ -10,13 +9,13 @@ using GUIForDiskpart.Presentation.Presenter;
 namespace GUIForDiskpart.Presentation.View.Windows
 {
     /// <summary>
-    /// Interaktionslogik für CreatePartition.xaml
+    /// Interaction logic for CreateVolumeWindow.xaml
     /// </summary>
-    public partial class CreatePartitionWindow : Window
+    public partial class WCreateVolume : Window
     {
         PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
-        long sizeInMB;
+        private long sizeInMB;
 
         private DiskModel diskModel;
         public DiskModel DiskModel
@@ -29,14 +28,13 @@ namespace GUIForDiskpart.Presentation.View.Windows
             }
         }
 
-        public CreatePartitionWindow(DiskModel disk)
+        public WCreateVolume(DiskModel disk)
         {
             InitializeComponent();
-
             diskModel = disk;
         }
 
-        public CreatePartitionWindow(DiskModel disk, long size)
+        public WCreateVolume(DiskModel disk, long size)
         {
             InitializeComponent();
 
@@ -47,38 +45,11 @@ namespace GUIForDiskpart.Presentation.View.Windows
             SizeValue.Text = size.ToString();
         }
 
-        private string SelectedOptionAsString()
-        {
-            return (string)((ComboBoxItem)PartitionOptionValue.SelectedValue).Content;
-        }
-
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            string option = DPCreatePartition.EFI;
-
-            switch (SelectedOptionAsString())
-            {
-                case ("EFI"):
-                    option = DPCreatePartition.EFI;
-                    break;
-                case ("EXTENDED"):
-                    option = DPCreatePartition.EXTENDED;
-                    break;
-                case ("LOGICAL"):
-                    option = DPCreatePartition.LOGICAL;
-                    break;
-                case ("MSR"):
-                    option = DPCreatePartition.MSR;
-                    break;
-                case ("PRIMARY"):
-                    option = DPCreatePartition.PRIMARY;
-                    break;
-            }
-
-
             string output = string.Empty;
-            
-            output += DPFunctions.CreatePartition(DiskModel.DiskIndex, option, GetSizeValue(), false);
+
+            output += DPFunctions.CreateVolume(DiskModel.DiskIndex, DPVolume.SIMPLE, GetSizeValue(), false);
 
             MainWindow.Log.Print(output);
             MainWindow.DisplayDiskData(false);

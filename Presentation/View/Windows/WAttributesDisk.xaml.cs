@@ -7,7 +7,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// <summary>
     /// Interaction logic for AttributesWindow.xaml
     /// </summary>
-    public partial class AttributesDiskWindow : Window
+    public partial class WAttributesDisk : Window
     {
         PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
@@ -22,7 +22,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             }
         }
 
-        public AttributesDiskWindow(DiskModel diskModel)
+        public WAttributesDisk(DiskModel diskModel)
         {
             InitializeComponent();
             diskModel = DiskModel;

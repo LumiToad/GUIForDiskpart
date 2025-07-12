@@ -22,7 +22,7 @@ namespace GUIForDiskpart
         public static App Instance { get; private set; }
         public WindowInstanceManager WIM { get; private set; } = new();
 
-        private StartupLoadingWindow? startup;
+        private WStartupLoading? startup;
 
         // Entry point of the whole application!
         protected override void OnStartup(StartupEventArgs e)

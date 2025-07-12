@@ -1,40 +1,41 @@
-﻿using GUIForDiskpart.Database.Data;
-using GUIForDiskpart.Model.Data;
-using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.Presentation.Presenter;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+
+using GUIForDiskpart.Model.Logic;
+using GUIForDiskpart.Presentation.Presenter;
+
 
 namespace GUIForDiskpart.Presentation.View.Windows
 {
     /// <summary>
-    /// Interaction logic for FormatPartitionWindow.xaml
+    /// Interaktionslogik für FormatWindow.xaml
     /// </summary>
-    public partial class FormatPartitionWindow : Window
+    public partial class WFormatDrive : Window
     {
         PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
-        private WSMPartition wsmPartition;
-        public WSMPartition WSMPartition
+        private DiskModel diskModel;
+        public DiskModel DiskModel
         {
-            get { return wsmPartition; }
+            get { return diskModel; }
             set
             {
-                wsmPartition = value;
+                diskModel = value;
                 AddTextToConsole();
             }
         }
 
-        public FormatPartitionWindow(WSMPartition partition)
+        public WFormatDrive(DiskModel disk)
         {
             InitializeComponent();
-            WSMPartition = partition;
+
+            diskModel = disk;
         }
 
         public void AddTextToConsole()
         {
-            ConsoleReturn.Print(wsmPartition.GetOutputAsString());
+            ConsoleReturn.Print(DiskModel.GetOutputAsString());
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -56,10 +57,10 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            string todo = "Format the partition! ALL DATA WILL BE LOST!";
-            string confirmKey = $"Drive: {WSMPartition.DiskNumber} Partition: {WSMPartition.PartitionNumber}";
+            string todo = "Format the whole drive! ALL DATA WILL BE LOST!";
+            string confirmKey = DiskModel.PhysicalName;
 
-            SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(ExecuteFormat, todo, confirmKey);
+            WSecurityCheck securityCheckWindow = new WSecurityCheck(ExecuteFormat, todo, confirmKey);
             securityCheckWindow.Owner = this;
             securityCheckWindow.Show();
         }
@@ -85,10 +86,28 @@ namespace GUIForDiskpart.Presentation.View.Windows
                     break;
             }
 
+            UInt64 size = GetSizeValue();
+
+            if (size == 0 && fileSystem == FSType.FAT32)
+            {
+                size = 32768;
+            }
+
             string output = string.Empty;
 
-            output = DPFunctions.Format(WSMPartition.DiskNumber, wsmPartition.PartitionNumber, fileSystem,
-                    VolumeValue.Text, (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, false, false);
+
+            if (DriveLetterValue.Text == "")
+            {
+                output = ComfortFeatures.EasyDiskFormat(diskModel, fileSystem, VolumeValue.Text,
+                    size, (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, true, false);
+            }
+            else
+            {
+                char driveLetter = DriveLetterValue.Text.ToCharArray()[0];
+
+                output = ComfortFeatures.EasyDiskFormat(diskModel, fileSystem, VolumeValue.Text,
+                    driveLetter, size, (bool)QuickFormattingValue.IsChecked, (bool)CompressionValue.IsChecked, false, true, false);
+            }
 
             MainWindow.Log.Print(output);
 
@@ -105,12 +124,26 @@ namespace GUIForDiskpart.Presentation.View.Windows
             return (string)((ComboBoxItem)FileSystemValue.SelectedValue).Content;
         }
 
+        private UInt64 GetSizeValue()
+        {
+            UInt64 size = 0;
+
+            if (SizeValue.Text != "")
+            { 
+                UInt64.TryParse(SizeValue.Text, out size);
+            }
+
+            return size;
+        }
+
         private void EvaluteFAT32SizeBox()
         {
             ClearErrorMessage();
             if (SelectedFileSystemAsString() != "FAT32") return;
 
-            if (((WSMPartition.Size / 1024) / 1024) <= 32768)
+            UInt64 size = GetSizeValue();
+
+            if (size <= 32768)
             {
                 ConfirmButton.IsEnabled = true;
                 ClearErrorMessage();
@@ -119,6 +152,11 @@ namespace GUIForDiskpart.Presentation.View.Windows
             {
                 ConfirmButton.IsEnabled = false;
                 SetErrorMessage("ERROR: FAT32 max size is 32768 MB!");
+            }
+
+            if (size == 0)
+            {
+                SetErrorMessage("Size will be 32768 MB -> FAT32 maximum.");
             }
         }
 
@@ -131,6 +169,11 @@ namespace GUIForDiskpart.Presentation.View.Windows
         {
             if (ErrorMessageValue == null) return;
             ErrorMessageValue.Content = " ";
+        }
+
+        private void SizeValue_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            EvaluteFAT32SizeBox();
         }
     }
 }

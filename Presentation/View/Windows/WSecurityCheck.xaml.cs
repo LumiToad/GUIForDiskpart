@@ -7,12 +7,12 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// <summary>
     /// Interaction logic for SecurityCheckWindow.xaml
     /// </summary>
-    public partial class SecurityCheckWindow : Window
+    public partial class WSecurityCheck : Window
     {
         public delegate void Result(bool result);
         public event Result OnClick;
 
-        public SecurityCheckWindow(Result result, string todo, string confirmKey)
+        public WSecurityCheck(Result result, string todo, string confirmKey)
         {
             InitializeComponent();
             AboutTo.Content = todo;

@@ -5,9 +5,9 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// <summary>
     /// Interaction logic for StartupLoadingWindow.xaml
     /// </summary>
-    public partial class StartupLoadingWindow : Window
+    public partial class WStartupLoading : Window
     {
-        public StartupLoadingWindow()
+        public WStartupLoading()
         {
             InitializeComponent();
             ChangeLoadingText("Drives");

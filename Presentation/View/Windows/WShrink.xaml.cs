@@ -1,18 +1,18 @@
-﻿using System.Globalization;
+﻿using GUIForDiskpart.Model.Data;
+using GUIForDiskpart.Model.Logic.Diskpart;
+using GUIForDiskpart.Presentation.Presenter;
+using GUIForDiskpart.Service;
 using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
-using GUIForDiskpart.Model.Data;
-using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.Service;
-using GUIForDiskpart.Presentation.Presenter;
 
 namespace GUIForDiskpart.Presentation.View.Windows
 {
     /// <summary>
-    /// Interaction logic for ExtendWindow.xaml
+    /// Interaction logic for ShrinkWindow.xaml
     /// </summary>
-    public partial class ExtendWindow : Window
+    public partial class WShrink : Window
     {
         PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
@@ -24,16 +24,17 @@ namespace GUIForDiskpart.Presentation.View.Windows
             {
                 partition = value;
                 Partition.DefragAnalysis = DAService.AnalyzeVolumeDefrag(Partition);
-                availableForExtendInMB = (Partition.DefragAnalysis.AvailableForExtend / 1024) / 1024;
+                availableForShrinkInMB = (Partition.DefragAnalysis.AvailableForShrink / 1024) / 1024;
                 AddTextToConsole();
-                SetSliderMinMax(DesiredSlider, 0.0d, Convert.ToDouble(availableForExtendInMB));
-                AvailableLabel.Content = ByteFormatter.FormatBytes(Partition.DefragAnalysis.AvailableForExtend);
+                SetSliderMinMax(MinimumSlider, 0.0d, Convert.ToDouble(availableForShrinkInMB));
+                SetSliderMinMax(DesiredSlider, 0.0d, Convert.ToDouble(availableForShrinkInMB));
+                AvailableLabel.Content = ByteFormatter.FormatBytes(Partition.DefragAnalysis.AvailableForShrink);
             }
         }
 
-        private UInt64 availableForExtendInMB;
+        private UInt64 availableForShrinkInMB;
 
-        public ExtendWindow(PartitionModel partition)
+        public WShrink(PartitionModel partition)
         {
             InitializeComponent();
             Partition = partition;
@@ -43,19 +44,11 @@ namespace GUIForDiskpart.Presentation.View.Windows
         {
             string output = string.Empty;
 
+            char driveLetter = Partition.WSMPartition.DriveLetter;
             uint desiredMB = Convert.ToUInt32(DesiredSizeValue.Text);
-            uint diskIndex = Partition.WSMPartition.DiskNumber;
+            uint minimumMB = Convert.ToUInt32(MinimumSizeValue.Text);
 
-            if (Partition.WSMPartition.DriveLetter < 65)
-            {
-                uint partitionIndex = Partition.WSMPartition.PartitionNumber;
-                output += DPFunctions.Extend(diskIndex, partitionIndex, desiredMB, false);
-            }
-            else
-            {
-                char driveLetter = Partition.WSMPartition.DriveLetter;
-                output += DPFunctions.Extend(diskIndex, driveLetter, desiredMB, false);
-            }
+            output += DPFunctions.Shrink(driveLetter, desiredMB, minimumMB, false, false);
 
             MainWindow.Log.Print(output);
             MainWindow.DisplayDiskData(false);
@@ -68,6 +61,11 @@ namespace GUIForDiskpart.Presentation.View.Windows
             this.Close();
         }
 
+        private void MinimumSizeValue_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            OnTextChanged(MinimumSlider, MinimumSizeValue, MinFormatted, e);
+        }
+
         private void DesiredSizeValue_TextChanged(object sender, TextChangedEventArgs e)
         {
             OnTextChanged(DesiredSlider, DesiredSizeValue, DesiredFormatted, e);
@@ -78,7 +76,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             if (slider == null || textBox == null) return;
             if (!double.TryParse(textBox.Text, out double value))
             {
-                foreach (var item in e.Changes)
+                foreach (var item in e.Changes) 
                 {
                     int index = item.Offset;
                     if (index < 0 || index > textBox.Text.Length) continue;
@@ -87,13 +85,20 @@ namespace GUIForDiskpart.Presentation.View.Windows
                 return;
             }
 
-            if (Convert.ToUInt64(textBox.Text) > availableForExtendInMB)
+            if (Convert.ToUInt64(textBox.Text) > availableForShrinkInMB)
             {
-                textBox.Text = availableForExtendInMB.ToString();
+                textBox.Text = availableForShrinkInMB.ToString();
             }
 
             slider.Value = value;
             ChangeFormattedLabel(label, textBox);
+        }
+
+        private void MinimumSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            CultureInfo cultureUS = new CultureInfo("en-US");
+            MinimumSizeValue.Text = MinimumSlider.Value.ToString("N0").Replace(".","");
+            ChangeFormattedLabel(MinFormatted, MinimumSizeValue);
         }
 
         private void DesiredSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -122,7 +127,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
         private void SetSliderMinMax(Slider slider, double min, double max)
         {
             if (slider == null) return;
-            slider.Minimum = min;
+            slider.Minimum = min; 
             slider.Maximum = max;
         }
     }

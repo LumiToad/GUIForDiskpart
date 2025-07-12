@@ -193,7 +193,7 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         public void OnAttributesVolume_Click(object sender, RoutedEventArgs e)
         {
-            AttributesVolumeByIndexWindow attributesVolumeByIndexWindow = new();
+            WAttributesVolByIndex attributesVolumeByIndexWindow = new();
             attributesVolumeByIndexWindow.Owner = Window;
             attributesVolumeByIndexWindow.Focus();
 

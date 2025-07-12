@@ -55,7 +55,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnClean_Click(object sender, RoutedEventArgs e)
         {
-            CleanWindow cleanWindow = new CleanWindow(DiskModel);
+            WClean cleanWindow = new WClean(DiskModel);
             cleanWindow.Owner = MainWindow.Window;
             cleanWindow.Focus();
 
@@ -64,7 +64,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnConvert_Click(object sender, RoutedEventArgs e)
         {
-            ConvertDriveWindow convertDriveWindow = new ConvertDriveWindow(DiskModel);
+            WConvertDrive convertDriveWindow = new WConvertDrive(DiskModel);
             convertDriveWindow.Owner = MainWindow.Window;
             convertDriveWindow.Focus();
 
@@ -73,7 +73,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnCreatePart_Click(object sender, RoutedEventArgs e)
         {
-            CreatePartitionWindow createPartitionWindow = new CreatePartitionWindow(DiskModel);
+            WCreatePartition createPartitionWindow = new WCreatePartition(DiskModel);
             createPartitionWindow.Owner = MainWindow.Window;
             createPartitionWindow.Focus();
 
@@ -82,7 +82,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnCreateVolume_Click(object sender, RoutedEventArgs e)
         {
-            CreateVolumeWindow createVolumeWindow = new CreateVolumeWindow(DiskModel);
+            WCreateVolume createVolumeWindow = new WCreateVolume(DiskModel);
             createVolumeWindow.Owner = MainWindow.Window;
             createVolumeWindow.Focus();
 
@@ -91,7 +91,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnEasyFormat_Click(object sender, RoutedEventArgs e)
         {
-            FormatDriveWindow formatWindow = new FormatDriveWindow(DiskModel);
+            WFormatDrive formatWindow = new WFormatDrive(DiskModel);
             formatWindow.Owner = MainWindow.Window;
             formatWindow.Focus();
 

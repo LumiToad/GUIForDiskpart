@@ -80,7 +80,7 @@ namespace GUIForDiskpart.Presentation.Presenter
         public void OpenScanVolumeWindow()
         {
             if (Partition.IsLogicalDisk && Partition.LDModel.DriveLetter == null) return;
-            CHKDSKWindow window = new CHKDSKWindow(Partition);
+            WCHKDSK window = new WCHKDSK(Partition);
             window.Owner = MainWindow.Window;
             window.Show();
         }
@@ -111,14 +111,14 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         private void OnExtend_Click(object sender, RoutedEventArgs e)
         {
-            ExtendWindow window = new ExtendWindow(Partition);
+            WExtend window = new WExtend(Partition);
             window.Owner = MainWindow.Window;
             window.Show();
         }
 
         private void OnShrink_Click(object sender, RoutedEventArgs e)
         {
-            GUIForDiskpart.Presentation.View.Windows.ShrinkWindow window = new GUIForDiskpart.Presentation.View.Windows.ShrinkWindow(Partition);
+            GUIForDiskpart.Presentation.View.Windows.WShrink window = new GUIForDiskpart.Presentation.View.Windows.WShrink(Partition);
             window.Owner = MainWindow.Window;
             window.Show();
         }
@@ -132,7 +132,7 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         private void OnAttributes_Click(object sender, RoutedEventArgs e)
         {
-            AttributesVolumeWindow window = new AttributesVolumeWindow(Partition.WSMPartition);
+            WAttributesVolume window = new WAttributesVolume(Partition.WSMPartition);
             window.Owner = MainWindow.Window;
             window.Show();
         }
@@ -165,14 +165,14 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         private void OnFormat_Click(object sender, RoutedEventArgs e)
         {
-            FormatPartitionWindow formatPartitionWindow = new FormatPartitionWindow(Partition.WSMPartition);
+            WFormatPartition formatPartitionWindow = new WFormatPartition(Partition.WSMPartition);
             formatPartitionWindow.Owner = MainWindow.Window;
             formatPartitionWindow.Show();
         }
 
         private void OnDelete_Click(object sender, RoutedEventArgs e)
         {
-            DeleteWindow deleteWindow = new DeleteWindow(Partition.WSMPartition);
+            WDelete deleteWindow = new WDelete(Partition.WSMPartition);
             deleteWindow.Owner = MainWindow.Window;
             deleteWindow.Show();
         }

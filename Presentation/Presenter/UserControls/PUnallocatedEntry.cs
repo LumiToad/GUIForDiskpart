@@ -47,7 +47,7 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         private void OnCreatePart_Click(object sender, RoutedEventArgs e)
         {
-            CreatePartitionWindow createPartitionWindow = new CreatePartitionWindow(diskModel, size);
+            WCreatePartition createPartitionWindow = new WCreatePartition(diskModel, size);
             createPartitionWindow.Owner = MainWindow.Window;
             createPartitionWindow.Focus();
 
@@ -56,7 +56,7 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         private void OnCreateVolume_Click(object sender, RoutedEventArgs e)
         {
-            CreateVolumeWindow createVolumeWindow = new CreateVolumeWindow(diskModel, size);
+            WCreateVolume createVolumeWindow = new WCreateVolume(diskModel, size);
             createVolumeWindow.Owner = MainWindow.Window;
             createVolumeWindow.Focus();
 

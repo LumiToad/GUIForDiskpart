@@ -9,7 +9,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// <summary>
     /// Interaktionslogik für ConvertDriveWindow.xaml
     /// </summary>
-    public partial class ConvertDriveWindow : Window
+    public partial class WConvertDrive : Window
     {
         PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
@@ -24,7 +24,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             }
         }
 
-        public ConvertDriveWindow(DiskModel disk)
+        public WConvertDrive(DiskModel disk)
         {
             InitializeComponent();
 

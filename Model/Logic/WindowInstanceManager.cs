@@ -12,7 +12,7 @@ namespace GUIForDiskpart.Model.Logic
 {
     public class WindowInstanceManager
     {
-        private StartupLoadingWindow? startup;
+        private WStartupLoading? startup;
 
         private Dictionary<Type, object> presenters = new();
 
@@ -103,7 +103,7 @@ namespace GUIForDiskpart.Model.Logic
 
         public void StartupWindowThreadEntryPoint()
         {
-            startup = new StartupLoadingWindow();
+            startup = new WStartupLoading();
             startup.Show();
             Dispatcher.Run();
         }

@@ -7,7 +7,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// <summary>
     /// Interaction logic for CleanWindow.xaml
     /// </summary>
-    public partial class CleanWindow : Window
+    public partial class WClean : Window
     {
         PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
@@ -22,7 +22,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             }
         }
 
-        public CleanWindow(DiskModel diskModel)
+        public WClean(DiskModel diskModel)
         {
             InitializeComponent();
 
@@ -52,7 +52,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             }
             string confirmKey = DiskModel.PhysicalName;
 
-            SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(ExecuteClean,todo, confirmKey);
+            WSecurityCheck securityCheckWindow = new WSecurityCheck(ExecuteClean,todo, confirmKey);
             securityCheckWindow.Owner = this;
             securityCheckWindow.Show();
         }

@@ -9,7 +9,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// <summary>
     /// Interaction logic for AttributesVolumeWindow.xaml
     /// </summary>
-    public partial class AttributesVolumeWindow : Window
+    public partial class WAttributesVolume : Window
     {
         PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
@@ -24,7 +24,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             }
         }
 
-        public AttributesVolumeWindow(WSMPartition partition)
+        public WAttributesVolume(WSMPartition partition)
         {
             InitializeComponent();
             WSMPartition = partition;

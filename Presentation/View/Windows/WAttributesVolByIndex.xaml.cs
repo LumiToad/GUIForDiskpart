@@ -10,13 +10,13 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// <summary>
     /// Interaction logic for AttributesVolumeByIndexWindow.xaml
     /// </summary>
-    public partial class AttributesVolumeByIndexWindow : Window
+    public partial class WAttributesVolByIndex : Window
     {
         PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
         int selectedVolume = -1;
 
-        public AttributesVolumeByIndexWindow()
+        public WAttributesVolByIndex()
         {
             InitializeComponent();
             PopulateAttributesCombobox();

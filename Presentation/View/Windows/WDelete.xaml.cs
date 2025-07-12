@@ -8,7 +8,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// <summary>
     /// Interaction logic for DeleteWindow.xaml
     /// </summary>
-    public partial class DeleteWindow : Window
+    public partial class WDelete : Window
     {
         PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
@@ -23,7 +23,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             }
         }
 
-        public DeleteWindow(WSMPartition wsmPartition)
+        public WDelete(WSMPartition wsmPartition)
         {
             InitializeComponent();
 
@@ -53,7 +53,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             }
             string confirmKey = $"Drive: {WSMPartition.DiskNumber} Partition: {WSMPartition.PartitionNumber}";
 
-            SecurityCheckWindow securityCheckWindow = new SecurityCheckWindow(ExecuteDelete, todo, confirmKey);
+            WSecurityCheck securityCheckWindow = new WSecurityCheck(ExecuteDelete, todo, confirmKey);
             securityCheckWindow.Owner = this;
             securityCheckWindow.Show();
         }

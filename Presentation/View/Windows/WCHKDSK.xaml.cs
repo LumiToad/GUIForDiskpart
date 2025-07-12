@@ -11,7 +11,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// <summary>
     /// Interaction logic for CHKDSKWindow.xaml
     /// </summary>
-    public partial class CHKDSKWindow : Window
+    public partial class WCHKDSK : Window
     {
         PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
 
@@ -30,7 +30,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         private string oldKBValue = "0";
 
-        public CHKDSKWindow(Partition partition)
+        public WCHKDSK(Partition partition)
         {
             InitializeComponent();
 
