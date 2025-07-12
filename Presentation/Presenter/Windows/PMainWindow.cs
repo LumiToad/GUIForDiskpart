@@ -10,6 +10,7 @@ using GUIForDiskpart.Presentation.View.UserControls;
 using GUIForDiskpart.Database.Data;
 using GUIForDiskpart.Presentation.Presenter.UserControls;
 using System.Linq;
+using GUIForDiskpart.Presentation.Presenter.Windows;
 
 
 
@@ -20,7 +21,7 @@ namespace GUIForDiskpart.Presentation.Presenter
         public PLog<UCLog> Log {get; private set;}
         public PEntryData<UCEntryData> EntryData { get; private set;}
 
-        private Dictionary<UCPhysicalDriveEntry, PPhysicalDrive<UCPhysicalDriveEntry>> K_ucPhysicalDrives_V_pPhysicalDrives = new();
+        private Dictionary<UCPhysicalDriveEntry, PPhysicalDriveEntry<UCPhysicalDriveEntry>> K_ucPhysicalDrives_V_pPhysicalDrives = new();
         private Dictionary<UCPartitionEntry, PPartitionEntry<UCPartitionEntry>> K_ucPartitionEntry_V_pPartitionEntry = new();
         private Dictionary<UCUnallocatedEntry, PUnallocatedEntry<UCUnallocatedEntry>> K_ucUnallocatedEntry_V_pUnallocatedEntry = new();
 
@@ -61,7 +62,7 @@ namespace GUIForDiskpart.Presentation.Presenter
                 {
                     case DiskModel diskModel:
                         var ucPhysicalDrive = new UCPhysicalDriveEntry();
-                        var pPhysicalDrive = CreateUCPresenter<PPhysicalDrive<UCPhysicalDriveEntry>>(ucPhysicalDrive, diskModel);
+                        var pPhysicalDrive = CreateUCPresenter<PPhysicalDriveEntry<UCPhysicalDriveEntry>>(ucPhysicalDrive, diskModel);
                         K_ucPhysicalDrives_V_pPhysicalDrives.Add(ucPhysicalDrive, pPhysicalDrive);
                         userControl = ucPhysicalDrive;
                         break;
@@ -120,7 +121,7 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         #region EntriesClick
 
-        public void OnDiskEntry_Click<UCType>(PPhysicalDrive<UCType> pPhysicalDrive) where UCType : UCPhysicalDriveEntry
+        public void OnDiskEntry_Click<UCType>(PPhysicalDriveEntry<UCType> pPhysicalDrive) where UCType : UCPhysicalDriveEntry
         {
             AddEntrysToStackPanel(Window.PartitionStackPanel, pPhysicalDrive.DiskModel.Partitions);
             if (pPhysicalDrive.DiskModel.UnallocatedSpace > 0)
@@ -193,11 +194,7 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         public void OnAttributesVolume_Click(object sender, RoutedEventArgs e)
         {
-            WAttributesVolByIndex attributesVolumeByIndexWindow = new();
-            attributesVolumeByIndexWindow.Owner = Window;
-            attributesVolumeByIndexWindow.Focus();
-
-            attributesVolumeByIndexWindow.Show();
+            App.Instance.WIM.CreateWPresenter<PAttributesVolByIndex<WAttributesVolByIndex>>();
         }
 
         #endregion TopBarDiskPartMenu

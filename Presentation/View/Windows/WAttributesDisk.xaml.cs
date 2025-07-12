@@ -9,53 +9,13 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class WAttributesDisk : Window
     {
-        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
+        public delegate void DOnClick(object sender, RoutedEventArgs e);
+        public event DOnClick ESet;
+        public event DOnClick EClear;
+        public event DOnClick ECancel;
 
-        private DiskModel diskModel;
-        public DiskModel DiskModel
-        {
-            get { return diskModel; }
-            set
-            {
-                diskModel = value;
-                AddTextToConsole(DiskModel.GetOutputAsString());
-            }
-        }
-
-        public WAttributesDisk(DiskModel diskModel)
-        {
-            InitializeComponent();
-            diskModel = DiskModel;
-        }
-
-        private void SetButton_Clear(object sender, RoutedEventArgs e)
-        {
-            string output = string.Empty;
-
-            output += DPFunctions.AttributesDisk(DiskModel.DiskIndex, true, false);
-
-            MainWindow.Log.Print(output);
-            this.Close();
-        }
-
-        private void ClearButton_Clear(object sender, RoutedEventArgs e)
-        {
-            string output = string.Empty;
-
-            output += DPFunctions.AttributesDisk(DiskModel.DiskIndex, false, false);
-
-            MainWindow.Log.Print(output);
-            this.Close();
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void AddTextToConsole(string text)
-        {
-            ConsoleReturn.Print(text);
-        }
+        private void SetButton_Click(object sender, RoutedEventArgs e) => EClear?.Invoke(sender, e);
+        private void ClearButton_Click(object sender, RoutedEventArgs e) => EClear?.Invoke(sender, e);
+        private void CancelButton_Click(object sender, RoutedEventArgs e) => ECancel?.Invoke(sender, e);
     }
 }

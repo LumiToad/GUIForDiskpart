@@ -9,7 +9,7 @@ using System.Windows.Media;
 
 namespace GUIForDiskpart.Presentation.Presenter.UserControls
 {
-    public class PPhysicalDrive<T> : UCPresenter<T> where T : UCPhysicalDriveEntry
+    public class PPhysicalDriveEntry<T> : UCPresenter<T> where T : UCPhysicalDriveEntry
     {
         public DiskModel DiskModel { get; private set; }
         public bool? IsSelected { get { return UserControl.EntrySelected.IsChecked; } }

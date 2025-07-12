@@ -18,7 +18,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <userControls:UCLog x:Name="ConsoleReturn" Grid.RowSpan="2"/>
+        <userControls:UCLog x:Name="Log" Grid.RowSpan="2"/>
         <StackPanel Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Top" Margin="10,10,0,0">
             <Label Content="Option" Padding="0,2.5,0,0"/>
             <ComboBox x:Name="Attributes" Width="120" Margin="10,0,0,0" SelectedIndex="0">
@@ -26,8 +26,8 @@
             </ComboBox>
         </StackPanel>
         <StackPanel Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Top" Margin="10,80,0,0">
-            <Button x:Name="ConfirmButton" Content="Set" Click="SetButton_Clear"/>
-            <Button x:Name="ConfirmButton_Copy" Content="Clear" Click="ClearButton_Clear" Margin="20,0,0,0"/>
+            <Button x:Name="ConfirmButton" Content="Set" Click="SetButton_Click"/>
+            <Button x:Name="ConfirmButton_Copy" Content="Clear" Click="ClearButton_Click" Margin="20,0,0,0"/>
             <Button x:Name="CancelButton" Content="Cancel" IsCancel="True"  Click="CancelButton_Click" Margin="20,0,0,0"/>
 
         </StackPanel>

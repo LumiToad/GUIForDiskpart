@@ -1,8 +1,9 @@
-﻿using GUIForDiskpart.Model.Data;
+﻿using System.Windows;
+
+using GUIForDiskpart.Model.Data;
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Presentation.View.UserControls;
-using Microsoft.VisualBasic.Logging;
-using System.Windows;
+
 
 namespace GUIForDiskpart.Presentation.Presenter.Windows
 {

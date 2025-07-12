@@ -56,7 +56,6 @@ namespace GUIForDiskpart.Presentation.View.Windows
         public void DiskEntry_Click(UCPhysicalDriveEntry entry) => EDiskEntry_Click(entry);
         public void PartitionEntry_Click(UCPartitionEntry entry) => EPartitionEntry_Click(entry);
         public void UnallocatedEntry_Click(UCUnallocatedEntry entry) => EUnallocatedEntry_Click(entry);
-
         public void ListPart_Click(object sender, RoutedEventArgs e) => EListPart_Click(sender, e);
 
         #endregion EntriesClick
