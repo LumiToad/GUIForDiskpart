@@ -13,7 +13,6 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         const string MBR_TEXT = "Will effect EVERY Volume on MBR drives!, will effect just THIS Volume on GPT drives";
         int selectedVolume = -1;
         
-
         private void PopulateAttributesCombobox()
         {
             Window.Attributes.Items.Add(DPAttributes.HIDDEN);

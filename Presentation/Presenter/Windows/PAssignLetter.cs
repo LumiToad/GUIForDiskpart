@@ -11,9 +11,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
     {
         private PLog<UCLog> Log;
 
-        WSMPartition wsmPartition;
-        WSMPartition WSMPartition
-        { get { return wsmPartition; } set { wsmPartition = value; } }
+        public WSMPartition WSMPartition { get; private set; }
 
         private void PopulateDriveLetterBox()
         {
@@ -46,7 +44,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         private void ExecuteRemove()
         {
             string output = string.Empty;
-            char letter = wsmPartition.DriveLetter;
+            char letter = WSMPartition.DriveLetter;
 
             output += DPFunctions.Remove(letter, false, true);
 
@@ -82,8 +80,8 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             PopulateDriveLetterBox();
             DiskService.OnDiskChanged += PopulateDriveLetterBox;
 
-            Log.Print(wsmPartition.GetOutputAsString(), true);
-            if (wsmPartition != null && wsmPartition.DriveLetter == '\0')
+            Log.Print(WSMPartition.GetOutputAsString(), true);
+            if (WSMPartition != null && WSMPartition.DriveLetter == '\0')
             {
                 Window.RemoveButton.IsEnabled = false;
                 Window.RemoveButton.Foreground = System.Windows.Media.Brushes.DarkGray;

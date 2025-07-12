@@ -16,7 +16,6 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         private PLog<UCLog> Log;
 
-        private DiskModel diskModel;
         public DiskModel DiskModel { get; private set; }
 
         #region OnClick

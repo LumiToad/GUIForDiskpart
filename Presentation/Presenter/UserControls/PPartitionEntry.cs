@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Presentation.Presenter.Windows;
 using GUIForDiskpart.Presentation.View.UserControls;
+using GUIForDiskpart.Presentation.View.Windows;
 using GUIForDiskpart.Utils;
 
 
@@ -37,7 +38,6 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         #endregion MenuItems
 
-        private PartitionModel partition;
         public PartitionModel Partition { get; private set; }
 
         public bool? IsSelected { get { return UserControl.IsSelected; } }
@@ -132,9 +132,7 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         private void OnAttributes_Click(object sender, RoutedEventArgs e)
         {
-            WAttributesVolume window = new WAttributesVolume(Partition.WSMPartition);
-            window.Owner = MainWindow.Window;
-            window.Show();
+            App.Instance.WIM.CreateWPresenter<PAttributesVolume>(true, Partition.WSMPartition);
         }
 
         private void OnActive_Click(object sender, RoutedEventArgs e)
@@ -160,7 +158,7 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         private void OnDetail_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Log.Print(DPFunctions.DetailPart(partition.WSMPartition.DiskNumber, partition.WSMPartition.PartitionNumber));
+            MainWindow.Log.Print(DPFunctions.DetailPart(Partition.WSMPartition.DiskNumber, Partition.WSMPartition.PartitionNumber));
         }
 
         private void OnFormat_Click(object sender, RoutedEventArgs e)

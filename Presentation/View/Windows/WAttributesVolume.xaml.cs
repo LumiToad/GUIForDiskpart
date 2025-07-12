@@ -11,64 +11,18 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class WAttributesVolume : Window
     {
-        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
+        public delegate void DOnClick(object sender, RoutedEventArgs e);
+        public event DOnClick ESet;
+        public event DOnClick EClear;
+        public event DOnClick ECancel;
 
-        private WSMPartition wsmPartition;
-        public WSMPartition WSMPartition
-        {
-            get { return wsmPartition; }
-            set
-            {
-                wsmPartition = value;
-                AddTextToConsole(wsmPartition.GetOutputAsString());
-            }
-        }
-
-        public WAttributesVolume(WSMPartition partition)
+        public WAttributesVolume()
         {
             InitializeComponent();
-            WSMPartition = partition;
-            PopulateAttributesCombobox();
-            MBRLabel.Text = (WSMPartition.PartitionTable == "MBR" ? "Will effect EVERY Volume on MBR drives!" : "Will effect just THIS Volume on GPT drives");
-            DriveLetterLabel.Content = WSMPartition.DriveLetter + ":/";
         }
 
-        private void PopulateAttributesCombobox()
-        {
-            Attributes.Items.Add(DPAttributes.HIDDEN);
-            Attributes.Items.Add(DPAttributes.READONLY);
-            Attributes.Items.Add(DPAttributes.NODEFAULTDRIVELETTER);
-            Attributes.Items.Add(DPAttributes.SHADOWCOPY);
-        }
-
-        private void SetButton_Click(object sender, RoutedEventArgs e)
-        {
-            string output = string.Empty;
-
-            output += DPFunctions.AttributesVolume(WSMPartition.DriveLetter, true, (string)Attributes.SelectedItem, true);
-
-            MainWindow.Log.Print(output);
-            this.Close();
-        }
-
-        private void ClearButton_Click(object sender, RoutedEventArgs e)
-        {
-            string output = string.Empty;
-
-            output += DPFunctions.AttributesVolume(WSMPartition.DriveLetter, false, (string)Attributes.SelectedItem, true);
-
-            MainWindow.Log.Print(output);
-            this.Close();
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void AddTextToConsole(string text)
-        {
-            ConsoleReturn.Print(text);
-        }
+        private void SetButton_Click(object sender, RoutedEventArgs e) => ESet?.Invoke(sender, e);
+        private void ClearButton_Click(object sender, RoutedEventArgs e) => EClear?.Invoke(sender, e);
+        private void CancelButton_Click(object sender, RoutedEventArgs e) => ECancel?.Invoke(sender, e);
     }
 }
