@@ -72,7 +72,7 @@
         </StackPanel>
         <Label Content="Volume:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Label x:Name="DriveLetterTop" Content="" HorizontalAlignment="Left" Margin="63,10,0,0" VerticalAlignment="Top"/>
-        <userControls:UCLog x:Name="ConsoleReturn" Margin="0,41,0,0" Padding="1,0,0,0"/>
+        <userControls:UCLog x:Name="Log" Margin="0,41,0,0" Padding="1,0,0,0"/>
         <Button x:Name="Cancel" Content="Cancel" IsCancel="True"  Grid.Row="1" Click="Cancel_Click" Height="36"/>
         <Button x:Name="Confirm" Grid.Row="1" Grid.Column="1" Click="Confirm_Click" Height="36">
             <StackPanel Orientation="Horizontal">

@@ -7,6 +7,7 @@ using System.Reflection;
 
 using GUIForDiskpart.Utils;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.ComponentModel;
 
 
 namespace GUIForDiskpart.Presentation.Presenter
@@ -33,7 +34,6 @@ namespace GUIForDiskpart.Presentation.Presenter
             hasRegistered = true;
 
             RegisterEventsInternal();
-            
         }
 
         protected virtual void RegisterEventsInternal()
@@ -122,8 +122,11 @@ namespace GUIForDiskpart.Presentation.Presenter
         /// </summary>
         public void Close()
         {
-            App.Instance.WIM.TerminateWindowAndPresenter(this);
+            App.Instance.WIM.RemovePresenter(this);
+            Window.Close();
         }
+
+        public void Close(object? sender, CancelEventArgs e) => App.Instance.WIM.RemovePresenter(this);
     }
 
     public class UCPresenter<T> : Presenter where T : UserControl

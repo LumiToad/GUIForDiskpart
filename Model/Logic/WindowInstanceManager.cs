@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Threading;
 
 using GUIForDiskpart.Presentation.Presenter;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 
 namespace GUIForDiskpart.Model.Logic
@@ -64,6 +65,7 @@ namespace GUIForDiskpart.Model.Logic
                 wPresenter.Window.Focus();        
             }
             wPresenter.Window.ContentRendered += OnWindowContentRendered;
+            wPresenter.Window.Closing += wPresenter.Close;
 
             wPresenter.RegisterEvents();
             wPresenter.Setup();
@@ -108,10 +110,9 @@ namespace GUIForDiskpart.Model.Logic
             Dispatcher.Run();
         }
 
-        public void TerminateWindowAndPresenter<T>(WPresenter<T> wPresenter) where T : Window
+        public void RemovePresenter<T>(WPresenter<T> wPresenter) where T : Window
         {
             presenters.Remove(wPresenter.GetType());
-            wPresenter.Window.Close();
         }
     }
 }

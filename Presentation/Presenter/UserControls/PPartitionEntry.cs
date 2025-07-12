@@ -82,9 +82,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
         public void OpenScanVolumeWindow()
         {
             if (Partition.IsLogicalDisk && Partition.LDModel.DriveLetter == null) return;
-            WCHKDSK window = new WCHKDSK(Partition);
-            window.Owner = MainWindow.Window;
-            window.Show();
+            App.Instance.WIM.CreateWPresenter<PCHKDSK>(true, Partition);
         }
 
         #region OnClick

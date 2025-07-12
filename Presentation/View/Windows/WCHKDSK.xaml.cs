@@ -1,10 +1,5 @@
-﻿using GUIForDiskpart.Database.Data;
-using GUIForDiskpart.Database.Data.CMD;
-using GUIForDiskpart.Model.Data;
-using GUIForDiskpart.Model.Logic.CMD;
-using GUIForDiskpart.Presentation.Presenter;
-using GUIForDiskpart.Utils;
-using System.Windows;
+﻿using System.Windows;
+
 
 namespace GUIForDiskpart.Presentation.View.Windows
 {
@@ -13,226 +8,69 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class WCHKDSK : Window
     {
-        PMainWindow MainWindow = App.Instance.WIM.GetPresenter<PMainWindow>();
+        public delegate void DOnClick(object sender, RoutedEventArgs e);
+        public event DOnClick EConfirm;
+        public event DOnClick ECancel;
+        public event DOnClick EJustScan;
+        public event DOnClick EBrowse;
 
-        private Partition partition;
-        public Partition Partition
-        {
-            get { return partition; }
-            set
-            {
-                partition = value;
-                AddTextToConsole(Partition.GetOutputAsString());
-                DriveLetterTop.Content = Partition.LDModel.VolumeName + " " + Partition.WSMPartition.DriveLetter + ":\\";
-                DriveLetterBottom.Content = Partition.WSMPartition.DriveLetter + ":\\";
-            }
-        }
+        public delegate void DOnChecked(object sender, RoutedEventArgs e);
+        public event DOnChecked EParaF;
+        public event DOnChecked EParaR;
+        public event DOnChecked EParaX;
+        public event DOnChecked EParaV;
+        public event DOnChecked EParaOfflineScanAndFix;
+        public event DOnChecked EParaI;
+        public event DOnChecked EParaC;
+        public event DOnChecked EParaL;
+        public event DOnChecked EParaB;
+        public event DOnChecked EParaScan;
+        public event DOnChecked EParaForceOff;
+        public event DOnChecked EParaPerf;
+        public event DOnChecked EParaSpotfix;
+        public event DOnChecked EParaSD;
+        public event DOnChecked EParaFree;
+        public event DOnChecked EParaMarkClean;
 
-        private string oldKBValue = "0";
+        public delegate void DOnTextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e);
+        public event DOnTextChanged ETextChanged;
 
-        public WCHKDSK(Partition partition)
+
+        public WCHKDSK()
         {
             InitializeComponent();
-
-            Partition = partition;
         }
 
-        private void AddTextToConsole(string text)
-        {
-            ConsoleReturn.Print(text);
-        }
+        private void TextBoxL_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) => ETextChanged?.Invoke(sender, e);
 
-        private void ParaF_Checked(object sender, RoutedEventArgs e)
-        {
-            WriteTextBoxPara((bool)ParaF.IsChecked, CHKDSKParameters.FIXERRORS);
-        }
+        #region OnChecked
 
-        private void ParaR_Checked(object sender, RoutedEventArgs e)
-        {
-            WriteTextBoxPara(ParaR.IsChecked, CHKDSKParameters.LOCATEBAD);
-        }
+        private void ParaF_Checked(object sender, RoutedEventArgs e) => EParaF?.Invoke(sender, e);
+        private void ParaR_Checked(object sender, RoutedEventArgs e) => EParaR?.Invoke(sender, e);
+        private void ParaX_Checked(object sender, RoutedEventArgs e) => EParaX?.Invoke(sender, e);
+        private void ParaV_Checked(object sender, RoutedEventArgs e) => EParaV?.Invoke(sender, e);
+        private void ParaOfflineScanAndFix_Checked(object sender, RoutedEventArgs e) => EParaOfflineScanAndFix?.Invoke(sender, e);
+        private void ParaI_Checked(object sender, RoutedEventArgs e) => EParaI?.Invoke(sender, e);
+        private void ParaC_Checked(object sender, RoutedEventArgs e) => EParaC?.Invoke(sender, e);
+        private void ParaL_Checked(object sender, RoutedEventArgs e) => EParaL?.Invoke(sender, e);
+        private void ParaB_Checked(object sender, RoutedEventArgs e) => EParaB?.Invoke(sender, e);
+        private void ParaScan_Checked(object sender, RoutedEventArgs e) => EParaScan?.Invoke(sender, e);
+        private void ParaForceOff_Checked(object sender, RoutedEventArgs e) => EParaForceOff?.Invoke(sender, e);
+        private void ParaPerf_Checked(object sender, RoutedEventArgs e) => EParaPerf?.Invoke(sender, e);
+        private void ParaSpotfix_Checked(object sender, RoutedEventArgs e) => EParaSpotfix?.Invoke(sender, e);
+        private void ParaSD_Checked(object sender, RoutedEventArgs e) => EParaSD?.Invoke(sender, e);
+        private void ParaFree_Checked(object sender, RoutedEventArgs e) => EParaFree?.Invoke(sender, e);
+        private void ParaMarkClean_Checked(object sender, RoutedEventArgs e) => EParaMarkClean?.Invoke(sender, e);
 
-        private void ParaX_Checked(object sender, RoutedEventArgs e)
-        {
-            WriteTextBoxPara(ParaX.IsChecked, CHKDSKParameters.FIXERRORSFORCEDISMOUNT);
-        }
+        #endregion OnChecked
 
-        private void ParaV_Checked(object sender, RoutedEventArgs e)
-        {
-            WriteTextBoxPara(ParaV.IsChecked, CHKDSKParameters.DISPLAYNAMEOFEACHFILE);
-        }
+        #region OnClick
 
-        private void ParaOfflineScanAndFix_Checked(object sender, RoutedEventArgs e)
-        {
-            WriteTextBoxPara(ParaOfflineScanAndFix.IsChecked, CHKDSKParameters.OFFLINESCANANDFIX);
-        }
+        private void Confirm_Click(object sender, RoutedEventArgs e) => EConfirm?.Invoke(sender, e);
+        private void Cancel_Click(object sender, RoutedEventArgs e) => ECancel?.Invoke(sender, e);
+        private void JustScan_Click(object sender, RoutedEventArgs e) => EJustScan?.Invoke(sender, e);
+        private void Browse_Click(object sender, RoutedEventArgs e) => EBrowse?.Invoke(sender, e);
 
-        private void ParaI_Checked(object sender, RoutedEventArgs e)
-        {
-            WriteTextBoxPara(ParaI.IsChecked, CHKDSKParameters.LESSVIGOROUS_NTFS);
-        }
-
-        private void ParaC_Checked(object sender, RoutedEventArgs e)
-        {
-            WriteTextBoxPara(ParaC.IsChecked, CHKDSKParameters.NOCYCLECHECKNTFS);
-        }
-
-        private void ParaL_Checked(object sender, RoutedEventArgs e)
-        {
-            if (ParaL.IsChecked == false)
-            { 
-                if (!string.IsNullOrEmpty(TextBoxL.Text) && TextBoxPara.Text.Contains(TextBoxL.Text))
-                {
-                    TextBoxPara.Text = TextBoxPara.Text.Replace(TextBoxL.Text, "");
-                }
-            }
-            
-            WriteTextBoxPara(ParaL.IsChecked, CHKDSKParameters.LOGFILESIZE_NTFS);
-            
-            if (ParaL.IsChecked == true)
-            {
-                ReplaceKBValueText();
-            }
-        }
-
-        private void TextBoxL_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-            ReplaceKBValueText();
-        }
-
-        private void ReplaceKBValueText()
-        {
-            if (TextBoxPara.Text.Contains(oldKBValue))
-            {
-                TextBoxPara.Text = TextBoxPara.Text.Replace(oldKBValue, TextBoxL.Text);
-            }
-            else
-            {
-                int index = TextBoxPara.Text.IndexOf(CHKDSKParameters.LOGFILESIZE_NTFS);
-                if (index == -1) return;
-                TextBoxPara.Text = TextBoxPara.Text.Insert(index + 3, TextBoxL.Text);
-            }
-
-            if (string.IsNullOrEmpty(TextBoxL.Text)) return;
-            oldKBValue = TextBoxL.Text;
-        }
-
-        private void ParaB_Checked(object sender, RoutedEventArgs e)
-        {
-            WriteTextBoxPara(ParaB.IsChecked, CHKDSKParameters.CLEARBADSECTORLIST_NTFS);
-        }
-
-        private void ParaScan_Checked(object sender, RoutedEventArgs e)
-        {
-            WriteTextBoxPara(ParaScan.IsChecked, CHKDSKParameters.SCAN_NTFS);
-            ParaForceOff.IsChecked = false;
-            WriteTextBoxPara(ParaForceOff.IsChecked, CHKDSKParameters.FORCEOFFLINEFIX_NTFS);
-        }
-
-        private void ParaForceOff_Checked(object sender, RoutedEventArgs e)
-        {
-            WriteTextBoxPara(ParaForceOff.IsChecked, CHKDSKParameters.FORCEOFFLINEFIX_NTFS);
-        }
-
-        private void ParaPerf_Checked(object sender, RoutedEventArgs e)
-        {
-            WriteTextBoxPara(ParaPerf.IsChecked, CHKDSKParameters.FULLPERFORMANCE);
-        }
-
-        private void ParaSpotfix_Checked(object sender, RoutedEventArgs e)
-        {
-            WriteTextBoxPara(ParaSpotfix.IsChecked, CHKDSKParameters.SPOTFIX);
-        }
-
-        private void ParaSD_Checked(object sender, RoutedEventArgs e)
-        {
-            WriteTextBoxPara(ParaSD.IsChecked, CHKDSKParameters.SDCLEAN_NTFS);
-        }
-
-        private void ParaFree_Checked(object sender, RoutedEventArgs e)
-        {
-            WriteTextBoxPara(ParaFree.IsChecked, CHKDSKParameters.FREEORPHANED_FATFAMILY);
-        }
-
-        private void ParaMarkClean_Checked(object sender, RoutedEventArgs e)
-        {
-            WriteTextBoxPara(ParaMarkClean.IsChecked, CHKDSKParameters.MARKCLEAN_FATFAMILY);
-        }
-
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void Confirm_Click(object sender, RoutedEventArgs e)
-        {
-            string output = string.Empty;
-
-            TextBoxPara.Text += GetOptionalParameters();
-            
-            if (string.IsNullOrEmpty(TextBoxDir.Text)) 
-            {
-                output += CMDFunctions.CHKDSK(Partition.WSMPartition.DriveLetter, TextBoxPara.Text);
-            }
-            else
-            {
-                output += CMDFunctions.CHKDSK(Partition.WSMPartition.DriveLetter, TextBoxPara.Text, TextBoxDir.Text);
-            }
-
-            MainWindow.Log.Print(output);
-
-            this.Close();
-        }
-
-        private string GetOptionalParameters()
-        {
-            string result = string.Empty;
-
-            if (ParaShutdown.IsChecked == true)
-            {
-                string item = (string)ParaShutdownSelection.SelectionBoxItem;
-                string shutdown = $" & {CMDBasic.CMD_SHUTDOWN} {CMDBasic.SHUTDOWN_FORCE} ";
-                switch (item)
-                {
-                    case ("Shutdown"):
-                        shutdown += $"{CMDBasic.SHUTDOWN_NO_TIMER} ";
-                        break;
-                    case ("Restart"):
-                        shutdown += $"{CMDBasic.SHUTDOWN_RESTART} ";
-                        break;
-                }
-                result += shutdown;
-            }        
-
-            return result;
-        }
-
-        private void Browse_Click(object sender, RoutedEventArgs e)
-        {
-            TextBoxDir.Text = FileUtils.GetSaveAsTextFilePath("CHKDSK");
-        }
-
-        private void WriteTextBoxPara(bool? value, string parameter)
-        {
-            if (value == true)
-            {
-                TextBoxPara.Text += $" {parameter} ";
-            }
-            else
-            {
-                if (TextBoxPara.Text.Contains(parameter))
-                {
-                    TextBoxPara.Text = TextBoxPara.Text.Replace($" {parameter} ", "");
-                }
-            }
-        }
-
-        private void JustScan_Click(object sender, RoutedEventArgs e)
-        {
-            if (ParaF.IsChecked == false) ParaF.IsChecked = true;
-            if (ParaR.IsChecked == false) ParaR.IsChecked = true;
-            if (ParaX.IsChecked == false) ParaX.IsChecked = true;
-            if (ParaScan.IsChecked == false) ParaScan.IsChecked = true;
-        }
+        #endregion OnClick
     }
 }
