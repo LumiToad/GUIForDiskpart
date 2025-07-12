@@ -13,13 +13,13 @@ namespace GUIForDiskpart.Presentation.Presenter
 {
     public class Presenter
     {
-        public PMainWindow<GUIFDMainWin>? MainWindow
+        public PMainWindow? MainWindow
         {
             get 
             {
                 if (App.Instance.WIM.HasGUIFDMainWinLoaded)
                 {
-                    return App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
+                    return App.Instance.WIM.GetPresenter<PMainWindow>();
                 }
                 else return null;
             }

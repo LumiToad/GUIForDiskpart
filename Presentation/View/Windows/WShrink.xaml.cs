@@ -14,7 +14,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class WShrink : Window
     {
-        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
+        PMainWindow MainWindow = App.Instance.WIM.GetPresenter<PMainWindow>();
 
         private PartitionModel partition;
         public PartitionModel Partition

@@ -1,14 +1,15 @@
-﻿using GUIForDiskpart.Utils;
-using System;
+﻿global using PEntryData =
+    GUIForDiskpart.Presentation.Presenter.UserControls.PEntryData<GUIForDiskpart.Presentation.View.UserControls.UCEntryData>;
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows;
 
-namespace GUIForDiskpart.Presentation.Presenter
+using GUIForDiskpart.Utils;
+
+
+namespace GUIForDiskpart.Presentation.Presenter.UserControls
 {
     public class PEntryData<T> : UCPresenter<T> where T : View.UserControls.UCEntryData
     {

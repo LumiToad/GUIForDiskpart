@@ -1,20 +1,19 @@
-﻿using GUIForDiskpart.Model.Data;
+﻿global using PAttributesDisk =
+    GUIForDiskpart.Presentation.Presenter.Windows.PAttributesDisk<GUIForDiskpart.Presentation.View.Windows.WAttributesDisk>;
+
+using System.Windows;
+
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Presentation.View.UserControls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+
 
 namespace GUIForDiskpart.Presentation.Presenter.Windows
 {
     public class PAttributesDisk<T> : WPresenter<T> where T : WAttributesDisk
     {
-        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
+        PMainWindow MainWindow = App.Instance.WIM.GetPresenter<PMainWindow>();
 
-        private PLog<UCLog> Log;
+        private PLog Log;
 
         public DiskModel DiskModel { get; private set; }
 
@@ -70,7 +69,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public override void InitPresenters()
         {
-            Log = CreateUCPresenter<PLog<UCLog>>(Window.Log);
+            Log = CreateUCPresenter<PLog>(Window.Log);
         }
 
         #endregion WPresenter

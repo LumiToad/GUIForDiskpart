@@ -13,7 +13,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class WCreateVolume : Window
     {
-        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
+        PMainWindow MainWindow = App.Instance.WIM.GetPresenter<PMainWindow>();
 
         private long sizeInMB;
 

@@ -10,7 +10,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class WDelete : Window
     {
-        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
+        PMainWindow MainWindow = App.Instance.WIM.GetPresenter<PMainWindow>();
 
         private WSMPartition wsmPartition;
         public WSMPartition WSMPartition

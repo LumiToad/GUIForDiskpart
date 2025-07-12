@@ -16,7 +16,7 @@ namespace GUIForDiskpart.Model.Logic
 
         private Dictionary<Type, object> presenters = new();
 
-        public bool HasGUIFDMainWinLoaded => presenters.ContainsKey(typeof(PMainWindow<GUIFDMainWin>));
+        public bool HasGUIFDMainWinLoaded => presenters.ContainsKey(typeof(PMainWindow));
 
         public dynamic this[Type type]
         {

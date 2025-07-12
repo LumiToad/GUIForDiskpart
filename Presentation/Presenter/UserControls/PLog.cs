@@ -1,11 +1,14 @@
-﻿using System;
+﻿global using PLog =
+    GUIForDiskpart.Presentation.Presenter.UserControls.PLog<GUIForDiskpart.Presentation.View.UserControls.UCLog>;
+
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
 using GUIForDiskpart.Utils;
 
 
-namespace GUIForDiskpart.Presentation.Presenter
+namespace GUIForDiskpart.Presentation.Presenter.UserControls
 {
     public class PLog<T> : UCPresenter<T> where T : View.UserControls.UCLog
     {

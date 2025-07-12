@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿global using PAssignLetter =
+    GUIForDiskpart.Presentation.Presenter.Windows.PAssignLetter<GUIForDiskpart.Presentation.View.Windows.WAssignLetter>;
+
+using System.Windows;
 
 using GUIForDiskpart.Model.Data;
 using GUIForDiskpart.Model.Logic.Diskpart;
@@ -9,7 +12,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 {
     public class PAssignLetter<T> : WPresenter<T> where T : WAssignLetter
     {
-        private PLog<UCLog> Log;
+        private PLog Log;
 
         public WSMPartition WSMPartition { get; private set; }
 
@@ -104,7 +107,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public override void InitPresenters()
         {
-            Log = CreateUCPresenter<PLog<UCLog>>(Window.Log);
+            Log = CreateUCPresenter<PLog>(Window.Log);
         }
 
         #endregion WPresenter

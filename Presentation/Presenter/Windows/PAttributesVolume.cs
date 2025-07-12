@@ -12,7 +12,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 {
     public class PAttributesVolume<T> : WPresenter<T> where T : WAttributesVolume
     {
-        private PLog<UCLog> Log;
+        private PLog Log;
         const string MBR_TEXT_EVERY_VOL = "Will effect EVERY Volume on MBR drives!";
         const string MBR_TEXT_THIS_VOL = "Will effect just THIS Volume on GPT drives";
 
@@ -81,7 +81,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public override void InitPresenters()
         {
-            Log = CreateUCPresenter<PLog<UCLog>>(Window.Log);
+            Log = CreateUCPresenter<PLog>(Window.Log);
         }
 
         #endregion WPresenter

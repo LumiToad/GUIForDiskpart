@@ -1,11 +1,13 @@
-﻿using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.Presentation.View.UserControls;
-using GUIForDiskpart.Utils;
-using System;
-using System.Management.Automation;
+﻿global using PPhysicalDriveEntry =
+    GUIForDiskpart.Presentation.Presenter.UserControls.PPhysicalDriveEntry<GUIForDiskpart.Presentation.View.UserControls.UCPhysicalDriveEntry>;
+
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
+
+using GUIForDiskpart.Model.Logic.Diskpart;
+using GUIForDiskpart.Presentation.View.UserControls;
+using GUIForDiskpart.Utils;
+
 
 namespace GUIForDiskpart.Presentation.Presenter.UserControls
 {

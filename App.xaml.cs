@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Threading;
 using System.Windows;
-using System.Windows.Threading;
 
 using GUIForDiskpart.Utils;
 using GUIForDiskpart.Model.Logic;
-using GUIForDiskpart.Presentation.Presenter;
 
 
 namespace GUIForDiskpart
@@ -47,12 +44,12 @@ namespace GUIForDiskpart
                 FileUtils.SaveExceptionCrashLog(ex);
             }
 
-            WIM.CreateWPresenter<PMainWindow<GUIFDMainWin>>();
+            WIM.CreateWPresenter<PMainWindow>();
         }
 
         public void OnMainWindowLoaded()
         {
-            var pMainWin = WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
+            var pMainWin = WIM.GetPresenter<PMainWindow>();
             DiskService.OnDiskChanged += pMainWin.OnDiskChanged;
             pMainWin.DisplayDiskData(true);
 

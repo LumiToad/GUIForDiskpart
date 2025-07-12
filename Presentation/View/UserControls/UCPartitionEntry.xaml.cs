@@ -32,7 +32,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         public event DOnClick EOpenContextMenu;
 
         // To Presenter
-        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
+        PMainWindow MainWindow = App.Instance.WIM.GetPresenter<PMainWindow>();
 
         // To Presenter
         private PartitionModel partition;

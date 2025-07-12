@@ -1,13 +1,14 @@
-﻿using GUIForDiskpart.Presentation.View.UserControls;
-using GUIForDiskpart.Service;
+﻿global using PUnallocatedEntry =
+    GUIForDiskpart.Presentation.Presenter.UserControls.PUnallocatedEntry<GUIForDiskpart.Presentation.View.UserControls.UCUnallocatedEntry>;
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Management.Automation;
 using System.Windows;
-using System.Windows.Controls;
+
+using GUIForDiskpart.Presentation.View.UserControls;
+using GUIForDiskpart.Service;
 
 
-namespace GUIForDiskpart.Presentation.Presenter
+namespace GUIForDiskpart.Presentation.Presenter.UserControls
 {
     public class PUnallocatedEntry<T> : UCPresenter<T> where T : UCUnallocatedEntry
     {

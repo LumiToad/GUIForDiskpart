@@ -1,14 +1,16 @@
-﻿using System.Windows;
+﻿global using PPartitionEntry =
+    GUIForDiskpart.Presentation.Presenter.UserControls.PPartitionEntry<GUIForDiskpart.Presentation.View.UserControls.UCPartitionEntry>;
+
+using System.Windows;
 using System.Windows.Controls;
 
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Presentation.Presenter.Windows;
 using GUIForDiskpart.Presentation.View.UserControls;
-using GUIForDiskpart.Presentation.View.Windows;
 using GUIForDiskpart.Utils;
 
 
-namespace GUIForDiskpart.Presentation.Presenter
+namespace GUIForDiskpart.Presentation.Presenter.UserControls
 {
     public class PPartitionEntry<T> : UCPresenter<T> where T : UCPartitionEntry
     {
@@ -177,7 +179,7 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         private void OnAssign_Click(object sender, RoutedEventArgs e)
         {
-            App.Instance.WIM.CreateWPresenter<PAssignLetter<WAssignLetter>>(true, Partition.WSMPartition);
+            App.Instance.WIM.CreateWPresenter<PAssignLetter>(true, Partition.WSMPartition);
         }
 
         private void OnScanVolume_Click(object sender, RoutedEventArgs e)

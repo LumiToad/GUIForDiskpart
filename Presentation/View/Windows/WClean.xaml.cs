@@ -9,7 +9,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class WClean : Window
     {
-        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM.GetPresenter<PMainWindow<GUIFDMainWin>>();
+        PMainWindow MainWindow = App.Instance.WIM.GetPresenter<PMainWindow>();
 
         private DiskModel diskModel;
         public DiskModel DiskModel

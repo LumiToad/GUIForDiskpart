@@ -27,7 +27,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         public event DOnClick EButton_Click;
         public event DOnClick EOpenContextMenu_Click;
 
-        PMainWindow<GUIFDMainWin> MainWindow = App.Instance.WIM[typeof(PMainWindow<GUIFDMainWin>)];
+        PMainWindow MainWindow = App.Instance.WIM[typeof(PMainWindow)];
 
         public UCPhysicalDriveEntry()
         {

@@ -1,14 +1,19 @@
-﻿using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.Presentation.View.UserControls;
+﻿global using PAttributesVolByIndex =
+    GUIForDiskpart.Presentation.Presenter.Windows.PAttributesVolByIndex<GUIForDiskpart.Presentation.View.Windows.WAttributesVolByIndex>;
+
 using System.Text.RegularExpressions;
 using System;
 using System.Windows;
+
+using GUIForDiskpart.Model.Logic.Diskpart;
+using GUIForDiskpart.Presentation.View.UserControls;
+
 
 namespace GUIForDiskpart.Presentation.Presenter.Windows
 {
     public class PAttributesVolByIndex<T> : WPresenter<T> where T : WAttributesVolByIndex
     {
-        private PLog<UCLog> Log;
+        private PLog Log;
 
         const string MBR_TEXT = "Will effect EVERY Volume on MBR drives!, will effect just THIS Volume on GPT drives";
         int selectedVolume = -1;
@@ -101,7 +106,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public override void InitPresenters()
         {
-            Log = CreateUCPresenter<PLog<UCLog>>(Window.Log);
+            Log = CreateUCPresenter<PLog>(Window.Log);
         }
 
         #endregion WPresenter
