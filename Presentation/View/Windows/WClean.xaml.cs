@@ -1,6 +1,7 @@
-﻿using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.Presentation.Presenter;
-using System.Windows;
+﻿using System.Windows;
+
+using GUIForDiskpart.Model.Logic.Diskpart;
+
 
 namespace GUIForDiskpart.Presentation.View.Windows
 {
@@ -9,62 +10,16 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class WClean : Window
     {
-        PMainWindow MainWindow = App.Instance.WIM.GetPresenter<PMainWindow>();
+        public delegate void DOnClick(object sender, RoutedEventArgs e);
+        public event DOnClick EConfirm;
+        public event DOnClick ECancel;
 
-        private DiskModel diskModel;
-        public DiskModel DiskModel
-        {
-            get { return diskModel; }
-            set
-            {
-                diskModel = value;
-                AddTextToConsole(DiskModel.GetOutputAsString());
-            }
-        }
-
-        public WClean(DiskModel diskModel)
+        public WClean()
         {
             InitializeComponent();
-
-            diskModel = DiskModel;
         }
 
-        private void ExecuteClean(bool value)
-        {
-            if (!value) return;
-
-            string output = string.Empty;
-
-            output += DPFunctions.Clean(DiskModel.DiskIndex, (bool)CleanAll.IsChecked);
-
-            MainWindow.Log.Print(output);
-            MainWindow.DisplayDiskData(false);
-
-            this.Close();
-        }
-
-        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
-        {
-            string todo = "Clean the whole drive! ALL DATA WILL BE LOST!";
-            if ((bool)CleanAll.IsChecked)
-            {
-                todo = "Clean and override the whole drive! MAKES DATA RESCUE CLOSE TO IMPOSSIBLE!";
-            }
-            string confirmKey = DiskModel.PhysicalName;
-
-            WSecurityCheck securityCheckWindow = new WSecurityCheck(ExecuteClean,todo, confirmKey);
-            securityCheckWindow.Owner = this;
-            securityCheckWindow.Show();
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void AddTextToConsole(string text)
-        {
-            ConsoleReturn.Print(text);
-        }
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e) => EConfirm?.Invoke(sender, e);
+        private void CancelButton_Click(object sender, RoutedEventArgs e) => ECancel?.Invoke(sender, e);
     }
 }

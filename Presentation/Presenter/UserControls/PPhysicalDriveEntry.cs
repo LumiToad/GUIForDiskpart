@@ -57,11 +57,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnClean_Click(object sender, RoutedEventArgs e)
         {
-            WClean cleanWindow = new WClean(DiskModel);
-            cleanWindow.Owner = MainWindow.Window;
-            cleanWindow.Focus();
-
-            cleanWindow.Show();
+            App.Instance.WIM.CreateWPresenter<PClean>(true, DiskModel);
         }
 
         private void OnConvert_Click(object sender, RoutedEventArgs e)

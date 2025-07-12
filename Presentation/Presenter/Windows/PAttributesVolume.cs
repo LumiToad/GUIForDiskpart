@@ -60,7 +60,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         public override void Setup()
         {
             PopulateAttributesCombobox();
-            Log.Print(WSMPartition.GetOutputAsString());
+            Log.Print(WSMPartition.GetOutputAsString(), true);
             Window.MBRLabel.Text = (WSMPartition.PartitionTable == "MBR" ? MBR_TEXT_EVERY_VOL : MBR_TEXT_THIS_VOL);
             Window.DriveLetterLabel.Content = WSMPartition.DriveLetter + ":/";
         }

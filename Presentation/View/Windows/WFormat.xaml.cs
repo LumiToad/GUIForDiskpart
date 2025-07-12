@@ -4,6 +4,7 @@ using System.Windows.Controls;
 
 using GUIForDiskpart.Model.Logic;
 using GUIForDiskpart.Presentation.Presenter;
+using static System.Net.Mime.MediaTypeNames;
 
 
 namespace GUIForDiskpart.Presentation.View.Windows
@@ -57,12 +58,12 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            string todo = "Format the whole drive! ALL DATA WILL BE LOST!";
+            string text = "Format the whole drive! ALL DATA WILL BE LOST!";
             string confirmKey = DiskModel.PhysicalName;
 
-            WSecurityCheck securityCheckWindow = new WSecurityCheck(ExecuteFormat, todo, confirmKey);
-            securityCheckWindow.Owner = this;
-            securityCheckWindow.Show();
+            var secCheck = App.Instance.WIM.CreateWPresenter<PSecurityCheck>(true, text, confirmKey);
+            secCheck.Window.Owner = this;
+            secCheck.ESecCheck += ExecuteFormat;
         }
 
         private void ExecuteFormat(bool value)

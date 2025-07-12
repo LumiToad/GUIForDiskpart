@@ -50,7 +50,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public override void Setup()
         {
-            Log.Print(DiskModel.GetOutputAsString());
+            Log.Print(DiskModel.GetOutputAsString(), true);
         }
 
         protected override void AddCustomArgs(params object?[] args)

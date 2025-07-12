@@ -45,7 +45,7 @@ namespace GUIForDiskpart.Model.Logic
             where PType : WPresenter<WType>, new()
             where WType : Window, new()
         {
-            PType wPresenter = WPresenter<WType>.New<PType>((packedArgs.Length > 0) ? packedArgs[0] : null);
+            PType wPresenter = WPresenter<WType>.New<PType>((packedArgs.Length > 0) ? packedArgs : null);
             SetupWindow<WType>(wPresenter, isFocus);
 
             return wPresenter;
@@ -53,6 +53,8 @@ namespace GUIForDiskpart.Model.Logic
 
         private void SetupWindow<T>(WPresenter<T> wPresenter, bool isFocus = true) where T : Window, new()
         {
+            if (presenters.ContainsKey(wPresenter.GetType())) return;
+
             wPresenter.Window = new();
             wPresenter.InitPresenters();
             wPresenter.Window.Show();

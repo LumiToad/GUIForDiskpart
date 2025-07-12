@@ -2,6 +2,7 @@
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Presentation.Presenter;
 using System.Windows;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace GUIForDiskpart.Presentation.View.Windows
 {
@@ -46,16 +47,16 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            string todo = "Delete the whole partition! ALL DATA WILL BE LOST!";
+            string text = "Delete the whole partition! ALL DATA WILL BE LOST!";
             if ((bool)CleanAll.IsChecked)
             {
-                todo = "Delete and override the whole partition! MAKES DATA RESCUE CLOSE TO IMPOSSIBLE!";
+                text = "Delete and override the whole partition! MAKES DATA RESCUE CLOSE TO IMPOSSIBLE!";
             }
             string confirmKey = $"Drive: {WSMPartition.DiskNumber} Partition: {WSMPartition.PartitionNumber}";
 
-            WSecurityCheck securityCheckWindow = new WSecurityCheck(ExecuteDelete, todo, confirmKey);
-            securityCheckWindow.Owner = this;
-            securityCheckWindow.Show();
+            var secCheck = App.Instance.WIM.CreateWPresenter<PSecurityCheck>(true, text, confirmKey);
+            secCheck.Window.Owner = this;
+            secCheck.ESecCheck += ExecuteDelete;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

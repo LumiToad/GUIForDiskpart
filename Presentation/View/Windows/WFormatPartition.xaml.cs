@@ -5,6 +5,7 @@ using GUIForDiskpart.Presentation.Presenter;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace GUIForDiskpart.Presentation.View.Windows
 {
@@ -56,12 +57,12 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            string todo = "Format the partition! ALL DATA WILL BE LOST!";
+            string text = "Format the partition! ALL DATA WILL BE LOST!";
             string confirmKey = $"Drive: {WSMPartition.DiskNumber} Partition: {WSMPartition.PartitionNumber}";
 
-            WSecurityCheck securityCheckWindow = new WSecurityCheck(ExecuteFormat, todo, confirmKey);
-            securityCheckWindow.Owner = this;
-            securityCheckWindow.Show();
+            var secCheck = App.Instance.WIM.CreateWPresenter<PSecurityCheck>(true, text, confirmKey);
+            secCheck.Window.Owner = this;
+            secCheck.ESecCheck += ExecuteFormat;
         }
 
         private void ExecuteFormat(bool value)
