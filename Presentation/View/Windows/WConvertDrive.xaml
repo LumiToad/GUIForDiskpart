@@ -30,7 +30,7 @@
 
         </StackPanel>
 
-        <userControls:UCLog x:Name="ConsoleReturn" Grid.RowSpan="2"/>
+        <userControls:UCLog x:Name="Log" Grid.RowSpan="2"/>
 
     </Grid>
 </Window>

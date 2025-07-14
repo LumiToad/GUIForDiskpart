@@ -62,11 +62,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnConvert_Click(object sender, RoutedEventArgs e)
         {
-            WConvertDrive convertDriveWindow = new WConvertDrive(DiskModel);
-            convertDriveWindow.Owner = MainWindow.Window;
-            convertDriveWindow.Focus();
-
-            convertDriveWindow.Show();
+            App.Instance.WIM.CreateWPresenter<PConvertDrive>(true, DiskModel);
         }
 
         private void OnCreatePart_Click(object sender, RoutedEventArgs e)

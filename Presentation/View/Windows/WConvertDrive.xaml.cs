@@ -11,67 +11,16 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class WConvertDrive : Window
     {
-        PMainWindow MainWindow = App.Instance.WIM.GetPresenter<PMainWindow>();
+        public delegate void DOnClick(object sender, RoutedEventArgs e);
+        public event DOnClick EConfirm;
+        public event DOnClick ECancel;
 
-        private DiskModel diskModel;
-        public DiskModel DiskModel
-        {
-            get { return diskModel; } 
-            set 
-            {
-                diskModel = value;
-                AddTextToConsole();
-            }
-        }
-
-        public WConvertDrive(DiskModel disk)
+        public WConvertDrive()
         {
             InitializeComponent();
-
-            diskModel = disk;
         }
 
-        public void AddTextToConsole()
-        {
-            ConsoleReturn.Print(DiskModel.GetOutputAsString());
-        }
-
-        private string SelectedOptionAsString()
-        {
-            return (string)((ComboBoxItem)ConvertOptionValue.SelectedValue).Content;
-        }
-
-        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
-        {
-            string option = DPConvert.GPT;
-
-            switch (SelectedOptionAsString())
-            {
-                case ("GPT"):
-                    option = DPConvert.GPT;
-                    break;
-                case ("MBR"):
-                    option = DPConvert.MBR;
-                    break;
-                case ("BASIC"):
-                    option = DPConvert.BASIC;
-                    break;
-                case ("DYNAMIC"):
-                    option = DPConvert.DYNAMIC;
-                    break;
-            }
-
-            string output = string.Empty;
-            output = DPFunctions.Convert(DiskModel.DiskIndex, option);
-
-            MainWindow.Log.Print(output);
-
-            this.Close();
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e) => EConfirm?.Invoke(sender, e);
+        private void CancelButton_Click(object sender, RoutedEventArgs e) => ECancel?.Invoke(sender, e);
     }
 }
