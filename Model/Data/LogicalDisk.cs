@@ -1,9 +1,9 @@
-﻿using GUIForDiskpart.Service;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Windows.Input;
+
+using GUIForDiskpart.Utils;
+
 
 namespace GUIForDiskpart.Model.Data
 {
@@ -37,9 +37,9 @@ namespace GUIForDiskpart.Model.Data
         private string volumeSerial;
         public string VolumeSerial { get; set; }
 
-        public string FormattedTotalSpace => ByteFormatter.FormatBytes(TotalSpace);
-        public string FormattedUsedSpace => ByteFormatter.FormatBytes(UsedSpace);
-        public string FormattedFreeSpace => ByteFormatter.FormatBytes(FreeSpace);
+        public string FormattedTotalSpace => ByteFormatter.BytesToUnitAsString(TotalSpace);
+        public string FormattedUsedSpace => ByteFormatter.BytesToUnitAsString(UsedSpace);
+        public string FormattedFreeSpace => ByteFormatter.BytesToUnitAsString(FreeSpace);
 
         public void PrintToConsole()
         {

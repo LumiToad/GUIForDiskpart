@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Windows;
 
 using GUIForDiskpart.Presentation.View.UserControls;
-using GUIForDiskpart.Service;
+using GUIForDiskpart.Utils;
 
 
 namespace GUIForDiskpart.Presentation.Presenter.UserControls
@@ -13,7 +13,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
     public class PUnallocatedEntry<T> : UCPresenter<T> where T : UCUnallocatedEntry
     {
         private long size;
-        private DiskModel diskModel;
+        public DiskModel DiskModel { get; private set; }
 
         public bool? IsSelected { get { return UserControl.EntrySelected.IsChecked; } }
 
@@ -48,16 +48,12 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnCreatePart_Click(object sender, RoutedEventArgs e)
         {
-            WCreatePartition createPartitionWindow = new WCreatePartition(diskModel, size);
-            createPartitionWindow.Owner = MainWindow.Window;
-            createPartitionWindow.Focus();
-
-            createPartitionWindow.Show();
+            App.Instance.WIM.CreateWPresenter<PCreatePartition>(true, DiskModel, size);
         }
 
         private void OnCreateVolume_Click(object sender, RoutedEventArgs e)
         {
-            WCreateVolume createVolumeWindow = new WCreateVolume(diskModel, size);
+            WCreateVolume createVolumeWindow = new WCreateVolume(DiskModel, size);
             createVolumeWindow.Owner = MainWindow.Window;
             createVolumeWindow.Focus();
 
@@ -75,8 +71,8 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         public override void Setup()
         {
-            size = diskModel.UnallocatedSpace;
-            SetSize(ByteFormatter.FormatBytes(size));
+            size = DiskModel.UnallocatedSpace;
+            SetSize(ByteFormatter.BytesToUnitAsString(size));
         }
 
         protected override void RegisterEventsInternal()
@@ -89,7 +85,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         public override void AddCustomArgs(params object?[] args)
         {
-            diskModel = (DiskModel)args[0];
+            DiskModel = (DiskModel)args[0];
         }
 
         #endregion UCPresenter

@@ -43,6 +43,12 @@ namespace GUIForDiskpart.Utils
             return retVal;
         }
 
+        public static string ComboBoxSelectionAsString(ComboBox comboBox)
+        {
+            var selected = comboBox.SelectedValue as ComboBoxItem;
+            return (string)selected.Content;
+        }
+
         // https://pvq.app/questions/874380/wpf-how-do-i-loop-through-the-all-controls-in-a-window - ask mixtral
         private static void GetChildrenControlsInternal(DependencyObject obj, ref List<UserControl> retVal)
         {

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using GUIForDiskpart.Service;
+
+using GUIForDiskpart.Utils;
+
 
 namespace GUIForDiskpart.Model.Data
 {
@@ -120,10 +122,10 @@ namespace GUIForDiskpart.Model.Data
         public uint TracksPerCylinder { get => tracksPerCylinder; set => tracksPerCylinder = value; }
         public ulong FreeSpace { get { return GetLogicalFreeSpace(); } }
         public ulong UsedSpace { get { return TotalSpace - Convert.ToUInt64(UnallocatedSpace) - FreeSpace; } }
-        public string FormattedTotalSpace => ByteFormatter.FormatBytes(TotalSpace);
-        public string FormattedFreeSpace => ByteFormatter.FormatBytes(GetLogicalFreeSpace());
-        public string FormattedUsedSpace => ByteFormatter.FormatBytes(UsedSpace);
-        public string FormattedUnallocatedSpace => ByteFormatter.FormatBytes(UnallocatedSpace);
+        public string FormattedTotalSpace => ByteFormatter.BytesToUnitAsString(TotalSpace);
+        public string FormattedFreeSpace => ByteFormatter.BytesToUnitAsString(GetLogicalFreeSpace());
+        public string FormattedUsedSpace => ByteFormatter.BytesToUnitAsString(UsedSpace);
+        public string FormattedUnallocatedSpace => ByteFormatter.BytesToUnitAsString(UnallocatedSpace);
 
         private List<Partition> partitions = new List<Partition>();
         public List<Partition> Partitions
@@ -144,8 +146,8 @@ namespace GUIForDiskpart.Model.Data
             fullOutput += "DiskModel: " + "\t\t\t" + DiskModelText + '\n';
             fullOutput += "MediaStatus: " + "\t\t\t" + MediaStatus + '\n';
             fullOutput += "MediaLoaded: " + "\t\t\t" + MediaLoaded + '\n';
-            fullOutput += $"TotalSpace: {"\t\t\t"}{ByteFormatter.FormatBytes(TotalSpace)} {ByteFormatter.GetBytesAsStringAndUnit(TotalSpace)}\n";
-            fullOutput += $"UnpartSpace: {"\t\t\t"}{ByteFormatter.FormatBytes(UnallocatedSpace)} {ByteFormatter.GetBytesAsStringAndUnit(UnallocatedSpace)}\n";
+            fullOutput += $"TotalSpace: {"\t\t\t"}{ByteFormatter.BytesToUnitAsString(TotalSpace)} {ByteFormatter.BytesToUnitAsString(TotalSpace, true, Unit.B)}\n";
+            fullOutput += $"UnpartSpace: {"\t\t\t"}{ByteFormatter.BytesToUnitAsString(UnallocatedSpace)} {ByteFormatter.BytesToUnitAsString(UnallocatedSpace, true, Unit.B)}\n";
             fullOutput += "WSMPartitionCount: " + "\t\t\t" + PartitionCount + " (includes hidden and reserved)" + '\n';
             fullOutput += "InterfaceType: " + "\t\t\t" + InterfaceType + '\n';
             fullOutput += "MediaSignature: " + "\t\t\t" + MediaSignature + '\n';

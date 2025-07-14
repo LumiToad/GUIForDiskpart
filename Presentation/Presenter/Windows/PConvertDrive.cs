@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Presentation.Presenter.UserControls;
 using GUIForDiskpart.Presentation.View.UserControls;
+using GUIForDiskpart.Utils;
 
 
 namespace GUIForDiskpart.Presentation.Presenter.Windows
@@ -17,19 +18,13 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public DiskModel DiskModel { get; private set; }
 
-        private string SelectedOptionAsString()
-        {
-            var selectedValue = Window.ConvertOptionValue.SelectedValue as ComboBoxItem;
-            return (string)selectedValue.Content;
-        }
-
         #region OnClick
 
         private void OnConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             string option = DPConvert.GPT;
 
-            switch (SelectedOptionAsString())
+            switch (WPFUtils.ComboBoxSelectionAsString(Window.ConvertOptionValue))
             {
                 case ("GPT"):
                     option = DPConvert.GPT;

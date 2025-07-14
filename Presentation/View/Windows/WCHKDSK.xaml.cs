@@ -35,7 +35,6 @@ namespace GUIForDiskpart.Presentation.View.Windows
         public delegate void DOnTextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e);
         public event DOnTextChanged ETextChanged;
 
-
         public WCHKDSK()
         {
             InitializeComponent();

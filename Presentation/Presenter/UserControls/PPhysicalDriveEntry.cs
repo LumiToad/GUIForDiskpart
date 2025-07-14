@@ -67,11 +67,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnCreatePart_Click(object sender, RoutedEventArgs e)
         {
-            WCreatePartition createPartitionWindow = new WCreatePartition(DiskModel);
-            createPartitionWindow.Owner = MainWindow.Window;
-            createPartitionWindow.Focus();
-
-            createPartitionWindow.Show();
+            App.Instance.WIM.CreateWPresenter<PCreatePartition>(true, DiskModel, DiskModel.UnallocatedSpace);
         }
 
         private void OnCreateVolume_Click(object sender, RoutedEventArgs e)

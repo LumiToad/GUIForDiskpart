@@ -1,7 +1,9 @@
-﻿using GUIForDiskpart.Service;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+
+using GUIForDiskpart.Utils;
+
 
 namespace GUIForDiskpart.Model.Data
 {
@@ -175,7 +177,7 @@ namespace GUIForDiskpart.Model.Data
                     key.Contains("AvailableForExtend")
                     )
                 {
-                    value = ByteFormatter.FormatBytes(Convert.ToInt64(value));
+                    value = ByteFormatter.BytesToUnitAsString(Convert.ToInt64(value));
                 }
                 data.Add(key, value);
             }

@@ -2,9 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 
-using GUIForDiskpart.Database.Data.Diskpart;
 using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.Presentation.Presenter;
+using GUIForDiskpart.Utils;
 
 
 namespace GUIForDiskpart.Presentation.View.Windows
@@ -14,109 +13,20 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class WCreatePartition : Window
     {
-        PMainWindow MainWindow = App.Instance.WIM.GetPresenter<PMainWindow>();
+        public delegate void DOnTextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e);
+        public event DOnTextChanged ETextChanged;
 
-        long sizeInMB;
+        public delegate void DOnClick(object sender, RoutedEventArgs e);
+        public event DOnClick EConfirm;
+        public event DOnClick ECancel;
 
-        private DiskModel diskModel;
-        public DiskModel DiskModel
-        {
-            get { return diskModel; }
-            set
-            {
-                diskModel = value;
-                AddTextToConsole();
-            }
-        }
-
-        public WCreatePartition(DiskModel disk)
+        public WCreatePartition()
         {
             InitializeComponent();
-
-            diskModel = disk;
         }
 
-        public WCreatePartition(DiskModel disk, long size)
-        {
-            InitializeComponent();
-
-            size /= 1024;
-            size /= 1024;
-            this.sizeInMB = size;
-            diskModel = disk;
-            SizeValue.Text = size.ToString();
-        }
-
-        private string SelectedOptionAsString()
-        {
-            return (string)((ComboBoxItem)PartitionOptionValue.SelectedValue).Content;
-        }
-
-        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
-        {
-            string option = DPCreatePartition.EFI;
-
-            switch (SelectedOptionAsString())
-            {
-                case ("EFI"):
-                    option = DPCreatePartition.EFI;
-                    break;
-                case ("EXTENDED"):
-                    option = DPCreatePartition.EXTENDED;
-                    break;
-                case ("LOGICAL"):
-                    option = DPCreatePartition.LOGICAL;
-                    break;
-                case ("MSR"):
-                    option = DPCreatePartition.MSR;
-                    break;
-                case ("PRIMARY"):
-                    option = DPCreatePartition.PRIMARY;
-                    break;
-            }
-
-
-            string output = string.Empty;
-            
-            output += DPFunctions.CreatePartition(DiskModel.DiskIndex, option, GetSizeValue(), false);
-
-            MainWindow.Log.Print(output);
-            MainWindow.DisplayDiskData(false);
-
-            this.Close();
-        }
-
-        private UInt64 GetSizeValue()
-        {
-            UInt64 size = 0;
-
-            if (SizeValue.Text != "")
-            {
-                UInt64.TryParse(SizeValue.Text, out size);
-            }
-
-            return size;
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        public void AddTextToConsole()
-        {
-            ConsoleReturn.Print(DiskModel.GetOutputAsString());
-        }
-
-        private void SizeValue_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (SizeValue.Text.Length == 0) return;
-
-            long enteredSize = Convert.ToInt64(SizeValue.Text);
-            if (enteredSize > sizeInMB)
-            {
-                SizeValue.Text = sizeInMB.ToString();
-            }
-        }
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e) => EConfirm?.Invoke(sender, e);
+        private void CancelButton_Click(object sender, RoutedEventArgs e) => ECancel?.Invoke(sender, e);
+        private void SizeValue_TextChanged(object sender, TextChangedEventArgs e) => ETextChanged?.Invoke(sender, e);
     }
 }

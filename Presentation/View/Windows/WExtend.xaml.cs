@@ -2,10 +2,12 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+
 using GUIForDiskpart.Model.Data;
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Service;
-using GUIForDiskpart.Presentation.Presenter;
+using GUIForDiskpart.Utils;
+
 
 namespace GUIForDiskpart.Presentation.View.Windows
 {
@@ -27,7 +29,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
                 availableForExtendInMB = (Partition.DefragAnalysis.AvailableForExtend / 1024) / 1024;
                 AddTextToConsole();
                 SetSliderMinMax(DesiredSlider, 0.0d, Convert.ToDouble(availableForExtendInMB));
-                AvailableLabel.Content = ByteFormatter.FormatBytes(Partition.DefragAnalysis.AvailableForExtend);
+                AvailableLabel.Content = ByteFormatter.BytesToUnitAsString(Partition.DefragAnalysis.AvailableForExtend);
             }
         }
 
@@ -107,7 +109,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
         {
             Int64 toMB = Convert.ToInt64(textBox.Text) * 1024;
             toMB *= 1024;
-            label.Content = ByteFormatter.FormatBytes(toMB);
+            label.Content = ByteFormatter.BytesToUnitAsString(toMB);
         }
 
         public void AddTextToConsole()

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-using GUIForDiskpart.Service;
+using GUIForDiskpart.Utils;
 using MBRTypes = GUIForDiskpart.Database.Data.Types.WSM_MBR_PartitionTypes;
 using GPTTypes = GUIForDiskpart.Database.Data.Types.WSM_GPT_PartitionTypes;
 
@@ -69,7 +69,7 @@ namespace GUIForDiskpart.Model.Data
         private ulong offset;
         public ulong Offset { get { return offset; } set { offset = value; } }
 
-        public string FormattedSize => ByteFormatter.FormatBytes(Size);
+        public string FormattedSize => ByteFormatter.BytesToUnitAsString(Size);
 
         public string PartitionType => GetPartitionType();
 
