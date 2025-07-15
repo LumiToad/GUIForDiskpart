@@ -12,7 +12,7 @@ namespace GUIForDiskpart.Service
 
         public static DAModel AnalyzeVolumeDefrag(PartitionModel partition)
         {
-            string[] lines = daRetriever.OptimizeVolumeDataQuery(partition.WSMPartition.DriveLetter);
+            string[] lines = daRetriever.OptimizeVolumeDataQuery(partition.WSM.DriveLetter);
             Dictionary<string, string> data = LinesToDictionary(lines);
 
             Model.Data.DefragAnalysis result = DictionaryToClass(data);

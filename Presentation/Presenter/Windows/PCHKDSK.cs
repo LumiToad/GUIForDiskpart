@@ -195,11 +195,11 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
             if (string.IsNullOrEmpty(Window.TextBoxDir.Text))
             {
-                output += CMDFunctions.CHKDSK(Partition.WSMPartition.DriveLetter, Window.TextBoxPara.Text);
+                output += CMDFunctions.CHKDSK(Partition.WSM.DriveLetter, Window.TextBoxPara.Text);
             }
             else
             {
-                output += CMDFunctions.CHKDSK(Partition.WSMPartition.DriveLetter, Window.TextBoxPara.Text, Window.TextBoxDir.Text);
+                output += CMDFunctions.CHKDSK(Partition.WSM.DriveLetter, Window.TextBoxPara.Text, Window.TextBoxDir.Text);
             }
 
             MainWindow.Log.Print(output);
@@ -227,8 +227,8 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         public override void Setup()
         {
             Log.Print(Partition.GetOutputAsString(), true);
-            Window.DriveLetterTop.Content = Partition.LDModel.VolumeName + " " + Partition.WSMPartition.DriveLetter + ":\\";
-            Window.DriveLetterBottom.Content = Partition.WSMPartition.DriveLetter + ":\\";
+            Window.DriveLetterTop.Content = Partition.LDModel.VolumeName + " " + Partition.WSM.DriveLetter + ":\\";
+            Window.DriveLetterBottom.Content = Partition.WSM.DriveLetter + ":\\";
         }
 
         protected override void AddCustomArgs(params object?[] args)

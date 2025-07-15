@@ -61,18 +61,18 @@ namespace GUIForDiskpart.Presentation.View.UserControls
 
         public void UpdateUI(PartitionModel partition)
         {
-            PartitionNumber.Content = $"#{partition.WSMPartition.PartitionNumber}";
+            PartitionNumber.Content = $"#{partition.WSM.PartitionNumber}";
             DriveNameAndLetter.Content = GetDriveNameText(partition);
-            TotalSpace.Content = partition.WSMPartition.FormattedSize;
+            TotalSpace.Content = partition.WSM.FormattedSize;
             FileSystemText.Content = GetFileSystemText(partition);
-            PartitionType.Content = $"{partition.WSMPartition.PartitionTable}: {partition.WSMPartition.PartitionType}";
+            PartitionType.Content = $"{partition.WSM.PartitionTable}: {partition.WSM.PartitionType}";
 
             if (partition.HasWSMPartition && partition.IsLogicalDisk)
             {
-                SetValueInProgressBar(partition.WSMPartition.Size, partition.LDModel.UsedSpace);
+                SetValueInProgressBar(partition.WSM.Size, partition.LDModel.UsedSpace);
             }
 
-            if (partition.WSMPartition.IsBoot)
+            if (partition.WSM.IsBoot)
             {
                 WinVolumeIcon.Source = IconUtils.GetSystemIconByType(SystemIconType.WinLogo);
             }
@@ -92,9 +92,9 @@ namespace GUIForDiskpart.Presentation.View.UserControls
                 driveNameText += $"{partition.LDModel.VolumeName} ";
             }
 
-            if (partition.WSMPartition.DriveLetter > 65)
+            if (partition.HasDriveLetter())
             {
-                driveNameText += $"[{partition.WSMPartition.DriveLetter}:\\]";
+                driveNameText += $"[{partition.GetDriveLetter()}:\\]";
             }
 
             if (driveNameText == string.Empty)

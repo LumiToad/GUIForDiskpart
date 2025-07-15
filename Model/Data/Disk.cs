@@ -208,7 +208,7 @@ namespace GUIForDiskpart.Model.Data
 
             foreach (Partition partition in Partitions)
             {
-                result -= Convert.ToInt64(partition.WSMPartition.Size);
+                result -= Convert.ToInt64(partition.WSM.Size);
             }
 
             return result > 0 ? result : 0;

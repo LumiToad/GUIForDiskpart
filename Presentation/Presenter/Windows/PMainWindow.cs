@@ -95,7 +95,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
                     UCPartitionEntry ucPartitionEntry = (UCPartitionEntry)entry;
                     var pPartitionEntry = K_ucPartitionEntry_V_pPartitionEntry[ucPartitionEntry];
                     if (ucPartitionEntry != null && ucPartitionEntry.IsSelected == true)
-                        return pPartitionEntry.Partition.WSMPartition.PartitionNumber;
+                        return pPartitionEntry.Partition.WSM.PartitionNumber;
                 }
             }
 

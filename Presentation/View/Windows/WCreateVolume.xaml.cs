@@ -13,81 +13,20 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class WCreateVolume : Window
     {
-        PMainWindow MainWindow = App.Instance.WIM.GetPresenter<PMainWindow>();
+        public delegate void DOnTextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e);
+        public event DOnTextChanged ETextChanged;
 
-        private long sizeInMB;
+        public delegate void DOnClick(object sender, RoutedEventArgs e);
+        public event DOnClick ECreate;
+        public event DOnClick ECancel;
 
-        private DiskModel diskModel;
-        public DiskModel DiskModel
-        {
-            get { return diskModel; }
-            set
-            {
-                diskModel = value;
-                AddTextToConsole();
-            }
-        }
-
-        public WCreateVolume(DiskModel disk)
+        public WCreateVolume()
         {
             InitializeComponent();
-            diskModel = disk;
         }
 
-        public WCreateVolume(DiskModel disk, long size)
-        {
-            InitializeComponent();
-
-            size /= 1024;
-            size /= 1024;
-            this.sizeInMB = size;
-            diskModel = disk;
-            SizeValue.Text = size.ToString();
-        }
-
-        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
-        {
-            string output = string.Empty;
-
-            output += DPFunctions.CreateVolume(DiskModel.DiskIndex, DPVolume.SIMPLE, GetSizeValue(), false);
-
-            MainWindow.Log.Print(output);
-            MainWindow.DisplayDiskData(false);
-
-            this.Close();
-        }
-
-        private UInt64 GetSizeValue()
-        {
-            UInt64 size = 0;
-
-            if (SizeValue.Text != "")
-            {
-                UInt64.TryParse(SizeValue.Text, out size);
-            }
-
-            return size;
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        public void AddTextToConsole()
-        {
-            ConsoleReturn.Print(DiskModel.GetOutputAsString());
-        }
-
-        private void SizeValue_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (SizeValue.Text.Length == 0) return;
-
-            long enteredSize = Convert.ToInt64(SizeValue.Text);
-            if (enteredSize > sizeInMB)
-            {
-                SizeValue.Text = sizeInMB.ToString();
-            }
-        }
+        private void CreateButton_Click(object sender, RoutedEventArgs e) => ECreate?.Invoke(sender, e);
+        private void CancelButton_Click(object sender, RoutedEventArgs e) => ECancel?.Invoke(sender, e);
+        private void SizeValue_TextChanged(object sender, TextChangedEventArgs e) => ETextChanged?.Invoke(sender, e);
     }
 }

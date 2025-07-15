@@ -15,20 +15,20 @@ namespace GUIForDiskpart.Service
         public static List<PartitionModel> GetAllPartitions(ManagementObject disk, DiskModel diskModel)
         {
             List<PartitionModel> partitions = new List<PartitionModel>();
-            List<WSMPartition> wsmPartitions = GetAllWSMPartitions(diskModel);
-            List<WMIPartition> wmiPartitions = GetAllWMIPartitions(disk, diskModel);
+            List<WSMModel> wsmPartitions = GetAllWSMPartitions(diskModel);
+            List<WMIModel> wmiPartitions = GetAllWMIPartitions(disk, diskModel);
 
-            foreach (WSMPartition wsmPart in wsmPartitions)
+            foreach (WSMModel wsmPart in wsmPartitions)
             {
                 PartitionModel partition = new PartitionModel();
-                partition.WSMPartition = wsmPart;
+                partition.WSM = wsmPart;
                 partition.AssignedDiskModel = diskModel;
 
-                foreach (WMIPartition wmiPart in wmiPartitions)
+                foreach (WMIModel wmiPart in wmiPartitions)
                 {
                     if (wmiPart.StartingOffset == wsmPart.Offset)
                     {
-                        partition.WMIPartition = wmiPart;
+                        partition.WMI = wmiPart;
                     }
                 }
 
@@ -38,9 +38,9 @@ namespace GUIForDiskpart.Service
             return partitions;
         }
 
-        private static List<WSMPartition> GetAllWSMPartitions(DiskModel diskModel)
+        private static List<WSMModel> GetAllWSMPartitions(DiskModel diskModel)
         {
-            List<WSMPartition> wsmPartitions = new List<WSMPartition>();
+            List<WSMModel> wsmPartitions = new List<WSMModel>();
 
             foreach (PSObject psObject in partitionRetriever.WSMPartitionQuery(diskModel))
             {
@@ -50,18 +50,18 @@ namespace GUIForDiskpart.Service
             return wsmPartitions;
         }
 
-        private static List<WMIPartition> GetAllWMIPartitions(ManagementObject disk, DiskModel diskModel)
+        private static List<WMIModel> GetAllWMIPartitions(ManagementObject disk, DiskModel diskModel)
         {
-            List<WMIPartition> wmiPartitions = new List<WMIPartition>();
+            List<WMIModel> wmiPartitions = new List<WMIModel>();
 
             partitionRetriever.WMIPartitionQuery(disk, diskModel, ref wmiPartitions);
 
             return wmiPartitions;
         }
 
-        private static WSMPartition GetWSMPartition(PSObject psObject)
+        private static WSMModel GetWSMPartition(PSObject psObject)
         {
-            WSMPartition wsmPartition = new WSMPartition();
+            WSMModel wsmPartition = new WSMModel();
 
             wsmPartition.DiskNumber = Convert.ToUInt32(psObject.Properties["DiskNumber"].Value);
             wsmPartition.PartitionNumber = Convert.ToUInt32(psObject.Properties["PartitionNumber"].Value);
@@ -86,9 +86,9 @@ namespace GUIForDiskpart.Service
             return wsmPartition;
         }
 
-        public static WMIPartition GetWMIPartition(ManagementObject partition, uint diskIndex)
+        public static WMIModel GetWMIPartition(ManagementObject partition, uint diskIndex)
         {
-            WMIPartition newPartition = new WMIPartition();
+            WMIModel newPartition = new WMIModel();
 
             newPartition.Availability = Convert.ToUInt16(partition.Properties["Availability"].Value);
             newPartition.StatusInfo = Convert.ToUInt16(partition.Properties["StatusInfo"].Value);

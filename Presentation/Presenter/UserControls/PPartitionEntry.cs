@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Controls;
 
 using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.Presentation.Presenter.Windows;
 using GUIForDiskpart.Presentation.View.UserControls;
 using GUIForDiskpart.Utils;
 
@@ -21,7 +20,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
         MenuItem Online =>
             WPFUtils.CreateContextMenuItem(IconUtils.Diskpart, "DPOnline", "DISKPART - Online", true, OnOnOffline_Click);
         MenuItem DPInActive =>
-            WPFUtils.CreateContextMenuItem(IconUtils.Diskpart, "DPInActive", "DISKPART - " + (Partition.WSMPartition.IsActive ? "Inactive" : "Active"), true, OnActive_Click);
+            WPFUtils.CreateContextMenuItem(IconUtils.Diskpart, "DPInActive", "DISKPART - " + (Partition.WSM.IsActive ? "Inactive" : "Active"), true, OnActive_Click);
         MenuItem DPAttributes =>
             WPFUtils.CreateContextMenuItem(IconUtils.Diskpart, "DPAttributes", "DISKPART - Attributes", true, OnAttributes_Click);
         MenuItem DPShrink =>
@@ -46,7 +45,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void PopulateContextMenu()
         {
-            if (Partition.WSMPartition.PartitionTable == "MBR")
+            if (Partition.WSM.PartitionTable == "MBR")
             {
                 UserControl.ContextMenu.Items.Add(DPInActive);
             }
@@ -60,7 +59,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
             }
 
             if (!UserControl.ContextMenu.Items.Contains(Offline))
-            { UserControl.ContextMenu.Items.Add((Partition.WSMPartition.DriveLetter < 65) ? Online : Offline); }
+            { UserControl.ContextMenu.Items.Add((!Partition.HasDriveLetter()) ? Online : Offline); }
 
             if (Partition.IsLogicalDisk)
             {
@@ -91,17 +90,17 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
         {
             string output = string.Empty;
 
-            uint diskIndex = Partition.WSMPartition.DiskNumber;
-            uint partitionIndex = Partition.WSMPartition.PartitionNumber;
-            char driveLetter = Partition.WSMPartition.DriveLetter;
+            uint diskIndex = Partition.WSM.DiskNumber;
+            uint partitionIndex = Partition.WSM.PartitionNumber;
+            char driveLetter = Partition.GetDriveLetter();
 
-            if (Partition.WSMPartition.IsOffline)
+            if (Partition.WSM.IsOffline)
             {
                 output = DPFunctions.OnlineVolume(diskIndex, partitionIndex, false);
             }
             else
             {
-                output = (Partition.WSMPartition.DriveLetter < 65) ?
+                output = (!Partition.HasDriveLetter()) ?
                 DPFunctions.OfflineVolume(diskIndex, partitionIndex, false) :
                 DPFunctions.OfflineVolume(driveLetter, false);
             }
@@ -111,9 +110,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnExtend_Click(object sender, RoutedEventArgs e)
         {
-            WExtend window = new WExtend(Partition);
-            window.Owner = MainWindow.Window;
-            window.Show();
+            App.Instance.WIM.CreateWPresenter<PExtend>(true, Partition);
         }
 
         private void OnShrink_Click(object sender, RoutedEventArgs e)
@@ -132,7 +129,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnAttributes_Click(object sender, RoutedEventArgs e)
         {
-            App.Instance.WIM.CreateWPresenter<PAttributesVolume>(true, Partition.WSMPartition);
+            App.Instance.WIM.CreateWPresenter<PAttributesVolume>(true, Partition);
         }
 
         private void OnActive_Click(object sender, RoutedEventArgs e)
@@ -142,7 +139,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
             switch (ErrorUtils.ShowMSGBoxWarning(title, ErrorUtils.MBR_ACTIVE_STATUS_WARNING))
             {
                 case MessageBoxResult.OK:
-                    MainWindow.Log.Print(DPFunctions.Active(Partition.WSMPartition.DiskNumber, Partition.WSMPartition.PartitionNumber, !Partition.WSMPartition.IsActive));
+                    MainWindow.Log.Print(DPFunctions.Active(Partition.WSM.DiskNumber, Partition.WSM.PartitionNumber, !Partition.WSM.IsActive));
                     MainWindow.DisplayDiskData(false);
                     break;
                 case MessageBoxResult.Cancel:
@@ -158,26 +155,24 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnDetail_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Log.Print(DPFunctions.DetailPart(Partition.WSMPartition.DiskNumber, Partition.WSMPartition.PartitionNumber));
+            MainWindow.Log.Print(DPFunctions.DetailPart(Partition.WSM.DiskNumber, Partition.WSM.PartitionNumber));
         }
 
         private void OnFormat_Click(object sender, RoutedEventArgs e)
         {
-            WFormatPartition formatPartitionWindow = new WFormatPartition(Partition.WSMPartition);
+            WFormatPartition formatPartitionWindow = new WFormatPartition(Partition.WSM);
             formatPartitionWindow.Owner = MainWindow.Window;
             formatPartitionWindow.Show();
         }
 
         private void OnDelete_Click(object sender, RoutedEventArgs e)
         {
-            WDelete deleteWindow = new WDelete(Partition.WSMPartition);
-            deleteWindow.Owner = MainWindow.Window;
-            deleteWindow.Show();
+            App.Instance.WIM.CreateWPresenter<PDelete>(true, Partition.WSM);
         }
 
         private void OnAssign_Click(object sender, RoutedEventArgs e)
         {
-            App.Instance.WIM.CreateWPresenter<PAssignLetter>(true, Partition.WSMPartition);
+            App.Instance.WIM.CreateWPresenter<PAssignLetter>(true, Partition.WSM);
         }
 
         private void OnScanVolume_Click(object sender, RoutedEventArgs e)

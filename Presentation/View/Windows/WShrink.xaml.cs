@@ -46,7 +46,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
         {
             string output = string.Empty;
 
-            char driveLetter = Partition.WSMPartition.DriveLetter;
+            char driveLetter = Partition.WSM.DriveLetter;
             uint desiredMB = Convert.ToUInt32(DesiredSizeValue.Text);
             uint minimumMB = Convert.ToUInt32(MinimumSizeValue.Text);
 
@@ -121,7 +121,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
         {
             string output = string.Empty;
 
-            output += Partition.WSMPartition.GetOutputAsString();
+            output += Partition.WSM.GetOutputAsString();
             output += Partition.DefragAnalysis.GetOutputAsString();
             ConsoleReturn.Print(output);
         }

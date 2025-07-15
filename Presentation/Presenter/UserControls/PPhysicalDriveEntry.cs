@@ -72,11 +72,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnCreateVolume_Click(object sender, RoutedEventArgs e)
         {
-            WCreateVolume createVolumeWindow = new WCreateVolume(DiskModel);
-            createVolumeWindow.Owner = MainWindow.Window;
-            createVolumeWindow.Focus();
-
-            createVolumeWindow.Show();
+            App.Instance.WIM.CreateWPresenter<PCreateVolume>(true, DiskModel, DiskModel.UnallocatedSpace);
         }
 
         private void OnEasyFormat_Click(object sender, RoutedEventArgs e)

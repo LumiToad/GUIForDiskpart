@@ -1,10 +1,4 @@
-﻿using Markdig.Parsers;
-using System;
-
-using GUIForDiskpart.Database.Data;
-using GUIForDiskpart.Database.Data.Diskpart;
-using GUIForDiskpart.Model.Logic.Diskpart;
-
+﻿using GUIForDiskpart.Model.Logic.Diskpart;
 
 
 namespace GUIForDiskpart.Model.Logic

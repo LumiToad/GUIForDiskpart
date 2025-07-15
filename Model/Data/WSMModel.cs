@@ -9,7 +9,7 @@ using GPTTypes = GUIForDiskpart.Database.Data.Types.WSM_GPT_PartitionTypes;
 
 namespace GUIForDiskpart.Model.Data
 {
-    public class WSMPartition
+    public class WSMModel
     {
         private const string WSM_INFO_KEY = "---WINDOWS STORAGE MANAGEMENT INFO---";
         private const string WSM_INFO_VALUE = "---MSFT_Storage, obtained via Powershell---";
@@ -145,7 +145,7 @@ namespace GUIForDiskpart.Model.Data
         public Dictionary<string, object?> GetKeyValuePairs()
         {
             Dictionary<string, object?> data = new Dictionary<string, object?>();
-            PropertyInfo[] wsmProperties = typeof(WSMPartition).GetProperties();
+            PropertyInfo[] wsmProperties = typeof(WSMModel).GetProperties();
 
             data.Add(WSM_INFO_KEY, WSM_INFO_VALUE);
 

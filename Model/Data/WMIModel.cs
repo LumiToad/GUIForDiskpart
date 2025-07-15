@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace GUIForDiskpart.Model.Data
 {
-    public class WMIPartition
+    public class WMIModel
     {
         private const string WMI_INFO_KEY = "---WINDOWS MANAGEMENT INSTRUMENTATION INFO---";
         private const string WMI_INFO_VALUE = "---Win32_DiskPartition---";
@@ -153,7 +153,7 @@ namespace GUIForDiskpart.Model.Data
         public Dictionary<string, object?> GetKeyValuePairs()
         {
             Dictionary<string, object?> data = new Dictionary<string, object?>();
-            PropertyInfo[] wmiProperties = typeof(WMIPartition).GetProperties();
+            PropertyInfo[] wmiProperties = typeof(WMIModel).GetProperties();
 
             data.Add(WMI_INFO_KEY, WMI_INFO_VALUE);
 

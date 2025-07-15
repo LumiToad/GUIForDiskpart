@@ -17,7 +17,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <userControls:UCLog x:Name="ConsoleReturn" Grid.RowSpan="2"/>
+        <userControls:UCLog x:Name="Log" Grid.RowSpan="2"/>
         <StackPanel Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Top" Margin="10,90,0,0"/>
         <Button x:Name="ConfirmButton" Content="Confirm" Click="ConfirmButton_Click" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
         <Button x:Name="CancelButton" Content="Cancel" IsCancel="True"  Click="CancelButton_Click" HorizontalContentAlignment="Right" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="71,10,0,0"/>

@@ -17,11 +17,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <userControls:UCLog x:Name="ConsoleReturn" Grid.RowSpan="2"/>
+        <userControls:UCLog x:Name="Log" Grid.RowSpan="2"/>
         <TextBox x:Name="SizeValue" HorizontalAlignment="Left" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="81,10,0,0" InputScope="Number" RenderTransformOrigin="0.508,-0.777" TextChanged="SizeValue_TextChanged"/>
         <Label Content="Size in MB:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="8,6,0,0"/>
         <StackPanel Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Top" Margin="10,40,0,0">
-            <Button x:Name="ConfirmButton" Content="Create" Click="ConfirmButton_Click"/>
+            <Button x:Name="ConfirmButton" Content="Create" Click="CreateButton_Click"/>
             <Button x:Name="CancelButton" Content="Cancel" IsCancel="True"  Click="CancelButton_Click" Margin="20,0,0,0"/>
 
         </StackPanel>

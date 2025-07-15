@@ -14,7 +14,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
     {
         private PLog Log;
 
-        public WSMPartition WSMPartition { get; private set; }
+        public WSMModel WSMPartition { get; private set; }
 
         private void PopulateDriveLetterBox()
         {
@@ -93,7 +93,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         protected override void AddCustomArgs(params object?[] args)
         {
-            WSMPartition = (WSMPartition)args[0];
+            WSMPartition = (WSMModel)args[0];
         }
 
         protected override void RegisterEventsInternal()

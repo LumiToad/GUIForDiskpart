@@ -16,8 +16,8 @@ namespace GUIForDiskpart.Presentation.View.Windows
     {
         PMainWindow MainWindow = App.Instance.WIM.GetPresenter<PMainWindow>();
 
-        private WSMPartition wsmPartition;
-        public WSMPartition WSMPartition
+        private WSMModel wsmPartition;
+        public WSMModel WSMPartition
         {
             get { return wsmPartition; }
             set
@@ -27,7 +27,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             }
         }
 
-        public WFormatPartition(WSMPartition partition)
+        public WFormatPartition(WSMModel partition)
         {
             InitializeComponent();
             WSMPartition = partition;

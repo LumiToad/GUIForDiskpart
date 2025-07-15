@@ -16,7 +16,10 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         const string MBR_TEXT_EVERY_VOL = "Will effect EVERY Volume on MBR drives!";
         const string MBR_TEXT_THIS_VOL = "Will effect just THIS Volume on GPT drives";
 
-        public WSMPartition WSMPartition { get; private set; }
+        public Partition Partition { get; private set; }
+        public WSMModel WSMPartition { get; private set; }
+
+        char? driveLetter;
 
         private void PopulateAttributesCombobox()
         {
@@ -42,7 +45,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         {
             string output = string.Empty;
 
-            output += DPFunctions.AttributesVolume(WSMPartition.DriveLetter, false, (string)Window.Attributes.SelectedItem, true);
+            output += DPFunctions.AttributesVolume((char)driveLetter, false, (string)Window.Attributes.SelectedItem, true);
 
             MainWindow.Log.Print(output);
             Close();
@@ -59,15 +62,18 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public override void Setup()
         {
+            WSMPartition = Partition.WSM;
+            driveLetter = Partition.GetDriveLetter();
+
             PopulateAttributesCombobox();
             Log.Print(WSMPartition.GetOutputAsString(), true);
             Window.MBRLabel.Text = (WSMPartition.PartitionTable == "MBR" ? MBR_TEXT_EVERY_VOL : MBR_TEXT_THIS_VOL);
-            Window.DriveLetterLabel.Content = WSMPartition.DriveLetter + ":/";
+            Window.DriveLetterLabel.Content = driveLetter + ":/";
         }
 
         protected override void AddCustomArgs(params object?[] args)
         {
-            WSMPartition = (WSMPartition)args[0];
+            Partition = (Partition)args[0];
         }
 
         protected override void RegisterEventsInternal()

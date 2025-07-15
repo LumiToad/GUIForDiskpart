@@ -12,21 +12,21 @@ namespace GUIForDiskpart.Model.Data
             set => assignedDiskModel = value;
         }
 
-        private WSMPartition wsmPartition;
-        public WSMPartition WSMPartition
+        private WSMModel wsm;
+        public WSMModel WSM
         {
-            get => wsmPartition;
-            set => wsmPartition = value;
+            get => wsm;
+            set => wsm = value;
         }
 
-        private WMIPartition wmiPartition;
-        public WMIPartition WMIPartition
+        private WMIModel wmi;
+        public WMIModel WMI
         {
-            get => wmiPartition;
-            set => wmiPartition = value;
+            get => wmi;
+            set => wmi = value;
         }
 
-        public LDModel LDModel => WMIPartition.LDModel;
+        public LDModel LDModel => WMI.LDModel;
 
         private DAModel defragAnalysis;
         public DAModel DefragAnalysis
@@ -36,10 +36,10 @@ namespace GUIForDiskpart.Model.Data
         }
 
         public bool HasWSMPartition
-        { get { return WSMPartition == null ? false : true; } }
+        { get { return WSM == null ? false : true; } }
 
         public bool HasWMIPartition
-        { get { return WMIPartition == null ? false : true; } }
+        { get { return WMI == null ? false : true; } }
 
         public bool IsLogicalDisk
         {
@@ -62,6 +62,33 @@ namespace GUIForDiskpart.Model.Data
             }
         }
 
+        public bool HasDriveLetter()
+        {
+            bool retVal = false;
+            if (WMI == null && WSM == null) return retVal;
+            if (WSM != null) retVal = WSM.DriveLetter > 65;
+            if (!retVal && WMI != null) retVal = WMI.LDModel.DriveLetter[0] > 65;
+
+            return retVal;
+        }
+
+        public char GetDriveLetter()
+        {
+            char retVal = ' ';
+            if (!HasDriveLetter()) return retVal;
+
+            if (WSM.DriveLetter > 65)
+            {
+                retVal = WSM.DriveLetter;
+            }
+            else if (WMI.LDModel.DriveLetter[0] > 65)
+            {
+                retVal = WMI.LDModel.DriveLetter[0];
+            }
+
+            return retVal;
+        }
+
         public void PrintToConsole()
         {
             Console.WriteLine(GetOutputAsString());
@@ -73,12 +100,12 @@ namespace GUIForDiskpart.Model.Data
 
             if (HasWSMPartition)
             {
-                fullOutput += WSMPartition.GetOutputAsString();
+                fullOutput += WSM.GetOutputAsString();
             }
 
             if (HasWMIPartition)
             {
-                fullOutput += WMIPartition.GetOutputAsString();
+                fullOutput += WMI.GetOutputAsString();
             }
 
             if (IsLogicalDisk)
@@ -101,12 +128,12 @@ namespace GUIForDiskpart.Model.Data
 
             if (HasWSMPartition)
             {
-                AppendDataToDict(data, WSMPartition.GetKeyValuePairs());
+                AppendDataToDict(data, WSM.GetKeyValuePairs());
             }
 
             if (HasWMIPartition)
             {
-                AppendDataToDict(data, WMIPartition.GetKeyValuePairs());
+                AppendDataToDict(data, WMI.GetKeyValuePairs());
             }
 
             if (IsLogicalDisk)
