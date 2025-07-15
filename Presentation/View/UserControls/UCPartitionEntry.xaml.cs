@@ -31,21 +31,6 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         public event DOnClick EScanVolume;
         public event DOnClick EOpenContextMenu;
 
-        // To Presenter
-        PMainWindow MainWindow = App.Instance.WIM.GetPresenter<PMainWindow>();
-
-        // To Presenter
-        private PartitionModel partition;
-        public PartitionModel Partition
-        {
-            get { return partition; }
-            set
-            {
-                partition = value;
-                UpdateUI(value);
-            }
-        }
-
         private const string PARTITIONBORDER = "#FF00C4B4";
         private const string LOGICALBORDER = "#FF0A70C5";
 
