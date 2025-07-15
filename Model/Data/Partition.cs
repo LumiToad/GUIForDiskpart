@@ -67,7 +67,10 @@ namespace GUIForDiskpart.Model.Data
             bool retVal = false;
             if (WMI == null && WSM == null) return retVal;
             if (WSM != null) retVal = WSM.DriveLetter > 65;
-            if (!retVal && WMI != null) retVal = WMI.LDModel.DriveLetter[0] > 65;
+            if (!retVal && WMI != null && WMI.LDModel != null && !string.IsNullOrWhiteSpace(WMI.LDModel.DriveLetter))
+            { 
+                retVal = WMI.LDModel.DriveLetter[0] > 65; 
+            }
 
             return retVal;
         }

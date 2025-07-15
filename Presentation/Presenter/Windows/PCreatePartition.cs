@@ -112,7 +112,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public override void InitPresenters()
         {
-            Log = CreateUCPresenter<PLog<UCLog>>(Window.Log);
+            Log = CreateUCPresenter<PLog>(Window.Log);
         }
 
         #endregion WPresenter

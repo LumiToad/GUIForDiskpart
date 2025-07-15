@@ -13,28 +13,16 @@ namespace GUIForDiskpart.Model.Data
         private const string LD_INFO_VALUE = "---Win32_LogicalDisk---";
         private const string KEY_PREFIX = "WMI-LD";
 
-        private string driveLetter;
         public string DriveLetter { get; set; }
-
-        private uint driveType;
         public uint DriveType { get; set; }
-
-        private string fileSystem;
         public string FileSystem { get; set; }
-
-        private ulong freeSpace;
         public ulong FreeSpace { get; set; }
 
         public ulong UsedSpace
         { get { return TotalSpace - FreeSpace; } }
 
-        public ulong totalSpace;
         public ulong TotalSpace { get; set; }
-
-        private string volumeName;
         public string VolumeName { get; set; }
-
-        private string volumeSerial;
         public string VolumeSerial { get; set; }
 
         public string FormattedTotalSpace => ByteFormatter.BytesToUnitAsString(TotalSpace);

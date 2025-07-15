@@ -77,7 +77,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnEasyFormat_Click(object sender, RoutedEventArgs e)
         {
-            WFormatDrive formatWindow = new WFormatDrive(DiskModel);
+            WEasyFormat formatWindow = new WEasyFormat(DiskModel);
             formatWindow.Owner = MainWindow.Window;
             formatWindow.Focus();
 

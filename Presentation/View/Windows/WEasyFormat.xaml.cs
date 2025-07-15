@@ -3,8 +3,6 @@ using System.Windows;
 using System.Windows.Controls;
 
 using GUIForDiskpart.Model.Logic;
-using GUIForDiskpart.Presentation.Presenter;
-using static System.Net.Mime.MediaTypeNames;
 
 
 namespace GUIForDiskpart.Presentation.View.Windows
@@ -12,7 +10,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// <summary>
     /// Interaktionslogik für FormatWindow.xaml
     /// </summary>
-    public partial class WFormatDrive : Window
+    public partial class WEasyFormat : Window
     {
         PMainWindow MainWindow = App.Instance.WIM.GetPresenter<PMainWindow>();
 
@@ -27,7 +25,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             }
         }
 
-        public WFormatDrive(DiskModel disk)
+        public WEasyFormat(DiskModel disk)
         {
             InitializeComponent();
 
@@ -36,7 +34,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
 
         public void AddTextToConsole()
         {
-            ConsoleReturn.Print(DiskModel.GetOutputAsString());
+            Log.Print(DiskModel.GetOutputAsString());
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

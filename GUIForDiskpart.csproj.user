@@ -57,7 +57,7 @@
     <Compile Update="Presentation\View\Windows\WFormatPartition.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Presentation\View\Windows\WFormat.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WEasyFormat.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Presentation\View\UserControls\UCPartitionEntry.xaml.cs">
@@ -145,7 +145,7 @@
     <Page Update="Presentation\View\Windows\WFormatPartition.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Presentation\View\Windows\WFormat.xaml">
+    <Page Update="Presentation\View\Windows\WEasyFormat.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Presentation\View\UserControls\UCPartitionEntry.xaml">

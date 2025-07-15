@@ -15,64 +15,27 @@ namespace GUIForDiskpart.Model.Data
         private const string WSM_INFO_VALUE = "---MSFT_Storage, obtained via Powershell---";
         private const string KEY_PREFIX = "WSM";
 
-        private uint diskNumber;
-        public uint DiskNumber { get { return diskNumber; } set { diskNumber = value; } }
-
-        private uint partitionNumber;
-        public uint PartitionNumber { get { return partitionNumber; } set { partitionNumber = value; } }
-
-        private char driveLetter;
-        public char DriveLetter { get { return driveLetter; } set { driveLetter = value; } }
-
-        private ushort operationalStatus;
-        public ushort OperationalStatus { get { return operationalStatus; } set { operationalStatus = value; } }
-
-        private ushort transitionState;
-        public ushort TransitionState { get { return transitionState; } set { transitionState = value; } }
-
-        private ulong size;
-        public ulong Size { get { return size; } set { size = value; } }
-
-        private ushort? mbrType;
-        public ushort? MBRType { get { return mbrType; } set { mbrType = value; } }
-
-        private string? gptType;
-        public string? GPTType { get { return gptType; } set { gptType = value; } }
-
-        private string guid;
-        public string GUID { get { return guid; } set { guid = value; } }
-
-        private bool isReadOnly;
-        public bool IsReadOnly { get { return isReadOnly; } set { isReadOnly = value; } }
-
-        private bool isOffline;
-        public bool IsOffline { get { return isOffline; } set { isOffline = value; } }
-
-        private bool isSystem;
-        public bool IsSystem { get { return isSystem; } set { isSystem = value; } }
-
-        private bool isBoot;
-        public bool IsBoot { get { return isBoot; } set { isBoot = value; } }
-
-        private bool isActive;
-        public bool IsActive { get { return isActive; } set { isActive = value; } }
-
-        private bool isHidden;
-        public bool IsHidden { get { return isHidden; } set { isHidden = value; } }
-
-        private bool isShadowCopy;
-        public bool IsShadowCopy { get { return isShadowCopy; } set { isShadowCopy = value; } }
-
-        private bool? noDefaultDriveLetter;
-        public bool? NoDefaultDriveLetter { get { return noDefaultDriveLetter; } set { noDefaultDriveLetter = value; } }
-
-        private ulong offset;
-        public ulong Offset { get { return offset; } set { offset = value; } }
+        public uint DiskNumber { get; set; }
+        public uint PartitionNumber { get; set; }
+        public char DriveLetter { get; set; }
+        public ushort OperationalStatus { get; set; }
+        public ushort TransitionState { get; set; }
+        public ulong Size { get; set; }
+        public ushort? MBRType { get; set; }
+        public string? GPTType { get; set; }
+        public string GUID { get; set; }
+        public bool IsReadOnly { get; set; }
+        public bool IsOffline { get; set; }
+        public bool IsSystem { get; set; }
+        public bool IsBoot { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsHidden { get; set; }
+        public bool IsShadowCopy { get; set; }
+        public bool? NoDefaultDriveLetter { get; set; }
+        public ulong Offset { get; set; }
 
         public string FormattedSize => ByteFormatter.BytesToUnitAsString(Size);
-
         public string PartitionType => GetPartitionType();
-
         public string PartitionTable => GetPartitionTable();
 
         private string GetPartitionType()
@@ -129,12 +92,12 @@ namespace GUIForDiskpart.Model.Data
         {
             string result = string.Empty;
 
-            if (mbrType != null)
+            if (MBRType != null)
             {
                 result = "MBR";
             }
 
-            if (!string.IsNullOrWhiteSpace(gptType))
+            if (!string.IsNullOrWhiteSpace(GPTType))
             {
                 result = "GPT";
             }

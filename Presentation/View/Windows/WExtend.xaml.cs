@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 
@@ -15,7 +13,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
         public event DOnClick EConfirm;
         public event DOnClick ECancel;
 
-        public delegate void DOnTextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e);
+        public delegate void DOnTextChanged(object sender, TextChangedEventArgs e);
         public event DOnTextChanged ETextChanged;
 
         public delegate void DOnSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e);
