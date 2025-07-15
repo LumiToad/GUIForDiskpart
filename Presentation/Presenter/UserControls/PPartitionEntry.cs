@@ -1,12 +1,11 @@
 ﻿global using PPartitionEntry =
     GUIForDiskpart.Presentation.Presenter.UserControls.PPartitionEntry<GUIForDiskpart.Presentation.View.UserControls.UCPartitionEntry>;
-
-using System.Windows;
-using System.Windows.Controls;
-
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Presentation.View.UserControls;
 using GUIForDiskpart.Utils;
+using System.Windows;
+using System.Windows.Controls;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ScrollBar;
 
 
 namespace GUIForDiskpart.Presentation.Presenter.UserControls
@@ -82,6 +81,50 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
         {
             if (Partition.IsLogicalDisk && Partition.LDModel.DriveLetter == null) return;
             App.Instance.WIM.CreateWPresenter<PCHKDSK>(true, Partition);
+        }
+
+        private string GetDriveNameText(PartitionModel partition)
+        {
+            string driveNameText = string.Empty;
+
+            if (partition.IsLogicalDisk && (!string.IsNullOrEmpty(partition.LDModel.VolumeName)))
+            {
+                driveNameText += $"{partition.LDModel.VolumeName} ";
+            }
+
+            if (partition.HasDriveLetter())
+            {
+                driveNameText += $"[{partition.GetDriveLetter()}:\\]";
+            }
+
+            if (driveNameText == string.Empty)
+            {
+                driveNameText = "No letter";
+            }
+
+            return driveNameText;
+        }
+
+        private void SetValueInProgressBar(ulong totalSize, ulong usedSpace)
+        {
+            UserControl.SizeBar.Maximum = totalSize;
+            UserControl.SizeBar.Minimum = 0;
+            UserControl.SizeBar.Value = usedSpace;
+        }
+
+        private string GetFileSystemText(PartitionModel partition)
+        {
+            if (partition.IsLogicalDisk && !string.IsNullOrWhiteSpace(partition.LDModel.FileSystem))
+            {
+                return partition.LDModel.FileSystem;
+            }
+
+            if (partition.IsLogicalDisk && string.IsNullOrWhiteSpace(partition.LDModel.FileSystem))
+            {
+                return "No filesystem";
+            }
+
+            return "No Windows Volume";
         }
 
         #region OnClick
@@ -190,7 +233,19 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
         #region UCPresenter
         public override void Setup()
         {
-            UserControl.UpdateUI(Partition);
+            string driveName = GetDriveNameText(Partition);
+            string fileSystem = GetFileSystemText(Partition);
+
+            UserControl.UpdateUI(Partition, driveName, fileSystem);
+            if (Partition.HasWSMPartition && Partition.IsLogicalDisk)
+            {
+                SetValueInProgressBar(Partition.WSM.Size, Partition.LDModel.UsedSpace);
+            }
+
+            if (Partition.WSM.IsBoot)
+            {
+                UserControl.WinVolumeIcon.Source = IconUtils.GetSystemIconByType(SystemIconType.WinLogo);
+            }
             PopulateContextMenu();
         }
 

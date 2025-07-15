@@ -59,65 +59,13 @@ namespace GUIForDiskpart.Presentation.View.UserControls
             InitializeComponent();
         }
 
-        public void UpdateUI(PartitionModel partition)
+        public void UpdateUI(PartitionModel partition, string driveName, string fileSystem)
         {
             PartitionNumber.Content = $"#{partition.WSM.PartitionNumber}";
-            DriveNameAndLetter.Content = GetDriveNameText(partition);
+            DriveNameAndLetter.Content = driveName;
             TotalSpace.Content = partition.WSM.FormattedSize;
-            FileSystemText.Content = GetFileSystemText(partition);
+            FileSystemText.Content = fileSystem;
             PartitionType.Content = $"{partition.WSM.PartitionTable}: {partition.WSM.PartitionType}";
-
-            if (partition.HasWSMPartition && partition.IsLogicalDisk)
-            {
-                SetValueInProgressBar(partition.WSM.Size, partition.LDModel.UsedSpace);
-            }
-
-            if (partition.WSM.IsBoot)
-            {
-                WinVolumeIcon.Source = IconUtils.GetSystemIconByType(SystemIconType.WinLogo);
-            }
-        }
-
-        public void SelectEntryRadioButton()
-        {
-            EntrySelected.IsChecked = !EntrySelected.IsChecked;
-        }
-
-        private string GetDriveNameText(PartitionModel partition)
-        {
-            string driveNameText = string.Empty;
-
-            if (partition.IsLogicalDisk && (!string.IsNullOrEmpty(partition.LDModel.VolumeName)))
-            {
-                driveNameText += $"{partition.LDModel.VolumeName} ";
-            }
-
-            if (partition.HasDriveLetter())
-            {
-                driveNameText += $"[{partition.GetDriveLetter()}:\\]";
-            }
-
-            if (driveNameText == string.Empty)
-            {
-                driveNameText = "No letter";
-            }
-
-            return driveNameText;
-        }
-
-        private string GetFileSystemText(PartitionModel partition)
-        {
-            if (partition.IsLogicalDisk && !string.IsNullOrWhiteSpace(partition.LDModel.FileSystem))
-            {
-                return partition.LDModel.FileSystem;
-            }
-
-            if (partition.IsLogicalDisk && string.IsNullOrWhiteSpace(partition.LDModel.FileSystem))
-            {
-                return "No filesystem";
-            }
-
-            return "No Windows Volume";
         }
 
         private void SetValueInProgressBar(ulong totalSize, ulong usedSpace)
