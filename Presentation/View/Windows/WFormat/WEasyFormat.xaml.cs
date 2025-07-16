@@ -4,9 +4,6 @@ using System.Windows.Controls;
 
 namespace GUIForDiskpart.Presentation.View.Windows
 {
-    /// <summary>
-    /// Interaktionslogik für FormatWindow.xaml
-    /// </summary>
     public partial class WEasyFormat : Window
     {
         public delegate void DOnClick(object sender, RoutedEventArgs e);

@@ -118,6 +118,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Presentation\View\Windows\WFormat\WFormatPartition.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

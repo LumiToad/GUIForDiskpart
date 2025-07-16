@@ -203,9 +203,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnFormat_Click(object sender, RoutedEventArgs e)
         {
-            WFormatPartition formatPartitionWindow = new WFormatPartition(Partition.WSM);
-            formatPartitionWindow.Owner = MainWindow.Window;
-            formatPartitionWindow.Show();
+            App.Instance.WIM.CreateWPresenter<PFormatPartition>(true, Partition.WSM);
         }
 
         private void OnDelete_Click(object sender, RoutedEventArgs e)
