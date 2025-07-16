@@ -26,6 +26,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         private const string SEC_WIN_WARN_MSG = "Format the whole drive! ALL DATA WILL BE LOST!";
 
         private ulong FAT32_Max => ulong.Parse(FAT32_MAX_SIZE_TEXT);
+
         private void ExecuteFormat(bool value)
         {
             if (!value) return;
@@ -57,25 +58,26 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             string output = string.Empty;
 
 
-            if (Window.DriveLetterValue.Text == "")
+            string driveLetter = Window.DriveLetterValue.Text;
+            string newVolName = Window.VolumeValue.Text;
+            bool isQuickFormat = (bool)Window.QuickFormattingValue.IsChecked;
+            bool isCompression = (bool)Window.CompressionValue.IsChecked;
+
+            if (driveLetter == string.Empty)
             {
-                output = ComfortFeatures.EasyDiskFormat(DiskModel, fileSystem, Window.VolumeValue.Text,
-                    size, (bool)Window.QuickFormattingValue.IsChecked, (bool)Window.CompressionValue.IsChecked, false, true, false);
+                output = ComfortFeatures.EasyDiskFormat(DiskModel, fileSystem, newVolName,
+                    size, isQuickFormat, isCompression, false, true, false);
             }
             else
             {
-                char driveLetter = Window.DriveLetterValue.Text.ToCharArray()[0];
-
-                output = ComfortFeatures.EasyDiskFormat(DiskModel, fileSystem, Window.VolumeValue.Text,
-                    driveLetter, size, (bool)Window.QuickFormattingValue.IsChecked, (bool)Window.CompressionValue.IsChecked, false, true, false);
+                output = ComfortFeatures.EasyDiskFormat(DiskModel, fileSystem, newVolName,
+                    driveLetter.ToCharArray()[0], size, isQuickFormat, isCompression, false, true, false);
             }
 
             MainWindow.Log.Print(output);
 
-            this.Close();
+            Close();
         }
-
-
 
         private string SelectedFileSystemAsString()
         {
