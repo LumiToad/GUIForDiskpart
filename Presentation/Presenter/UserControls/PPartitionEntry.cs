@@ -11,6 +11,22 @@ using GUIForDiskpart.Utils;
 
 namespace GUIForDiskpart.Presentation.Presenter.UserControls
 {
+    /// <summary>
+    /// Constructed with:
+    /// <value><c>PartitionModel</c> Partition</value>
+    /// <br/><br/>
+    /// Must be instanced with <c>CreateUCPresenter</c> method of a <c>WPresenter</c> derived class.<br/>
+    /// If the UserControl is already present at compile time, this class should be instanced in the <c>InitPresenters</c> method. <br/>
+    /// See code example:
+    /// <para>
+    /// <code>
+    /// public override void InitPresenters()
+    /// {
+    ///     someProperty = CreateUCPresenter&lt;PSomething&gt;(Window.SomeUserControl);
+    /// }
+    /// </code>
+    /// </para>
+    /// </summary>
     public class PPartitionEntry<T> : UCPresenter<T> where T : UCPartitionEntry
     {
         #region MenuItems

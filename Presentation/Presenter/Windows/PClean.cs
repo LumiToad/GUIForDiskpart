@@ -10,6 +10,18 @@ using GUIForDiskpart.Presentation.View.UserControls;
 
 namespace GUIForDiskpart.Presentation.Presenter.Windows
 {
+    /// <summary>
+    /// Constructed with:
+    /// <value><c>DiskModel</c> Disk</value>
+    /// <br/><br/>
+    /// Must be instanced with <c>App.Instance.WIM.CreateWPresenter</c> method.<br/>
+    /// See code example:
+    /// <para>
+    /// <code>
+    /// App.Instance.WIM.CreateWPresenter&lt;PClean&gt;(true, Disk);
+    /// </code>
+    /// </para>
+    /// </summary>
     public class PClean<T> : WPresenter<T> where T : WClean
     {
         private PLog<UCLog> Log;
@@ -17,7 +29,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         const string DESCRIPTION_CLEAN = "Clean the whole drive! ALL DATA WILL BE LOST!";
         const string DESCRIPTION_CLEAN_ALL = "Clean and override the whole drive! MAKES DATA RESCUE CLOSE TO IMPOSSIBLE!";
 
-        public DiskModel DiskModel { get; private set; }
+        public DiskModel Disk { get; private set; }
 
         private void ExecuteClean(bool value)
         {
@@ -25,7 +37,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
             string output = string.Empty;
 
-            output += DPFunctions.Clean(DiskModel.DiskIndex, (bool)Window.CleanAll.IsChecked);
+            output += DPFunctions.Clean(Disk.DiskIndex, (bool)Window.CleanAll.IsChecked);
 
             MainWindow.Log.Print(output);
             MainWindow.DisplayDiskData(false);
@@ -38,7 +50,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         private void OnConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             string text = (bool)Window.CleanAll.IsChecked ? DESCRIPTION_CLEAN_ALL : DESCRIPTION_CLEAN;
-            string confirmKey = DiskModel.PhysicalName;
+            string confirmKey = Disk.PhysicalName;
 
             var secCheck = App.Instance.WIM.CreateWPresenter<PSecurityCheck>(true, text, confirmKey);
             secCheck.ESecCheck += ExecuteClean;
@@ -55,12 +67,12 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public override void Setup()
         {
-            Log.Print(DiskModel.GetOutputAsString(), true);
+            Log.Print(Disk.GetOutputAsString(), true);
         }
 
         protected override void AddCustomArgs(params object?[] args)
         {
-            DiskModel = (DiskModel)args[0];
+            Disk = (DiskModel)args[0];
         }
 
         protected override void RegisterEventsInternal()

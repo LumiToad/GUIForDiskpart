@@ -12,7 +12,6 @@ using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Presentation.View.UserControls;
 using GUIForDiskpart.Database.Data;
 using GUIForDiskpart.Presentation.Presenter.UserControls;
-using GUIForDiskpart.Presentation.Presenter.Windows;
 
 
 namespace GUIForDiskpart.Presentation.Presenter.Windows

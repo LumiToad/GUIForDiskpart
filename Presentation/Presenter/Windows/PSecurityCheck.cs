@@ -7,6 +7,19 @@ using System.Windows.Controls;
 
 namespace GUIForDiskpart.Presentation.Presenter.Windows
 {
+    /// <summary>
+    /// Constructed with:
+    /// <value><c>string</c> aboutToText</value>,
+    /// <value><c>string</c> confirmText</value>
+    /// <br/><br/>
+    /// Must be instanced with <c>App.Instance.WIM.CreateWPresenter</c> method.<br/>
+    /// See code example:
+    /// <para>
+    /// <code>
+    /// App.Instance.WIM.CreateWPresenter&lt;PSecurityCheck&gt;(true, Partition);
+    /// </code>
+    /// </para>
+    /// </summary>
     public class PSecurityCheck<T> : WPresenter<T> where T : WSecurityCheck
     {
         public delegate void SecCheckResult(bool result);

@@ -12,11 +12,23 @@ using GUIForDiskpart.Utils;
 
 namespace GUIForDiskpart.Presentation.Presenter.Windows
 {
+    /// <summary>
+    /// Constructed with:
+    /// <value><c>DiskModel</c> Disk</value>
+    /// <br/><br/>
+    /// Must be instanced with <c>App.Instance.WIM.CreateWPresenter</c> method.<br/>
+    /// See code example:
+    /// <para>
+    /// <code>
+    /// App.Instance.WIM.CreateWPresenter&lt;PConvertDrive&gt;(true, Disk);
+    /// </code>
+    /// </para>
+    /// </summary>
     public class PConvertDrive<T> : WPresenter<T> where T : WConvertDrive
     {
         private PLog<UCLog> Log;
 
-        public DiskModel DiskModel { get; private set; }
+        public DiskModel Disk { get; private set; }
 
         #region OnClick
 
@@ -41,7 +53,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             }
 
             string output = string.Empty;
-            output = DPFunctions.Convert(DiskModel.DiskIndex, option);
+            output = DPFunctions.Convert(Disk.DiskIndex, option);
 
             MainWindow.Log.Print(output);
 
@@ -59,12 +71,12 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public override void Setup()
         {
-            Log.Print(DiskModel.GetOutputAsString());
+            Log.Print(Disk.GetOutputAsString());
         }
 
         protected override void AddCustomArgs(params object?[] args)
         {
-            DiskModel = (DiskModel)args[0];
+            Disk = (DiskModel)args[0];
         }
 
         protected override void RegisterEventsInternal()

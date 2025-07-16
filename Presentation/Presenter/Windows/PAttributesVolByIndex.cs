@@ -6,11 +6,22 @@ using System;
 using System.Windows;
 
 using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.Presentation.View.UserControls;
 
 
 namespace GUIForDiskpart.Presentation.Presenter.Windows
 {
+    /// <summary>
+    /// Constructed with:
+    /// NONE - Has no arguments!
+    /// <br/><br/>
+    /// Must be instanced with <c>App.Instance.WIM.CreateWPresenter</c> method.<br/>
+    /// See code example:
+    /// <para>
+    /// <code>
+    /// App.Instance.WIM.CreateWPresenter&lt;PAttributesVolByIndex&gt;(true);
+    /// </code>
+    /// </para>
+    /// </summary>
     public class PAttributesVolByIndex<T> : WPresenter<T> where T : WAttributesVolByIndex
     {
         private PLog Log;

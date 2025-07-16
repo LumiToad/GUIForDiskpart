@@ -11,11 +11,23 @@ using System.Windows;
 
 namespace GUIForDiskpart.Presentation.Presenter.Windows
 {
+    /// <summary>
+    /// Constructed with:
+    /// <value><c>WSMModel</c> WSM</value>
+    /// <br/>
+    /// Must be instanced with <c>App.Instance.WIM.CreateWPresenter</c> method.<br/>
+    /// See code example:
+    /// <para>
+    /// <code>
+    /// App.Instance.WIM.CreateWPresenter&lt;PDelete&gt;(true, WSM);
+    /// </code>
+    /// </para>
+    /// </summary>
     public class PDelete<T> : WPresenter<T> where T : WDelete
     {
         private PLog<UCLog> Log;
 
-        public WSMModel WSMPartition { get; private set; }
+        public WSMModel WSM { get; private set; }
 
         const string DELETE_TEXT = "Delete the whole partition! ALL DATA WILL BE LOST!";
         const string CLEAN_ALL_TEXT = "Delete and override the whole partition! MAKES DATA RESCUE CLOSE TO IMPOSSIBLE!";
@@ -26,7 +38,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
             string output = string.Empty;
 
-            output += DPFunctions.Delete(WSMPartition.DiskNumber, WSMPartition.PartitionNumber, true, (bool)Window.CleanAll.IsChecked);
+            output += DPFunctions.Delete(WSM.DiskNumber, WSM.PartitionNumber, true, (bool)Window.CleanAll.IsChecked);
 
             MainWindow.Log.Print(output);
             MainWindow.DisplayDiskData(false);
@@ -43,7 +55,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             {
                 text = CLEAN_ALL_TEXT;
             }
-            string confirmKey = $"Drive: {WSMPartition.DiskNumber} Partition: {WSMPartition.PartitionNumber}";
+            string confirmKey = $"Drive: {WSM.DiskNumber} Partition: {WSM.PartitionNumber}";
 
             var secCheck = App.Instance.WIM.CreateWPresenter<PSecurityCheck>(true, text, confirmKey);
             secCheck.Window.Owner = Window;
@@ -61,12 +73,12 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public override void Setup()
         {
-            Log.Print(WSMPartition.GetOutputAsString());
+            Log.Print(WSM.GetOutputAsString());
         }
 
         protected override void AddCustomArgs(params object?[] args)
         {
-            WSMPartition = (WSMModel)args[0];
+            WSM = (WSMModel)args[0];
         }
 
         protected override void RegisterEventsInternal()

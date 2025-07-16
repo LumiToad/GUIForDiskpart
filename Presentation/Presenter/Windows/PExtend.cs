@@ -14,6 +14,18 @@ using GUIForDiskpart.Utils;
 
 namespace GUIForDiskpart.Presentation.Presenter.Windows
 {
+    /// <summary>
+    /// Constructed with:
+    /// <value><c>PartitionModel</c> Partition</value>
+    /// <br/><br/>
+    /// Must be instanced with <c>App.Instance.WIM.CreateWPresenter</c> method.<br/>
+    /// See code example:
+    /// <para>
+    /// <code>
+    /// App.Instance.WIM.CreateWPresenter&lt;PExtend&gt;(true, Partition);
+    /// </code>
+    /// </para>
+    /// </summary>
     public class PExtend<T> : WPresenter<T> where T : WExtend
     {
         private PLog<UCLog> Log;

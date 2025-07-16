@@ -12,11 +12,23 @@ using GUIForDiskpart.Utils;
 
 namespace GUIForDiskpart.Presentation.Presenter.Windows
 {
+    /// <summary>
+    /// Constructed with:
+    /// <value><c>DiskModel</c> Disk</value>
+    /// <br/><br/>
+    /// Must be instanced with <c>App.Instance.WIM.CreateWPresenter</c> method.<br/>
+    /// See code example:
+    /// <para>
+    /// <code>
+    /// App.Instance.WIM.CreateWPresenter&lt;PCreateVolume&gt;(true, Disk);
+    /// </code>
+    /// </para>
+    /// </summary>
     public class PCreateVolume<T> : WPresenter<T> where T : WCreateVolume
     {
         private PLog<UCLog> Log;
 
-        public DiskModel DiskModel { get; private set; }
+        public DiskModel Disk { get; private set; }
 
         long size;
 
@@ -49,7 +61,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         {
             string output = string.Empty;
 
-            output += DPFunctions.CreateVolume(DiskModel.DiskIndex, DPVolume.SIMPLE, GetSizeValue(), false);
+            output += DPFunctions.CreateVolume(Disk.DiskIndex, DPVolume.SIMPLE, GetSizeValue(), false);
 
             MainWindow.Log.Print(output);
             MainWindow.DisplayDiskData(false);
@@ -70,12 +82,12 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         {
             Window.SizeValue.Text = ByteFormatter.BytesToUnitAsString(size, false, Unit.MB, 0);
 
-            Log.Print(DiskModel.GetOutputAsString());
+            Log.Print(Disk.GetOutputAsString());
         }
 
         protected override void AddCustomArgs(params object?[] args)
         {
-            DiskModel = (DiskModel)args[0];
+            Disk = (DiskModel)args[0];
             size = (long)args[1];
         }
 

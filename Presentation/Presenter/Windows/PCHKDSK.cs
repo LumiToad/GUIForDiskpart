@@ -13,11 +13,23 @@ using GUIForDiskpart.Utils;
 
 namespace GUIForDiskpart.Presentation.Presenter.Windows
 {
+    /// <summary>
+    /// Constructed with:
+    /// <value><c>PartitionModel</c> Partition</value>
+    /// <br/><br/>
+    /// Must be instanced with <c>App.Instance.WIM.CreateWPresenter</c> method.<br/>
+    /// See code example:
+    /// <para>
+    /// <code>
+    /// App.Instance.WIM.CreateWPresenter&lt;PCHKDSK&gt;(true, Partition);
+    /// </code>
+    /// </para>
+    /// </summary>
     public class PCHKDSK<T> : WPresenter<T> where T : WCHKDSK
     {
         private PLog<UCLog> Log;
 
-        public Partition Partition { get; private set; }
+        public PartitionModel Partition { get; private set; }
 
         private string oldKBValue = "0";
 

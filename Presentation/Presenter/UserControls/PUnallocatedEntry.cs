@@ -10,10 +10,26 @@ using GUIForDiskpart.Utils;
 
 namespace GUIForDiskpart.Presentation.Presenter.UserControls
 {
+    /// <summary>
+    /// Constructed with:
+    /// <value><c>DiskModel</c> Disk</value>
+    /// <br/><br/>
+    /// Must be instanced with <c>CreateUCPresenter</c> method of a <c>WPresenter</c> derived class.<br/>
+    /// If the UserControl is already present at compile time, this class should be instanced in the <c>InitPresenters</c> method. <br/>
+    /// See code example:
+    /// <para>
+    /// <code>
+    /// public override void InitPresenters()
+    /// {
+    ///     someProperty = CreateUCPresenter&lt;PSomething&gt;(Window.SomeUserControl);
+    /// }
+    /// </code>
+    /// </para>
+    /// </summary>
     public class PUnallocatedEntry<T> : UCPresenter<T> where T : UCUnallocatedEntry
     {
         private long size;
-        public DiskModel DiskModel { get; private set; }
+        public DiskModel Disk { get; private set; }
 
         public bool? IsSelected { get { return UserControl.EntrySelected.IsChecked; } }
 
@@ -48,12 +64,12 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnCreatePart_Click(object sender, RoutedEventArgs e)
         {
-            App.Instance.WIM.CreateWPresenter<PCreatePartition>(true, DiskModel, size);
+            App.Instance.WIM.CreateWPresenter<PCreatePartition>(true, Disk, size);
         }
 
         private void OnCreateVolume_Click(object sender, RoutedEventArgs e)
         {
-            App.Instance.WIM.CreateWPresenter<PCreateVolume>(true, DiskModel, DiskModel.UnallocatedSpace);
+            App.Instance.WIM.CreateWPresenter<PCreateVolume>(true, Disk, Disk.UnallocatedSpace);
         }
 
         private void OnOpenContextMenu_Click(object sender, RoutedEventArgs e)
@@ -67,7 +83,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         public override void Setup()
         {
-            size = DiskModel.UnallocatedSpace;
+            size = Disk.UnallocatedSpace;
             SetSize(ByteFormatter.BytesToUnitAsString(size));
         }
 
@@ -81,7 +97,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         public override void AddCustomArgs(params object?[] args)
         {
-            DiskModel = (DiskModel)args[0];
+            Disk = (DiskModel)args[0];
         }
 
         #endregion UCPresenter

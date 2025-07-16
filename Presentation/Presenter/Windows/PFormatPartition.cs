@@ -11,6 +11,18 @@ using GUIForDiskpart.Presentation.Presenter.Windows.Components;
 
 namespace GUIForDiskpart.Presentation.Presenter.Windows
 {
+    /// <summary>
+    /// Constructed with:
+    /// <value><c>WSMModel</c> WSM</value>
+    /// <br/><br/>
+    /// Must be instanced with <c>App.Instance.WIM.CreateWPresenter</c> method.<br/>
+    /// See code example:
+    /// <para>
+    /// <code>
+    /// App.Instance.WIM.CreateWPresenter&lt;PFormatPartition&gt;(true, WSM);
+    /// </code>
+    /// </para>
+    /// </summary>
     public class PFormatPartition<T> : WPresenter<T> where T : WFormatPartition
     {
         private PLog Log;

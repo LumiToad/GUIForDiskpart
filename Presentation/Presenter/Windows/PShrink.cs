@@ -1,23 +1,29 @@
 ﻿global using PShrink =
    GUIForDiskpart.Presentation.Presenter.Windows.PShrink<GUIForDiskpart.Presentation.View.Windows.WShrink>;
+
+using System;
+using System.Windows;
+using System.Windows.Controls;
+
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Presentation.Presenter.UserControls;
 using GUIForDiskpart.Presentation.View.UserControls;
 using GUIForDiskpart.Utils;
-using System;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Controls;
 
 
 namespace GUIForDiskpart.Presentation.Presenter.Windows
 {
     /// <summary>
-    /// Must be instanced with App.Instance.WIM.CreateWPresenter method.
+    /// Constructed with: 
+    /// <value><c>PartitionModel</c> Partition</value>
+    /// <br/><br/>
+    /// Must be instanced with <c>App.Instance.WIM.CreateWPresenter</c> method.<br/>
     /// See code example:
+    /// <para>
     /// <code>
     /// App.Instance.WIM.CreateWPresenter&lt;PShrink&gt;(true, Partition);
     /// </code>
+    /// </para>
     /// </summary>
     public class PShrink<T> : WPresenter<T> where T : WShrink
     {

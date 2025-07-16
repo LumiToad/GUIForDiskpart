@@ -5,18 +5,29 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 
-using GUIForDiskpart.Model.Logic;
 using GUIForDiskpart.Presentation.Presenter.Windows.Components;
 
 
 namespace GUIForDiskpart.Presentation.Presenter.Windows
 {
+    /// <summary>
+    /// Constructed with:
+    /// <value><c>DiskModel</c> Disk</value>
+    /// <br/><br/>
+    /// Must be instanced with <c>App.Instance.WIM.CreateWPresenter</c> method.<br/>
+    /// See code example:
+    /// <para>
+    /// <code>
+    /// App.Instance.WIM.CreateWPresenter&lt;PEasyFomat&gt;(true, DiskModel);
+    /// </code>
+    /// </para>
+    /// </summary>
     public class PEasyFomat<T> : WPresenter<T> where T : WEasyFormat
     {
         private PLog Log;
         private readonly PCFormat pcFormat = new();
 
-        public DiskModel DiskModel { get; private set; }
+        public DiskModel Disk { get; private set; }
 
         public UInt64 GetSizeValue()
         {
@@ -42,7 +53,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         private void OnConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            string confirmKey = DiskModel.PhysicalName;
+            string confirmKey = Disk.PhysicalName;
 
             var secCheck = App.Instance.WIM.CreateWPresenter<PSecurityCheck>(true, PCFormat.SEC_WIN_WARN_DRIVE, confirmKey);
             secCheck.Window.Owner = Window;
@@ -57,12 +68,12 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public override void Setup()
         {
-            Log.Print(DiskModel.GetOutputAsString(), true);
+            Log.Print(Disk.GetOutputAsString(), true);
         }
 
         protected override void AddCustomArgs(params object?[] args)
         {
-            DiskModel = (DiskModel)args[0];
+            Disk = (DiskModel)args[0];
         }
 
         protected override void RegisterEventsInternal()
