@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-
+using System.Windows.Media.Animation;
 using GUIForDiskpart.Utils;
 
 
@@ -9,123 +9,122 @@ namespace GUIForDiskpart.Model.Data
 {
     public class Disk
     {
+        #region EntryDataHeaders
+
         private const string WMI_INFO_KEY = "---WINDOWS MANAGEMENT INSTRUMENTATION INFO---";
         private const string WMI_INFO_VALUE = "---Win32_DiskPartition---";
         private const string WMI_KEY_PREFIX = "WMI";
         private const string MSFT_INFO_KEY = "---WINDOWS STORAGE MANAGEMENT INFO---";
         private const string MSFT_INFO_VALUE = "---WMI > MSFT_Disk / MSFT_PhysicalDisk---";
         private const string MSFT_KEY_PREFIX = "WSM-MSFT";
+        
+        #endregion EntryDataHeaders
 
-        private string deviceID;
-        private string physicalName;
-        private string diskModelText;
-        private string mediaStatus;
-        private ushort[] operationalStatusValues;
-        private bool mediaLoaded;
-        private ulong totalSpace;
-        private string interfaceType;
-        private uint mediaSignature;
-        private string caption;
-        private string mediaType;
-        private ushort? msftMediaType;
-        private ushort availability;
-        private uint bytesPerSector;
-        private string compressionMethod;
-        private uint configManagerErrorCode;
-        private bool configManagerUserConfig;
-        private string creationClassName;
-        private ulong defaultBlockSize;
-        private string description;
-        private bool errorCleared;
-        private string errorDescription;
-        private string errorMethodology;
-        private string firmwareRevision;
-        private uint diskIndex;
-        private DateTime installDate;
-        private uint lastErrorCode;
-        private string manufacturer;
-        private ulong maxBlockSize;
-        private ulong maxMediaSize;
-        private ulong minBlockSize;
-        private bool needsCleaning;
-        private uint numberOfMediaSupported;
-        private string pnpDeviceID;
-        private bool powerManagementSupported;
-        private uint scsiBus;
-        private ushort scsiLogicalUnit;
-        private ushort scsiPort;
-        private ushort scsiTargetId;
-        private uint sectorsPerTrack;
-        private string serialNumber;
-        private ushort statusInfo;
-        private string systemCreationClassName;
-        private string systemName;
-        private ulong totalCylinders;
-        private uint totalHeads;
-        private ulong totalSectors;
-        private ulong totalTracks;
-        private uint tracksPerCylinder;
+        #region MSFT_OPERATIONALSTATUS
 
-        public string DeviceMediaType => GetDeviceMediaType();
-        public string OperationalStatus => GetOperationalStatus(operationalStatusValues);
-        public bool IsOnline => OperationalStatus.Contains("Online");
-        public string DeviceID { get => deviceID; set => deviceID = value; }
-        public string PhysicalName { get => physicalName; set => physicalName = value; }
-        public string DiskModelText { get => diskModelText; set => diskModelText = value; }
-        public string MediaStatus { get => mediaStatus; set => mediaStatus = value; }
-        public ushort[] OperationalStatusValues { get => operationalStatusValues; set => operationalStatusValues = value; }
-        public bool MediaLoaded { get => mediaLoaded; set => mediaLoaded = value; }
-        public ulong TotalSpace { get => totalSpace; set => totalSpace = value; }
-        public long UnallocatedSpace => CalcUnallocatedSpace();
+        private readonly string[] MSFT_OP_STATUS =
+        {
+            "Unknown",                      // 0
+            "Other",                        // 1
+            "OK",                           // 2
+            "Degraded",                     // 3
+            "Stressed",                     // 4
+            "Predictive Failure",           // 5
+            "Error",                        // 6
+            "Non-Recoverable Error",        // 7
+            "Starting",                     // 8
+            "Stopping",                     // 9
+            "Stopped",                      // 10
+            "In Service",                   // 11
+            "No Contact",                   // 12
+            "Lost Communication",           // 13
+            "Aborted",                      // 14
+            "Dormant",                      // 15
+            "Supporting Entity in Error",   // 16
+            "Completed",                    // 17
+            "Online",                       // 0xD011
+            "Not Ready",                    // 0xD012
+            "No Media",                     // 0xD013
+            "Offline",                      // 0xD014
+            "Failed",                       // 0xD015
+        };
+
+        #endregion MSFT_OPERATIONALSTATUS
+
+        #region MSFT_MEDIATYPES
+
+        private const string MSFT_MEDIATYPE_NULL = "Could not resolve... (Virtual Disk or device name is insufficient)";
+        private const string MSFT_MEDIATYPE_0 = "Unspecified";
+        private const string MSFT_MEDIATYPE_3 = "HDD (Hard Disk Drive)";
+        private const string MSFT_MEDIATYPE_4 = "SSD (Solid-State Drive)";
+        private const string MSFT_MEDIATYPE_5 = "SCM (Storage Class Memory)";
+
+        #endregion MSFT_MEDIATYPES
+
+        #region DiskProperties
+
+        public string DeviceID { get; set; }
+        public string PhysicalName { get; set; }
+        public string DiskModelText { get; set; }
+        public string MediaStatus { get; set; }
+        public ushort[] OperationalStatusValues { get; set; }
+        public bool MediaLoaded { get; set; }
+        public ulong TotalSpace { get; set; }
+        public string InterfaceType { get; set; }
+        public uint MediaSignature { get; set; }
+        public string Caption { get; set; }
+        public string MediaType { get; set; }
+        public ushort? MSFTMediaType { get; set; }
+        public ushort Availability { get; set; }
+        public uint BytesPerSector { get; set; }
+        public string CompressionMethod { get; set; }
+        public uint ConfigManagerErrorCode { get; set; }
+        public bool ConfigManagerUserConfig { get; set; }
+        public string CreationClassName { get; set; }
+        public ulong DefaultBlockSize { get; set; }
+        public string Description { get; set; }
+        public bool ErrorCleared { get; set; }
+        public string ErrorDescription { get; set; }
+        public string ErrorMethodology { get; set; }
+        public string FirmwareRevision { get; set; }
+        public uint DiskIndex { get; set; }
+        public DateTime InstallDate { get; set; }
+        public uint LastErrorCode { get; set; }
+        public string Manufacturer { get; set; }
+        public ulong MaxBlockSize { get; set; }
+        public ulong MaxMediaSize { get; set; }
+        public ulong MinBlockSize { get; set; }
+        public bool NeedsCleaning { get; set; }
+        public uint NumberOfMediaSupported { get; set; }
+        public string PNPDeviceID { get; set; }
+        public bool PowerManagementSupported { get; set; }
+        public uint SCSIBus { get; set; }
+        public ushort SCSILogicalUnit { get; set; }
+        public ushort SCSIPort { get; set; }
+        public ushort SCSITargetID { get; set; }
+        public uint SectorsPerTrack { get; set; }
+        public string SerialNumber { get; set; }
+        public ushort StatusInfo { get; set; }
+        public string SystemCreationClassName { get; set; }
+        public string SystemName { get; set; }
+        public ulong TotalCylinders { get; set; }
+        public uint TotalHeads { get; set; }
+        public ulong TotalSectors { get; set; }
+        public ulong TotalTracks { get; set; }
+        public uint TracksPerCylinder { get; set; }
         public int PartitionCount => Partitions.Count;
-        public string InterfaceType { get => interfaceType; set => interfaceType = value; }
-        public uint MediaSignature { get => mediaSignature; set => mediaSignature = value; }
-        public string Caption { get => caption; set => caption = value; }
-        public string MediaType { get => mediaType; set => mediaType = value; }
-        public ushort? MSFTMediaType { get => msftMediaType; set => msftMediaType = value; }
-        public ushort Availability { get => availability; set => availability = value; }
-        public uint BytesPerSector { get => bytesPerSector; set => bytesPerSector = value; }
-        public string CompressionMethod { get => compressionMethod; set => compressionMethod = value; }
-        public uint ConfigManagerErrorCode { get => configManagerErrorCode; set => configManagerErrorCode = value; }
-        public bool ConfigManagerUserConfig { get => configManagerUserConfig; set => configManagerUserConfig = value; }
-        public string CreationClassName { get => creationClassName; set => creationClassName = value; }
-        public ulong DefaultBlockSize { get => defaultBlockSize; set => defaultBlockSize = value; }
-        public string Description { get => description; set => description = value; }
-        public bool ErrorCleared { get => errorCleared; set => errorCleared = value; }
-        public string ErrorDescription { get => errorDescription; set => errorDescription = value; }
-        public string ErrorMethodology { get => errorMethodology; set => errorMethodology = value; }
-        public string FirmwareRevision { get => firmwareRevision; set => firmwareRevision = value; }
-        public uint DiskIndex { get => diskIndex; set => diskIndex = value; }
-        public DateTime InstallDate { get => installDate; set => installDate = value; }
-        public uint LastErrorCode { get => lastErrorCode; set => lastErrorCode = value; }
-        public string Manufacturer { get => manufacturer; set => manufacturer = value; }
-        public ulong MaxBlockSize { get => maxBlockSize; set => maxBlockSize = value; }
-        public ulong MaxMediaSize { get => maxMediaSize; set => maxMediaSize = value; }
-        public ulong MinBlockSize { get => minBlockSize; set => minBlockSize = value; }
-        public bool NeedsCleaning { get => needsCleaning; set => needsCleaning = value; }
-        public uint NumberOfMediaSupported { get => numberOfMediaSupported; set => numberOfMediaSupported = value; }
-        public string PNPDeviceID { get => pnpDeviceID; set => pnpDeviceID = value; }
-        public bool PowerManagementSupported { get => powerManagementSupported; set => powerManagementSupported = value; }
-        public uint SCSIBus { get => scsiBus; set => scsiBus = value; }
-        public ushort SCSILogicalUnit { get => scsiLogicalUnit; set => scsiLogicalUnit = value; }
-        public ushort SCSIPort { get => scsiPort; set => scsiPort = value; }
-        public ushort SCSITargetID { get => scsiTargetId; set => scsiTargetId = value; }
-        public uint SectorsPerTrack { get => sectorsPerTrack; set => sectorsPerTrack = value; }
-        public string SerialNumber { get => serialNumber; set => serialNumber = value; }
-        public ushort StatusInfo { get => statusInfo; set => statusInfo = value; }
-        public string SystemCreationClassName { get => systemCreationClassName; set => systemCreationClassName = value; }
-        public string SystemName { get => systemName; set => systemName = value; }
-        public ulong TotalCylinders { get => totalCylinders; set => totalCylinders = value; }
-        public uint TotalHeads { get => totalHeads; set => totalHeads = value; }
-        public ulong TotalSectors { get => totalSectors; set => totalSectors = value; }
-        public ulong TotalTracks { get => totalTracks; set => totalTracks = value; }
-        public uint TracksPerCylinder { get => tracksPerCylinder; set => tracksPerCylinder = value; }
+        public string DeviceMediaType => GetDeviceMediaType();
+        public string OperationalStatus => GetOperationalStatus(OperationalStatusValues);
+        public bool IsOnline => OperationalStatus.Contains("Online");
+        public long UnallocatedSpace => CalcUnallocatedSpace();
         public ulong FreeSpace { get { return GetLogicalFreeSpace(); } }
         public ulong UsedSpace { get { return TotalSpace - Convert.ToUInt64(UnallocatedSpace) - FreeSpace; } }
         public string FormattedTotalSpace => ByteFormatter.BytesToUnitAsString(TotalSpace);
         public string FormattedFreeSpace => ByteFormatter.BytesToUnitAsString(GetLogicalFreeSpace());
         public string FormattedUsedSpace => ByteFormatter.BytesToUnitAsString(UsedSpace);
         public string FormattedUnallocatedSpace => ByteFormatter.BytesToUnitAsString(UnallocatedSpace);
+
+        #endregion DiskProperties
 
         private List<Partition> partitions = new List<Partition>();
         public List<Partition> Partitions
@@ -277,19 +276,19 @@ namespace GUIForDiskpart.Model.Data
             switch (MSFTMediaType)
             {
                 case null:
-                    result = "Could not resolve... (Virtual Disk or device name is insufficient)";
+                    result = MSFT_MEDIATYPE_NULL;
                     break;
                 case 0:
-                    result = "Unspecified";
+                    result = MSFT_MEDIATYPE_0;
                     break;
                 case 3:
-                    result = "HDD (Hard Disk Drive)";
+                    result = MSFT_MEDIATYPE_3;
                     break;
                 case 4:
-                    result = "SSD (Solid-State Drive)";
+                    result = MSFT_MEDIATYPE_4;
                     break;
                 case 5:
-                    result = "SCM (Storage Class Memory)";
+                    result = MSFT_MEDIATYPE_5;
                     break;
             }
             return result;
@@ -301,78 +300,19 @@ namespace GUIForDiskpart.Model.Data
 
             foreach (ushort status in operationalStatus)
             {
-                switch (status)
+                if (status > 17)
                 {
-                    case 0:
-                        result += "Unknown";
-                        break;
-                    case 1:
-                        result += "Other";
-                        break;
-                    case 2:
-                        result += "OK";
-                        break;
-                    case 3:
-                        result += "Degraded";
-                        break;
-                    case 4:
-                        result += "Stressed";
-                        break;
-                    case 5:
-                        result += "Predictive Failure";
-                        break;
-                    case 6:
-                        result += "Error";
-                        break;
-                    case 7:
-                        result += "Non-Recoverable Error";
-                        break;
-                    case 8:
-                        result += "Starting";
-                        break;
-                    case 9:
-                        result += "Stopping";
-                        break;
-                    case 10:
-                        result += "Stopped";
-                        break;
-                    case 11:
-                        result += "In Service";
-                        break;
-                    case 12:
-                        result += "No Contact";
-                        break;
-                    case 13:
-                        result += "Lost Communication";
-                        break;
-                    case 14:
-                        result += "Aborted";
-                        break;
-                    case 15:
-                        result += "Dormant";
-                        break;
-                    case 16:
-                        result += "Supporting Entity in Error";
-                        break;
-                    case 17:
-                        result += "Completed";
-                        break;
-                    case 0xD010:
-                        result += "Online";
-                        break;
-                    case 0xD011:
-                        result += "Not Ready";
-                        break;
-                    case 0xD012:
-                        result += "No Media";
-                        break;
-                    case 0xD013:
-                        result += "Offline";
-                        break;
-                    case 0xD014:
-                        result += "Failed";
-                        break;
+                    ushort calcStatus = 0xD010; // 53264
+                    calcStatus = (ushort)(status - calcStatus);
+                    calcStatus += 18;
+
+                    result += MSFT_OP_STATUS[calcStatus];
                 }
+                else
+                {
+                    result += MSFT_OP_STATUS[status];
+                }
+
                 if (status == operationalStatus[operationalStatus.Length - 1]) continue;
                 result += ", ";
             }
