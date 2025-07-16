@@ -1,11 +1,12 @@
 ﻿global using PPartitionEntry =
     GUIForDiskpart.Presentation.Presenter.UserControls.PPartitionEntry<GUIForDiskpart.Presentation.View.UserControls.UCPartitionEntry>;
+
+using System.Windows;
+using System.Windows.Controls;
+
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Presentation.View.UserControls;
 using GUIForDiskpart.Utils;
-using System.Windows;
-using System.Windows.Controls;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ScrollBar;
 
 
 namespace GUIForDiskpart.Presentation.Presenter.UserControls
@@ -158,9 +159,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnShrink_Click(object sender, RoutedEventArgs e)
         {
-            GUIForDiskpart.Presentation.View.Windows.WShrink window = new GUIForDiskpart.Presentation.View.Windows.WShrink(Partition);
-            window.Owner = MainWindow.Window;
-            window.Show();
+            App.Instance.WIM.CreateWPresenter<PShrink>(true, Partition);
         }
 
         private void OnAnalyzeDefrag_Click(object sender, RoutedEventArgs e)

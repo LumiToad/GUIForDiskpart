@@ -52,6 +52,12 @@ namespace GUIForDiskpart.Utils
             return FormatBytes(bytes, ref i, unit);
         }
 
+        public static double BytesToUnit(UInt64 bytes, Unit unit = Unit.MAX)
+        {
+            int i = 0;
+            return FormatBytes(Convert.ToInt64(bytes), ref i, unit);
+        }
+
         private static string CreateFormatString(int decimalDigits)
         {
             string formatString = "{0:0.";
