@@ -77,11 +77,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnEasyFormat_Click(object sender, RoutedEventArgs e)
         {
-            WEasyFormat formatWindow = new WEasyFormat(DiskModel);
-            formatWindow.Owner = MainWindow.Window;
-            formatWindow.Focus();
-
-            formatWindow.Show();
+            App.Instance.WIM.CreateWPresenter<PEasyFormat>(true, DiskModel);
         }
 
         private void OnButton_Click(object sender, RoutedEventArgs e)

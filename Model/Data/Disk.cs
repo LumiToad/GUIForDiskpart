@@ -302,7 +302,7 @@ namespace GUIForDiskpart.Model.Data
             {
                 if (status > 17)
                 {
-                    ushort calcStatus = 0xD010; // 53264
+                    ushort calcStatus = 0xD010;
                     calcStatus = (ushort)(status - calcStatus);
                     calcStatus += 18;
 
