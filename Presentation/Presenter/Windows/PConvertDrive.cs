@@ -71,7 +71,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public override void Setup()
         {
-            Log.Print(Disk.GetOutputAsString());
+            Log.Print(Disk.GetOutputAsString(), true);
         }
 
         protected override void AddCustomArgs(params object?[] args)

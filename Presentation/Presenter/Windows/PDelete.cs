@@ -73,7 +73,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public override void Setup()
         {
-            Log.Print(WSM.GetOutputAsString());
+            Log.Print(WSM.GetOutputAsString(), true);
         }
 
         protected override void AddCustomArgs(params object?[] args)

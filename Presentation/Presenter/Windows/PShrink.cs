@@ -102,7 +102,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
             output += DPFunctions.Shrink(driveLetter, desiredMB, minimumMB, false, false);
 
-            MainWindow.Log.Print(output);
+            MainWindow.Log.Print(output, true);
             MainWindow.DisplayDiskData(false);
 
             Close();
@@ -126,7 +126,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             string output = string.Empty;
             output += Partition.WSM.GetOutputAsString();
             output += Partition.DefragAnalysis.GetOutputAsString();
-            Log.Print(output);
+            Log.Print(output, true);
             SetSliderMinMax(Window.MinimumSlider, 0.0d, available);
             SetSliderMinMax(Window.DesiredSlider, 0.0d, available);
             Window.AvailableLabel.Content = $"{availableForShrinkInMB}";

@@ -23,11 +23,6 @@ namespace GUIForDiskpart.Presentation.View.UserControls
             InitializeComponent();
         }
 
-        public void Print(string text)
-        {
-
-        }
-
         public void SaveLog_Click(object sender, RoutedEventArgs e) => ESaveLog?.Invoke(sender, e);
         public void LogUI_TextChanged(object sender, TextChangedEventArgs e) => ELogUI?.Invoke(sender, e);
     }
