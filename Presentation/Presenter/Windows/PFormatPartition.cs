@@ -26,16 +26,13 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
     public class PFormatPartition<T> : WPresenter<T> where T : WFormatPartition
     {
         private PLog Log;
-        private readonly PCFormat pcFormat = new();
+        private PCFormatPartition pcFormat;
 
         public WSMModel WSM { get; private set; }
 
-        private void ExecuteFormat(bool value) => pcFormat.ExecuteFormat(value, Window, this as PFormatPartition);
-        public void SetErrorMessage(string message) => pcFormat.SetErrorMessage(message, Window);
-        public void ClearErrorMessage() => pcFormat.ClearErrorMessage(Window);
-
-        private void OnComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) =>
-            pcFormat.OnComboBox_SelectionChanged(Window, this as PFormatPartition);
+        private void ExecuteFormat(bool value) => pcFormat.ExecuteFormat(value);
+        public void SetErrorMessage(string message) => pcFormat.SetErrorMessage(message);
+        public void ClearErrorMessage() => pcFormat.ClearErrorMessage();
 
         #region OnClick
 
@@ -43,7 +40,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         {
             string confirmKey = $"Drive: {WSM.DiskNumber} Partition: {WSM.PartitionNumber}";
 
-            var secCheck = App.Instance.WIM.CreateWPresenter<PSecurityCheck>(true, PCFormat.SEC_WIN_WARN_PART, confirmKey);
+            var secCheck = App.Instance.WIM.CreateWPresenter<PSecurityCheck>(true, PCFormatBase.SEC_WIN_WARN_PART, confirmKey);
             secCheck.Window.Owner = Window;
             secCheck.ESecCheck += ExecuteFormat;
         }
@@ -70,12 +67,17 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
             Window.EConfirm += OnConfirmButton_Click;
             Window.ECancel += OnCancelButton_Click;
-            Window.ESelectionChanged += OnComboBox_SelectionChanged;
+            Window.ESelectionChanged += pcFormat.OnComboBox_SelectionChanged;
         }
 
         public override void InitPresenters()
         {
             Log = CreateUCPresenter<PLog>(Window.Log);
+        }
+
+        public override void InitComponents()
+        {
+            pcFormat = new(Window, this as PFormatPartition);
         }
 
         #endregion WPresenter

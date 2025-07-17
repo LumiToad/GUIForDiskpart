@@ -25,7 +25,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
     public class PEasyFomat<T> : WPresenter<T> where T : WEasyFormat
     {
         private PLog Log;
-        private readonly PCFormat pcFormat = new();
+        private PCEasyFormat pcFormat;
 
         public DiskModel Disk { get; private set; }
 
@@ -41,13 +41,11 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             return size;
         }
 
-        private void ExecuteFormat(bool value) => pcFormat.ExecuteFormat(value, Window, this as PEasyFormat);
-        private void EvaluteFAT32SizeBox() => pcFormat.EvaluteFAT32SizeBox(Window, this as PEasyFormat);
-        public void SetErrorMessage(string message) => pcFormat.SetErrorMessage(message, Window);
-        public void ClearErrorMessage() => pcFormat.ClearErrorMessage(Window);
+        private void ExecuteFormat(bool value) => pcFormat.ExecuteFormat(value);
+        private void EvaluteFAT32SizeBox() => pcFormat.EvaluteFAT32SizeBox();
+        public void SetErrorMessage(string message) => pcFormat.SetErrorMessage(message);
+        public void ClearErrorMessage() => pcFormat.ClearErrorMessage();
         private void OnSizeValue_TextChanged(object sender, TextChangedEventArgs e) => EvaluteFAT32SizeBox();
-        private void OnComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) => 
-            pcFormat.OnComboBox_SelectionChanged(Window, this as PEasyFormat);
 
         #region OnClick
 
@@ -55,7 +53,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         {
             string confirmKey = Disk.PhysicalName;
 
-            var secCheck = App.Instance.WIM.CreateWPresenter<PSecurityCheck>(true, PCFormat.SEC_WIN_WARN_DRIVE, confirmKey);
+            var secCheck = App.Instance.WIM.CreateWPresenter<PSecurityCheck>(true, PCFormatBase.SEC_WIN_WARN_DRIVE, confirmKey);
             secCheck.Window.Owner = Window;
             secCheck.ESecCheck += ExecuteFormat;
         }
@@ -82,13 +80,18 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
             Window.EConfirm += OnConfirmButton_Click;
             Window.ECancel += OnConfirmButton_Click;
-            Window.ESelectionChanged += OnComboBox_SelectionChanged;
+            Window.ESelectionChanged += pcFormat.OnComboBox_SelectionChanged;
             Window.ETextChanged += OnSizeValue_TextChanged;
         }
 
         public override void InitPresenters()
         {
             Log = CreateUCPresenter<PLog>(Window.Log);
+        }
+
+        public override void InitComponents()
+        {
+            pcFormat = new(Window, this as PEasyFormat);
         }
 
         #endregion WPresenter

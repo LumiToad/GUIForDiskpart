@@ -62,6 +62,7 @@ namespace GUIForDiskpart.Presentation.Presenter
 
         protected virtual void AddCustomArgs(params object?[] args) { }
         public virtual void InitPresenters() { }
+        public virtual void InitComponents() { }
 
         /// <summary>
         /// Returns either the specified generic UserControlClass OR a List of those!

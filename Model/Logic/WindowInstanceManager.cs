@@ -57,6 +57,7 @@ namespace GUIForDiskpart.Model.Logic
 
             wPresenter.Window = new();
             wPresenter.InitPresenters();
+            wPresenter.InitComponents();
             wPresenter.Window.Show();
             if (wPresenter.Window != App.Instance.MainWindow)
             {
