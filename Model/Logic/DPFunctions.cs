@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
-using GUIForDiskpart.Database.Data.Diskpart;
-
+using GUIForDiskpart.Utils;
 
 
 namespace GUIForDiskpart.Model.Logic.Diskpart
@@ -760,7 +758,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
                 if (info.Contains(line) || info.Contains(" \n"))
                 {
                     fullOutput = fullOutput.Replace(line, "");
-                    output = Regex.Replace(fullOutput, @"[\r\n]+", "\n");
+                    output = fullOutput.UnifyWhiteSpace();
                 }
             }
 

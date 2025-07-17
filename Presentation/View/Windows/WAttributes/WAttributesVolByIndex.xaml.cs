@@ -1,16 +1,12 @@
-﻿using GUIForDiskpart.Database.Data.Diskpart;
-using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.Presentation.Presenter;
-using System;
-using System.Text.RegularExpressions;
-using System.Windows;
+﻿using System.Windows;
+
 
 namespace GUIForDiskpart.Presentation.View.Windows
 {
     /// <summary>
     /// Interaction logic for AttributesVolumeByIndexWindow.xaml
     /// </summary>
-    public partial class WAttributesVolByIndex : Window
+    public partial class WAttributesVolByIdx : Window
     {
         public delegate void DOnClick(object sender, RoutedEventArgs e);
         public event DOnClick ESet;
@@ -20,7 +16,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
         public delegate void DOnTextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e);
         public event DOnTextChanged ETextChanged;
 
-        public WAttributesVolByIndex()
+        public WAttributesVolByIdx()
         {
             InitializeComponent();
         }

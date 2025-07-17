@@ -31,9 +31,9 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
     {
         #region MenuItems
 
-        MenuItem Offline =>
+        MenuItem DPOffline =>
             WPFUtils.CreateContextMenuItem(IconUtils.Diskpart, "DPOffline", "DISKPART - Offline", true, OnOnOffline_Click);
-        MenuItem Online =>
+        MenuItem DPOnline =>
             WPFUtils.CreateContextMenuItem(IconUtils.Diskpart, "DPOnline", "DISKPART - Online", true, OnOnOffline_Click);
         MenuItem DPInActive =>
             WPFUtils.CreateContextMenuItem(IconUtils.Diskpart, "DPInActive", "DISKPART - " + (Partition.WSM.IsActive ? "Inactive" : "Active"), true, OnActive_Click);
@@ -61,6 +61,8 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void PopulateContextMenu()
         {
+            UserControl.ContextMenu.Items.Add(Partition.WSM.IsOffline ? DPOnline : DPOffline);
+
             if (Partition.WSM.PartitionTable == "MBR")
             {
                 UserControl.ContextMenu.Items.Add(DPInActive);
@@ -71,11 +73,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
                 UserControl.ContextMenu.Items.Add(DPAttributes);
                 UserControl.ContextMenu.Items.Add(DPShrink);
                 UserControl.ContextMenu.Items.Add(DPExtend);
-                UserControl.ContextMenu.Items.Add(Offline);
             }
-
-            if (!UserControl.ContextMenu.Items.Contains(Offline))
-            { UserControl.ContextMenu.Items.Add((!Partition.HasDriveLetter()) ? Online : Offline); }
 
             if (Partition.IsLogicalDisk)
             {

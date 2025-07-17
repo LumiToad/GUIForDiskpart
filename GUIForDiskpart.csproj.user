@@ -24,13 +24,13 @@
     <Compile Update="Presentation\View\Windows\WAssignLetter.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Presentation\View\Windows\WAttributesVolByIndex.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WAttributes\WAttributesVolByIndex.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Presentation\View\Windows\WAttributesVolume.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WAttributes\WAttributesVolume.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Presentation\View\Windows\WAttributesDisk.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WAttributes\WAttributesDisk.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Presentation\View\Windows\WCHKDSK.xaml.cs">
@@ -42,10 +42,10 @@
     <Compile Update="Presentation\View\Windows\WConvertDrive.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Presentation\View\Windows\WCreatePartition.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WCreate\WCreatePartition.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Presentation\View\Windows\WCreateVolume.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WCreate\WCreateVolume.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Presentation\View\Windows\WDelete.xaml.cs">
@@ -109,13 +109,13 @@
     <Page Update="Presentation\View\Windows\WAssignLetter.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Presentation\View\Windows\WAttributesVolByIndex.xaml">
+    <Page Update="Presentation\View\Windows\WAttributes\WAttributesVolByIndex.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Presentation\View\Windows\WAttributesVolume.xaml">
+    <Page Update="Presentation\View\Windows\WAttributes\WAttributesVolume.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Presentation\View\Windows\WAttributesDisk.xaml">
+    <Page Update="Presentation\View\Windows\WAttributes\WAttributesDisk.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Presentation\View\Windows\WCHKDSK.xaml">
@@ -127,10 +127,10 @@
     <Page Update="Presentation\View\Windows\WConvertDrive.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Presentation\View\Windows\WCreatePartition.xaml">
+    <Page Update="Presentation\View\Windows\WCreate\WCreatePartition.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Presentation\View\Windows\WCreateVolume.xaml">
+    <Page Update="Presentation\View\Windows\WCreate\WCreateVolume.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Presentation\View\Windows\WDelete.xaml">

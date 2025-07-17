@@ -22,8 +22,6 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
     /// </summary>
     public class PAttributesDisk<T> : WPresenter<T> where T : WAttributesDisk
     {
-        PMainWindow MainWindow = App.Instance.WIM.GetPresenter<PMainWindow>();
-
         private PLog Log;
 
         public DiskModel Disk { get; private set; }

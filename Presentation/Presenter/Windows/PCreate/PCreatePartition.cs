@@ -60,27 +60,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         private void OnConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            string option = DPCreatePartition.EFI;
-
-            switch (WPFUtils.ComboBoxSelectionAsString(Window.PartitionOptionValue))
-            {
-                case ("EFI"):
-                    option = DPCreatePartition.EFI;
-                    break;
-                case ("EXTENDED"):
-                    option = DPCreatePartition.EXTENDED;
-                    break;
-                case ("LOGICAL"):
-                    option = DPCreatePartition.LOGICAL;
-                    break;
-                case ("MSR"):
-                    option = DPCreatePartition.MSR;
-                    break;
-                case ("PRIMARY"):
-                    option = DPCreatePartition.PRIMARY;
-                    break;
-            }
-
+            string option = (WPFUtils.ComboBoxSelectionAsString(Window.PartitionOptionValue));
             string output = string.Empty;
 
             output += DPFunctions.CreatePartition(Disk.DiskIndex, option, GetSizeValue(), false);
@@ -117,7 +97,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         {
             base.RegisterEventsInternal();
 
-            Window.EConfirm += OnConfirmButton_Click;
+            Window.ECreate += OnConfirmButton_Click;
             Window.ECancel += OnCancelButton_Click;
 
             Window.ETextChanged += OnSizeValue_TextChanged;

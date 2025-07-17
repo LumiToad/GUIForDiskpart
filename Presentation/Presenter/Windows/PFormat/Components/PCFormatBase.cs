@@ -2,8 +2,6 @@
 {
     public class PCFormatBase
     {
-        public PLog Log;
-
         public const string FS_NTFS = "NTFS";
         public const string FS_FAT32 = "FAT32";
         public const string FS_EXFAT = "exFAT";

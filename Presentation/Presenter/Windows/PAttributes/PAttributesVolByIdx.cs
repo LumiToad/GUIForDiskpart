@@ -1,11 +1,12 @@
-﻿global using PAttributesVolByIndex =
-    GUIForDiskpart.Presentation.Presenter.Windows.PAttributesVolByIndex<GUIForDiskpart.Presentation.View.Windows.WAttributesVolByIndex>;
+﻿global using PAttributesVolByIdx =
+    GUIForDiskpart.Presentation.Presenter.Windows.PAttributesVolByIdx<GUIForDiskpart.Presentation.View.Windows.WAttributesVolByIdx>;
 
-using System.Text.RegularExpressions;
 using System;
 using System.Windows;
 
 using GUIForDiskpart.Model.Logic.Diskpart;
+using System.Windows.Controls;
+using GUIForDiskpart.Utils;
 
 
 namespace GUIForDiskpart.Presentation.Presenter.Windows
@@ -22,7 +23,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
     /// </code>
     /// </para>
     /// </summary>
-    public class PAttributesVolByIndex<T> : WPresenter<T> where T : WAttributesVolByIndex
+    public class PAttributesVolByIdx<T> : WPresenter<T> where T : WAttributesVolByIdx
     {
         private PLog Log;
 
@@ -37,13 +38,13 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             Window.Attributes.Items.Add(DPAttributes.SHADOWCOPY);
         }
 
-        private void OnTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void OnTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             int lastCarretIndex = Window.VolumeNumber.CaretIndex;
 
             if (!int.TryParse(Window.VolumeNumber.Text, out selectedVolume))
             {
-                Window.VolumeNumber.Text = Regex.Replace(Window.VolumeNumber.Text, "[^0-9]", "");
+                Window.VolumeNumber.Text = Window.VolumeNumber.Text.RemoveAllButNumbers();
                 Window.VolumeNumber.CaretIndex = lastCarretIndex;
             }
 

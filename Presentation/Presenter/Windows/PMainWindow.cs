@@ -86,7 +86,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
                     UCPhysicalDriveEntry ucPhysicalDrive = (UCPhysicalDriveEntry)entry;
                     var pPhysicalDrive = K_ucPhysicalDrives_V_pPhysicalDrives[ucPhysicalDrive];
                     if (pPhysicalDrive != null && pPhysicalDrive.IsSelected == true)
-                        return pPhysicalDrive.DiskModel.DiskIndex;
+                        return pPhysicalDrive.Disk.DiskIndex;
                 }
 
                 if (entry.GetType() == typeof(UCPartitionEntry))
@@ -123,15 +123,15 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public void OnDiskEntry_Click<UCType>(PPhysicalDriveEntry<UCType> pPhysicalDrive) where UCType : UCPhysicalDriveEntry
         {
-            AddEntrysToStackPanel(Window.PartitionStackPanel, pPhysicalDrive.DiskModel.Partitions);
-            if (pPhysicalDrive.DiskModel.UnallocatedSpace > 0)
+            AddEntrysToStackPanel(Window.PartitionStackPanel, pPhysicalDrive.Disk.Partitions);
+            if (pPhysicalDrive.Disk.UnallocatedSpace > 0)
             {
                 var ucUnallocatedEntry = new UCUnallocatedEntry();
-                var pUnallocatedEntry = CreateUCPresenter<PUnallocatedEntry>(ucUnallocatedEntry, pPhysicalDrive.DiskModel);
+                var pUnallocatedEntry = CreateUCPresenter<PUnallocatedEntry>(ucUnallocatedEntry, pPhysicalDrive.Disk);
                 Window.PartitionStackPanel.Children.Add(ucUnallocatedEntry);
                 K_ucUnallocatedEntry_V_pUnallocatedEntry.Add(ucUnallocatedEntry, pUnallocatedEntry);
             }
-            EntryData.AddDataToGrid(pPhysicalDrive.DiskModel.GetKeyValuePairs());
+            EntryData.AddDataToGrid(pPhysicalDrive.Disk.GetKeyValuePairs());
         }
 
         public void OnPartitionEntry_Click(UCPartitionEntry entry)
@@ -194,7 +194,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public void OnAttributesVolume_Click(object sender, RoutedEventArgs e)
         {
-            App.Instance.WIM.CreateWPresenter<PAttributesVolByIndex>();
+            App.Instance.WIM.CreateWPresenter<PAttributesVolByIdx>();
         }
 
         #endregion TopBarDiskPartMenu

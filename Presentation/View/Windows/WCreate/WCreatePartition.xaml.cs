@@ -1,9 +1,5 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-
-using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.Utils;
 
 
 namespace GUIForDiskpart.Presentation.View.Windows
@@ -17,7 +13,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
         public event DOnTextChanged ETextChanged;
 
         public delegate void DOnClick(object sender, RoutedEventArgs e);
-        public event DOnClick EConfirm;
+        public event DOnClick ECreate;
         public event DOnClick ECancel;
 
         public WCreatePartition()
@@ -25,7 +21,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
             InitializeComponent();
         }
 
-        private void ConfirmButton_Click(object sender, RoutedEventArgs e) => EConfirm?.Invoke(sender, e);
+        private void CreateButton_Click(object sender, RoutedEventArgs e) => ECreate?.Invoke(sender, e);
         private void CancelButton_Click(object sender, RoutedEventArgs e) => ECancel?.Invoke(sender, e);
         private void SizeValue_TextChanged(object sender, TextChangedEventArgs e) => ETextChanged?.Invoke(sender, e);
     }

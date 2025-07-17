@@ -29,7 +29,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
     /// </summary>
     public class PPhysicalDriveEntry<T> : UCPresenter<T> where T : UCPhysicalDriveEntry
     {
-        public DiskModel DiskModel { get; private set; }
+        public DiskModel Disk { get; private set; }
         public bool? IsSelected { get { return UserControl.EntrySelected.IsChecked; } }
 
         #region MenuItems
@@ -37,8 +37,8 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
         MenuItem OnOffline =>
             WPFUtils.CreateContextMenuItem(
                 IconUtils.Diskpart,
-                DiskModel.IsOnline ? "DPOnline" : "DPOffline",
-                DiskModel.IsOnline ? "DISKPART - Online" : "DISKPART - Offline",
+                Disk.IsOnline ? "DPOffline" : "DPOnline",
+                Disk.IsOnline ? "DISKPART - Offline" : "DISKPART - Online",
                 true,
                 OnOnOffline_Click
                 );
@@ -55,7 +55,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
         public void OnOnOffline_Click(object sender, RoutedEventArgs e)
         {
             string output = string.Empty;
-            output += DPFunctions.OnOfflineDisk(DiskModel.DiskIndex, !DiskModel.IsOnline, false);
+            output += DPFunctions.OnOfflineDisk(Disk.DiskIndex, !Disk.IsOnline, false);
 
             MainWindow.Log.Print(output);
             MainWindow.DisplayDiskData(false);
@@ -63,37 +63,37 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnDetail_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Log.Print(DPFunctions.DetailDisk(DiskModel.DiskIndex));
+            MainWindow.Log.Print(DPFunctions.DetailDisk(Disk.DiskIndex));
         }
 
         private void OnListPart_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Log.Print(DPFunctions.ListPart(DiskModel.DiskIndex));
+            MainWindow.Log.Print(DPFunctions.ListPart(Disk.DiskIndex));
         }
 
         private void OnClean_Click(object sender, RoutedEventArgs e)
         {
-            App.Instance.WIM.CreateWPresenter<PClean>(true, DiskModel);
+            App.Instance.WIM.CreateWPresenter<PClean>(true, Disk);
         }
 
         private void OnConvert_Click(object sender, RoutedEventArgs e)
         {
-            App.Instance.WIM.CreateWPresenter<PConvertDrive>(true, DiskModel);
+            App.Instance.WIM.CreateWPresenter<PConvertDrive>(true, Disk);
         }
 
         private void OnCreatePart_Click(object sender, RoutedEventArgs e)
         {
-            App.Instance.WIM.CreateWPresenter<PCreatePartition>(true, DiskModel, DiskModel.UnallocatedSpace);
+            App.Instance.WIM.CreateWPresenter<PCreatePartition>(true, Disk, Disk.UnallocatedSpace);
         }
 
         private void OnCreateVolume_Click(object sender, RoutedEventArgs e)
         {
-            App.Instance.WIM.CreateWPresenter<PCreateVolume>(true, DiskModel, DiskModel.UnallocatedSpace);
+            App.Instance.WIM.CreateWPresenter<PCreateVolume>(true, Disk, Disk.UnallocatedSpace);
         }
 
         private void OnEasyFormat_Click(object sender, RoutedEventArgs e)
         {
-            App.Instance.WIM.CreateWPresenter<PEasyFormat>(true, DiskModel);
+            App.Instance.WIM.CreateWPresenter<PEasyFormat>(true, Disk);
         }
 
         private void OnButton_Click(object sender, RoutedEventArgs e)
@@ -113,7 +113,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         public override void Setup()
         {
-            UserControl.UpdateUI(DiskModel);
+            UserControl.UpdateUI(Disk);
             PopulateContextMenu();
         }
 
@@ -133,7 +133,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         public override void AddCustomArgs(params object?[] args)
         {
-            DiskModel = (DiskModel)args[0];
+            Disk = (DiskModel)args[0];
         }
 
         #endregion UCPresenter

@@ -30,7 +30,7 @@
             <ComboBoxItem Content="PRIMARY"/>
         </ComboBox>
         <StackPanel Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Top" Margin="10,90,0,0">
-            <Button x:Name="ConfirmButton" Content="Create" Click="ConfirmButton_Click"/>
+            <Button x:Name="ConfirmButton" Content="Create" Click="CreateButton_Click"/>
             <Button x:Name="CancelButton" Content="Cancel" IsCancel="True"  Click="CancelButton_Click" Margin="20,0,0,0"/>
 
         </StackPanel>

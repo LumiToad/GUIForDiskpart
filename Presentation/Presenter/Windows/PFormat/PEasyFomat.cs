@@ -79,7 +79,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             base.RegisterEventsInternal();
 
             Window.EConfirm += OnConfirmButton_Click;
-            Window.ECancel += OnConfirmButton_Click;
+            Window.ECancel += OnCancelButton_Click;
             Window.ESelectionChanged += pcFormat.OnComboBox_SelectionChanged;
             Window.ETextChanged += OnSizeValue_TextChanged;
         }
