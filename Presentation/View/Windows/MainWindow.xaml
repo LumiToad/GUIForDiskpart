@@ -99,10 +99,10 @@
                 </Grid.RowDefinitions>
 
                 <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" Width="{Binding ActualWidth, ElementName=grid, Mode=OneWay}">
-                    <StackPanel x:Name="DiskStackPanel" Orientation="Horizontal" CanHorizontallyScroll="True" HorizontalAlignment="Center"/>
+                    <userControls:UCEntryPanel x:Name="DiskPanel"/>
                 </ScrollViewer>
                 <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" Width="{Binding ActualWidth, ElementName=grid, Mode=OneWay}" Grid.Row="1">
-                    <StackPanel x:Name="PartitionStackPanel" Orientation="Horizontal" CanHorizontallyScroll="True" HorizontalAlignment="Center"/>
+                    <userControls:UCEntryPanel x:Name="PartitionPanel"/>
                 </ScrollViewer>
                 <userControls:UCEntryData x:Name="EntryDataUI" HorizontalAlignment="Center" Grid.Row="2" Height="NaN"/>
 

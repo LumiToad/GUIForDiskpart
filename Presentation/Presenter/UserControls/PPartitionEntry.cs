@@ -29,6 +29,9 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
     /// </summary>
     public class PPartitionEntry<T> : UCPresenter<T> where T : UCPartitionEntry
     {
+        public delegate void DOnSelected();
+        public event DOnSelected ESelected;
+
         #region MenuItems
 
         MenuItem DPOffline =>
@@ -59,6 +62,13 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         public bool? IsSelected { get { return UserControl.IsSelected; } }
 
+
+        public void Select()
+        {
+            SetEntryRadioButton(true);
+            MainWindow.Window.PartitionEntry_Click(UserControl);
+        }
+
         private void PopulateContextMenu()
         {
             UserControl.ContextMenu.Items.Add(Partition.WSM.IsOffline ? DPOnline : DPOffline);
@@ -87,9 +97,9 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
             }
         }
 
-        public void ToggleEntryRadioButton()
+        public void SetEntryRadioButton(bool value)
         {
-            UserControl.EntrySelected.IsChecked = !UserControl.EntrySelected.IsChecked;
+            UserControl.EntrySelected.IsChecked = value;
         }
 
         public void OpenScanVolumeWindow()
@@ -205,8 +215,8 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnButton_Click(object sender, RoutedEventArgs e)
         {
-            ToggleEntryRadioButton();
-            MainWindow.OnPartitionEntry_Click(UserControl);
+            Select();
+            ESelected?.Invoke();
         }
 
         private void OnDetail_Click(object sender, RoutedEventArgs e)

@@ -53,13 +53,6 @@ namespace GUIForDiskpart.Presentation.View.UserControls
             PartitionType.Content = $"{partition.WSM.PartitionTable}: {partition.WSM.PartitionType}";
         }
 
-        private void SetValueInProgressBar(ulong totalSize, ulong usedSpace)
-        {
-            SizeBar.Maximum = totalSize;
-            SizeBar.Minimum = 0;
-            SizeBar.Value = usedSpace;
-        }
-
         private void OnOffline_Click(object sender, RoutedEventArgs e) => EOnOffline?.Invoke(sender, e);
         private void Extend_Click(object sender, RoutedEventArgs e) => EExtend?.Invoke(sender, e);
         private void Shrink_Click(object sender, RoutedEventArgs e) => EShrink?.Invoke(sender, e);

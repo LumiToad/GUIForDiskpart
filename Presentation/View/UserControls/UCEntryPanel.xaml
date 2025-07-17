@@ -6,5 +6,5 @@
              xmlns:local="clr-namespace:GUIForDiskpart.Presentation.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel x:Name="DiskStackPanel" Orientation="Horizontal" CanHorizontallyScroll="True" Margin="400,0,400,347"/>
+    <StackPanel x:Name="Stack" Orientation="Horizontal" CanHorizontallyScroll="True" HorizontalAlignment="Center"/>
 </UserControl>

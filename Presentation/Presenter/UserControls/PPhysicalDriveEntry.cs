@@ -29,6 +29,9 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
     /// </summary>
     public class PPhysicalDriveEntry<T> : UCPresenter<T> where T : UCPhysicalDriveEntry
     {
+        public delegate void DOnSelected();
+        public event DOnSelected ESelected;
+
         public DiskModel Disk { get; private set; }
         public bool? IsSelected { get { return UserControl.EntrySelected.IsChecked; } }
 
@@ -50,9 +53,15 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
             UserControl.ContextMenu.Items.Add(OnOffline);
         }
 
+        public void Select()
+        {
+            UserControl.SetEntryRadioButton(true);
+            MainWindow.Window.DiskEntry_Click(UserControl);
+        }
+
         #region OnClick
 
-        public void OnOnOffline_Click(object sender, RoutedEventArgs e)
+        private void OnOnOffline_Click(object sender, RoutedEventArgs e)
         {
             string output = string.Empty;
             output += DPFunctions.OnOfflineDisk(Disk.DiskIndex, !Disk.IsOnline, false);
@@ -98,8 +107,8 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnButton_Click(object sender, RoutedEventArgs e)
         {
-            UserControl.SelectEntryRadioButton();
-            MainWindow.OnDiskEntry_Click(this);
+            Select();
+            ESelected?.Invoke();
         }
 
         private void OnOpenContextMenu_Click(object sender, RoutedEventArgs e)

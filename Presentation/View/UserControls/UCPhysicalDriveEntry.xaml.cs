@@ -27,14 +27,12 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         public event DOnClick EButton_Click;
         public event DOnClick EOpenContextMenu_Click;
 
-        PMainWindow MainWindow = App.Instance.WIM[typeof(PMainWindow)];
-
         public UCPhysicalDriveEntry()
         {
             InitializeComponent();
         }
 
-        public void SelectEntryRadioButton() => EntrySelected.IsChecked = true;
+        public void SetEntryRadioButton(bool value) => EntrySelected.IsChecked = value;
 
         public void SetValueInProgressBar(ulong totalSize, ulong usedSpace)
         {
@@ -90,7 +88,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
             return result;
         }
 
-        public void OnOffline_Click(object sender, RoutedEventArgs e) => EOnOffline_Click(sender, e);
+        private void OnOffline_Click(object sender, RoutedEventArgs e) => EOnOffline_Click(sender, e);
         private void Detail_Click(object sender, RoutedEventArgs e) => EDetail_Click(sender, e);
         private void ListPart_Click(object sender, RoutedEventArgs e) => EListPart_Click(sender, e);
         private void Clean_Click(object sender, RoutedEventArgs e) => EClean_Click(sender, e);

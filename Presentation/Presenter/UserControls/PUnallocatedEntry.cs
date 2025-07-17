@@ -28,6 +28,9 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
     /// </summary>
     public class PUnallocatedEntry<T> : UCPresenter<T> where T : UCUnallocatedEntry
     {
+        public delegate void DOnSelected();
+        public event DOnSelected ESelected;
+
         private long size;
         public DiskModel Disk { get; private set; }
 
@@ -44,9 +47,15 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
             }
         }
 
-        public void SelectEntryRadioButton()
+        public void Select()
         {
-            UserControl.EntrySelected.IsChecked = !UserControl.EntrySelected.IsChecked;
+            SetEntryRadioButton(true);
+            MainWindow.Window.UnallocatedEntry_Click(UserControl);
+        }
+
+        public void SetEntryRadioButton(bool value)
+        {
+            UserControl.EntrySelected.IsChecked = value;
         }
 
         private void SetSize(string size)
@@ -58,8 +67,8 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         private void OnButton_Click(object sender, RoutedEventArgs e)
         {
-            SelectEntryRadioButton();
-            MainWindow.OnUnallocatedEntry_Click(UserControl);
+            Select();
+            ESelected?.Invoke();
         }
 
         private void OnCreatePart_Click(object sender, RoutedEventArgs e)
@@ -89,10 +98,10 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         protected override void RegisterEventsInternal()
         {
-            UserControl.EButton_Click += OnButton_Click;
-            UserControl.ECreatePart_Click += OnCreatePart_Click;
-            UserControl.ECreateVolume_Click += OnCreateVolume_Click;
-            UserControl.EOpenContextMenu_Click += OnOpenContextMenu_Click;
+            UserControl.EButton += OnButton_Click;
+            UserControl.ECreatePart += OnCreatePart_Click;
+            UserControl.ECreateVolume += OnCreateVolume_Click;
+            UserControl.EOpenContextMenu += OnOpenContextMenu_Click;
         }
 
         public override void AddCustomArgs(params object?[] args)

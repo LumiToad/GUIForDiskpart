@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.ComponentModel;
+using System.Reflection;
 using System.Windows.Controls;
 using System.Diagnostics;
-using System.Reflection;
 
 using GUIForDiskpart.Utils;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.ComponentModel;
 
 
 namespace GUIForDiskpart.Presentation.Presenter
 {
     public class Presenter
     {
+        protected Dictionary<Type, object> key_UC_Value_P = new();
+
         public PMainWindow? MainWindow
         {
             get 
@@ -44,44 +45,13 @@ namespace GUIForDiskpart.Presentation.Presenter
                 ErrorUtils.NotImplementedException();
             }
         }
-    }
 
-    public class WPresenter<T> : Presenter where T : Window
-    {
-        public T Window;
-        private Dictionary<Type, object> key_UC_Value_P = new();
-
-        public static dynamic New<WPresenterClass>(params object?[] args) where WPresenterClass : WPresenter<T>, new()
-        {
-            var wPresenter = new WPresenterClass();
-            wPresenter.AddCustomArgs(args);
-            return wPresenter;
-        }
-
-        public virtual void Setup() { }
-
-        protected virtual void AddCustomArgs(params object?[] args) { }
-        public virtual void InitPresenters() { }
-        public virtual void InitComponents() { }
-
-        /// <summary>
-        /// Returns either the specified generic UserControlClass OR a List of those!
-        /// Out parameter isList will tell you.
-        /// </summary>
-        /// <typeparam name="UserControlClass"></typeparam>
-        /// <returns></returns>
-        public dynamic GetUCPresenter<UserControlClass>(out bool isList) where UserControlClass : UserControl
-        {
-            isList = (key_UC_Value_P[typeof(UserControlClass)] is List<UserControlClass>);
-            return key_UC_Value_P[typeof(UserControlClass)];
-        }
-
-        protected UCPresenterClass CreateUCPresenter<UCPresenterClass>(UserControl userControl, params object?[] args) where UCPresenterClass : new()
+        public UCPresenterClass CreateUCPresenter<UCPresenterClass>(UserControl userControl, params object?[] args) where UCPresenterClass : new()
         {
             var method = GetType().GetMethod("CreateUCPresenterInternal", BindingFlags.NonPublic | BindingFlags.Instance);
             method = method.MakeGenericMethod(userControl.GetType(), typeof(UCPresenterClass));
 
-            var retVal = method.Invoke(this, new object?[] { userControl, args} );
+            var retVal = method.Invoke(this, new object?[] { userControl, args });
             return (UCPresenterClass)retVal;
         }
 
@@ -92,6 +62,7 @@ namespace GUIForDiskpart.Presentation.Presenter
             var ucPresenter = new PType();
             ucPresenter.AddUserControl(userControl);
             ucPresenter.AddCustomArgs(args);
+            ucPresenter.InitComponents();
             ucPresenter.Setup();
 
             if (key_UC_Value_P.ContainsKey(typeof(UCType)))
@@ -116,6 +87,37 @@ namespace GUIForDiskpart.Presentation.Presenter
             }
 
             return ucPresenter;
+        }
+
+        public virtual void InitComponents() { }
+    }
+
+    public class WPresenter<T> : Presenter where T : Window
+    {
+        public T Window;
+
+        public static dynamic New<WPresenterClass>(params object?[] args) where WPresenterClass : WPresenter<T>, new()
+        {
+            var wPresenter = new WPresenterClass();
+            wPresenter.AddCustomArgs(args);
+            return wPresenter;
+        }
+
+        public virtual void Setup() { }
+
+        protected virtual void AddCustomArgs(params object?[] args) { }
+        public virtual void InitPresenters() { }
+
+        /// <summary>
+        /// Returns either the specified generic UserControlClass OR a List of those!
+        /// Out parameter isList will tell you.
+        /// </summary>
+        /// <typeparam name="UserControlClass"></typeparam>
+        /// <returns></returns>
+        public dynamic GetUCPresenter<UserControlClass>(out bool isList) where UserControlClass : UserControl
+        {
+            isList = (key_UC_Value_P[typeof(UserControlClass)] is List<UserControlClass>);
+            return key_UC_Value_P[typeof(UserControlClass)];
         }
 
         /// <summary>
