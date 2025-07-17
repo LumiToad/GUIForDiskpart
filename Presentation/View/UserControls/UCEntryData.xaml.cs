@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using GUIForDiskpart.Presentation.Presenter;
-using GUIForDiskpart.Utils;
+
 
 namespace GUIForDiskpart.Presentation.View.UserControls
 {

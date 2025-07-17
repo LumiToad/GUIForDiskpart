@@ -19,7 +19,7 @@ namespace GUIForDiskpart
         public static App Instance { get; private set; }
         public WindowInstanceManager WIM { get; private set; } = new();
 
-        private WStartupLoading? startup;
+        //private WStartupLoading? startup;
 
         // Entry point of the whole application!
         protected override void OnStartup(StartupEventArgs e)
@@ -36,7 +36,7 @@ namespace GUIForDiskpart
 
             try
             {
-                RetrieveAndShowDiskData(true);
+                DiskService.ReLoadDisks();
                 DiskService.SetupDiskChangedWatcher();
             }
             catch (Exception ex)
@@ -49,45 +49,7 @@ namespace GUIForDiskpart
 
         public void OnMainWindowLoaded()
         {
-            var pMainWin = WIM.GetPresenter<PMainWindow>();
-            DiskService.OnDiskChanged += pMainWin.OnDiskChanged;
-            pMainWin.DisplayDiskData(true);
-
             WIM.StartupWindowClose();
         }
-
-        // Retriever
-        #region RetrieveDisk
-        //private void OnDiskChanged()
-        //{
-        //    RetrieveAndShowDiskData(false);
-        //}
-
-        // Retriever
-        public void RetrieveAndShowDiskData(bool outputText)
-        {
-            RetrieveAndShowDiskData_Internal(outputText);
-        }
-
-        // Retriever
-        private void RetrieveAndShowDiskData_Internal(bool outputText)
-        {
-            DiskService.ReLoadDisks();
-
-            //WIM.GetPresenter<MainWindow<GUIFDMainWin>>().RetrieveAndShowDiskData(outputText);
-
-            //Todo -> View!
-            //AddEntrysToStackPanel<DiskModel>(DiskStackPanel, DiskService.PhysicalDrives);
-
-            //if (outputText)
-            //{
-            //    AddTextToOutputConsole(DiskService.GetDiskOutput());
-            //}
-
-            //Todo -> View!
-            //DiskEntry_Click((PhysicalDiskEntryUI)DiskStackPanel.Children[0]);
-        }
-
-        #endregion RetrieveDisk
     }
 }

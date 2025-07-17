@@ -25,13 +25,15 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         private Dictionary<UCPartitionEntry, PPartitionEntry> K_ucPartitionEntry_V_pPartitionEntry = new();
         private Dictionary<UCUnallocatedEntry, PUnallocatedEntry> K_ucUnallocatedEntry_V_pUnallocatedEntry = new();
 
+        private void OnWindowContent_Rendered(EventArgs e)
+        {
+            DiskService.OnDiskChanged += OnDiskChanged;
+            DisplayDiskData(true);
+        }
 
         // Retriever
         #region RetrieveDisk
-        public void OnDiskChanged()
-        {
-            DisplayDiskData(false);
-        }
+        public void OnDiskChanged() => DisplayDiskData(false);
 
         // Retriever
         public void DisplayDiskData(bool outputText)
@@ -42,8 +44,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
                 Log.Print(DiskService.GetDiskOutput());
             }
             var ucPhysicalDrive = Window.DiskStackPanel.Children[0] as UCPhysicalDriveEntry;
-            var pPhysicalDrive = K_ucPhysicalDrives_V_pPhysicalDrives[ucPhysicalDrive];
-            OnDiskEntry_Click(pPhysicalDrive);
+            OnDiskEntry_Click(ucPhysicalDrive);
         }
 
         #region StackPanelLogic_TESTING!!!
@@ -109,11 +110,12 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public void OnSaveEntryData_Click(object sender, RoutedEventArgs e)
         {
-            Window.EntryDataUI.SaveEntryData_Click(sender, e);
+            EntryData.OnSaveEntryData_Click(sender, e);
         }
 
         public void OnQuit_Click(object sender, RoutedEventArgs e)
         {
+            // TODO: Save shutdown?
             App.Instance.Shutdown();
         }
 
@@ -121,8 +123,10 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         #region EntriesClick
 
-        public void OnDiskEntry_Click<UCType>(PPhysicalDriveEntry<UCType> pPhysicalDrive) where UCType : UCPhysicalDriveEntry
+        public void OnDiskEntry_Click(UCPhysicalDriveEntry ucPhysicalDrive)
         {
+            var pPhysicalDrive = K_ucPhysicalDrives_V_pPhysicalDrives[ucPhysicalDrive];
+
             AddEntrysToStackPanel(Window.PartitionStackPanel, pPhysicalDrive.Disk.Partitions);
             if (pPhysicalDrive.Disk.UnallocatedSpace > 0)
             {
@@ -226,12 +230,12 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public void OnWebsite_Click(object sender, RoutedEventArgs e)
         {
-            CommandExecuter.IssueCommand(ProcessType.CMD, "start " + AppInfo.WEBSITE_URL);
+            CommandExecuter.IssueCommand(ProcessType.CMD, CMDBasic.START_BROWSER + AppInfo.WEBSITE_URL);
         }
 
         public void OnWiki_Click(object sender, RoutedEventArgs e)
         {
-            CommandExecuter.IssueCommand(ProcessType.CMD, "start " + AppInfo.WIKI_URL);
+            CommandExecuter.IssueCommand(ProcessType.CMD, CMDBasic.START_BROWSER + AppInfo.WIKI_URL);
         }
 
         public void OnAbout_Click(object sender, RoutedEventArgs e)
@@ -243,13 +247,15 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         #endregion TopBarHelpMenu
 
-        #region WPresenterOverrides
+        #region WPresenter
         
         protected override void RegisterEventsInternal()
         {
             base.RegisterEventsInternal();
 
-            //Window.EDiskEntry_Click += OnDiskEntryClick;
+            Window.ERendered += OnWindowContent_Rendered;
+
+            Window.EDiskEntry_Click += OnDiskEntry_Click;
             Window.EPartitionEntry_Click += OnPartitionEntry_Click;
             Window.EUnallocatedEntry_Click += OnUnallocatedEntry_Click;
             Window.EListPart_Click += OnListPart_Click;
@@ -280,7 +286,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             EntryData = CreateUCPresenter<PEntryData>(Window.EntryDataUI);
         }
 
-        #endregion WPresenterOverrides
+        #endregion WPresenter
     }
 }
 

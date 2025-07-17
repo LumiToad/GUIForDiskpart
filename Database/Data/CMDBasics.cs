@@ -11,6 +11,8 @@
         public const string SHUTDOWN_RESTART = "/r";
 
         #endregion Shutdown
+
+        public const string START_BROWSER = "start ";
     }
 
     #region CHKDSK

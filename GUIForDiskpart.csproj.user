@@ -9,6 +9,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Presentation\View\UserControls\UCEntryPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Presentation\View\UserControls\UCLog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

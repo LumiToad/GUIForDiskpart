@@ -12,15 +12,6 @@ namespace GUIForDiskpart.Presentation.View.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-        public delegate void DDiskEntryOnClick(UCPhysicalDriveEntry entry);
-        public event DDiskEntryOnClick EDiskEntry_Click;
-
-        public delegate void DPartitionEntryOnClick(UCPartitionEntry entry);
-        public event DPartitionEntryOnClick EPartitionEntry_Click;
-
-        public delegate void DUnallocatedEntryOnClick(UCUnallocatedEntry entry);
-        public event DUnallocatedEntryOnClick EUnallocatedEntry_Click;
-
         public delegate void DOnClick(object sender, RoutedEventArgs e);
         public event DOnClick EListPart_Click;
         public event DOnClick EListVolume_Click;
@@ -40,6 +31,19 @@ namespace GUIForDiskpart.Presentation.View.Windows
         public event DOnClick EWiki_Click;
         public event DOnClick EAbout_Click;
 
+        public delegate void DDiskEntryOnClick(UCPhysicalDriveEntry entry);
+        public event DDiskEntryOnClick EDiskEntry_Click;
+
+        public delegate void DPartitionEntryOnClick(UCPartitionEntry entry);
+        public event DPartitionEntryOnClick EPartitionEntry_Click;
+
+        public delegate void DUnallocatedEntryOnClick(UCUnallocatedEntry entry);
+        public event DUnallocatedEntryOnClick EUnallocatedEntry_Click;
+
+        public delegate void DContentRendered(EventArgs e);
+        public event DContentRendered ERendered;
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -49,6 +53,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
         {
             base.OnContentRendered(e);
             App.Instance.OnMainWindowLoaded();
+            ERendered?.Invoke(e);
         }
 
         #region EntriesClick
