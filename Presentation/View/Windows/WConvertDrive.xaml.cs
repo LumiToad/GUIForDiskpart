@@ -1,4 +1,4 @@
-﻿using GUIForDiskpart.Database.Data.Diskpart;
+﻿using GUIForDiskpart.Database.Data.DP;
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Presentation.Presenter;
 using System.Windows;

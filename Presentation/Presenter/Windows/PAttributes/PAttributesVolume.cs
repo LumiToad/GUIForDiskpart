@@ -2,7 +2,8 @@
     GUIForDiskpart.Presentation.Presenter.Windows.PAttributesVolume<GUIForDiskpart.Presentation.View.Windows.WAttributesVolume>;
 
 using System.Windows;
-
+using GUIForDiskpart.Database.Data;
+using GUIForDiskpart.Database.Data.Types;
 using GUIForDiskpart.Model.Data;
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Presentation.View.UserControls;
@@ -35,10 +36,10 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         private void PopulateAttributesCombobox()
         {
-            Window.Attributes.Items.Add(DPAttributes.HIDDEN);
-            Window.Attributes.Items.Add(DPAttributes.READONLY);
-            Window.Attributes.Items.Add(DPAttributes.NODEFAULTDRIVELETTER);
-            Window.Attributes.Items.Add(DPAttributes.SHADOWCOPY);
+            Window.Attributes.Items.Add(Attributes.HIDDEN);
+            Window.Attributes.Items.Add(Attributes.READONLY);
+            Window.Attributes.Items.Add(Attributes.NODEFAULTDRIVELETTER);
+            Window.Attributes.Items.Add(Attributes.SHADOWCOPY);
         }
 
         #region OnClick
@@ -79,8 +80,8 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
             PopulateAttributesCombobox();
             Log.Print(WSMPartition.GetOutputAsString(), true);
-            Window.MBRLabel.Text = (WSMPartition.PartitionTable == "MBR" ? MBR_TEXT_EVERY_VOL : MBR_TEXT_THIS_VOL);
-            Window.DriveLetterLabel.Content = driveLetter + ":/";
+            Window.MBRLabel.Text = (WSMPartition.PartitionTable == CommonTypes.MBR ? MBR_TEXT_EVERY_VOL : MBR_TEXT_THIS_VOL);
+            Window.DriveLetterLabel.Content = driveLetter + CommonStrings.PATH_FORMAT;
         }
 
         protected override void AddCustomArgs(params object?[] args)

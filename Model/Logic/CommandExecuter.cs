@@ -6,6 +6,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
+using System.Numerics;
+using static System.Windows.Forms.AxHost;
 
 
 namespace GUIForDiskpart.Model.Logic
@@ -13,6 +15,8 @@ namespace GUIForDiskpart.Model.Logic
     public static class CommandExecuter
     {
         private const string EXE_SUFFIX = ".exe";
+        private const string CMD_ECHO_CLOSE_WINDOW = "echo Please close this window & pause >nul";
+        private const string STARTED_WITH_PARAMS = "started with parameters:";
 
         public static List<object> IssuePowershellCommand(string command, string psParam)
         {
@@ -85,12 +89,12 @@ namespace GUIForDiskpart.Model.Logic
                 output += processType.ToString().ToUpper() + " - " + command + "\n";
             }
 
-            process.StandardInput.WriteLine("exit");
+            process.StandardInput.WriteLine(CMDBasic.EXIT);
 
             output += ReadProcessStandardOutput(process);
             int exitCode = 0;
             exitCode = process.ExitCode;
-            output += "Exit Code: " + exitCode.ToString() + "\n";
+            output += $"{CommonStrings.EXIT_CODE} {exitCode.ToString()}\n";
 
             return output;
         }
@@ -106,18 +110,18 @@ namespace GUIForDiskpart.Model.Logic
             process.StandardInput.WriteLine(command);
             output += processType.ToString().ToUpper() + " - " + command + "\n";
 
-            process.StandardInput.WriteLine("exit");
+            process.StandardInput.WriteLine(CMDBasic.EXIT);
 
             output += ReadProcessStandardOutput(process);
             int exitCode = ExitProcess(process);
-            output += "Exit Code: " + exitCode.ToString() + "\n";
+            output += $"{CommonStrings.EXIT_CODE} {exitCode.ToString()}\n";
 
             return output;
         }
 
         public static string GetChoiceYNString()
         {
-            var info = new ProcessStartInfo("choice");
+            var info = new ProcessStartInfo(CMDBasic.CHOICE);
             info.UseShellExecute = false;
             info.RedirectStandardOutput = true;
             info.RedirectStandardInput = true;
@@ -153,10 +157,10 @@ namespace GUIForDiskpart.Model.Logic
             process.StartInfo.FileName = Database.Data.Types.ProcessType.CMD + EXE_SUFFIX;
             process.StartInfo.RedirectStandardInput = true;
             process.Start();
-            process.StandardInput.WriteLine($"{command} & echo Please close this window & pause >nul");
+            process.StandardInput.WriteLine($"{command} & {CMD_ECHO_CLOSE_WINDOW}");
 
-            output += $"{process.ProcessName.ToUpper()}{EXE_SUFFIX} started with parameters:\n";
-            output += $"{command} & echo Please close this window & pause >nul";
+            output += $"{process.ProcessName.ToUpper()}{EXE_SUFFIX} {STARTED_WITH_PARAMS}\n";
+            output += $"{command} & {CMD_ECHO_CLOSE_WINDOW}";
 
             Console.WriteLine(output);
             return output;

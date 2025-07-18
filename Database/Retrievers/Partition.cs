@@ -27,7 +27,7 @@ namespace GUIForDiskpart.Database.Retrievers
 
         public List<object> WSMPartitionQuery(DiskModel diskModel)
         {
-            string diskIndex = Convert.ToString(diskModel.DiskIndex);
+            string diskIndex = System.Convert.ToString(diskModel.DiskIndex);
 
             return CommandExecuter.IssuePowershellCommand("Get-Partition", diskIndex);
         }

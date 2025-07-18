@@ -32,10 +32,10 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         
         private void PopulateAttributesCombobox()
         {
-            Window.Attributes.Items.Add(DPAttributes.HIDDEN);
-            Window.Attributes.Items.Add(DPAttributes.READONLY);
-            Window.Attributes.Items.Add(DPAttributes.NODEFAULTDRIVELETTER);
-            Window.Attributes.Items.Add(DPAttributes.SHADOWCOPY);
+            Window.Attributes.Items.Add(Attributes.HIDDEN);
+            Window.Attributes.Items.Add(Attributes.READONLY);
+            Window.Attributes.Items.Add(Attributes.NODEFAULTDRIVELETTER);
+            Window.Attributes.Items.Add(Attributes.SHADOWCOPY);
         }
 
         private void OnTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -56,7 +56,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
             if (!string.IsNullOrEmpty(Window.VolumeNumber.Text))
             {
-                selectedVolume = Convert.ToInt32(Window.VolumeNumber.Text);
+                selectedVolume = System.Convert.ToInt32(Window.VolumeNumber.Text);
             }
             else selectedVolume = -1;
         }
@@ -99,7 +99,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         {
             PopulateAttributesCombobox();
             Window.MBRLabel.Text = MBR_TEXT;
-            Log.Print(DPFunctions.List(DPList.VOLUME), true);
+            Log.Print(DPFunctions.List(Basics.VOLUME), true);
         }
 
         protected override void AddCustomArgs(params object?[] args)

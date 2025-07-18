@@ -26,7 +26,7 @@
         </Grid.RowDefinitions>
         <StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.Row="2" VerticalAlignment="Center" Width="NaN" HorizontalAlignment="Center">
             <Label Content="CHKDSK" Padding="3,0,6,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Label x:Name="DriveLetterBottom" Content="D:/" Padding="3,0,6,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Label x:Name="DriveLetterBottom" Content="D:\" Padding="3,0,6,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
         </StackPanel>
         <StackPanel Margin="8,10,0,0" Grid.Column="1">
             <CheckBox x:Name="ParaF" Content="Find and fix logical errors [/f]" Unchecked="ParaF_Checked" Checked="ParaF_Checked"/>

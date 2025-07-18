@@ -94,17 +94,17 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public void OnListVolume_Click(object sender, RoutedEventArgs e)
         {
-            Log.Print(DPFunctions.List(DPList.VOLUME));
+            Log.Print(DPFunctions.List(Basics.VOLUME));
         }
 
         public void OnListDisk_Click(object sender, RoutedEventArgs e)
         {
-            Log.Print(DPFunctions.List(DPList.DISK));
+            Log.Print(DPFunctions.List(Basics.DISK));
         }
 
         public void OnListVDisk_Click(object sender, RoutedEventArgs e)
         {
-            Log.Print(DPFunctions.List(DPList.VDISK));
+            Log.Print(DPFunctions.List(Basics.VDISK));
         }
 
         public void OnCreateVDisk_Click(object sender, RoutedEventArgs e)

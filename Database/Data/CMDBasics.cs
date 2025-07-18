@@ -13,9 +13,9 @@
         #endregion Shutdown
 
         public const string START_BROWSER = "start ";
+        public const string CHOICE = "choice";
+        public const string EXIT = "exit";
     }
-
-    #region CHKDSK
 
     public class CHKDSKParameters
     {
@@ -38,10 +38,6 @@
         public const string MARKCLEAN_FATFAMILY = "/markclean";
     }
 
-    #endregion CHKDSK
-
-    #region CHKNTFS
-
     public class CHKNTFSParameters
     {
         public const string CMD_CHKNTFS = "CHKNTFS";
@@ -49,8 +45,5 @@
         public const string SETTIMER = "/t:";
         public const string EXCLUDEVOLUMES = "/x";
         public const string QUEUEMULTIVOLUME = "/c";
-
     }
-
-    #endregion CHKNTFS
 }

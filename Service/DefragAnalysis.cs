@@ -16,7 +16,7 @@ namespace GUIForDiskpart.Service
             Dictionary<string, string> data = LinesToDictionary(lines);
 
             Model.Data.DefragAnalysis result = DictionaryToClass(data);
-            result.AvailableForExtend = Convert.ToUInt64(partition.AssignedDiskModel.UnallocatedSpace);
+            result.AvailableForExtend = System.Convert.ToUInt64(partition.AssignedDiskModel.UnallocatedSpace);
             return result;
         }
 
@@ -54,7 +54,7 @@ namespace GUIForDiskpart.Service
             foreach (PropertyInfo property in defragAnalysisProperties)
             {
                 if (!dict.ContainsKey(property.Name)) continue;
-                var item = Convert.ChangeType(dict[property.Name], property.PropertyType);
+                var item = System.Convert.ChangeType(dict[property.Name], property.PropertyType);
                 property.SetValue(defragAnalysis, item);
             }
 

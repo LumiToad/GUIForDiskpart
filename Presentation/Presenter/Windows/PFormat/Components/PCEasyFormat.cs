@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 
 using GUIForDiskpart.Model.Logic;
+using GUIForDiskpart.Database.Data.Types;
 
 
 namespace GUIForDiskpart.Presentation.Presenter.Windows.Components
@@ -27,13 +28,13 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows.Components
 
             switch (SelectedFileSystemAsString())
             {
-                case (FS_NTFS):
+                case (FSTypeStrings.FS_NTFS):
                     fileSystem = FSType.NTFS;
                     break;
-                case (FS_FAT32):
+                case (FSTypeStrings.FS_FAT32):
                     fileSystem = FSType.FAT32;
                     break;
-                case (FS_EXFAT):
+                case (FSTypeStrings.FS_EXFAT):
                     fileSystem = FSType.exFAT;
                     break;
             }
@@ -75,7 +76,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows.Components
         public void EvaluteFAT32SizeBox()
         {
             ClearErrorMessage();
-            if (SelectedFileSystemAsString() != FS_FAT32) return;
+            if (SelectedFileSystemAsString() != FSTypeStrings.FS_FAT32) return;
 
             UInt64 size = presenter.GetSizeValue();
 
@@ -111,7 +112,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows.Components
         {
             if (window.CompressionValue == null) return;
 
-            if (SelectedFileSystemAsString() == FS_NTFS)
+            if (SelectedFileSystemAsString() == FSTypeStrings.FS_NTFS)
             {
                 window.CompressionValue.IsEnabled = true;
             }

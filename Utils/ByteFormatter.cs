@@ -41,7 +41,7 @@ namespace GUIForDiskpart.Utils
 
         public static string BytesToUnitAsString(UInt64 unsignedBytes, bool withSuffix = true, Unit unit = Unit.MAX, int decimalDigits = 2)
         {
-            Int64 bytes = Convert.ToInt64(unsignedBytes);
+            Int64 bytes = System.Convert.ToInt64(unsignedBytes);
 
             return BytesToUnitAsString(bytes, withSuffix, unit, decimalDigits);
         }
@@ -55,7 +55,7 @@ namespace GUIForDiskpart.Utils
         public static double BytesToUnit(UInt64 bytes, Unit unit = Unit.MAX)
         {
             int i = 0;
-            return FormatBytes(Convert.ToInt64(bytes), ref i, unit);
+            return FormatBytes(System.Convert.ToInt64(bytes), ref i, unit);
         }
 
         private static string CreateFormatString(int decimalDigits)

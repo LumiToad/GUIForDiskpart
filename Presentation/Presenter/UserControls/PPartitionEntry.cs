@@ -3,7 +3,8 @@
 
 using System.Windows;
 using System.Windows.Controls;
-
+using GUIForDiskpart.Database.Data;
+using GUIForDiskpart.Database.Data.Types;
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Presentation.View.UserControls;
 using GUIForDiskpart.Utils;
@@ -73,7 +74,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
         {
             UserControl.ContextMenu.Items.Add(Partition.WSM.IsOffline ? DPOnline : DPOffline);
 
-            if (Partition.WSM.PartitionTable == "MBR")
+            if (Partition.WSM.PartitionTable == CommonTypes.MBR)
             {
                 UserControl.ContextMenu.Items.Add(DPInActive);
             }
@@ -119,7 +120,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
             if (partition.HasDriveLetter())
             {
-                driveNameText += $"[{partition.GetDriveLetter()}:\\]";
+                driveNameText += $"[{partition.GetDriveLetter()}{CommonStrings.PATH_FORMAT}]";
             }
 
             if (driveNameText == string.Empty)

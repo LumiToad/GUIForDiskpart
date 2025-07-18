@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:GUIForDiskpart.Presentation.View.Windows"
         xmlns:userControls="clr-namespace:GUIForDiskpart.Presentation.View.UserControls"
         xmlns:cmd="clr-namespace:GUIForDiskpart.Database.Data.CMD"
-        xmlns:diskpart="clr-namespace:GUIForDiskpart.Database.Data.Diskpart"
+        xmlns:diskpart="clr-namespace:GUIForDiskpart.Database.Data.DP"
         xmlns:System="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
         Title="AttributesVolumeWindow" Height="270" Width="530"

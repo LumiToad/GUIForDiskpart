@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Windows.Media.Animation;
+using GUIForDiskpart.Database.Data;
 using GUIForDiskpart.Utils;
 
 
@@ -115,10 +115,10 @@ namespace GUIForDiskpart.Model.Data
         public int PartitionCount => Partitions.Count;
         public string DeviceMediaType => GetDeviceMediaType();
         public string OperationalStatus => GetOperationalStatus(OperationalStatusValues);
-        public bool IsOnline => OperationalStatus.Contains("Online");
+        public bool IsOnline => OperationalStatus.Contains(CommonStrings.ONLINE);
         public long UnallocatedSpace => CalcUnallocatedSpace();
         public ulong FreeSpace { get { return GetLogicalFreeSpace(); } }
-        public ulong UsedSpace { get { return TotalSpace - Convert.ToUInt64(UnallocatedSpace) - FreeSpace; } }
+        public ulong UsedSpace { get { return TotalSpace - System.Convert.ToUInt64(UnallocatedSpace) - FreeSpace; } }
         public string FormattedTotalSpace => ByteFormatter.BytesToUnitAsString(TotalSpace);
         public string FormattedFreeSpace => ByteFormatter.BytesToUnitAsString(GetLogicalFreeSpace());
         public string FormattedUsedSpace => ByteFormatter.BytesToUnitAsString(UsedSpace);
@@ -203,11 +203,11 @@ namespace GUIForDiskpart.Model.Data
 
         private long CalcUnallocatedSpace()
         {
-            long result = Convert.ToInt64(TotalSpace);
+            long result = System.Convert.ToInt64(TotalSpace);
 
             foreach (Partition partition in Partitions)
             {
-                result -= Convert.ToInt64(partition.WSM.Size);
+                result -= System.Convert.ToInt64(partition.WSM.Size);
             }
 
             return result > 0 ? result : 0;
@@ -221,7 +221,8 @@ namespace GUIForDiskpart.Model.Data
             data.Add(MSFT_INFO_KEY, MSFT_INFO_VALUE);
             data.Add($"{MSFT_KEY_PREFIX} DeviceMediaType", DeviceMediaType);
             data.Add($"{MSFT_KEY_PREFIX} OperationalStatus", OperationalStatus);
-            data.Add($"{MSFT_KEY_PREFIX} Online / Offline", IsOnline ? "Online" : "Offline");
+            data.Add($"{MSFT_KEY_PREFIX} {CommonStrings.ONLINE} / {CommonStrings.OFFLINE}",
+                IsOnline ? CommonStrings.ONLINE : CommonStrings.OFFLINE);
 
             data.Add(WMI_INFO_KEY, WMI_INFO_VALUE);
 

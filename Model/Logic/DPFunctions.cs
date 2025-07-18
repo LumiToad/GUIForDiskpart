@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using GUIForDiskpart.Database.Data;
 using GUIForDiskpart.Utils;
 
 
@@ -21,7 +22,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[1];
 
-            commands[0] = "List " + type;
+            commands[0] = $"{Basics.LIST} {type} ";
 
             return ExecuteInternal(commands);
         }
@@ -30,8 +31,8 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select DISK " + index;
-            commands[1] = "List " + DPList.PARTITION;
+            commands[0] = $"{Basics.SELECT} {Basics.DISK} {index} ";
+            commands[1] = $"{Basics.LIST} {Basics.PARTITION} ";
 
             return ExecuteInternal(commands);
         }
@@ -40,8 +41,8 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + "DISK " + diskIndex;
-            commands[1] = "Detail " + "DISK ";
+            commands[0] = $"{Basics.SELECT} {Basics.DISK} {diskIndex} ";
+            commands[1] = $"{Basics.DETAIL} {Basics.DISK} ";
 
             return ExecuteInternal(commands);
         }
@@ -50,9 +51,9 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + "DISK " + diskIndex;
-            commands[1] = "Select " + "PART " + partIndex;
-            commands[2] = "Detail " + "PART ";
+            commands[0] = $"{Basics.SELECT} {Basics.DISK} {diskIndex} ";
+            commands[1] = $"{Basics.SELECT} {Basics.PART} {partIndex} ";
+            commands[2] = $"{Basics.DETAIL} {Basics.PART} ";
 
             return ExecuteInternal(commands);
         }
@@ -65,17 +66,17 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
-            commands[1] = "Create PARTITION " + option + " ";
+            commands[0] = $"{Basics.SELECT} {Basics.DISK} {diskIndex} ";
+            commands[1] = $"{Create.CREATE} {Create.PARTITION} {option} ";
 
             if (sizeInMB > 0)
             {
-                commands[1] += "SIZE=" + sizeInMB + " ";
+                commands[1] += $"{Create.SIZE}= {sizeInMB} ";
             }
 
             if (isNoErr)
             {
-                commands[1] += "NOERR ";
+                commands[1] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -85,16 +86,16 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[1];
 
-            commands[0] = "Create VOLUME " + option + " DISK=" + diskIndex + " ";
+            commands[0] = $"{Create.CREATE} {Create.VOLUME} {option} {Basics.DISK}={diskIndex} ";
 
             if (sizeInMB > 0)
             {
-                commands[0] += "SIZE=" + sizeInMB + " ";
+                commands[0] += $"{Create.SIZE}= {sizeInMB} ";
             }
 
             if (isNoErr)
             {
-                commands[0] += "NOERR ";
+                commands[0] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -104,11 +105,11 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[1];
 
-            commands[0] = "Create VOLUME SIMPLE" + option + " ";
+            commands[0] = $"{Create.CREATE} {Create.VOLUME} {Create.SIMPLE} {option} ";
 
             if (sizeInMB > 0)
             {
-                commands[0] += "SIZE=" + sizeInMB + " ";
+                commands[0] += $"{Create.SIZE}= {sizeInMB} ";
             }
 
             string disksString = string.Empty;
@@ -122,11 +123,11 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
                 }
             }
 
-            commands[0] += "ALIGN=" + alignInKB + " ";
+            commands[0] += $"{Create.ALIGN}= {alignInKB} ";
 
             if (isNoErr)
             {
-                commands[0] += "NOERR ";
+                commands[0] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -140,24 +141,24 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[1];
 
-            commands[0] = "CREATE VDISK FILE=" + savePath + " ";
+            commands[0] = $"{Create.CREATE} {Create.VDISK} {Basics.FILE}={savePath} ";
 
             if (isFixed)
             {
-                commands[0] += "FIXED ";
+                commands[0] += $"{Create.TYPE}={Create.FIXED} ";
             }
             else
             {
-                commands[0] += "EXPANDABLE ";
+                commands[0] += $"{Create.TYPE}={Create.EXPANDABLE} ";
             }
 
-            commands[0] += "MAXIMUM=" + maxSizeInMB + " ";
+            commands[0] += $"{Create.MAXIMUM}= {maxSizeInMB} ";
 
-            commands[0] += "SD=" + sddlFlags + " ";
+            commands[0] += $"{Create.SD}= {sddlFlags} ";
 
             if (isNoErr)
             {
-                commands[0] += "NOERR ";
+                commands[0] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -167,22 +168,22 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[1];
 
-            commands[0] = "CREATE VDISK FILE=" + savePath + " ";
+            commands[0] = $"{Create.CREATE} {Create.VDISK} {Basics.FILE}={savePath} ";
 
             if (isFixed)
             {
-                commands[0] += "TYPE=FIXED ";
+                commands[0] += $"{Create.TYPE}={Create.FIXED} ";
             }
             else
             {
-                commands[0] += "TYPE=EXPANDABLE ";
+                commands[0] += $"{Create.TYPE}={Create.EXPANDABLE} ";
             }
 
-            commands[0] += "MAXIMUM=" + maxSizeInMB + " ";
+            commands[0] += $"{Create.MAXIMUM}={maxSizeInMB} ";
 
             if (isNoErr)
             {
-                commands[0] += "NOERR ";
+                commands[0] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -192,11 +193,11 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[1];
 
-            commands[0] = "CREATE VDISK FILE=" + savePath + " PARENT=" + parentFilePath + " ";
+            commands[0] = $"{Create.CREATE} {Create.VDISK} {Basics.FILE}={savePath} {Create.PARENT}={parentFilePath} ";
 
             if (isNoErr)
             {
-                commands[0] += "NOERR ";
+                commands[0] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -206,11 +207,11 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[1];
 
-            commands[0] = "CREATE VDISK FILE=" + savePath + " SOURCE=" + sourceFilePath + " ";
+            commands[0] = $"{Create.CREATE} {Create.VDISK} {Basics.FILE}={savePath} {Create.SOURCE}={sourceFilePath} ";
 
             if (isNoErr)
             {
-                commands[0] += "NOERR ";
+                commands[0] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -220,20 +221,20 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select VDISK FILE=" + filePath + " ";
-            commands[1] = "ATTACH VDISK ";
+            commands[0] = $"{Basics.SELECT} {VDisk.VDISK} {Basics.FILE}={filePath} ";
+            commands[1] = $"{VDisk.ATTACH} {VDisk.VDISK} ";
 
             if (isReadOnly)
             {
-                commands[1] += "readonly ";
+                commands[1] += $"{VDisk.READONLY} ";
             }
 
-            commands[1] += sddlFlags + " ";
+            commands[1] += $"{sddlFlags} ";
 
             if (isNoErr)
             {
-                commands[0] += "NOERR ";
-                commands[1] += "NOERR ";
+                commands[0] += $"{Basics.NOERR} ";
+                commands[1] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -243,20 +244,20 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select VDISK FILE=" + filePath + " ";
-            commands[1] = "ATTACH VDISK ";
+            commands[0] = $"{Basics.SELECT} {VDisk.VDISK} {Basics.FILE}={filePath} ";
+            commands[1] = $"{VDisk.ATTACH} {VDisk.VDISK} ";
 
             if (isReadOnly)
             {
-                commands[1] += "readonly ";
+                commands[1] += $"{VDisk.READONLY} ";
             }
 
-            commands[1] += "usefilesd ";
+            commands[1] += $"{VDisk.USEFILESD} ";
 
             if (isNoErr)
             {
-                commands[0] += "NOERR ";
-                commands[1] += "NOERR ";
+                commands[0] += $"{Basics.NOERR} ";
+                commands[1] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -266,12 +267,12 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select VDISK FILE=" + filePath + " ";
-            commands[1] = "COMPACT VDISK ";
+            commands[0] = $"{Basics.SELECT} {VDisk.VDISK} {Basics.FILE}={filePath} ";
+            commands[1] = $"{VDisk.COMPACT} {VDisk.VDISK} ";
 
             if (isNoErr)
             {
-                commands[0] += "NOERR ";
+                commands[0] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -281,13 +282,13 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select VDISK FILE=" + filePath + " ";
-            commands[1] = "DETACH VDISK ";
+            commands[0] = $"{Basics.SELECT} {VDisk.VDISK} {Basics.FILE}={filePath} ";
+            commands[1] = $"{VDisk.DETACH} {VDisk.VDISK} ";
 
             if (isNoErr)
             {
-                commands[0] += "NOERR ";
-                commands[1] += "NOERR ";
+                commands[0] += $"{Basics.NOERR} ";
+                commands[1] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -297,12 +298,12 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select VDISK FILE=" + filePath + " ";
-            commands[1] = "DETAIL VDISK ";
+            commands[0] = $"{Basics.SELECT} {VDisk.VDISK} {Basics.FILE}={filePath} ";
+            commands[1] = $"{Basics.DETAIL} {VDisk.VDISK} ";
 
             if (isNoErr)
             {
-                commands[0] += "NOERR ";
+                commands[0] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -312,12 +313,12 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select VDISK FILE=" + filePath + " ";
-            commands[1] = "EXPAND VDISK MAXIMUM=" + maxSizeInMB + " ";
+            commands[0] = $"{Basics.SELECT} {VDisk.VDISK} {Basics.FILE}={filePath} ";
+            commands[1] = $"{VDisk.EXPAND} {VDisk.VDISK} {VDisk.MAXIMUM}={maxSizeInMB} ";
 
             if (isNoErr)
             {
-                commands[0] += "NOERR ";
+                commands[0] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -327,12 +328,12 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select VDISK FILE=" + filePath + " ";
-            commands[1] = "MERGE VDISK DEPTH=" + depth + " ";
+            commands[0] = $"{Basics.SELECT} {VDisk.VDISK} {Basics.FILE}={filePath} ";
+            commands[1] = $"{VDisk.MERGE} {VDisk.VDISK} {VDisk.DEPTH}={depth} ";
 
             if (isNoErr)
             {
-                commands[0] += "NOERR ";
+                commands[0] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -347,38 +348,38 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
-            commands[1] = "Select " + DPList.PARTITION + " " + partitionIndex;
-            commands[2] = "FORMAT " + "FS=" + fileSystem + " ";
+            commands[0] = $"{Basics.SELECT} {Basics.DISK} {diskIndex} ";
+            commands[1] = $"{Basics.SELECT} {Basics.PARTITION} {partitionIndex} ";
+            commands[2] = $"{Database.Data.DP.Format.FORMAT} {Database.Data.DP.Format.FS}={fileSystem} ";
 
             if (volumeName != "")
             {
-                commands[2] += "LABEL=" + volumeName + " ";
+                commands[2] += $"{Database.Data.DP.Format.LABEL}={volumeName} ";
             }
 
             if (isQuickFormatting)
             {
-                commands[2] += "QUICK ";
+                commands[2] += $"{Database.Data.DP.Format.QUICK} ";
             }
 
             if (isCompressed && fileSystem == FSType.NTFS)
             {
-                commands[2] += "COMPRESS ";
+                commands[2] += $"{Database.Data.DP.Format.COMPRESS} ";
             }
 
             if (isOverride)
             {
-                commands[2] += "OVERRIDE ";
+                commands[2] += $"{Database.Data.DP.Format.OVERRIDE} ";
             }
 
             if (isNoWait)
             {
-                commands[2] += "NOWAIT ";
+                commands[2] += $"{Database.Data.DP.Format.NOWAIT} ";
             }
 
             if (isNoErr)
             {
-                commands[2] += "NOERR ";
+                commands[2] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -388,18 +389,18 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
-            commands[1] = "Select " + DPList.PARTITION + " " + partitionIndex;
-            commands[2] = "DELETE " + "PART ";
+            commands[0] = $"{Basics.SELECT} {Basics.DISK} {diskIndex}";
+            commands[1] = $"{Basics.SELECT} {Basics.PARTITION} {partitionIndex}";
+            commands[2] = $"{Database.Data.DP.Delete.DELETE} {Basics.PART} ";
 
             if (isNoErr)
             {
-                commands[2] += "NOERR ";
+                commands[2] += $"{Basics.NOERR} ";
             }
 
             if (isOverride)
             {
-                commands[2] += "OVERRIDE ";
+                commands[2] += $"{Database.Data.DP.Delete.OVERRIDE} ";
             }
 
             return ExecuteInternal(commands);
@@ -409,18 +410,18 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
-            commands[1] = "Select " + DPList.PARTITION + " " + partitionIndex;
-            commands[2] = "ASSIGN ";
+            commands[0] = $"{Basics.SELECT} {Basics.DISK} {diskIndex}";
+            commands[1] = $"{Basics.SELECT} {Basics.PARTITION} {partitionIndex}";
+            commands[2] = $"{Basics.ASSIGN} ";
 
             if (diskLetter != null)
             {
-                commands[2] += "LETTER=" + diskLetter + " ";
+                commands[2] += $"{Basics.LETTER}={diskLetter} ";
             }
 
             if (isNoErr)
             {
-                commands[2] += "NOERR ";
+                commands[2] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -435,17 +436,17 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPList.VOLUME + " " + driveLetter;
-            commands[1] = "REMOVE LETTER=" + driveLetter + " ";
+            commands[0] = $"{Basics.SELECT} {Basics.VOLUME} {driveLetter}";
+            commands[1] = $"{Database.Data.DP.Remove.REMOVE} {Basics.LETTER}={driveLetter} ";
 
             if (isDismount)
             {
-                commands[1] += "DISMOUNT ";
+                commands[1] += $"{Database.Data.DP.Remove.DISMOUNT} ";
             }
 
             if (isNoErr)
             {
-                commands[1] += "NOERR ";
+                commands[1] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -455,17 +456,17 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPList.VOLUME + " " + driveLetter;
-            commands[1] = "REMOVE MOUNT=" + mountPath + " ";
+            commands[0] = $"{Basics.SELECT} {Basics.VOLUME} {driveLetter}";
+            commands[1] = $"{Database.Data.DP.Remove.REMOVE} {Database.Data.DP.Remove.MOUNT}={mountPath} ";
 
             if (isDismount)
             {
-                commands[1] += "DISMOUNT ";
+                commands[1] += $"{Database.Data.DP.Remove.DISMOUNT} ";
             }
 
             if (isNoErr)
             {
-                commands[1] += "NOERR ";
+                commands[1] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -475,17 +476,17 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPList.PARTITION + " " + partitionIndex;
-            commands[1] = "REMOVE ALL ";
+            commands[0] = $"{Basics.SELECT} {Basics.PARTITION} {partitionIndex} ";
+            commands[1] = $"{Database.Data.DP.Remove.REMOVE} {Basics.ALL} ";
 
             if (isDismount)
             {
-                commands[1] += "DISMOUNT ";
+                commands[1] += $"{Database.Data.DP.Remove.DISMOUNT} ";
             }
 
             if (isNoErr)
             {
-                commands[1] += "NOERR ";
+                commands[1] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -495,12 +496,12 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
-            commands[1] = "CLEAN ";
+            commands[0] = $"{Basics.SELECT} {Basics.DISK} {diskIndex} ";
+            commands[1] = $"{Basics.CLEAN} ";
 
             if (isCleanAll)
             {
-                commands[1] += "ALL";
+                commands[1] += $"{Basics.ALL} ";
             }
 
             return ExecuteInternal(commands);
@@ -510,8 +511,8 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
-            commands[1] = "CONVERT " + options;
+            commands[0] = $"{Basics.SELECT} {Basics.DISK} {diskIndex} ";
+            commands[1] = $"{Basics.CONVERT} {options} ";
 
             return ExecuteInternal(commands);
         }
@@ -520,9 +521,9 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
-            commands[1] = "Select " + DPList.PARTITION + " " + partitionIndex;
-            commands[2] = isSetActive ? "ACTIVE " : "INACTIVE";
+            commands[0] = $"{Basics.SELECT} {Basics.DISK} {diskIndex} ";
+            commands[1] = $"{Basics.SELECT} {Basics.PARTITION} {partitionIndex} ";
+            commands[2] = $"{(isSetActive ? Basics.ACTIVE : Basics.INACTIVE)} ";
 
             return ExecuteInternal(commands);
         }
@@ -531,15 +532,15 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPList.VOLUME + " " + driveLetter;
-            commands[1] = "ATTRIBUTES " + DPList.VOLUME + " ";
+            commands[0] = $"{Basics.SELECT} {Basics.VOLUME} {driveLetter}";
+            commands[1] = $"{Attributes.ATTRIBUTES} {Basics.VOLUME} ";
 
-            commands[1] += (isSet ? DPAttributes.SET : DPAttributes.CLEAR) + " ";
-            commands[1] += option + " ";
+            commands[1] += $"{(isSet ? Attributes.SET : Attributes.CLEAR)} ";
+            commands[1] += $"{option} ";
 
             if (isNoErr)
             {
-                commands[1] += "NOERR ";
+                commands[1] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -549,15 +550,15 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPList.VOLUME + " " + volumeIndex;
-            commands[1] = "ATTRIBUTES " + DPList.VOLUME + " ";
+            commands[0] = $"{Basics.SELECT} {Basics.VOLUME} {volumeIndex}";
+            commands[1] = $"{Attributes.ATTRIBUTES} {Basics.VOLUME} ";
 
-            commands[1] += (isSet ? DPAttributes.SET : DPAttributes.CLEAR) + " ";
-            commands[1] += option + " ";
+            commands[1] += $"{(isSet ? Attributes.SET : Attributes.CLEAR)} ";
+            commands[1] += $"{option} ";
 
             if (isNoErr)
             {
-                commands[1] += "NOERR ";
+                commands[1] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -567,14 +568,14 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
-            commands[1] = "ATTRIBUTES " + DPList.DISK + " ";
-            commands[1] += (isSet ? DPAttributes.SET : DPAttributes.CLEAR) + " ";
-            commands[1] += DPAttributes.READONLY + " ";
+            commands[0] = $"{Basics.SELECT} {Basics.DISK} {diskIndex} ";
+            commands[1] = $"{Attributes.ATTRIBUTES} {Basics.DISK} ";
+            commands[1] += $"{(isSet ? Attributes.SET : Attributes.CLEAR)} ";
+            commands[1] += $"{Attributes.READONLY} ";
 
             if (isNoErr)
             {
-                commands[1] += "NOERR ";
+                commands[1] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -584,18 +585,18 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
-            commands[1] = "Select " + DPList.VOLUME + " " + driveLetter;
-            commands[2] = "EXTEND ";
+            commands[0] = $"{Basics.SELECT} {Basics.DISK} {diskIndex} ";
+            commands[1] = $"{Basics.SELECT} {Basics.VOLUME} {driveLetter}";
+            commands[2] = $"{Basics.EXTEND} ";
 
             if (sizeInMB > 0)
             {
-                commands[2] += "SIZE=" + sizeInMB + " ";
+                commands[2] += $"{Basics.SIZE}={sizeInMB} ";
             }
 
             if (isNoErr)
             {
-                commands[2] += "NOERR ";
+                commands[2] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -605,18 +606,18 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
-            commands[1] = "Select " + DPList.PARTITION + " " + partitionIndex;
-            commands[2] = "EXTEND ";
+            commands[0] = $"{Basics.SELECT} {Basics.DISK} {diskIndex} ";
+            commands[1] = $"{Basics.SELECT} {Basics.PARTITION} {partitionIndex} ";
+            commands[2] = $"{Basics.EXTEND} ";
 
             if (sizeInMB > 0)
             {
-                commands[2] += "SIZE=" + sizeInMB + " ";
+                commands[2] += $"{Basics.SIZE}={sizeInMB} ";
             }
 
             if (isNoErr)
             {
-                commands[2] += "NOERR ";
+                commands[2] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -626,27 +627,27 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPList.VOLUME + " " + driveLetter;
-            commands[1] = "SHRINK ";
+            commands[0] = $"{Basics.SELECT} {Basics.VOLUME} {driveLetter}";
+            commands[1] = $"{Database.Data.DP.Shrink.SHRINK} ";
 
             if (desiredInMB > 0)
             {
-                commands[1] += "DESIRED=" + desiredInMB + " ";
+                commands[1] += $"{Database.Data.DP.Shrink.DESIRED}={desiredInMB} ";
             }
 
             if (minimumInMB > 0)
             {
-                commands[1] += "MINIMUM=" + minimumInMB + " ";
+                commands[1] += $"{Database.Data.DP.Shrink.MINIMUM}={minimumInMB} ";
             }
 
             if (isNoWait)
             {
-                commands[1] += "NOWAIT ";
+                commands[1] += $"{Database.Data.DP.Shrink.NOWAIT} ";
             }
 
             if (isNoErr)
             {
-                commands[1] += "NOERR ";
+                commands[1] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -656,13 +657,13 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPList.VOLUME + " " + driveLetter;
-            commands[1] = "REMOVE " + "LETTER=" + driveLetter;
-            commands[2] = "OFFLINE " + DPList.VOLUME + " ";
+            commands[0] = $"{Basics.SELECT} {Basics.VOLUME} {driveLetter}";
+            commands[1] = $"{Database.Data.DP.Remove.REMOVE} {Basics.LETTER}={driveLetter} ";
+            commands[2] = $"{CommonStrings.OFFLINE } {Basics.VOLUME} ";
 
             if (isNoErr)
             {
-                commands[1] += "NOERR ";
+                commands[1] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -672,13 +673,13 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
-            commands[1] = "Select " + DPList.PARTITION + " " + partitionIndex;
-            commands[2] = "OFFLINE " + DPList.VOLUME + " ";
+            commands[0] = $"{Basics.SELECT} {Basics.DISK} {diskIndex} ";
+            commands[1] = $"{Basics.SELECT} {Basics.PARTITION} {partitionIndex} ";
+            commands[2] = $"{CommonStrings.OFFLINE} {Basics.VOLUME} ";
 
             if (isNoErr)
             {
-                commands[1] += "NOERR ";
+                commands[1] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -688,13 +689,13 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[3];
 
-            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
-            commands[1] = "Select " + DPList.PARTITION + " " + partitionIndex;
-            commands[2] = "ONLINE " + DPList.VOLUME + " ";
+            commands[0] = $"{Basics.SELECT} {Basics.DISK} {diskIndex} ";
+            commands[1] = $"{Basics.SELECT} {Basics.PARTITION} {partitionIndex} ";
+            commands[2] = $"{CommonStrings.ONLINE} {Basics.VOLUME} ";
 
             if (isNoErr)
             {
-                commands[1] += "NOERR ";
+                commands[1] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -704,19 +705,19 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPList.DISK + " " + diskIndex;
-            commands[1] = "OFFLINE ";
+            commands[0] = $"{Basics.SELECT} {Basics.DISK} {diskIndex} ";
+            commands[1] = $"{CommonStrings.OFFLINE} ";
 
             if (isSetOnline)
             {
-                commands[1] = "ONLINE ";
+                commands[1] = $"{CommonStrings.ONLINE} ";
             }
 
-            commands[1] += DPList.DISK + " ";
+            commands[1] += $"{Basics.DISK} ";
 
             if (isNoErr)
             {
-                commands[1] += "NOERR ";
+                commands[1] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -726,17 +727,17 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
         {
             string[] commands = new string[2];
 
-            commands[0] = "Select " + DPList.PARTITION + " " + partitionIndex;
-            commands[1] = "SET ID= " + option + " ";
+            commands[0] = $"{Basics.SELECT} {Basics.PARTITION} {partitionIndex} ";
+            commands[1] = $"{SetIDO.SET} {SetIDO.ID}={option} ";
 
             if (isOverride)
             {
-                commands[1] += "OVERRIDE ";
+                commands[1] += $"{SetIDO.OVERRIDE} ";
             }
 
             if (isNoErr)
             {
-                commands[1] += "NOERR ";
+                commands[1] += $"{Basics.NOERR} ";
             }
 
             return ExecuteInternal(commands);
@@ -744,7 +745,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
 
         #endregion Various
 
-        #region private
+        #region Private
 
         private static string RemoveDPInfo(string info)
         {
@@ -785,6 +786,6 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
             return output;
         }
 
-        #endregion private
+        #endregion Private
     }
 }

@@ -111,7 +111,7 @@ namespace GUIForDiskpart.Model.Data
                     key.Contains("AvailableForExtend")
                     )
                 {
-                    value = ByteFormatter.BytesToUnitAsString(Convert.ToInt64(value));
+                    value = ByteFormatter.BytesToUnitAsString(System.Convert.ToInt64(value));
                 }
                 data.Add(key, value);
             }

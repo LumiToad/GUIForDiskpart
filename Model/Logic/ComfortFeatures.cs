@@ -19,10 +19,10 @@ namespace GUIForDiskpart.Model.Logic
                 output += DPFunctions.OnOfflineDisk(diskModel.DiskIndex, true, false);
             }
             output += DPFunctions.Clean(diskModel.DiskIndex, false);
-            output += DPFunctions.Convert(diskModel.DiskIndex, DPConvert.GPT);
+            output += DPFunctions.Convert(diskModel.DiskIndex, Convert.GPT);
             output += DPFunctions.Delete(diskModel.DiskIndex, 1, false, true);
 
-            output += DPFunctions.CreatePartition(diskModel.DiskIndex, DPCreatePartition.PRIMARY, sizeInMB, isNoErr);
+            output += DPFunctions.CreatePartition(diskModel.DiskIndex, Create.PRIMARY, sizeInMB, isNoErr);
             output += DPFunctions.Format(diskModel.DiskIndex, 1, fileSystem, volumeName, isQuickFormatting, isCompressed, isOverride, isNoWait, isNoErr);
             output += DPFunctions.Assign(diskModel.DiskIndex, 1, driveLetter, isNoErr);
 
@@ -41,10 +41,10 @@ namespace GUIForDiskpart.Model.Logic
                 output += DPFunctions.OnOfflineDisk(diskModel.DiskIndex, true, false);
             }
             output += DPFunctions.Clean(diskModel.DiskIndex, false);
-            output += DPFunctions.Convert(diskModel.DiskIndex, DPConvert.GPT);
+            output += DPFunctions.Convert(diskModel.DiskIndex, Convert.GPT);
             output += DPFunctions.Delete(diskModel.DiskIndex, 1, false, true);
 
-            output += DPFunctions.CreatePartition(diskModel.DiskIndex, DPCreatePartition.PRIMARY, sizeInMB, isNoErr);
+            output += DPFunctions.CreatePartition(diskModel.DiskIndex, Create.PRIMARY, sizeInMB, isNoErr);
             output += DPFunctions.Format(diskModel.DiskIndex, 1, fileSystem, volumeName, isQuickFormatting, isCompressed, isOverride, isNoWait, isNoErr);
             output += DPFunctions.Assign(diskModel.DiskIndex, 1, isNoErr);
 
@@ -63,10 +63,10 @@ namespace GUIForDiskpart.Model.Logic
                 output += DPFunctions.OnOfflineDisk(diskModel.DiskIndex, true, false);
             }
             output += DPFunctions.Clean(diskModel.DiskIndex, false);
-            output += DPFunctions.Convert(diskModel.DiskIndex, DPConvert.GPT);
+            output += DPFunctions.Convert(diskModel.DiskIndex, Convert.GPT);
             output += DPFunctions.Delete(diskModel.DiskIndex, 1, false, true);
 
-            output += DPFunctions.CreatePartition(diskModel.DiskIndex, DPCreatePartition.PRIMARY, 0, isNoErr);
+            output += DPFunctions.CreatePartition(diskModel.DiskIndex, Create.PRIMARY, 0, isNoErr);
             output += DPFunctions.Format(diskModel.DiskIndex, 1, fileSystem, volumeName, isQuickFormatting, isCompressed, isOverride, isNoWait, isNoErr);
             output += DPFunctions.Assign(diskModel.DiskIndex, 1, isNoErr);
 

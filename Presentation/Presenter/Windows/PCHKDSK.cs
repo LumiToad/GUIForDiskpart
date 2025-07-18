@@ -2,7 +2,7 @@
     GUIForDiskpart.Presentation.Presenter.Windows.PCHKDSK<GUIForDiskpart.Presentation.View.Windows.WCHKDSK>;
 
 using System.Windows;
-
+using GUIForDiskpart.Database.Data;
 using GUIForDiskpart.Database.Data.CMD;
 using GUIForDiskpart.Model.Data;
 using GUIForDiskpart.Model.Logic.CMD;
@@ -239,8 +239,8 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         public override void Setup()
         {
             Log.Print(Partition.GetOutputAsString(), true);
-            Window.DriveLetterTop.Content = Partition.LDModel.VolumeName + " " + Partition.WSM.DriveLetter + ":\\";
-            Window.DriveLetterBottom.Content = Partition.WSM.DriveLetter + ":\\";
+            Window.DriveLetterTop.Content = $"{Partition.LDModel.VolumeName} {Partition.WSM.DriveLetter}{CommonStrings.PATH_FORMAT}";
+            Window.DriveLetterBottom.Content = $"{Partition.WSM.DriveLetter}{CommonStrings.PATH_FORMAT}";
         }
 
         protected override void AddCustomArgs(params object?[] args)

@@ -60,7 +60,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
                 return;
             }
 
-            if (Convert.ToUInt64(textBox.Text) > availableForExtendInMB)
+            if (System.Convert.ToUInt64(textBox.Text) > availableForExtendInMB)
             {
                 textBox.Text = availableForExtendInMB.ToString();
             }
@@ -71,7 +71,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         private void ChangeFormattedLabel(Label label, TextBox textBox)
         {
-            Int64 toMB = Convert.ToInt64(textBox.Text) * 1024;
+            Int64 toMB = System.Convert.ToInt64(textBox.Text) * 1024;
             toMB *= 1024;
             label.Content = ByteFormatter.BytesToUnitAsString(toMB);
         }
@@ -89,7 +89,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         {
             string output = string.Empty;
 
-            uint desiredMB = Convert.ToUInt32(Window.DesiredSizeValue.Text);
+            uint desiredMB = System.Convert.ToUInt32(Window.DesiredSizeValue.Text);
             uint diskIndex = Partition.WSM.DiskNumber;
 
             if (Partition.HasDriveLetter())
@@ -128,7 +128,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             Log.Print(output);
 
             availableForExtendInMB = (Partition.DefragAnalysis.AvailableForExtend / 1024) / 1024;
-            SetSliderMinMax(Window.DesiredSlider, 0.0d, Convert.ToDouble(availableForExtendInMB));
+            SetSliderMinMax(Window.DesiredSlider, 0.0d, System.Convert.ToDouble(availableForExtendInMB));
             Window.AvailableLabel.Content = ByteFormatter.BytesToUnitAsString(Partition.DefragAnalysis.AvailableForExtend);
         }
 

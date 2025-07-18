@@ -63,23 +63,23 @@ namespace GUIForDiskpart.Service
         {
             WSMModel wsmPartition = new WSMModel();
 
-            wsmPartition.DiskNumber = Convert.ToUInt32(psObject.Properties["DiskNumber"].Value);
-            wsmPartition.PartitionNumber = Convert.ToUInt32(psObject.Properties["PartitionNumber"].Value);
-            wsmPartition.DriveLetter = Convert.ToChar(psObject.Properties["DriveLetter"].Value);
-            wsmPartition.OperationalStatus = Convert.ToUInt16(psObject.Properties["OperationalStatus"].Value);
-            wsmPartition.TransitionState = Convert.ToUInt16(psObject.Properties["TransitionState"].Value);
-            wsmPartition.Size = Convert.ToUInt64(psObject.Properties["Size"].Value);
-            wsmPartition.MBRType = Convert.ToUInt16(psObject.Properties["MbrType"].Value);
-            wsmPartition.GPTType = Convert.ToString(psObject.Properties["GptType"].Value);
-            wsmPartition.IsReadOnly = Convert.ToBoolean(psObject.Properties["IsReadOnly"].Value);
-            wsmPartition.IsOffline = Convert.ToBoolean(psObject.Properties["IsOffline"].Value);
-            wsmPartition.IsSystem = Convert.ToBoolean(psObject.Properties["IsSystem"].Value);
-            wsmPartition.IsBoot = Convert.ToBoolean(psObject.Properties["IsBoot"].Value);
-            wsmPartition.IsActive = Convert.ToBoolean(psObject.Properties["IsActive"].Value);
-            wsmPartition.IsHidden = Convert.ToBoolean(psObject.Properties["IsHidden"].Value);
-            wsmPartition.IsShadowCopy = Convert.ToBoolean(psObject.Properties["IsShadowCopy"].Value);
-            wsmPartition.NoDefaultDriveLetter = Convert.ToBoolean(psObject.Properties["NoDefaultDriveLetter"].Value);
-            wsmPartition.Offset = Convert.ToUInt64(psObject.Members["Offset"].Value);
+            wsmPartition.DiskNumber = System.Convert.ToUInt32(psObject.Properties["DiskNumber"].Value);
+            wsmPartition.PartitionNumber = System.Convert.ToUInt32(psObject.Properties["PartitionNumber"].Value);
+            wsmPartition.DriveLetter = System.Convert.ToChar(psObject.Properties["DriveLetter"].Value);
+            wsmPartition.OperationalStatus = System.Convert.ToUInt16(psObject.Properties["OperationalStatus"].Value);
+            wsmPartition.TransitionState = System.Convert.ToUInt16(psObject.Properties["TransitionState"].Value);
+            wsmPartition.Size = System.Convert.ToUInt64(psObject.Properties["Size"].Value);
+            wsmPartition.MBRType = System.Convert.ToUInt16(psObject.Properties["MbrType"].Value);
+            wsmPartition.GPTType = System.Convert.ToString(psObject.Properties["GptType"].Value);
+            wsmPartition.IsReadOnly = System.Convert.ToBoolean(psObject.Properties["IsReadOnly"].Value);
+            wsmPartition.IsOffline = System.Convert.ToBoolean(psObject.Properties["IsOffline"].Value);
+            wsmPartition.IsSystem = System.Convert.ToBoolean(psObject.Properties["IsSystem"].Value);
+            wsmPartition.IsBoot = System.Convert.ToBoolean(psObject.Properties["IsBoot"].Value);
+            wsmPartition.IsActive = System.Convert.ToBoolean(psObject.Properties["IsActive"].Value);
+            wsmPartition.IsHidden = System.Convert.ToBoolean(psObject.Properties["IsHidden"].Value);
+            wsmPartition.IsShadowCopy = System.Convert.ToBoolean(psObject.Properties["IsShadowCopy"].Value);
+            wsmPartition.NoDefaultDriveLetter = System.Convert.ToBoolean(psObject.Properties["NoDefaultDriveLetter"].Value);
+            wsmPartition.Offset = System.Convert.ToUInt64(psObject.Members["Offset"].Value);
 
             wsmPartition.PrintToConsole();
 
@@ -90,43 +90,43 @@ namespace GUIForDiskpart.Service
         {
             WMIModel newPartition = new WMIModel();
 
-            newPartition.Availability = Convert.ToUInt16(partition.Properties["Availability"].Value);
-            newPartition.StatusInfo = Convert.ToUInt16(partition.Properties["StatusInfo"].Value);
-            newPartition.BlockSize = Convert.ToUInt64(partition.Properties["BlockSize"].Value);
-            newPartition.Bootable = Convert.ToBoolean(partition.Properties["Bootable"].Value);
-            newPartition.BootPartition = Convert.ToBoolean(partition.Properties["BootPartition"].Value);
-            newPartition.Caption = Convert.ToString(partition.Properties["Caption"].Value);
+            newPartition.Availability = System.Convert.ToUInt16(partition.Properties["Availability"].Value);
+            newPartition.StatusInfo = System.Convert.ToUInt16(partition.Properties["StatusInfo"].Value);
+            newPartition.BlockSize = System.Convert.ToUInt64(partition.Properties["BlockSize"].Value);
+            newPartition.Bootable = System.Convert.ToBoolean(partition.Properties["Bootable"].Value);
+            newPartition.BootPartition = System.Convert.ToBoolean(partition.Properties["BootPartition"].Value);
+            newPartition.Caption = System.Convert.ToString(partition.Properties["Caption"].Value);
 
-            newPartition.ConfigManagerErrorCode = Convert.ToUInt32(partition.Properties["ConfigManagerErrorCode"].Value);
-            newPartition.ConfigManagerUserConfig = Convert.ToBoolean(partition.Properties["ConfigManagerUserConfig"].Value);
-            newPartition.CreationClassName = Convert.ToString(partition.Properties["CreationClassName"].Value);
-            newPartition.Description = Convert.ToString(partition.Properties["Description"].Value);
-            newPartition.DeviceID = Convert.ToString(partition.Properties["DeviceID"].Value);
-            newPartition.DiskIndex = Convert.ToUInt32(partition.Properties["DiskIndex"].Value);
+            newPartition.ConfigManagerErrorCode = System.Convert.ToUInt32(partition.Properties["ConfigManagerErrorCode"].Value);
+            newPartition.ConfigManagerUserConfig = System.Convert.ToBoolean(partition.Properties["ConfigManagerUserConfig"].Value);
+            newPartition.CreationClassName = System.Convert.ToString(partition.Properties["CreationClassName"].Value);
+            newPartition.Description = System.Convert.ToString(partition.Properties["Description"].Value);
+            newPartition.DeviceID = System.Convert.ToString(partition.Properties["DeviceID"].Value);
+            newPartition.DiskIndex = System.Convert.ToUInt32(partition.Properties["DiskIndex"].Value);
 
-            newPartition.ErrorCleared = Convert.ToBoolean(partition.Properties["ErrorCleared"].Value);
-            newPartition.ErrorDescription = Convert.ToString(partition.Properties["ErrorDescription"].Value);
-            newPartition.ErrorMethodology = Convert.ToString(partition.Properties["ErrorMethodology"].Value);
+            newPartition.ErrorCleared = System.Convert.ToBoolean(partition.Properties["ErrorCleared"].Value);
+            newPartition.ErrorDescription = System.Convert.ToString(partition.Properties["ErrorDescription"].Value);
+            newPartition.ErrorMethodology = System.Convert.ToString(partition.Properties["ErrorMethodology"].Value);
 
-            newPartition.HiddenSectors = Convert.ToUInt32(partition.Properties["ConfigManagerErrorCode"].Value);
-            newPartition.PartitionIndex = Convert.ToUInt32(partition.Properties["Index"].Value);
+            newPartition.HiddenSectors = System.Convert.ToUInt32(partition.Properties["ConfigManagerErrorCode"].Value);
+            newPartition.PartitionIndex = System.Convert.ToUInt32(partition.Properties["Index"].Value);
 
-            newPartition.InstallDate = Convert.ToDateTime(partition.Properties["InstallDate"].Value);
-            newPartition.LastErrorCode = Convert.ToUInt32(partition.Properties["LastErrorCode"].Value);
-            newPartition.PartitionName = Convert.ToString(partition.Properties["Name"].Value);
-            newPartition.NumberOfBlocks = Convert.ToUInt64(partition.Properties["NumberOfBlocks"].Value);
+            newPartition.InstallDate = System.Convert.ToDateTime(partition.Properties["InstallDate"].Value);
+            newPartition.LastErrorCode = System.Convert.ToUInt32(partition.Properties["LastErrorCode"].Value);
+            newPartition.PartitionName = System.Convert.ToString(partition.Properties["Name"].Value);
+            newPartition.NumberOfBlocks = System.Convert.ToUInt64(partition.Properties["NumberOfBlocks"].Value);
 
-            newPartition.PNPDeviceID = Convert.ToString(partition.Properties["PNPDeviceID"].Value);
-            newPartition.PowerManagementSupported = Convert.ToBoolean(partition.Properties["PowerManagementSupported"].Value);
-            newPartition.PrimaryPartition = Convert.ToBoolean(partition.Properties["PrimaryPartition"].Value);
-            newPartition.Purpose = Convert.ToString(partition.Properties["Purpose"].Value);
-            newPartition.RewritePartition = Convert.ToBoolean(partition.Properties["RewritePartition"].Value);
-            newPartition.Size = Convert.ToUInt64(partition.Properties["Size"].Value);
-            newPartition.StartingOffset = Convert.ToUInt64(partition.Properties["StartingOffset"].Value);
-            newPartition.Status = Convert.ToString(partition.Properties["Status"].Value);
-            newPartition.SystemCreationClassName = Convert.ToString(partition.Properties["SystemCreationClassName"].Value);
-            newPartition.SystemName = Convert.ToString(partition.Properties["SystemName"].Value);
-            newPartition.Type = Convert.ToString(partition.Properties["Type"].Value);
+            newPartition.PNPDeviceID = System.Convert.ToString(partition.Properties["PNPDeviceID"].Value);
+            newPartition.PowerManagementSupported = System.Convert.ToBoolean(partition.Properties["PowerManagementSupported"].Value);
+            newPartition.PrimaryPartition = System.Convert.ToBoolean(partition.Properties["PrimaryPartition"].Value);
+            newPartition.Purpose = System.Convert.ToString(partition.Properties["Purpose"].Value);
+            newPartition.RewritePartition = System.Convert.ToBoolean(partition.Properties["RewritePartition"].Value);
+            newPartition.Size = System.Convert.ToUInt64(partition.Properties["Size"].Value);
+            newPartition.StartingOffset = System.Convert.ToUInt64(partition.Properties["StartingOffset"].Value);
+            newPartition.Status = System.Convert.ToString(partition.Properties["Status"].Value);
+            newPartition.SystemCreationClassName = System.Convert.ToString(partition.Properties["SystemCreationClassName"].Value);
+            newPartition.SystemName = System.Convert.ToString(partition.Properties["SystemName"].Value);
+            newPartition.Type = System.Convert.ToString(partition.Properties["Type"].Value);
 
             return newPartition;
         }

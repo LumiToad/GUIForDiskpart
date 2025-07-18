@@ -8,12 +8,20 @@
         exFAT = 40
     }
 
+    public static class FSTypeStrings
+    {
+        public const string FS_NTFS = "NTFS";
+        public const string FS_FAT = "FAT";
+        public const string FS_FAT32 = "FAT32";
+        public const string FS_EXFAT = "exFAT";
+    }
+
     public static class ProcessType
     {
-        public static string NONE { get { return ""; } }
-        public static string CMD { get { return "cmd"; } }
-        public static string DISKPART { get { return "diskpart"; } }
-        public static string POWERSHELL { get { return "powershell"; } }
+        public const string NONE = "";
+        public const string CMD = "cmd";
+        public const string DISKPART = "diskpart";
+        public const string POWERSHELL = "powershell";
     }
 
     public static class WSM_GPT_PartitionTypes
@@ -62,6 +70,12 @@
 
             return result;
         }
+    }
+
+    public static class CommonTypes
+    {
+        public const string GPT = "GPT";
+        public const string MBR = "MBR";
     }
 
     public static class WSM_MBR_PartitionTypes

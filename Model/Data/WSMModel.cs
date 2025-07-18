@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Reflection;
 
 using GUIForDiskpart.Utils;
+using GUIForDiskpart.Database.Data.Types;
+
 using MBRTypes = GUIForDiskpart.Database.Data.Types.WSM_MBR_PartitionTypes;
 using GPTTypes = GUIForDiskpart.Database.Data.Types.WSM_GPT_PartitionTypes;
 
@@ -14,6 +16,8 @@ namespace GUIForDiskpart.Model.Data
         private const string WSM_INFO_KEY = "---WINDOWS STORAGE MANAGEMENT INFO---";
         private const string WSM_INFO_VALUE = "---MSFT_Storage, obtained via Powershell---";
         private const string KEY_PREFIX = "WSM";
+
+        private const string PARTITION_TYPE_UNKNOWN_TXT = "Type unknown...";
 
         public uint DiskNumber { get; set; }
         public uint PartitionNumber { get; set; }
@@ -41,13 +45,13 @@ namespace GUIForDiskpart.Model.Data
         private string GetPartitionType()
         {
 
-            string result = "Type unknown...";
+            string result = PARTITION_TYPE_UNKNOWN_TXT;
 
-            if (PartitionTable == "MBR")
+            if (PartitionTable == CommonTypes.MBR)
             {
                 result = MBRTypes.GetTypeByUInt16(MBRType);
             }
-            else if (PartitionTable == "GPT")
+            else if (PartitionTable == CommonTypes.GPT)
             {
                 result = GPTTypes.GetTypeByGUID(GPTType);
             }
@@ -94,12 +98,12 @@ namespace GUIForDiskpart.Model.Data
 
             if (MBRType != null)
             {
-                result = "MBR";
+                result = CommonTypes.MBR;
             }
 
             if (!string.IsNullOrWhiteSpace(GPTType))
             {
-                result = "GPT";
+                result = CommonTypes.GPT;
             }
 
             return result;

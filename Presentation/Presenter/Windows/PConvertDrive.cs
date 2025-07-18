@@ -3,7 +3,7 @@
 
 using System.Windows;
 using System.Windows.Controls;
-
+using GUIForDiskpart.Database.Data.Types;
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Presentation.Presenter.UserControls;
 using GUIForDiskpart.Presentation.View.UserControls;
@@ -34,21 +34,21 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         private void OnConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            string option = DPConvert.GPT;
+            string option = WPFUtils.ComboBoxSelectionAsString(Window.ConvertOptionValue);
 
-            switch (WPFUtils.ComboBoxSelectionAsString(Window.ConvertOptionValue))
+            switch (option)
             {
-                case ("GPT"):
-                    option = DPConvert.GPT;
+                case (CommonTypes.GPT):
+                    option = Convert.GPT;
                     break;
-                case ("MBR"):
-                    option = DPConvert.MBR;
+                case (CommonTypes.MBR):
+                    option = Convert.MBR;
                     break;
                 case ("BASIC"):
-                    option = DPConvert.BASIC;
+                    option = Convert.BASIC;
                     break;
                 case ("DYNAMIC"):
-                    option = DPConvert.DYNAMIC;
+                    option = Convert.DYNAMIC;
                     break;
             }
 

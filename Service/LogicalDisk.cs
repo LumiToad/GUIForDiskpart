@@ -17,13 +17,13 @@ namespace GUIForDiskpart.Service
 
             if (logicalDisk == null) return newLogicalDisk;
 
-            newLogicalDisk.DriveType = Convert.ToUInt32(logicalDisk.Properties["DriveType"].Value); // C: - 3
-            newLogicalDisk.FileSystem = Convert.ToString(logicalDisk.Properties["FileSystem"].Value); // NTFS
-            newLogicalDisk.FreeSpace = Convert.ToUInt64(logicalDisk.Properties["FreeSpace"].Value); // in bytes
-            newLogicalDisk.TotalSpace = Convert.ToUInt64(logicalDisk.Properties["Size"].Value); // in bytes
-            newLogicalDisk.VolumeName = Convert.ToString(logicalDisk.Properties["VolumeName"].Value); // System
-            newLogicalDisk.VolumeSerial = Convert.ToString(logicalDisk.Properties["VolumeSerialNumber"].Value); // 12345678
-            newLogicalDisk.DriveLetter = Convert.ToString(logicalDisk.Properties["Name"].Value);
+            newLogicalDisk.DriveType = System.Convert.ToUInt32(logicalDisk.Properties["DriveType"].Value); // C: - 3
+            newLogicalDisk.FileSystem = System.Convert.ToString(logicalDisk.Properties["FileSystem"].Value); // NTFS
+            newLogicalDisk.FreeSpace = System.Convert.ToUInt64(logicalDisk.Properties["FreeSpace"].Value); // in bytes
+            newLogicalDisk.TotalSpace = System.Convert.ToUInt64(logicalDisk.Properties["Size"].Value); // in bytes
+            newLogicalDisk.VolumeName = System.Convert.ToString(logicalDisk.Properties["VolumeName"].Value); // System
+            newLogicalDisk.VolumeSerial = System.Convert.ToString(logicalDisk.Properties["VolumeSerialNumber"].Value); // 12345678
+            newLogicalDisk.DriveLetter = System.Convert.ToString(logicalDisk.Properties["Name"].Value);
 
             newLogicalDisk.PrintToConsole();
 

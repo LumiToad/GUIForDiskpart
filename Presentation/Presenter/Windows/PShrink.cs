@@ -42,7 +42,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         private void ChangeFormattedLabel(Label label, TextBox textBox)
         {
-            label.Content = $"{Convert.ToInt64(textBox.Text)} MB";
+            label.Content = $"{System.Convert.ToInt64(textBox.Text)} MB";
         }
 
         private void OnTextChanged(Slider slider, TextBox textBox, Label label, TextChangedEventArgs e)
@@ -59,7 +59,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
                 return;
             }
 
-            if (Convert.ToUInt64(textBox.Text) > availableForShrinkInMB)
+            if (System.Convert.ToUInt64(textBox.Text) > availableForShrinkInMB)
             {
                 textBox.Text = availableForShrinkInMB.ToString();
             }
@@ -97,8 +97,8 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             string output = string.Empty;
 
             char driveLetter = Partition.WSM.DriveLetter;
-            uint desiredMB = Convert.ToUInt32(Window.DesiredSizeValue.Text);
-            uint minimumMB = Convert.ToUInt32(Window.MinimumSizeValue.Text);
+            uint desiredMB = System.Convert.ToUInt32(Window.DesiredSizeValue.Text);
+            uint minimumMB = System.Convert.ToUInt32(Window.MinimumSizeValue.Text);
 
             output += DPFunctions.Shrink(driveLetter, desiredMB, minimumMB, false, false);
 
