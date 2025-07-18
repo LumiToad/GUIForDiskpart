@@ -26,6 +26,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public void DisplayDiskData(bool outputText)
         {
+            DiskService.ReLoadDisks();
             PDiskPanel.UpdatePanel(DiskService.PhysicalDrives);
 
             if (outputText)
@@ -52,7 +53,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public void OnQuit_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Save shutdown?
+            // TODO: sicherer shutdown?
             App.Instance.Shutdown();
         }
 

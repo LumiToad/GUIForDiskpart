@@ -4,6 +4,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
+using GUIForDiskpart.Database.Data;
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Presentation.View.UserControls;
 using GUIForDiskpart.Utils;
@@ -37,20 +38,16 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         #region MenuItems
 
-        MenuItem OnOffline =>
-            WPFUtils.CreateContextMenuItem(
-                IconUtils.Diskpart,
-                Disk.IsOnline ? "DPOffline" : "DPOnline",
-                Disk.IsOnline ? "DISKPART - Offline" : "DISKPART - Online",
-                true,
-                OnOnOffline_Click
-                );
-        
+        MenuItem DPOnline =>
+           WPFUtils.CreateContextMenuItem(CMenuItems.DPOnline, OnOnline_Click);
+        MenuItem DPOffline =>
+            WPFUtils.CreateContextMenuItem(CMenuItems.DPOffline, OnOffline_Click);
+
         #endregion MenuItems
 
         private void PopulateContextMenu()
         {
-            UserControl.ContextMenu.Items.Add(OnOffline);
+            UserControl.ContextMenu.Items.Add(Disk.IsOnline ? DPOffline : DPOnline);
         }
 
         public void Select()
@@ -61,10 +58,19 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         #region OnClick
 
-        private void OnOnOffline_Click(object sender, RoutedEventArgs e)
+        private void OnOnline_Click(object sender, RoutedEventArgs e)
         {
             string output = string.Empty;
-            output += DPFunctions.OnOfflineDisk(Disk.DiskIndex, !Disk.IsOnline, false);
+            output += DPFunctions.OnOfflineDisk(Disk.DiskIndex, true, false);
+
+            MainWindow.Log.Print(output);
+            MainWindow.DisplayDiskData(false);
+        }
+
+        private void OnOffline_Click(object sender, RoutedEventArgs e)
+        {
+            string output = string.Empty;
+            output += DPFunctions.OnOfflineDisk(Disk.DiskIndex, false, false);
 
             MainWindow.Log.Print(output);
             MainWindow.DisplayDiskData(false);
@@ -128,7 +134,8 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         protected override void RegisterEventsInternal()
         {
-            UserControl.EOnOffline_Click += OnOnOffline_Click;
+            UserControl.EOnline_Click += OnOnline_Click;
+            UserControl.EOffline_Click += OnOnline_Click;
             UserControl.EDetail_Click += OnDetail_Click;
             UserControl.EListPart_Click += OnListPart_Click;
             UserControl.EClean_Click += OnClean_Click;

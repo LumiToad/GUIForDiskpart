@@ -1,10 +1,9 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
-using System.Windows;
-//using System.Windows.Forms;
+using Microsoft.Win32;
+
 
 namespace GUIForDiskpart.Utils
 {
@@ -16,10 +15,15 @@ namespace GUIForDiskpart.Utils
         private static string FullConfigPath = $"{FullGUIFDPath}\\config";
         private static string JsonExtension = ".json";
 
+        private const string TEXT_FILE_FILTER = "Text file (*.txt)|*.txt";
+        private const string GUIFD_CRASH_MSG = "GUIFD has crashed. A crash-log has been saved at";
+        private const string DATE_TIME_FORMAT_STRING = "yyyy-MM-dd_hh-mm-ss";
+        private const string EMBEDDED_RES_PATH = "GUIForDiskpart.EmbeddedResources";
+
         public static void SaveAsTextfile(string text, string filename)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Text file (*.txt)|*.txt";
+            saveFileDialog.Filter = TEXT_FILE_FILTER;
 
             string currentDateTime = GetFormattedDateTimeString();
             saveFileDialog.FileName = $"guifd_{filename}_{currentDateTime}";
@@ -33,7 +37,7 @@ namespace GUIForDiskpart.Utils
         public static string GetSaveAsTextFilePath(string name)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Text file (*.txt)|*.txt";
+            saveFileDialog.Filter = TEXT_FILE_FILTER;
 
             string currentDateTime = GetFormattedDateTimeString();
             saveFileDialog.FileName = $"{name}_{currentDateTime}";
@@ -47,7 +51,7 @@ namespace GUIForDiskpart.Utils
 
         private static string GetFormattedDateTimeString()
         {
-            return DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
+            return DateTime.Now.ToString(DATE_TIME_FORMAT_STRING);
         }
 
         public static FileStream LoadFromFile(string filePath)
@@ -117,15 +121,16 @@ namespace GUIForDiskpart.Utils
             }
 
             File.WriteAllText($"{FullCrashPath}\\{fileName}", fullCrash);
-            MessageBoxResult result = MessageBox.Show
+
+            var result = ErrorUtils.ShowMSGBoxWarning
                 (
-                    $"GUIFD has crashed. A crash-log has been saved at {FullCrashPath}\\{fileName}", "ERROR!", MessageBoxButton.OK
+                "ERROR!", $"{GUIFD_CRASH_MSG} {FullCrashPath}\\{fileName}", MessageBoxButton.OK
                 );
         }
 
         public static Stream GetEmbeddedResourceStream(string fileName)
         {
-            string fullFileName = $"GUIForDiskpart.EmbeddedResources.{fileName}";
+            string fullFileName = $"{EMBEDDED_RES_PATH}.{fileName}";
             var thisAssembly = Assembly.GetExecutingAssembly();
             var stream = thisAssembly.GetManifestResourceStream(fullFileName);
             return stream;

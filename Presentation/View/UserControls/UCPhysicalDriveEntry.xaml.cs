@@ -16,7 +16,8 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     public partial class UCPhysicalDriveEntry : UserControl
     {
         public delegate void DOnClick(object sender, RoutedEventArgs e);
-        public event DOnClick EOnOffline_Click;
+        public event DOnClick EOnline_Click;
+        public event DOnClick EOffline_Click;
         public event DOnClick EDetail_Click;
         public event DOnClick EListPart_Click;
         public event DOnClick EClean_Click;
@@ -88,7 +89,8 @@ namespace GUIForDiskpart.Presentation.View.UserControls
             return result;
         }
 
-        private void OnOffline_Click(object sender, RoutedEventArgs e) => EOnOffline_Click(sender, e);
+        private void Online_Click(object sender, RoutedEventArgs e) => EOnline_Click(sender, e);
+        private void Offline_Click(object sender, RoutedEventArgs e) => EOffline_Click(sender, e);
         private void Detail_Click(object sender, RoutedEventArgs e) => EDetail_Click(sender, e);
         private void ListPart_Click(object sender, RoutedEventArgs e) => EListPart_Click(sender, e);
         private void Clean_Click(object sender, RoutedEventArgs e) => EClean_Click(sender, e);

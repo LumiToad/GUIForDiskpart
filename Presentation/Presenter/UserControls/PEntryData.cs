@@ -69,7 +69,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         public void OnSaveEntryData_Click(object sender, RoutedEventArgs e)
         {
-            string entrieString = string.Empty;
+            string entryString = string.Empty;
 
             bool noneSelected = false;
 
@@ -82,8 +82,8 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
             foreach (var entry in UserControl.EntryDataGrid.SelectedCells)
             {
                 if (entry.Item == null) continue;
-                if (entrieString.Contains(entry.Item.ToString())) continue;
-                entrieString += entry.Item + "\n";
+                if (entryString.Contains(entry.Item.ToString())) continue;
+                entryString += entry.Item + "\n";
             }
 
             if (noneSelected)
@@ -91,7 +91,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
                 UserControl.EntryDataGrid.UnselectAllCells();
             }
 
-            FileUtils.SaveAsTextfile(entrieString, "data");
+            FileUtils.SaveAsTextfile(entryString, "data");
         }
 
         private void OnEntryDataGrid_LMBUp(object sender, MouseButtonEventArgs e)

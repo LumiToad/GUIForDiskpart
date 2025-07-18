@@ -27,10 +27,12 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public WSMModel WSM { get; private set; }
 
+        private const string AUTO_SELECT = "Auto Select";
+
         private void PopulateDriveLetterBox()
         {
             Window.DriveLetterBox.Items.Clear();
-            Window.DriveLetterBox.Items.Add("Auto Select");
+            Window.DriveLetterBox.Items.Add(AUTO_SELECT);
 
             foreach (char availableLetter in DriveLetterService.GetAvailableDriveLetters())
             {
@@ -44,7 +46,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             string output = string.Empty;
 
             char? letter = null;
-            if (Window.DriveLetterBox.SelectedValue != "Auto Select")
+            if (Window.DriveLetterBox.SelectedValue != AUTO_SELECT)
             {
                 letter = (char?)Window.DriveLetterBox.SelectedValue;
             }

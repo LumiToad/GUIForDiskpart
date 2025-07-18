@@ -17,12 +17,14 @@ namespace GUIForDiskpart.Presentation.View.UserControls
     public partial class UCPartitionEntry : UserControl
     {
         public delegate void DOnClick(object sender, RoutedEventArgs e);
-        public event DOnClick EOnOffline;
+        public event DOnClick EOnline;
+        public event DOnClick EOffline;
         public event DOnClick EExtend;
         public event DOnClick EShrink;
         public event DOnClick EAnalyzeDefrag;
         public event DOnClick EAttributes;
         public event DOnClick EActive;
+        public event DOnClick EInactive;
         public event DOnClick EButton;
         public event DOnClick EDetail;
         public event DOnClick EFormat;
@@ -53,12 +55,14 @@ namespace GUIForDiskpart.Presentation.View.UserControls
             PartitionType.Content = $"{partition.WSM.PartitionTable}: {partition.WSM.PartitionType}";
         }
 
-        private void OnOffline_Click(object sender, RoutedEventArgs e) => EOnOffline?.Invoke(sender, e);
+        private void Online_Click(object sender, RoutedEventArgs e) => EOnline?.Invoke(sender, e);
+        private void Offline_Click(object sender, RoutedEventArgs e) => EOffline?.Invoke(sender, e);
         private void Extend_Click(object sender, RoutedEventArgs e) => EExtend?.Invoke(sender, e);
         private void Shrink_Click(object sender, RoutedEventArgs e) => EShrink?.Invoke(sender, e);
         private void AnalyzeDefrag_Click(object sender, RoutedEventArgs e) => EAnalyzeDefrag?.Invoke(sender, e);
         private void Attributes_Click(object sender, RoutedEventArgs e) => EAttributes?.Invoke(sender, e);
         private void Active_Click(object sender, RoutedEventArgs e) => EActive?.Invoke(sender, e);
+        private void Inactive_Click(object sender, RoutedEventArgs e) => EActive?.Invoke(sender, e);
         private void Button_Click(object sender, RoutedEventArgs e) => EButton?.Invoke(sender, e);
         private void Detail_Click(object sender, RoutedEventArgs e) => EDetail?.Invoke(sender, e);
         private void Format_Click(object sender, RoutedEventArgs e) => EFormat?.Invoke(sender, e);

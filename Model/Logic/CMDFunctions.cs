@@ -1,18 +1,18 @@
-﻿using System;
-using System.IO;
-using System.Windows.Forms;
+﻿using GUIForDiskpart.Database.Data.CMD;
 
 namespace GUIForDiskpart.Model.Logic.CMD
 {
     public static class CMDFunctions
     {
+        private const string LOG_FILE_CREATED = "A log file has been created here";
+
         public static string CHKDSK(char driveLetter, string parameters, string logFileLocation)
         {
             string command = string.Empty;
             string yesNo = CommandExecuter.GetChoiceYNString();
-            string closingCommand = $" DIR > \"{logFileLocation}\" & echo A log file has been created here: {logFileLocation} ";
+            string closingCommand = $" {CMDBasic.DIR} > \"{logFileLocation}\" & {CMDBasic.ECHO} {LOG_FILE_CREATED}: {logFileLocation} ";
 
-            command = $"echo {yesNo[0]} | CHKDSK {driveLetter}: {parameters} & {closingCommand}";
+            command = $"{CMDBasic.ECHO} {yesNo[0]} | {CHKDSKParameters.CMD_CHKDSK} {driveLetter}: {parameters} & {closingCommand}";
 
             return ExecuteInternal(command);
         }
@@ -22,7 +22,7 @@ namespace GUIForDiskpart.Model.Logic.CMD
             string command = string.Empty;
             string yesNo = CommandExecuter.GetChoiceYNString();
 
-            command = $"echo {yesNo[0]} | CHKDSK {driveLetter}: {parameters} ";
+            command = $"{CMDBasic.ECHO} {yesNo[0]} | {CHKDSKParameters.CMD_CHKDSK} {driveLetter}: {parameters} ";
 
             return ExecuteInternal(command);
         }
@@ -31,7 +31,7 @@ namespace GUIForDiskpart.Model.Logic.CMD
         {
             string command = string.Empty;
 
-            command = $"CHKDSK {parameters}";
+            command = $"{CHKDSKParameters.CMD_CHKDSK} {parameters}";
 
             return ExecuteInternal(command);
         }

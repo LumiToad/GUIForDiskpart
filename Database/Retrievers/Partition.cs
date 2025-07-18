@@ -10,9 +10,12 @@ namespace GUIForDiskpart.Database.Retrievers
 {
     public class Partition
     {
+        private const string PARTITION_QUERY_FORMAT_STRING = "associators of {{{0}}} where AssocClass = Win32_DiskDriveToDiskPartition";
+        private const string PS_GET_PARTITION = "Get-Partition";
+
         public void WMIPartitionQuery(ManagementObject disk, DiskModel diskModel, ref List<WMIModel> list)
         {
-            var partitionQueryText = string.Format("associators of {{{0}}} where AssocClass = Win32_DiskDriveToDiskPartition", disk.Path.RelativePath);
+            var partitionQueryText = string.Format(PARTITION_QUERY_FORMAT_STRING, disk.Path.RelativePath);
             var partitionQuery = new ManagementObjectSearcher(partitionQueryText);
 
             foreach (ManagementObject partitionManagementObject in partitionQuery.Get())
@@ -29,7 +32,7 @@ namespace GUIForDiskpart.Database.Retrievers
         {
             string diskIndex = System.Convert.ToString(diskModel.DiskIndex);
 
-            return CommandExecuter.IssuePowershellCommand("Get-Partition", diskIndex);
+            return CommandExecuter.IssuePowershellCommand(PS_GET_PARTITION, diskIndex);
         }
     }
 }

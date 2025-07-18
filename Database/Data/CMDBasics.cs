@@ -15,6 +15,8 @@
         public const string START_BROWSER = "start ";
         public const string CHOICE = "choice";
         public const string EXIT = "exit";
+        public const string ECHO = "echo";
+        public const string DIR = "dir";
     }
 
     public class CHKDSKParameters

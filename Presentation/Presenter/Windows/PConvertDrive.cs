@@ -44,10 +44,10 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
                 case (CommonTypes.MBR):
                     option = Convert.MBR;
                     break;
-                case ("BASIC"):
+                case (Convert.BASIC):
                     option = Convert.BASIC;
                     break;
-                case ("DYNAMIC"):
+                case (Convert.DYNAMIC):
                     option = Convert.DYNAMIC;
                     break;
             }

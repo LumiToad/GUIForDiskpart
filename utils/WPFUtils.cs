@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GUIForDiskpart.Database.Data;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -24,9 +25,19 @@ namespace GUIForDiskpart.Utils
             return menuItem;
         }
 
-        public static MenuItem CreateContextMenuItem(string name, string header, bool isEnabled, RoutedEventHandler handler)
+        public static MenuItem CreateContextMenuItem(string cMenuItemName, RoutedEventHandler handler)
         {
-            return CreateContextMenuItem(null, name, header, isEnabled, handler);
+            var cmItem = CMenuItems.GetCMenuItemData(cMenuItemName);
+
+            return CreateContextMenuItem
+                (
+                    cmItem.Image,
+                    cMenuItemName,
+                    cmItem.Header,
+                    cmItem.IsEnabled,
+                    handler,
+                    cmItem.Tooltip
+                );
         }
 
         public static List<UserControl> GetChildrenUserControls(this System.Windows.Window window)
