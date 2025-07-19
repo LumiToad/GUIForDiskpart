@@ -119,10 +119,10 @@ namespace GUIForDiskpart.Model.Data
         public long UnallocatedSpace => CalcUnallocatedSpace();
         public ulong FreeSpace { get { return GetLogicalFreeSpace(); } }
         public ulong UsedSpace { get { return TotalSpace - System.Convert.ToUInt64(UnallocatedSpace) - FreeSpace; } }
-        public string FormattedTotalSpace => ByteFormatter.BytesToUnitAsString(TotalSpace);
-        public string FormattedFreeSpace => ByteFormatter.BytesToUnitAsString(GetLogicalFreeSpace());
-        public string FormattedUsedSpace => ByteFormatter.BytesToUnitAsString(UsedSpace);
-        public string FormattedUnallocatedSpace => ByteFormatter.BytesToUnitAsString(UnallocatedSpace);
+        public string FormattedTotalSpace => ByteFormatter.BytesToAsString(TotalSpace);
+        public string FormattedFreeSpace => ByteFormatter.BytesToAsString(GetLogicalFreeSpace());
+        public string FormattedUsedSpace => ByteFormatter.BytesToAsString(UsedSpace);
+        public string FormattedUnallocatedSpace => ByteFormatter.BytesToAsString(UnallocatedSpace);
 
         #endregion DiskProperties
 
@@ -145,8 +145,8 @@ namespace GUIForDiskpart.Model.Data
             fullOutput += "DiskModel: " + "\t\t\t" + DiskModelText + '\n';
             fullOutput += "MediaStatus: " + "\t\t\t" + MediaStatus + '\n';
             fullOutput += "MediaLoaded: " + "\t\t\t" + MediaLoaded + '\n';
-            fullOutput += $"TotalSpace: {"\t\t\t"}{ByteFormatter.BytesToUnitAsString(TotalSpace)} {ByteFormatter.BytesToUnitAsString(TotalSpace, true, Unit.B)}\n";
-            fullOutput += $"UnpartSpace: {"\t\t\t"}{ByteFormatter.BytesToUnitAsString(UnallocatedSpace)} {ByteFormatter.BytesToUnitAsString(UnallocatedSpace, true, Unit.B)}\n";
+            fullOutput += $"TotalSpace: {"\t\t\t"}{ByteFormatter.BytesToAsString(TotalSpace)} {ByteFormatter.BytesToAsString(TotalSpace, true, Unit.B)}\n";
+            fullOutput += $"UnpartSpace: {"\t\t\t"}{ByteFormatter.BytesToAsString(UnallocatedSpace)} {ByteFormatter.BytesToAsString(UnallocatedSpace, true, Unit.B)}\n";
             fullOutput += "WSMPartitionCount: " + "\t\t\t" + PartitionCount + " (includes hidden and reserved)" + '\n';
             fullOutput += "InterfaceType: " + "\t\t\t" + InterfaceType + '\n';
             fullOutput += "MediaSignature: " + "\t\t\t" + MediaSignature + '\n';

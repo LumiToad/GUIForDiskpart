@@ -25,9 +25,9 @@ namespace GUIForDiskpart.Model.Data
         public string VolumeName { get; set; }
         public string VolumeSerial { get; set; }
 
-        public string FormattedTotalSpace => ByteFormatter.BytesToUnitAsString(TotalSpace);
-        public string FormattedUsedSpace => ByteFormatter.BytesToUnitAsString(UsedSpace);
-        public string FormattedFreeSpace => ByteFormatter.BytesToUnitAsString(FreeSpace);
+        public string FormattedTotalSpace => ByteFormatter.BytesToAsString(TotalSpace);
+        public string FormattedUsedSpace => ByteFormatter.BytesToAsString(UsedSpace);
+        public string FormattedFreeSpace => ByteFormatter.BytesToAsString(FreeSpace);
 
         public void PrintToConsole()
         {

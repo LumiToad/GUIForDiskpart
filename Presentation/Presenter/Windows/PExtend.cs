@@ -32,51 +32,75 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public PartitionModel Partition { get; private set; }
 
-        private double availableForExtendInMB;
+        private UInt64 availableInByte;
+        private UInt64 desiredInByte;
 
         private void OnDesiredSizeValue_TextChanged(object sender, TextChangedEventArgs e)
         {
-            OnDesiredSizeChanged(Window.DesiredSlider, Window.DesiredSizeValue, Window.DesiredFormatted, e);
+            Window.DesiredSizeValue.Text = Window.DesiredSizeValue.Text.RemoveAllButNumbers();
+            if (!UInt64.TryParse(Window.DesiredSizeValue.Text, out UInt64 value))
+            {
+                SetDesiredTextBox(0);
+                value = 0;
+            }
+
+            desiredInByte = ByteFormatter.SizeFromTo<UInt64, UInt64>(value, Unit.MB, Unit.B);
+            OnDesiredSizeChanged(sender);
         }
 
         private void OnDesiredSizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            CultureInfo cultureUS = new CultureInfo("en-US");
-            Window.DesiredSizeValue.Text = Window.DesiredSlider.Value.ToString("N0").Replace(".", "");
-            ChangeFormattedLabel(Window.DesiredFormatted, Window.DesiredSizeValue);
+            desiredInByte = System.Convert.ToUInt64(Window.DesiredSlider.Value);
+            OnDesiredSizeChanged(sender);
         }
 
-        private void OnDesiredSizeChanged(Slider slider, TextBox textBox, Label label, TextChangedEventArgs e)
+        private void OnDesiredSizeChanged(object sender)
         {
-            if (slider == null || textBox == null) return;
-            if (!double.TryParse(textBox.Text, out double value))
+            if (desiredInByte > availableInByte)
             {
-                foreach (var item in e.Changes)
-                {
-                    int index = item.Offset;
-                    if (index < 0 || index > textBox.Text.Length) continue;
-                    textBox.Text = textBox.Text.Remove(index, 1);
-                }
-                return;
+                desiredInByte = availableInByte;
+                SetDesiredTextBox(desiredInByte);
             }
 
-            if (System.Convert.ToUInt64(textBox.Text) > availableForExtendInMB)
+            if (sender == Window.DesiredSlider)
             {
-                textBox.Text = availableForExtendInMB.ToString();
+                SetDesiredTextBox(desiredInByte);
             }
 
-            slider.Value = value;
-            ChangeFormattedLabel(label, textBox);
+            if (sender == Window.DesiredSizeValue)
+            {
+                SetSliderValue(desiredInByte);
+            }
+
+            SetFormattedLabel(desiredInByte);
         }
 
-        private void ChangeFormattedLabel(Label label, TextBox textBox)
+        public void SetupSlider(double min, double max)
         {
-            Int64 toMB = System.Convert.ToInt64(textBox.Text) * 1024;
-            toMB *= 1024;
-            label.Content = ByteFormatter.BytesToUnitAsString(toMB);
+            Window.DesiredSlider.Minimum = min;
+            Window.DesiredSlider.Maximum = max;
+        }
+
+        public void SetSliderValue(double value)
+        {
+            Window.DesiredSlider.Value = value;
+        }
+
+        public void SetFormattedLabel(ulong size)
+        {
+            Window.DesiredFormatted.Content = ByteFormatter.BytesToAsString(size);
         }
 
 
+        public void SetAvailableLabel(ulong size)
+        {
+            Window.AvailableLabel.Content = ByteFormatter.BytesToAsString(size);
+        }
+
+        public void SetDesiredTextBox(ulong size)
+        {
+            Window.DesiredSizeValue.Text = ByteFormatter.BytesToAsString(size, false, Unit.MB, 0);
+        }
 
         #region OnClick
 
@@ -122,9 +146,9 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             output += Partition.DefragAnalysis.GetOutputAsString();
             Log.Print(output);
 
-            availableForExtendInMB = ByteFormatter.BytesToUnit<UInt64, UInt64>(Partition.DefragAnalysis.AvailableForExtend, Unit.MB);
-            Window.SetupSlider(0.0d, availableForExtendInMB);
-            Window.AvailableLabel.Content = ByteFormatter.BytesToUnitAsString(Partition.DefragAnalysis.AvailableForExtend);
+            availableInByte = Partition.DefragAnalysis.AvailableForExtend;
+            SetupSlider(0.0d, availableInByte);
+            SetAvailableLabel(availableInByte);
         }
 
         protected override void AddCustomArgs(params object?[] args)

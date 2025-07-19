@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using GUIForDiskpart.Utils;
+using System;
+using System.Windows;
 using System.Windows.Controls;
 
 
@@ -28,15 +30,5 @@ namespace GUIForDiskpart.Presentation.View.Windows
         private void CancelButton_Click(object sender, RoutedEventArgs e) => ECancel?.Invoke(sender, e);
         private void DesiredSizeValue_TextChanged(object sender, TextChangedEventArgs e) => ETextChanged?.Invoke(sender, e);
         private void DesiredSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) => ESliderValueChanged?.Invoke(sender, e);
-
-        #region ViewSetters
-
-        public void SetupSlider(double min, double max)
-        {
-            DesiredSlider.Minimum = min;
-            DesiredSlider.Maximum = max;
-        }
-
-        #endregion ViewSetters
     }
 }

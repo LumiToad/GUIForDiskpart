@@ -38,7 +38,7 @@ namespace GUIForDiskpart.Model.Data
         public bool? NoDefaultDriveLetter { get; set; }
         public ulong Offset { get; set; }
 
-        public string FormattedSize => ByteFormatter.BytesToUnitAsString(Size);
+        public string FormattedSize => ByteFormatter.BytesToAsString(Size);
         public string PartitionType => GetPartitionType();
         public string PartitionTable => GetPartitionTable();
 

@@ -120,7 +120,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         public override void Setup()
         {
             Partition.DefragAnalysis = DAService.AnalyzeVolumeDefrag(Partition);
-            double available = (ByteFormatter.BytesToUnit<ulong, double>(Partition.DefragAnalysis.AvailableForShrink, Unit.MB));
+            double available = (ByteFormatter.BytesTo<ulong, double>(Partition.DefragAnalysis.AvailableForShrink, Unit.MB));
             availableForShrinkInMB = (ulong)available;
 
             string output = string.Empty;

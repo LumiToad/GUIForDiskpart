@@ -93,7 +93,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
         public override void Setup()
         {
             size = Disk.UnallocatedSpace;
-            SetSize(ByteFormatter.BytesToUnitAsString(size));
+            SetSize(ByteFormatter.BytesToAsString(size));
         }
 
         protected override void RegisterEventsInternal()

@@ -82,7 +82,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public override void Setup()
         {
-            Window.SizeValue.Text = ByteFormatter.BytesToUnitAsString(size, false, Unit.MB, 0);
+            Window.SizeValue.Text = ByteFormatter.BytesToAsString(size, false, Unit.MB, 0);
 
             Log.Print(Disk.GetOutputAsString(), true);
         }
