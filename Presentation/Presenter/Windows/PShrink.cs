@@ -102,7 +102,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
             output += DPFunctions.Shrink(driveLetter, desiredMB, minimumMB, false, false);
 
-            MainWindow.Log.Print(output, true);
+            MainWindow.Log.Print(output);
             MainWindow.DisplayDiskData(false);
 
             Close();
@@ -120,7 +120,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         public override void Setup()
         {
             Partition.DefragAnalysis = DAService.AnalyzeVolumeDefrag(Partition);
-            double available = (ByteFormatter.BytesToUnit(Partition.DefragAnalysis.AvailableForShrink, Unit.MB));
+            double available = (ByteFormatter.BytesToUnit<ulong, double>(Partition.DefragAnalysis.AvailableForShrink, Unit.MB));
             availableForShrinkInMB = (ulong)available;
 
             string output = string.Empty;

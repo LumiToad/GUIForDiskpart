@@ -22,7 +22,7 @@ namespace GUIForDiskpart.Presentation.View.Windows
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e) => EConfirm?.Invoke(sender, e);
-        private void CancelButton_Click(object sender, RoutedEventArgs e) => EConfirm?.Invoke(sender, e);
+        private void CancelButton_Click(object sender, RoutedEventArgs e) => ECancel?.Invoke(sender, e);
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) => ESelectionChanged?.Invoke(sender, e);
         private void SizeValue_TextChanged(object sender, TextChangedEventArgs e) => ETextChanged?.Invoke(sender, e);
     }

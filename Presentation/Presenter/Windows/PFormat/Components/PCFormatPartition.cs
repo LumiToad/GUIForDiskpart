@@ -67,7 +67,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows.Components
             ClearErrorMessage();
             if (SelectedFileSystemAsString() != FSTypeStrings.FS_FAT32) return;
 
-            ulong inMB = (ulong)ByteFormatter.BytesToUnit(presenter.WSM.Size, Unit.MB);
+            ulong inMB = ByteFormatter.BytesToUnit<ulong, ulong>(presenter.WSM.Size, Unit.MB);
 
             if (inMB <= FAT32_Max)
             {

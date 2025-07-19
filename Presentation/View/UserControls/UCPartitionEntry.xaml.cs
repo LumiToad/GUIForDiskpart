@@ -62,7 +62,7 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         private void AnalyzeDefrag_Click(object sender, RoutedEventArgs e) => EAnalyzeDefrag?.Invoke(sender, e);
         private void Attributes_Click(object sender, RoutedEventArgs e) => EAttributes?.Invoke(sender, e);
         private void Active_Click(object sender, RoutedEventArgs e) => EActive?.Invoke(sender, e);
-        private void Inactive_Click(object sender, RoutedEventArgs e) => EActive?.Invoke(sender, e);
+        private void Inactive_Click(object sender, RoutedEventArgs e) => EInactive?.Invoke(sender, e);
         private void Button_Click(object sender, RoutedEventArgs e) => EButton?.Invoke(sender, e);
         private void Detail_Click(object sender, RoutedEventArgs e) => EDetail?.Invoke(sender, e);
         private void Format_Click(object sender, RoutedEventArgs e) => EFormat?.Invoke(sender, e);

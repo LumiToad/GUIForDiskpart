@@ -45,17 +45,21 @@ namespace GUIForDiskpart.Utils
 
             return BytesToUnitAsString(bytes, withSuffix, unit, decimalDigits);
         }
-
+        /*
         public static double BytesToUnit(Int64 bytes, Unit unit = Unit.MAX)
         {
             int i = 0;
             return FormatBytes(bytes, ref i, unit);
         }
-
-        public static double BytesToUnit(UInt64 bytes, Unit unit = Unit.MAX)
+        */
+        public static ReturnType BytesToUnit<ArgType, ReturnType>(ArgType bytes, Unit unit = Unit.MAX) 
+            where ArgType : unmanaged, IComparable, IFormattable, IConvertible, IComparable<ArgType>, IEquatable<ArgType>
+            where ReturnType : unmanaged, IComparable, IFormattable, IConvertible, IComparable<ReturnType>, IEquatable<ReturnType>
         {
             int i = 0;
-            return FormatBytes(System.Convert.ToInt64(bytes), ref i, unit);
+            long bytesAsLong = System.Convert.ToInt64(bytes);
+            var result = FormatBytes(bytesAsLong, ref i, unit);
+            return (ReturnType)System.Convert.ChangeType(result, typeof(ReturnType));
         }
 
         private static string CreateFormatString(int decimalDigits)

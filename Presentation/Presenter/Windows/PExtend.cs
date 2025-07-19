@@ -32,7 +32,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public PartitionModel Partition { get; private set; }
 
-        private UInt64 availableForExtendInMB;
+        private double availableForExtendInMB;
 
         private void OnDesiredSizeValue_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -76,12 +76,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             label.Content = ByteFormatter.BytesToUnitAsString(toMB);
         }
 
-        private void SetSliderMinMax(Slider slider, double min, double max)
-        {
-            if (slider == null) return;
-            slider.Minimum = min;
-            slider.Maximum = max;
-        }
+
 
         #region OnClick
 
@@ -127,8 +122,8 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             output += Partition.DefragAnalysis.GetOutputAsString();
             Log.Print(output);
 
-            availableForExtendInMB = (Partition.DefragAnalysis.AvailableForExtend / 1024) / 1024;
-            SetSliderMinMax(Window.DesiredSlider, 0.0d, System.Convert.ToDouble(availableForExtendInMB));
+            availableForExtendInMB = ByteFormatter.BytesToUnit<UInt64, UInt64>(Partition.DefragAnalysis.AvailableForExtend, Unit.MB);
+            Window.SetupSlider(0.0d, availableForExtendInMB);
             Window.AvailableLabel.Content = ByteFormatter.BytesToUnitAsString(Partition.DefragAnalysis.AvailableForExtend);
         }
 

@@ -67,7 +67,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         public PPhysicalDriveEntry GetEntryPresenter(UCPhysicalDriveEntry entry) => pcDiskPanel.GetEntryPresenter(entry);
         public PPartitionEntry GetEntryPresenter(UCPartitionEntry entry) => pcPartitionPanel.GetEntry(entry);
-        public PUnallocatedEntry GetEntryPresenter(UCUnallocatedEntry entry) => pcPartitionPanel.GetEntryPresenter(entry);
+        public PUnallocatedEntry? GetEntryPresenter(UCUnallocatedEntry entry) => pcPartitionPanel.GetEntryPresenter(entry);
 
         #region UCPresenter
 

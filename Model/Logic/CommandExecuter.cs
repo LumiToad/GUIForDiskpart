@@ -1,13 +1,12 @@
-﻿using GUIForDiskpart.Database.Data;
-using Microsoft.PowerShell;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
-using System.Numerics;
-using static System.Windows.Forms.AxHost;
+using Microsoft.PowerShell;
+
+using GUIForDiskpart.Database.Data;
 
 
 namespace GUIForDiskpart.Model.Logic

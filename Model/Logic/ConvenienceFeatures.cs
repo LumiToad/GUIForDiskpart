@@ -3,7 +3,7 @@
 
 namespace GUIForDiskpart.Model.Logic
 {
-    public static class ComfortFeatures
+    public static class ConvenienceFeatures
     {
         private const string LOG_COMMAND_NAME = "Easy disk format";
         private const string LOG_APPLIATION_NAME = "GUIFD - ";

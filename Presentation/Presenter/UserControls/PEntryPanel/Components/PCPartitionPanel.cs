@@ -91,17 +91,21 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls.Components
             return Partitions_K_uc_V_p[entry];
         }
 
-        public PUnallocatedEntry GetEntryPresenter(UCUnallocatedEntry entry)
+        public PUnallocatedEntry? GetEntryPresenter(UCUnallocatedEntry entry)
         {
-            return Unallocated_K_uc_V_p[entry];
+            if (Unallocated_K_uc_V_p.ContainsKey(entry))
+                return Unallocated_K_uc_V_p[entry];
+            else return null;
         }
 
         public void SelectPrevious()
         {
             if (wasUnallocatedSelected)
             {
-                foreach (UCUnallocatedEntry entry in userControl.Stack.Children)
+                foreach (var entry in userControl.Stack.Children)
                 {
+                    if (entry is UCPartitionEntry) continue;
+
                     var pUnallocated = GetEntryPresenter(new UCUnallocatedEntry());
                     if (pUnallocated != null)
                     {
@@ -113,9 +117,11 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls.Components
 
             if (previousSelected != null) 
             {
-                foreach (UCPartitionEntry entry in userControl.Stack.Children)
+                foreach (var entry in userControl.Stack.Children)
                 {
-                    var pPartition = Partitions_K_uc_V_p[entry];
+                    if (entry is UCUnallocatedEntry) continue;
+
+                    var pPartition = Partitions_K_uc_V_p[entry as UCPartitionEntry];
                     if (
                         pPartition != null &&
                         pPartition.Partition != null &&

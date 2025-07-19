@@ -55,12 +55,12 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows.Components
 
             if (driveLetter == string.Empty)
             {
-                output = ComfortFeatures.EasyDiskFormat(presenter.Disk, fileSystem, newVolName,
+                output = ConvenienceFeatures.EasyDiskFormat(presenter.Disk, fileSystem, newVolName,
                     size, isQuickFormat, isCompression, false, true, false);
             }
             else
             {
-                output = ComfortFeatures.EasyDiskFormat(presenter.Disk, fileSystem, newVolName,
+                output = ConvenienceFeatures.EasyDiskFormat(presenter.Disk, fileSystem, newVolName,
                     driveLetter.ToCharArray()[0], size, isQuickFormat, isCompression, false, true, false);
             }
 
