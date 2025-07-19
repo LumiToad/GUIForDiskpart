@@ -2,6 +2,7 @@
    GUIForDiskpart.Presentation.Presenter.Windows.PShrink<GUIForDiskpart.Presentation.View.Windows.WShrink>;
 
 using System;
+using System.Management.Automation.Remoting;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -31,63 +32,98 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
         public PartitionModel Partition { get; private set; }
 
-        private UInt64 availableForShrinkInMB;
+        private UInt64 availableInByte;
+        private UInt64 desiredInByte;
+        private UInt64 minimumInByte;
 
-        private void SetSliderMinMax(Slider slider, double min, double max)
+        private void OnDesiredSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (slider == null) return;
-            slider.Minimum = min;
-            slider.Maximum = max;
-        }
-
-        private void ChangeFormattedLabel(Label label, TextBox textBox)
-        {
-            label.Content = $"{System.Convert.ToInt64(textBox.Text)} MB";
-        }
-
-        private void OnTextChanged(Slider slider, TextBox textBox, Label label, TextChangedEventArgs e)
-        {
-            if (slider == null || textBox == null) return;
-            if (!double.TryParse(textBox.Text, out double value))
-            {
-                foreach (var item in e.Changes)
-                {
-                    int index = item.Offset;
-                    if (index < 0 || index >= textBox.Text.Length) continue;
-                    textBox.Text = textBox.Text.Remove(index, 1);
-                }
-                return;
-            }
-
-            if (System.Convert.ToUInt64(textBox.Text) > availableForShrinkInMB)
-            {
-                textBox.Text = availableForShrinkInMB.ToString();
-            }
-
-            slider.Value = value;
-            ChangeFormattedLabel(label, textBox);
-        }
-
-        private void OnMinimumSizeValue_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            OnTextChanged(Window.MinimumSlider, Window.MinimumSizeValue, Window.MinFormatted, e);
-        }
-
-        private void OnDesiredSizeValue_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            OnTextChanged(Window.DesiredSlider, Window.DesiredSizeValue, Window.DesiredFormatted, e);
+            desiredInByte = System.Convert.ToUInt64(Window.DesiredSlider.Value);
+            OnSizeChanged(sender, Window.DesiredSlider, Window.DesiredSizeValue, Window.DesiredFormatted, ref desiredInByte);
         }
 
         private void OnMinimumSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Window.MinimumSizeValue.Text = Math.Floor(Window.MinimumSlider.Value).ToString();
-            ChangeFormattedLabel(Window.MinFormatted, Window.MinimumSizeValue);
+            minimumInByte = System.Convert.ToUInt64(Window.MinimumSlider.Value);
+            OnSizeChanged(sender, Window.MinimumSlider, Window.MinimumSizeValue, Window.MinFormatted, ref minimumInByte);
         }
 
-        private void OnDesiredSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void OnSizeChanged(object sender, Slider slider, TextBox textBox, Label label, ref ulong value)
         {
-            Window.DesiredSizeValue.Text = Math.Floor(Window.DesiredSlider.Value).ToString();
-            ChangeFormattedLabel(Window.DesiredFormatted, Window.DesiredSizeValue);
+            if (value > availableInByte)
+            {
+                value = availableInByte;
+                SetTextBox(value, textBox);
+            }
+
+            if (sender == slider)
+            {
+                SetTextBox(value, textBox);
+            }
+
+            if (sender == textBox)
+            {
+                SetSliderValue(value, slider);
+            }
+
+            SetFormattedLabel(value, label);
+        }
+
+        private void OnTextChanged(object sender, Slider slider, TextBox textBox, Label label, ref ulong bytes)
+        {
+            textBox.Text = textBox.Text.RemoveAllButNumbers();
+            if (!UInt64.TryParse(textBox.Text, out UInt64 value))
+            {
+                SetTextBox(0, textBox);
+                value = 0;
+            }
+
+            bytes = ByteFormatter.SizeFromTo<UInt64, UInt64>(value, Unit.MB, Unit.B);
+            OnSizeChanged(sender, slider, textBox, label, ref bytes);
+        }
+
+        private void OnDesiredSizeValue_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Window.DesiredSizeValue.Text = Window.DesiredSizeValue.Text.RemoveAllButNumbers();
+            OnTextChanged(sender, Window.DesiredSlider, Window.DesiredSizeValue, Window.DesiredFormatted, ref desiredInByte);
+        }
+
+        private void OnMinimumSizeValue_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Window.MinimumSizeValue.Text = Window.MinimumSizeValue.Text.RemoveAllButNumbers();
+            OnTextChanged(sender, Window.MinimumSlider, Window.MinimumSizeValue, Window.MinFormatted, ref minimumInByte);
+        }
+
+        public void SetSliderValue(double value, Slider slider)
+        {
+            slider.Value = value;
+        }
+
+        public void SetFormattedLabel(ulong size, Label label)
+        {
+            label.Content = ByteFormatter.BytesToAsString(size);
+        }
+
+        public void SetAvailableLabel(ulong size)
+        {
+            Window.AvailableLabel.Content = ByteFormatter.BytesToAsString(size);
+        }
+
+        public void SetTextBox(ulong size, TextBox textBox)
+        {
+            textBox.Text = ByteFormatter.BytesToAsString(size, false, Unit.MB, 0);
+        }
+
+        public void SetupMinimumSlider(double min, double max)
+        {
+            Window.MinimumSlider.Minimum = min;
+            Window.MinimumSlider.Maximum = max;
+        }
+
+        public void SetupDesiredSlider(double min, double max)
+        {
+            Window.DesiredSlider.Minimum = min;
+            Window.DesiredSlider.Maximum = max;
         }
 
         #region OnClick
@@ -97,8 +133,8 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             string output = string.Empty;
 
             char driveLetter = Partition.WSM.DriveLetter;
-            uint desiredMB = System.Convert.ToUInt32(Window.DesiredSizeValue.Text);
-            uint minimumMB = System.Convert.ToUInt32(Window.MinimumSizeValue.Text);
+            uint desiredMB = ByteFormatter.BytesTo<UInt64, UInt32>(desiredInByte, Unit.MB);
+            uint minimumMB = ByteFormatter.BytesTo<UInt64, UInt32>(minimumInByte, Unit.MB);
 
             output += DPFunctions.Shrink(driveLetter, desiredMB, minimumMB, false, false);
 
@@ -120,16 +156,16 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         public override void Setup()
         {
             Partition.DefragAnalysis = DAService.AnalyzeVolumeDefrag(Partition);
-            double available = (ByteFormatter.BytesTo<ulong, double>(Partition.DefragAnalysis.AvailableForShrink, Unit.MB));
-            availableForShrinkInMB = (ulong)available;
+            availableInByte = Partition.DefragAnalysis.AvailableForShrink;
 
             string output = string.Empty;
             output += Partition.WSM.GetOutputAsString();
             output += Partition.DefragAnalysis.GetOutputAsString();
             Log.Print(output, true);
-            SetSliderMinMax(Window.MinimumSlider, 0.0d, available);
-            SetSliderMinMax(Window.DesiredSlider, 0.0d, available);
-            Window.AvailableLabel.Content = $"{availableForShrinkInMB}";
+
+            SetupMinimumSlider(0.0d, availableInByte);
+            SetupDesiredSlider(0.0d, availableInByte);
+            Window.AvailableLabel.Content = $"{ByteFormatter.BytesToAsString(availableInByte)}";
         }
 
         protected override void AddCustomArgs(params object?[] args)

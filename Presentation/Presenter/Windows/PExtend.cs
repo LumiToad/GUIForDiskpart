@@ -108,7 +108,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         {
             string output = string.Empty;
 
-            uint desiredMB = System.Convert.ToUInt32(Window.DesiredSizeValue.Text);
+            uint desiredMB = ByteFormatter.BytesTo<UInt64, UInt32>(desiredInByte, Unit.MB);
             uint diskIndex = Partition.WSM.DiskNumber;
 
             if (Partition.HasDriveLetter())

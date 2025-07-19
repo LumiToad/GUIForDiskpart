@@ -1,12 +1,5 @@
-﻿using System;
-using System.Globalization;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-
-using GUIForDiskpart.Model.Data;
-using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.Service;
-using GUIForDiskpart.Utils;
 
 
 namespace GUIForDiskpart.Presentation.View.Windows
