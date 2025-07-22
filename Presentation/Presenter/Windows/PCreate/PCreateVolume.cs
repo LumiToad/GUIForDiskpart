@@ -64,7 +64,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             output += DPFunctions.CreateVolume(Disk.DiskIndex, Create.SIMPLE, GetSizeValue(), false);
 
             MainWindow.Log.Print(output);
-            MainWindow.DisplayDiskData(false);
+            MainWindow.UpdatePanels(false);
 
             Close();
         }

@@ -66,7 +66,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             output += DPFunctions.CreatePartition(Disk.DiskIndex, option, GetSizeValue(), false);
 
             MainWindow.Log.Print(output);
-            MainWindow.DisplayDiskData(false);
+            MainWindow.UpdatePanels(false);
 
             Close();
         }

@@ -174,7 +174,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
             }
             
             MainWindow.Log.Print(output);
-            MainWindow.DisplayDiskData(false);
+            MainWindow.UpdatePanels(false);
         }
 
         private void OnOffline_Click(object sender, RoutedEventArgs e)
@@ -193,7 +193,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
             }
 
             MainWindow.Log.Print(output);
-            MainWindow.DisplayDiskData(false);
+            MainWindow.UpdatePanels(false);
         }
 
         private void OnExtend_Click(object sender, RoutedEventArgs e)
@@ -227,7 +227,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
                 case MessageBoxResult.OK:
                     string result = DPFunctions.Active(Partition.WSM.DiskNumber, Partition.WSM.PartitionNumber, true);
                     MainWindow.Log.Print(result);
-                    MainWindow.DisplayDiskData(false);
+                    MainWindow.UpdatePanels(false);
                     break;
                 case MessageBoxResult.Cancel:
                     break;
@@ -243,7 +243,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
                 case MessageBoxResult.OK:
                     string result = DPFunctions.Active(Partition.WSM.DiskNumber, Partition.WSM.PartitionNumber, false);
                     MainWindow.Log.Print(result);
-                    MainWindow.DisplayDiskData(false);
+                    MainWindow.UpdatePanels(false);
                     break;
                 case MessageBoxResult.Cancel:
                     break;

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
-
 using DiskRetriever = GUIForDiskpart.Database.Retrievers.Disk;
 
 
@@ -10,8 +10,8 @@ namespace GUIForDiskpart.Service
 {
     public static class Disk
     {
-        public delegate void DiskChanged();
-        public static event DiskChanged OnDiskChanged;
+        public delegate void DDiskChange();
+        public static event DDiskChange EDiskChange;
 
         private static List<DiskModel> physicalDisks = new List<DiskModel>();
         public static List<DiskModel> PhysicalDrives { get { return physicalDisks; } }
@@ -19,17 +19,28 @@ namespace GUIForDiskpart.Service
 
         private static DiskRetriever diskRetriever = new();
         
-        public static void ExecuteOnDiskChanged(object sender, EventArrivedEventArgs e) => OnDiskChanged();
+        private const double RELOAD_COOLDOWN = 3000.0d;
+        private static System.Timers.Timer reloadCDTimer;
+        private static bool isReloadBlocked = false;
+
+        public static void SetupDiskChangedWatcher() => diskRetriever.SetupDiskChangedWatcher();
+
+        public static void ExecuteOnDiskChanged(object sender, EventArrivedEventArgs e) => EDiskChange?.Invoke();
 
         public static void ReLoadDisks()
         {
+            if (isReloadBlocked) return;
+            isReloadBlocked = true;
+            
             DeleteDiskLists();
             StoreDisksInList();
-        }
 
-        public static void SetupDiskChangedWatcher()
-        {
-            diskRetriever.SetupDiskChangedWatcher();
+            reloadCDTimer = new(RELOAD_COOLDOWN);
+            reloadCDTimer.Elapsed += (sender, e) => {
+                isReloadBlocked = false;
+                reloadCDTimer.Stop();
+            };
+            reloadCDTimer.Start();
         }
 
         private static void DeleteDiskLists()

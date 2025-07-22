@@ -41,7 +41,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             output += DPFunctions.Delete(WSM.DiskNumber, WSM.PartitionNumber, true, (bool)Window.CleanAll.IsChecked);
 
             MainWindow.Log.Print(output);
-            MainWindow.DisplayDiskData(false);
+            MainWindow.UpdatePanels(false);
 
             Close();
         }

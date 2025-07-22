@@ -54,7 +54,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             output += DPFunctions.Assign(WSM.DiskNumber, WSM.PartitionNumber, letter, true);
 
             MainWindow.Log.Print(output);
-            MainWindow.DisplayDiskData(false);
+            MainWindow.UpdatePanels(false);
         }
 
         private void ExecuteRemove()
@@ -65,7 +65,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             output += DPFunctions.Remove(letter, false, true);
 
             MainWindow.Log.Print(output);
-            MainWindow.DisplayDiskData(false);
+            MainWindow.UpdatePanels(false);
         }
 
         #region OnClick
@@ -94,7 +94,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         public override void Setup()
         {
             PopulateDriveLetterBox();
-            DiskService.OnDiskChanged += PopulateDriveLetterBox;
+            DiskService.EDiskChange += PopulateDriveLetterBox;
 
             Log.Print(WSM.GetOutputAsString(), true);
             if (WSM != null && WSM.DriveLetter == '\0')

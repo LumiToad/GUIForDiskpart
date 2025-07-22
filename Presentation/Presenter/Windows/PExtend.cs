@@ -123,7 +123,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
             }
 
             MainWindow.Log.Print(output);
-            MainWindow.DisplayDiskData(false);
+            MainWindow.UpdatePanels(false);
 
             Close();
         }

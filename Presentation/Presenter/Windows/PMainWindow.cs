@@ -22,11 +22,15 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         public PEntryPanel PDiskPanel { get; private set; }
         public PEntryPanel PPartitionPanel { get; private set; }
 
-        public void OnDiskChanged() => DisplayDiskData(false);
+        public void OnDiskChanged()
+        {
+            Application.Current.Dispatcher.Invoke(UpdatePanels, true);
+        }
 
-        public void DisplayDiskData(bool outputText)
+        public void UpdatePanels(bool outputText)
         {
             DiskService.ReLoadDisks();
+
             PDiskPanel.UpdatePanel(DiskService.PhysicalDrives);
 
             if (outputText)
@@ -36,12 +40,13 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
 
             PDiskPanel.SelectPrevious();
             PPartitionPanel.SelectPrevious();
+
         }
 
         private void OnWindowContent_Rendered(EventArgs e)
         {
-            DiskService.OnDiskChanged += OnDiskChanged;
-            DisplayDiskData(true);
+            DiskService.EDiskChange += OnDiskChanged;
+            UpdatePanels(true);
         }
 
         #region TopBarFileMenu
@@ -140,7 +145,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         public void OnRetrieveDiskData_Click(object sender, RoutedEventArgs e)
         {
             DiskService.ReLoadDisks();
-            DisplayDiskData(true);
+            UpdatePanels(true);
         }
 
         public void OnScanVolume_Click(object sender, RoutedEventArgs e)

@@ -125,7 +125,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
             output += DPFunctions.OnOfflineDisk(Disk.DiskIndex, true, false);
 
             MainWindow.Log.Print(output);
-            MainWindow.DisplayDiskData(false);
+            MainWindow.UpdatePanels(false);
         }
 
         private void OnOffline_Click(object sender, RoutedEventArgs e)
@@ -134,7 +134,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
             output += DPFunctions.OnOfflineDisk(Disk.DiskIndex, false, false);
 
             MainWindow.Log.Print(output);
-            MainWindow.DisplayDiskData(false);
+            MainWindow.UpdatePanels(false);
         }
 
         private void OnDetail_Click(object sender, RoutedEventArgs e)
