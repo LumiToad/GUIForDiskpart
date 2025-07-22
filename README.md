@@ -63,10 +63,10 @@
   <h2>Example scripts</h2>
   Here are some scripts, I'd like to show:<br /><br />
   <ul>
-    <li><a href="https://github.com/LumiToad/GUIForDiskpart/blob/main/diskpart/DPFunctions.cs">Diskpart commands service class.</a></li>
-    <li><a href="https://github.com/LumiToad/GUIForDiskpart/blob/main/main/CommandExecuter.cs">Service class to execute commands.</a></li>
-    <li><a href="https://github.com/LumiToad/GUIForDiskpart/blob/main/main/WSM_GPT_PartitionTypes.cs">GUID types service class. prevents "magic strings" anywhere in code.<br /> There are a lot of classes like these.</a></li>
-    <li><a href="https://github.com/LumiToad/GUIForDiskpart/blob/main/main/DiskRetriever.cs">Service class for retrieving drive data.</a></li>
+    <li>Model logic<br/><a href="https://github.com/LumiToad/GUIForDiskpart/blob/main/Model/Logic/DPFunctions.cs">Diskpart commands</a></li>
+    <li>Model logic<br/><a href="https://github.com/LumiToad/GUIForDiskpart/blob/main/Model/Logic/CommandExecuter.cs">Executes commands in CMD</a></li>
+    <li>Presenter<br/><a href="https://github.com/LumiToad/GUIForDiskpart/blob/main/Presentation/Presenter/Windows/PCHKDSK.cs">This is the presenter logic for the CHKDSK window</a></li>
+    <li>Service<br/><a href="https://github.com/LumiToad/GUIForDiskpart/blob/main/Service/Partition.cs">Retrieves partition data from WMI / WSM databases</a></li>
   </ul>
   Feel free to explore the code. Keep in mind, that the whole thing is still in developement.
 
