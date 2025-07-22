@@ -47,6 +47,7 @@ namespace GUIForDiskpart.Presentation.Presenter.Windows
         {
             DiskService.EDiskChange += OnDiskChanged;
             UpdatePanels(true);
+            Window.Activate();
         }
 
         #region TopBarFileMenu

@@ -2,3 +2,5 @@
 obj/
 builds/
 textfiles/
+build.bat
+cmd.exe.lnk

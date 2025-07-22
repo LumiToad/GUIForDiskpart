@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
 	<DebugType>embedded</DebugType>
 	<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
     <TargetFramework>net6.0-windows</TargetFramework>
@@ -12,13 +12,13 @@
     <ApplicationManifest>main\app.manifest</ApplicationManifest>
 	<Deterministic>false</Deterministic>
 	<Version>1.0.1658</Version>
-	<AssemblyVersion>1.0.2402.0</AssemblyVersion>
+	<AssemblyVersion>1.1.0000.0</AssemblyVersion>
 	<FileVersion>1.0.2402.0</FileVersion>
 	<Copyright>MIT License</Copyright>
 	<ApplicationIcon>resources\guifdLogo.ico</ApplicationIcon>
 	<Platforms>AnyCPU;x64;x86</Platforms>
 	<PlatformTarget>AnyCPU</PlatformTarget>
-	<BaseOutputPath>E:\Projekte\0_Programmieren\CSharp\GUIForDiskpart\builds</BaseOutputPath>
+	<BaseOutputPath>E:\GitHub_Repos\GUIForDiskpart\builds</BaseOutputPath>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>

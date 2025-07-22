@@ -6,7 +6,7 @@ namespace GUIForDiskpart.Database.Data
     {
         public const string WEBSITE_URL = "https://github.com/LumiToad/GUIForDiskpart";
         public const string WIKI_URL = "https://github.com/LumiToad/GUIForDiskpart/wiki";
-        public const string BUILD_STAGE = "Beta";
+        public const string BUILD_STAGE = "Beta (MVP refactor)";
         public static string BuildString => GetBuildNumberString();
 
         private static string GetBuildNumberString()
