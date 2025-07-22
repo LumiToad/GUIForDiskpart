@@ -1,0 +1,86 @@
+﻿<UserControl x:Name="userControl" x:Class="GUIForDiskpart.Presentation.View.UserControls.UCPhysicalDriveEntry"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GUIForDiskpart.Presentation.View.UserControls"
+             mc:Ignorable="d" Width="220" Height="100" Focusable="True">
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="DISKPART - List Partition" Click="ListPart_Click">
+                <MenuItem.Icon>
+                    <Image Source="/Resources/diskpart.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="DISKPART - Detail" Click="Detail_Click">
+                <MenuItem.Icon>
+                    <Image Source="/Resources/diskpart.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="DISKPART - Clean" Click="Clean_Click">
+                <MenuItem.Icon>
+                    <Image Source="/Resources/diskpart.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="DISKPART - Convert" Click="Convert_Click">
+                <MenuItem.Icon>
+                    <Image Source="/Resources/diskpart.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="DISKPART - Create">
+                <MenuItem.Icon>
+                    <Image Source="/Resources/diskpart.png" />
+                </MenuItem.Icon>
+                <MenuItem Header="Partition" Click="CreatePart_Click"/>
+                <MenuItem Header="Volume" Click="CreateVolume_Click"/>
+            </MenuItem>
+            <Separator />
+            <MenuItem Header="GUIFD - Easy Format" Click="EasyFormat_Click">
+                <MenuItem.Icon>
+                    <Image Source="/Resources/guifd.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+
+    </UserControl.ContextMenu>
+    <Button x:Name="DiskEntryButton" MinWidth="150" MinHeight="100" HorizontalContentAlignment="Right" Click="Button_Click" Background="#FFA5A4A4">
+        <Grid Width="220" Height="100">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Width="NaN" Grid.ColumnSpan="2">
+                <Image x:Name="DiskIcon" MinWidth="16" MinHeight="16" Width="24" Height="24" MaxWidth="32" MaxHeight="32" ToolTip="USB / Hard installed"/>
+                <Image x:Name="MediaTypeIcon" MinWidth="16" MinHeight="16" Margin="0,5,0,0" MaxWidth="32" MaxHeight="32" Width="24" Height="24" ToolTip="Green Arrow shows, when this Disk is removable"/>
+                <RadioButton x:Name="EntrySelected" Content="" Padding="0,0,0,0" Width="NaN" Height="NaN" HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="False" Focusable="False" Margin="0,17,0,0" GroupName="SelectedDisk"/>
+            </StackPanel>
+
+            <StackPanel MinWidth="120" Margin="0,0,0,4" Grid.Column="2">
+                <Label x:Name="DiskIndex" Content="00" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="16" ToolTip="{Binding Content, ElementName=DiskIndex}"/>
+                <Label x:Name="DiskModelText" Content="Model" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" Width="NaN" Height="23.28" ToolTip="{Binding Content, ElementName=DiskModelText}"/>
+                <Label x:Name="TotalSpace" Content="1000" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="16" Width="NaN" ToolTip="{Binding Content, ElementName=TotalSpace}"/>
+                <Label x:Name="WSMPartitionCount" Content="99" Grid.IsSharedSizeScope="False" Padding="1,1,1,1" FontSize="16" Width="NaN" ToolTip="{Binding Content, ElementName=WSMPartitionCount}"/>
+                <StackPanel Height="100"/>
+            </StackPanel>
+            <Button Grid.Column="3" Click="OpenContextMenu_Click" Content="..." HorizontalAlignment="Left" Height="20" Width="20" VerticalContentAlignment="Center" VerticalAlignment="Bottom"/>
+            <Border Grid.Column="3" Height="80" Width="19" BorderThickness="2,2,2,2" BorderBrush="#FF676767" CornerRadius="0.2,0.2,0.2,0.2" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                <ProgressBar x:Name="SizeBar" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Orientation="Vertical" BorderBrush="DimGray" Foreground="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" BorderThickness="0,0,0,0" Value="0" Height="76" ToolTip="Blue - used space | This only takes Logical Drives into account.">
+                    <ProgressBar.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </ProgressBar.RenderTransform>
+                </ProgressBar>
+            </Border>
+        </Grid>
+    </Button>
+</UserControl>
+    
+
+    

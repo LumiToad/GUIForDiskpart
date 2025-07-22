@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="GUIForDiskpart.Presentation.View.UserControls.UCLog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:GUIForDiskpart.Presentation.View.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Save Log" Click="SaveLog_Click"/>
+            </ContextMenu>
+        </Grid.ContextMenu>
+        <TextBox x:Name="TextBox" TextWrapping="Wrap" FontFamily="Consolas" AllowDrop="False" Background="#FF252525" IsUndoEnabled="False" Foreground="#FF009409" VerticalScrollBarVisibility="Visible" TextChanged="LogUI_TextChanged" IsReadOnly="True" Width="NaN" UseLayoutRounding="True" Padding="0,5,0,5" d:IsHidden="True"/>
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,25 @@
+﻿<Window x:Class="GUIForDiskpart.Presentation.View.Windows.WSecurityCheck"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUIForDiskpart.Presentation.View.Windows"
+        mc:Ignorable="d"
+        Title="SecurityCheckWindow" Height="200" Width="400"
+        ResizeMode="NoResize">
+    <Grid x:Name="MainGrid" Background="#FF8C8C8C">
+        <Border HorizontalAlignment="Center" Height="151" Margin="0,10,0,0" VerticalAlignment="Top" Width="380">
+            <Grid>
+                <Label Content="You are about to:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Label x:Name="AboutTo" Content="?" HorizontalAlignment="Left" Margin="106,0,0,0" VerticalAlignment="Top" Foreground="Red"/>
+                <Label Content="Enter this confirmation text below:" HorizontalAlignment="Left" Margin="0,31,0,0" VerticalAlignment="Top" Width="196"/>
+                <Label x:Name="ConfirmText" Content="?" HorizontalAlignment="Left" Margin="0,56,0,0" VerticalAlignment="Top" Width="196"/>
+                <TextBox x:Name="TextBox" TextWrapping="Wrap" Margin="0,87,0,39" TextChanged="TextBox_TextChanged"/>
+                <Button x:Name="Confirm" Content="CONFIRM" HorizontalAlignment="Left" Margin="64,126,0,0" VerticalAlignment="Top" Foreground="#FFB90000" FontSize="20" Width="100" IsEnabled="False" Click="Confirm_Click"/>
+                <Button x:Name="Cancel" Content="Cancel" IsCancel="True"  HorizontalAlignment="Left" Margin="218,126,0,0" VerticalAlignment="Top" FontSize="20" Width="100" Click="Cancel_Click"/>
+
+            </Grid>
+        </Border>
+
+    </Grid>
+</Window>

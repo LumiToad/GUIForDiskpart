@@ -9,70 +9,70 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="userControls\ConsoleReturn.xaml.cs">
+    <Compile Update="Presentation\View\UserControls\UCEntryPanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="userControls\EntryData.xaml.cs">
+    <Compile Update="Presentation\View\UserControls\UCLog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="userControls\UnallocatedEntryUI.xaml.cs">
+    <Compile Update="Presentation\View\UserControls\UCEntryData.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\AboutWindow.xaml.cs">
+    <Compile Update="Presentation\View\UserControls\UCUnallocatedEntry.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\AssignLetterWindow.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WAbout.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\AttributesVolumeByIndexWindow.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WAssignLetter.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\AttributesVolumeWindow.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WAttributes\WAttributesVolByIndex.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\AttributesDiskWindow.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WAttributes\WAttributesVolume.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\CHKDSKWindow.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WAttributes\WAttributesDisk.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\CleanWindow.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WCHKDSK.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\ConvertDriveWindow.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WClean.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\CreatePartitionWindow.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WConvertDrive.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\CreateVolumeWindow.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WCreate\WCreatePartition.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\DeleteWindow.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WCreate\WCreateVolume.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\ExtendWindow.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WDelete.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\FormatPartitionWindow.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WExtend.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\FormatWindow.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WFormat\WEasyFormat.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="userControls\PartitionDriveEntryUI.xaml.cs">
+    <Compile Update="Presentation\View\UserControls\UCPartitionEntry.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="userControls\PhysicalDriveEntryUI.xaml.cs">
+    <Compile Update="Presentation\View\UserControls\UCPhysicalDriveEntry.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\SecurityCheckWindow.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WSecurityCheck.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\ShrinkWindow.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WShrink.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="windows\StartupLoadingWindow.xaml.cs">
+    <Compile Update="Presentation\View\Windows\WStartupLoading.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -94,73 +94,73 @@
     <Page Update="Themes\MSSample.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="userControls\ConsoleReturn.xaml">
+    <Page Update="Presentation\View\UserControls\UCLog.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="userControls\EntryData.xaml">
+    <Page Update="Presentation\View\UserControls\UCEntryData.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="userControls\UnallocatedEntryUI.xaml">
+    <Page Update="Presentation\View\UserControls\UCUnallocatedEntry.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Win95Button.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\AboutWindow.xaml">
+    <Page Update="Presentation\View\Windows\WAbout.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\AssignLetterWindow.xaml">
+    <Page Update="Presentation\View\Windows\WAssignLetter.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\AttributesVolumeByIndexWindow.xaml">
+    <Page Update="Presentation\View\Windows\WAttributes\WAttributesVolByIndex.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\AttributesVolumeWindow.xaml">
+    <Page Update="Presentation\View\Windows\WAttributes\WAttributesVolume.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\AttributesDiskWindow.xaml">
+    <Page Update="Presentation\View\Windows\WAttributes\WAttributesDisk.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\CHKDSKWindow.xaml">
+    <Page Update="Presentation\View\Windows\WCHKDSK.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\CleanWindow.xaml">
+    <Page Update="Presentation\View\Windows\WClean.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\ConvertDriveWindow.xaml">
+    <Page Update="Presentation\View\Windows\WConvertDrive.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\CreatePartitionWindow.xaml">
+    <Page Update="Presentation\View\Windows\WCreate\WCreatePartition.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\CreateVolumeWindow.xaml">
+    <Page Update="Presentation\View\Windows\WCreate\WCreateVolume.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\DeleteWindow.xaml">
+    <Page Update="Presentation\View\Windows\WDelete.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\ExtendWindow.xaml">
+    <Page Update="Presentation\View\Windows\WExtend.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\FormatPartitionWindow.xaml">
+    <Page Update="Presentation\View\Windows\WFormat\WFormatPartition.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\FormatWindow.xaml">
+    <Page Update="Presentation\View\Windows\WFormat\WEasyFormat.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="userControls\PartitionDriveEntryUI.xaml">
+    <Page Update="Presentation\View\UserControls\UCPartitionEntry.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="userControls\PhysicalDriveEntryUI.xaml">
+    <Page Update="Presentation\View\UserControls\UCPhysicalDriveEntry.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\SecurityCheckWindow.xaml">
+    <Page Update="Presentation\View\Windows\WSecurityCheck.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\ShrinkWindow.xaml">
+    <Page Update="Presentation\View\Windows\WShrink.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="windows\StartupLoadingWindow.xaml">
+    <Page Update="Presentation\View\Windows\WStartupLoading.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
