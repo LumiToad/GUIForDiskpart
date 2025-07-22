@@ -3,9 +3,10 @@
   <h1>GUI for Diskpart - GUIFD</h1>
 
   <p>
-  <h3>Currently refactoring to MVP View-Model (as of the end of May 2025)</h3>
-  Yes, the project is still alive! I intend to add more features, adding stuff to the wiki and some UI adjustments, before this is considered "done".<br />
-  But MVP refactor comes first!
+  <h3>Status</h3>
+    Yes, the project is still alive!
+    I intend to add more features, adding stuff to the wiki and some UI adjustments, before this is considered "done".<br />
+    The project was just updated to use the MVP view model.
   </p>
   <br />
   <p>
