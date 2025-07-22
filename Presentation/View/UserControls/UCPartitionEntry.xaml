@@ -14,7 +14,7 @@
             </MenuItem>
             <MenuItem Header="DISKPART - Format" Click="Format_Click">
                 <MenuItem.Icon>
-                    <Image Source="/´Resources/diskpart.png" />
+                    <Image Source="/Resources/diskpart.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="DISKPART - Delete" Click="Delete_Click">
