@@ -28,7 +28,7 @@
     because I always wanted to be able to develop apps as well!<br /><br />
     This project taught me a lot! I worked on it a few hours a week during school.<br />
     Initialy a summer break project, I am still working on it, when I have free time.<br />
-    A lot of the code from earlier stages of developement will probably be replaced at some point.<br /><br />
+    A lot of the code from earlier stages of developement will probably be replaced at some point. (Update July 2025 - Has been updated) <br /><br />
     A developement diary is online on <a href="https://www.linkedin.com/in/lukas-schmidt-93b532256/">my LinkedIn</a>:<br />
     <ul>
       <li><a href="https://www.linkedin.com/pulse/guifordiskpart-01-first-steps-lukas-schmidt/?trackingId=WVK4aIkqQZOT0Qj%2F7jFHBw%3D%3D">#01 - First Steps</a></li>
