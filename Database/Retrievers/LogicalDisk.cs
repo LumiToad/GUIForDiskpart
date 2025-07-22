@@ -14,8 +14,8 @@ namespace GUIForDiskpart.Database.Retrievers
 
             ManagementObject? RetVal = null;
 
-            // The logicalDriveQuery.Get() returns a collection, which in this case can never contain more than one object!
-            // Todo: check if this is true
+            // The logicalDriveQuery.Get() returns a collection,
+            // which in this case (Partition) can never contain more than one object!
             foreach (ManagementObject logicalDisk in logicalDriveQuery.Get())
             {
                 RetVal = logicalDisk;

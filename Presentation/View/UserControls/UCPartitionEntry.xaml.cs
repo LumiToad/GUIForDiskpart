@@ -1,12 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-
-using GUIForDiskpart.Model.Data;
-using GUIForDiskpart.Model.Logic.Diskpart;
-using GUIForDiskpart.Presentation.Presenter;
-using GUIForDiskpart.Service;
-using GUIForDiskpart.Utils;
 
 
 namespace GUIForDiskpart.Presentation.View.UserControls
@@ -33,26 +26,17 @@ namespace GUIForDiskpart.Presentation.View.UserControls
         public event DOnClick EScanVolume;
         public event DOnClick EOpenContextMenu;
 
-        private const string PARTITIONBORDER = "#FF00C4B4";
-        private const string LOGICALBORDER = "#FF0A70C5";
+        // private const string PARTITIONBORDER = "#FF00C4B4";
+        // private const string LOGICALBORDER = "#FF0A70C5";
 
-        private const string BASICBACKGROUND = "#FFBBBBBB";
-        private const string SELECTBACKGROUND = "#FF308EBF";
+        // private const string BASICBACKGROUND = "#FFBBBBBB";
+        // private const string SELECTBACKGROUND = "#FF308EBF";
 
         public bool? IsSelected { get { return EntrySelected.IsChecked; } }
 
         public UCPartitionEntry()
         {
             InitializeComponent();
-        }
-
-        public void UpdateUI(PartitionModel partition, string driveName, string fileSystem)
-        {
-            PartitionNumber.Content = $"#{partition.WSM.PartitionNumber}";
-            DriveNameAndLetter.Content = driveName;
-            TotalSpace.Content = partition.WSM.FormattedSize;
-            FileSystemText.Content = fileSystem;
-            PartitionType.Content = $"{partition.WSM.PartitionTable}: {partition.WSM.PartitionType}";
         }
 
         private void Online_Click(object sender, RoutedEventArgs e) => EOnline?.Invoke(sender, e);

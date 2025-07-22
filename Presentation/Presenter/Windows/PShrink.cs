@@ -2,7 +2,6 @@
    GUIForDiskpart.Presentation.Presenter.Windows.PShrink<GUIForDiskpart.Presentation.View.Windows.WShrink>;
 
 using System;
-using System.Management.Automation.Remoting;
 using System.Windows;
 using System.Windows.Controls;
 

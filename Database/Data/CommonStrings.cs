@@ -10,5 +10,6 @@
         public const string NO_FS = "No filesystem";
         public const string NO_LETTER = "No letter";
         public const string NO_WIN_VOL = "No Windows Volume";
+        public const string USB = "USB";
     }
 }

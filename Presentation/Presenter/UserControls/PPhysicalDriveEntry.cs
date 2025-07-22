@@ -1,13 +1,13 @@
 ﻿global using PPhysicalDriveEntry =
     GUIForDiskpart.Presentation.Presenter.UserControls.PPhysicalDriveEntry<GUIForDiskpart.Presentation.View.UserControls.UCPhysicalDriveEntry>;
-
-using System.Windows;
-using System.Windows.Controls;
-
 using GUIForDiskpart.Database.Data;
 using GUIForDiskpart.Model.Logic.Diskpart;
 using GUIForDiskpart.Presentation.View.UserControls;
 using GUIForDiskpart.Utils;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ScrollBar;
 
 
 namespace GUIForDiskpart.Presentation.Presenter.UserControls
@@ -36,6 +36,11 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
         public DiskModel Disk { get; private set; }
         public bool? IsSelected { get { return UserControl.EntrySelected.IsChecked; } }
 
+        private const string EXTERNAL_HD_MEDIA = "External hard disk media";
+        private const string REMOVABLE_MEDIA = "Removable Media";
+        private const string FIXED_HD_MEDIA = "Fixed hard disk media";
+        private const string UNKNOWN_MEDIA = "Unknown";
+
         #region MenuItems
 
         MenuItem DPOnline =>
@@ -45,6 +50,62 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         #endregion MenuItems
 
+        public void SetEntryRadioButton(bool value) => UserControl.EntrySelected.IsChecked = value;
+
+        public void SetValueInProgressBar(ulong totalSize, ulong usedSpace)
+        {
+            UserControl.SizeBar.Maximum = totalSize;
+            UserControl.SizeBar.Minimum = 0;
+            UserControl.SizeBar.Value = usedSpace;
+        }
+
+        public void UpdateUI(DiskModel diskModel)
+        {
+            UserControl.DiskIndex.Content = $"#{diskModel.DiskIndex}";
+            UserControl.DiskModelText.Content = diskModel.DiskModelText;
+            UserControl.TotalSpace.Content = diskModel.FormattedTotalSpace;
+            UserControl.WSMPartitionCount.Content = $"{diskModel.PartitionCount} partitions";
+            SetValueInProgressBar(diskModel.TotalSpace, diskModel.UsedSpace);
+
+            UserControl.DiskIcon.Source = GetDiskIcon(diskModel);
+            UserControl.MediaTypeIcon.Source = GetMediaTypeIcon(diskModel);
+        }
+
+        private ImageSource? GetDiskIcon(DiskModel diskModel)
+        {
+            ImageSource? result = IconUtils.GetShellIconByType(Shell32IconType.Drive, true);
+
+            if (diskModel.InterfaceType == CommonStrings.USB)
+            {
+                result = IconUtils.GetShellIconByType(Shell32IconType.USB, true);
+            }
+
+            return result;
+        }
+
+        private ImageSource? GetMediaTypeIcon(DiskModel diskModel)
+        {
+            ImageSource? result = IconUtils.GetShellIconByType(Shell32IconType.QuestionMark, true);
+
+            switch (diskModel.MediaType)
+            {
+                case (EXTERNAL_HD_MEDIA):
+                    result = IconUtils.GetShellIconByType(Shell32IconType.UpArrow, true);
+                    break;
+                case (REMOVABLE_MEDIA):
+                    result = IconUtils.GetShellIconByType(Shell32IconType.UpArrow, true);
+                    break;
+                case (FIXED_HD_MEDIA):
+                    result = IconUtils.GetShellIconByType(Shell32IconType.Fixed, true);
+                    break;
+                case (UNKNOWN_MEDIA):
+                    result = IconUtils.GetShellIconByType(Shell32IconType.QuestionMark, true);
+                    break;
+            }
+
+            return result;
+        }
+
         private void PopulateContextMenu()
         {
             UserControl.ContextMenu.Items.Add(Disk.IsOnline ? DPOffline : DPOnline);
@@ -52,7 +113,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         public void Select()
         {
-            UserControl.SetEntryRadioButton(true);
+            SetEntryRadioButton(true);
             MainWindow.Window.DiskEntry_Click(UserControl);
         }
 
@@ -128,7 +189,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         public override void Setup()
         {
-            UserControl.UpdateUI(Disk);
+            UpdateUI(Disk);
             PopulateContextMenu();
         }
 

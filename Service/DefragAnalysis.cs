@@ -48,8 +48,6 @@ namespace GUIForDiskpart.Service
         {
             DAModel defragAnalysis = new();
 
-            //defragAnalysis.AverageFileSize = Convert.ToUInt64(dict["AverageFileSize"]);
-
             PropertyInfo[] defragAnalysisProperties = typeof(DAModel).GetProperties();
             foreach (PropertyInfo property in defragAnalysisProperties)
             {

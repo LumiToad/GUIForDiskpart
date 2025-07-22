@@ -94,6 +94,15 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
             }
         }
 
+        public void UpdateUI(PartitionModel partition, string driveName, string fileSystem)
+        {
+            UserControl.PartitionNumber.Content = $"#{partition.WSM.PartitionNumber}";
+            UserControl.DriveNameAndLetter.Content = driveName;
+            UserControl.TotalSpace.Content = partition.WSM.FormattedSize;
+            UserControl.FileSystemText.Content = fileSystem;
+            UserControl.PartitionType.Content = $"{partition.WSM.PartitionTable}: {partition.WSM.PartitionType}";
+        }
+
         public void SetEntryRadioButton(bool value)
         {
             UserControl.EntrySelected.IsChecked = value;
@@ -285,7 +294,7 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
             string driveName = GetDriveNameText(Partition);
             string fileSystem = GetFileSystemText(Partition);
 
-            UserControl.UpdateUI(Partition, driveName, fileSystem);
+            UpdateUI(Partition, driveName, fileSystem);
             if (Partition.HasWSMPartition && Partition.IsLogicalDisk)
             {
                 SetValueInProgressBar(Partition.WSM.Size, Partition.LDModel.UsedSpace);

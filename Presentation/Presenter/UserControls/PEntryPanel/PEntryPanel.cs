@@ -71,14 +71,6 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
 
         #region UCPresenter
 
-        public override void Setup()
-        {
-        }
-
-        protected override void RegisterEventsInternal()
-        {
-        }
-
         public override void AddCustomArgs(params object?[] args)
         {
             if (args[0] is PCDiskPanel)

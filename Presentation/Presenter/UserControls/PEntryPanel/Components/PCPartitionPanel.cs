@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Controls;
 
 using GUIForDiskpart.Presentation.View.UserControls;
+
 
 namespace GUIForDiskpart.Presentation.Presenter.UserControls.Components
 {

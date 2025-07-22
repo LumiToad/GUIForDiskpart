@@ -29,6 +29,11 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
     /// </summary>
     public class PEntryData<T> : UCPresenter<T> where T : View.UserControls.UCEntryData
     {
+        public void AddDataToGrid(Dictionary<string, object?> data)
+        {
+            UserControl.EntryDataGrid.ItemsSource = data;
+        }
+
         private void OnSearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
             UserControl.EntryDataGrid.SelectAllCells();
@@ -106,11 +111,6 @@ namespace GUIForDiskpart.Presentation.Presenter.UserControls
                 }
                 UserControl.SelectedCell = UserControl.EntryDataGrid.SelectedCells[0];
             }
-        }
-
-        public void AddDataToGrid(Dictionary<string, object?> data)
-        {
-            UserControl.EntryDataGrid.ItemsSource = data;
         }
 
         #region UCPresenter
