@@ -38,6 +38,7 @@
       <li><a href="https://www.linkedin.com/pulse/guifordiskpart-05-more-issues-lukas-schmidt-w56pe/?trackingId=MQHtZADDSEm7DUZnMAyZxg%3D%3D">#05 - More Issues</a></li>
       <li><a href="https://www.linkedin.com/pulse/guifordiskpart-06-overscoped-lukas-schmidt-cfzrf/?trackingId=MQHtZADDSEm7DUZnMAyZxg%3D%3D">#06 - Overscoped</a></li>
       <li><a href="https://www.linkedin.com/pulse/guifordiskpart-07-finished-program-beta-lukas-schmidt-j2gdf/?trackingId=dfzLrGWKOs2nXPPXoTqAhA%3D%3D">#07 - A finished program (beta)</a></li>
+      <li><a href="https://www.linkedin.com/pulse/guifordiskpart-08-view-model-jungle-lukas-schmidt-7xjyf/?trackingId=kaTPboN6knwQAvRM3%2Fcz2g%3D%3D">#08 - The view model jungle...</a></li>
       <li><a href="#">Coming soon...</a></li>
     </ul>
   </p>
