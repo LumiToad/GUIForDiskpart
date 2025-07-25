@@ -45,7 +45,7 @@
 
   <hr />
   <h2>Engines / Languages</h2>
-  Windows Presentation Foundation (.NET 6.0), WQL (Windows Query Language), C#, PowerShell, Batch, XAML
+  C#, XAML, Microsoft WPF, WQL, PowerShell, Batch 
   
   <hr />
   <h2>Features</h2>
