@@ -48,6 +48,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="GUIFD_TDD\**" />
+    <EmbeddedResource Remove="GUIFD_TDD\**" />
+    <None Remove="GUIFD_TDD\**" />
+    <Page Remove="GUIFD_TDD\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Main\ProcessHandler.cs" />
   </ItemGroup>
 
@@ -59,14 +66,6 @@
     <PackageReference Include="Microsoft.Management.Infrastructure" Version="3.0.0" />
     <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.16" />
     <PackageReference Include="System.Management" Version="7.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="GUIForDiskpart">
-      <HintPath>builds\Debug\net6.0-windows\GUIForDiskpart.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
