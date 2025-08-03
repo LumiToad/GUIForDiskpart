@@ -1,10 +1,11 @@
-﻿using System;
+﻿using PartitionRetriever = GUIForDiskpart.Database.Retrievers.Partition;
+
 using System.Collections.Generic;
 using System.Management;
 using System.Management.Automation;
 
 using GUIForDiskpart.Model.Data;
-using PartitionRetriever = GUIForDiskpart.Database.Retrievers.Partition;
+
 
 namespace GUIForDiskpart.Service
 {
@@ -80,8 +81,6 @@ namespace GUIForDiskpart.Service
             wsmPartition.IsShadowCopy = System.Convert.ToBoolean(psObject.Properties["IsShadowCopy"].Value);
             wsmPartition.NoDefaultDriveLetter = System.Convert.ToBoolean(psObject.Properties["NoDefaultDriveLetter"].Value);
             wsmPartition.Offset = System.Convert.ToUInt64(psObject.Members["Offset"].Value);
-
-            wsmPartition.PrintToConsole();
 
             return wsmPartition;
         }

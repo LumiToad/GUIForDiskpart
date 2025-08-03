@@ -25,8 +25,6 @@ namespace GUIForDiskpart.Service
             newLogicalDisk.VolumeSerial = System.Convert.ToString(logicalDisk.Properties["VolumeSerialNumber"].Value); // 12345678
             newLogicalDisk.DriveLetter = System.Convert.ToString(logicalDisk.Properties["Name"].Value);
 
-            newLogicalDisk.PrintToConsole();
-
             return newLogicalDisk;
         }
     }

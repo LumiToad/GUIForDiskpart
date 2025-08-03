@@ -134,6 +134,7 @@ namespace GUIForDiskpart.Utils
             return hIcon != IntPtr.Zero ? Icon.FromHandle(hIcon) : null;
         }
 
+        
         public static ImageSource ToImageSource(this Icon icon)
         {
             ImageSource imageSource = Imaging.CreateBitmapSourceFromHIcon(
@@ -143,6 +144,7 @@ namespace GUIForDiskpart.Utils
 
             return imageSource;
         }
+        
 
         public static System.Windows.Controls.Image GetImageFromFile(string filePath)
         {

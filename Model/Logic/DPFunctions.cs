@@ -16,7 +16,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
             GetDPInfoExcludeStrings();
         }
 
-        #region ListingAndDetail
+        #region ListAndDetail
 
         public static string List(string type)
         {
@@ -58,7 +58,7 @@ namespace GUIForDiskpart.Model.Logic.Diskpart
             return ExecuteInternal(commands);
         }
 
-        #endregion ListingAndDetail
+        #endregion ListAndDetail
 
         #region Create
 

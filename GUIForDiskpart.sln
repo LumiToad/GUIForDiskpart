@@ -5,6 +5,11 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GUIForDiskpart", "GUIForDiskpart.csproj", "{B42DE0F0-FAD8-4C3B-98F4-F898D994EF19}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUIFD_TDD", "..\GUIFD_TDD\GUIFD_TDD.csproj", "{3C9D2D06-110B-4BEF-9099-643DA8110429}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B42DE0F0-FAD8-4C3B-98F4-F898D994EF19} = {B42DE0F0-FAD8-4C3B-98F4-F898D994EF19}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +33,18 @@ Global
 		{B42DE0F0-FAD8-4C3B-98F4-F898D994EF19}.Release|x64.Build.0 = Release|x64
 		{B42DE0F0-FAD8-4C3B-98F4-F898D994EF19}.Release|x86.ActiveCfg = Release|x86
 		{B42DE0F0-FAD8-4C3B-98F4-F898D994EF19}.Release|x86.Build.0 = Release|x86
+		{3C9D2D06-110B-4BEF-9099-643DA8110429}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C9D2D06-110B-4BEF-9099-643DA8110429}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C9D2D06-110B-4BEF-9099-643DA8110429}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3C9D2D06-110B-4BEF-9099-643DA8110429}.Debug|x64.Build.0 = Debug|Any CPU
+		{3C9D2D06-110B-4BEF-9099-643DA8110429}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3C9D2D06-110B-4BEF-9099-643DA8110429}.Debug|x86.Build.0 = Debug|Any CPU
+		{3C9D2D06-110B-4BEF-9099-643DA8110429}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C9D2D06-110B-4BEF-9099-643DA8110429}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C9D2D06-110B-4BEF-9099-643DA8110429}.Release|x64.ActiveCfg = Release|Any CPU
+		{3C9D2D06-110B-4BEF-9099-643DA8110429}.Release|x64.Build.0 = Release|Any CPU
+		{3C9D2D06-110B-4BEF-9099-643DA8110429}.Release|x86.ActiveCfg = Release|Any CPU
+		{3C9D2D06-110B-4BEF-9099-643DA8110429}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

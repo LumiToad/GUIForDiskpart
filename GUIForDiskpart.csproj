@@ -62,14 +62,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="GUIForDiskpart">
-      <HintPath>builds\Debug\net6.0-windows\GUIForDiskpart.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-      <Private>True</Private>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Resources\cmd.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
